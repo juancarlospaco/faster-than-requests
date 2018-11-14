@@ -14,10 +14,14 @@
 | Faster_than_requests (no SSL) |  `0.50`  | 1     | 50   | 0                     | 1          |
 | Faster_than_requests          |  `0.45`  | 1     | 50   | 0                     | 1          |
 
+<details>
+
 - Lines Of Code counted using [CLOC](https://github.com/AlDanial/cloc).
 - Direct dependencies of the package when ready to run.
 - Benchmarks run on Docker from Dockerfile on this repo.
 - Developers counted from the Contributors list of Git.
+
+</details>
 
 
 # FAQ
