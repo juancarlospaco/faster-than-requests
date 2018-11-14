@@ -57,7 +57,8 @@ Yes, for speed.
 
 - Developer Documentation ?.
 
-[Yes.](faster_than_requests_DOCS.zip) (Zip because GitHub marks the Repo as being JavaScript)
+[Yes.](https://github.com/juancarlospaco/faster-than-requests/raw/master/faster_than_requests_DOCS.zip)
+(Zip because GitHub marks the Repo as being JavaScript)
 
 - How can I download it ?.
 
