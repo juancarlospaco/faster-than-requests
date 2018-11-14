@@ -53,8 +53,11 @@ Yes, for speed.
 - How to set the HTTP Method ?.
 
 `http_method="get"` for GET.
+
 `http_method="post"` for POST.
+
 `http_method="put"` for PUT.
+
 `http_method="patch"` for PATCH.
 
 - How to set the HTTP Body ?.
