@@ -42,10 +42,6 @@ No.
 
 No.
 
-- How can be faster than PyCurl ?.
-
-I dunno.
-
 - It sends empty string as User-Agent ?.
 
 Yes, for speed.
@@ -75,6 +71,10 @@ Yes, for speed.
 - How to set an HTTP Header key=value ?.
 
 `("key", "value")`
+
+- How can be faster than PyCurl ?.
+
+I dunno.
 
 - But Requests have more *options* ?.
 
