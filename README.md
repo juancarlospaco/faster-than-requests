@@ -47,6 +47,10 @@ No.
 
 No.
 
+- This runs on Python2 ?.
+
+I dunno. (Not supported)
+
 - It sends empty string as User-Agent ?.
 
 Yes, for speed.
