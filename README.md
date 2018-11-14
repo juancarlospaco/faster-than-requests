@@ -44,7 +44,7 @@ No.
 
 - How can be faster than PyCurl ?.
 
-Because PyCurl is a *wrapper* ?.
+I dunno.
 
 - It sends empty string as User-Agent ?.
 
