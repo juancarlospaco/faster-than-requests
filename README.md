@@ -50,6 +50,10 @@ Yes, for speed.
 
 [Yes.](faster_than_requests_DOCS.zip) (Zip because GitHub marks the Repo as being JavaScript)
 
+- How can I download it ?.
+
+https://github.com/juancarlospaco/faster-than-requests/releases
+
 - How to set the URL ?.
 
 `url="http://example.com"` (1st argument always).
