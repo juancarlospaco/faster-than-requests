@@ -20,11 +20,16 @@
 - Direct dependencies of the package when ready to run.
 - Benchmarks run on Docker from Dockerfile on this repo.
 - Developers counted from the Contributors list of Git.
+- Stats as of year 2018.
 
 </details>
 
 
 # FAQ
+
+- Whats the idea, inspiration, reason, etc ?.
+
+[Feel free to Fork, Clone, Download, Improve, Reimplement, Play with this Open Source. Make it 10 times faster, 10 times smaller.](http://tonsky.me/blog/disenchantment)
 
 - This works with SSL ?.
 
