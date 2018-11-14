@@ -60,9 +60,11 @@ Yes, for speed.
 [Yes.](https://github.com/juancarlospaco/faster-than-requests/raw/master/faster_than_requests_DOCS.zip)
 (Zip because GitHub marks the Repo as being JavaScript)
 
-- How can I download it ?.
+- How can I Install it ?.
 
 https://github.com/juancarlospaco/faster-than-requests/releases
+
+If you dont understand how to install it, you can just download, extract, put the files on the same folder as your `*.py` file and you are good to go.
 
 - How to set the URL ?.
 
