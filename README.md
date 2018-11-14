@@ -51,10 +51,6 @@ No.
 
 I dunno. (Not supported)
 
-- It sends empty string as User-Agent ?.
-
-Yes, for speed.
-
 - Developer Documentation ?.
 
 [Yes.](https://github.com/juancarlospaco/faster-than-requests/raw/master/faster_than_requests_DOCS.zip)
