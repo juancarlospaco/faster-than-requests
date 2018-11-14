@@ -50,6 +50,10 @@ Yes, for speed.
 
 [Yes.](faster_than_requests_DOCS.zip) (Zip because GitHub marks the Repo as being JavaScript)
 
+- How to set the URL ?.
+
+`url="http://example.com"` (1st argument always).
+
 - How to set the HTTP Method ?.
 
 `http_method="get"` for GET.
@@ -63,6 +67,10 @@ Yes, for speed.
 - How to set the HTTP Body ?.
 
 `body="my body"`
+
+- How to set an HTTP Header key=value ?.
+
+`("key", "value")`
 
 - But Requests have more *options* ?.
 
