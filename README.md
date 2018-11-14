@@ -50,6 +50,17 @@ Yes, for speed.
 
 [Yes.](faster_than_requests_DOCS.zip) (Zip because GitHub marks the Repo as being JavaScript)
 
+- How to set the HTTP Method ?.
+
+`http_method="get"` for GET.
+`http_method="post"` for POST.
+`http_method="put"` for PUT.
+`http_method="patch"` for PATCH.
+
+- How to set the HTTP Body ?.
+
+`body="my body"`
+
 - But Requests have more *options* ?.
 
 Yes.
