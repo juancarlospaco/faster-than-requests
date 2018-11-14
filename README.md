@@ -82,4 +82,4 @@ I dunno.
 
 - But Requests have more *options* ?.
 
-Yes.
+I dunno.
