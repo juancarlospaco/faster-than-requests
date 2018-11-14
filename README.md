@@ -52,4 +52,4 @@ Yes, for speed.
 
 - But Requests have more *options* ?.
 
-Which I use like once a year, but yes.
+Yes.
