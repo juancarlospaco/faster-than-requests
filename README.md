@@ -25,6 +25,14 @@
 </details>
 
 
+# Use
+
+```python
+import faster_than_requests as requests
+print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
+```
+
+
 # FAQ
 
 - Whats the idea, inspiration, reason, etc ?.
