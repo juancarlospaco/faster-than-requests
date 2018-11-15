@@ -37,3 +37,7 @@ print(requests.get2ndjson_list(["http://httpbin.org/json",
 
 print(requests.downloads_list([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
                                ("http://httpbin.org/image/svg",  "bar.svg")]))
+
+print(requests.downloads_list_delay([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
+                                     ("http://httpbin.org/image/svg",  "bar.svg")],
+                                     delay=3))
