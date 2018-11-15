@@ -33,7 +33,7 @@ print(requests.downloads("http://httpbin.org/image/jpeg", "foo.jpeg"))          
 print(requests.get2str_list(["http://httpbin.org/json", "http://httpbin.org/xml"]))     # HTTP GET body to string from a list.
 
 print(requests.get2ndjson_list(["http://httpbin.org/json",
-                                "http://httpbin.org/xml"], "output.ndjson"))     # HTTP GET body to NDJSON file from a list.
+                                "http://httpbin.org/json"], "output.ndjson"))     # HTTP GET body to NDJSON file from a list.
 
 print(requests.downloads_list([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
                                ("http://httpbin.org/image/svg",  "bar.svg")]))
