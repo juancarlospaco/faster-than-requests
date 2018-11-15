@@ -119,6 +119,10 @@ If you dont understand how to install it, you can just download, extract, put th
 No SSL is smaller but no HTTPS.
 Feel free to delete it if you want.
 
+- Whats NDJSON ?.
+
+https://github.com/ndjson/ndjson-spec
+
 - How can be faster than PyCurl ?.
 
 I dunno.
