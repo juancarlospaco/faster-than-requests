@@ -2,6 +2,8 @@
 
 [![screenshot](https://source.unsplash.com/eH_ftJYhaTY/800x402)](https://youtu.be/QiKwnlyhKrk?t=5)
 
+![screenshot](temp.jpg)
+
 | Library                       | Speed    | Files | LOC  | Dependencies          | Developers |
 |-------------------------------|----------|-------|------|-----------------------|------------|
 | PyWGET                        | `152.39` | 1     | 338  | Wget                  | >=17       |
