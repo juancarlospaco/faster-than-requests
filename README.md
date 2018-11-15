@@ -11,8 +11,8 @@
 | Urllib3                       |  `3.55`  | >=40  | 5242 | 0 (No SSL), >=5 (SSL) | >=188      |
 | PyCurl                        |  `0.75`  | >=15  | 5932 | Curl, LibCurl         | >=50       |
 | PyCurl (no SSL)               |  `0.68`  | >=15  | 5932 | Curl, LibCurl         | >=50       |
-| Faster_than_requests (no SSL) |  `0.50`  | 1     | 50   | 0                     | 1          |
-| Faster_than_requests          |  `0.45`  | 1     | 50   | 0                     | 1          |
+| Faster_than_requests (no SSL) |  `0.50`  | 1     | 75   | 0                     | 1          |
+| Faster_than_requests          |  `0.45`  | 1     | 75   | 0                     | 1          |
 
 <details>
 
@@ -33,23 +33,26 @@ import faster_than_requests as requests
 print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 ```
 
-- ``gets()`` HTTP GET.
-- ``posts()`` HTTP POST.
-- ``puts()`` HTTP PUT.
-- ``deletes()`` HTTP DELETE.
-- ``patchs()`` HTTP PATCH.
-- ``get2str()`` HTTP GET body only :arrow_right: string.
-- ``get2str_list()`` HTTP GET body from a list :arrow_right: string.
-- ``get2ndjson_list()`` HTTP GET body from a list :arrow_right: NDJSON.
-- ``get2dict()`` HTTP GET body only :arrow_right: dictionary.
-- ``get2json()`` HTTP GET body only :arrow_right: JSON.
-- ``get2json_pretty()`` HTTP GET body only :arrow_right: Pretty-Printed JSON.
-- ``post2str()`` HTTP POST data only :arrow_right: string.
-- ``post2dict()`` HTTP POST data only :arrow_right: dictionary.
-- ``post2json()`` HTTP POST data :arrow_right: JSON.
-- ``post2json_pretty()`` HTTP POST data :arrow_right: Pretty-Printed JSON.
-- ``downloads()`` HTTP GET Download 1 file.
-- ``downloads_list()`` HTTP GET Download a list of files.
+- `gets()` HTTP GET.
+- `posts()` HTTP POST.
+- `puts()` HTTP PUT.
+- `deletes()` HTTP DELETE.
+- `patchs()` HTTP PATCH.
+- `get2str()` HTTP GET body only :arrow_right: string.
+- `get2str_list()` HTTP GET body from a list :arrow_right: string.
+- `get2ndjson_list()` HTTP GET body from a list :arrow_right: NDJSON.
+- `get2dict()` HTTP GET body only :arrow_right: dictionary.
+- `get2json()` HTTP GET body only :arrow_right: JSON.
+- `get2json_pretty()` HTTP GET body only :arrow_right: Pretty-Printed JSON.
+- `get2assert()` HTTP GET body only to assert from expected argument for unittests.
+- `post2str()` HTTP POST data only :arrow_right: string.
+- `post2dict()` HTTP POST data only :arrow_right: dictionary.
+- `post2json()` HTTP POST data :arrow_right: JSON.
+- `post2json_pretty()` HTTP POST data :arrow_right: Pretty-Printed JSON.
+- `post2assert()` HTTP POST body only to assert from expected argument for unittests.
+- `downloads()` HTTP GET Download 1 file.
+- `downloads_list()` HTTP GET Download a list of files.
+- `downloads_list_delay()` HTTP GET Download a list of files with delay, optional randomized delay.
 
 
 # FAQ
