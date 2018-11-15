@@ -64,7 +64,8 @@ print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 ```bash
 $ ./build-docker.sh
 $ ./run-docker.sh
-$ ./run-benchmark.sh  # Inside Docker.
+$ ./server4benchmarks &  # Inside Docker.
+$ python3 benchmark.py   # Inside Docker.
 ```
 
 
