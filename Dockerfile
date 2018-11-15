@@ -6,7 +6,6 @@ RUN apt-get clean -y
 RUN pip3 install --upgrade pip==18.1
 RUN pip3 install --upgrade requests==2.20.1
 RUN pip3 install --upgrade urllib3==1.24.1
-RUN pip3 install --upgrade urlgrabber==3.10.2
 RUN nimble -y refresh
 RUN nimble -y install nimpy
 ADD src/faster_than_requests.nim /tmp/
