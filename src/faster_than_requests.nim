@@ -67,7 +67,7 @@ proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
    "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
-# Extra HTTP Functions, go beyond the ones from Requests.
+# Extra HTTP Functions, go beyond the ones from Requests/PyCurl.
 
 proc get2str*(url: string): string {.inline, exportpy.} =
   ## HTTP GET body to string.
