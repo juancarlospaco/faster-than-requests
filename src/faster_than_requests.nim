@@ -1,10 +1,7 @@
-## Faster Than Requests
+## Faster than requests
 ## ====================
 ##
-## - Faster & simpler Requests & PyCurl replacement for Python, less options & more speed.
-##
-## API
-## ---
+## **API**
 ##
 ## - ``faster_than_requests.gets()`` HTTP GET.
 ## - ``faster_than_requests.posts()`` HTTP POST.
@@ -13,11 +10,14 @@
 ## - ``faster_than_requests.patchs()`` HTTP PATCH.
 ## - ``faster_than_requests.get2str()`` HTTP GET body only to string response.
 ## - ``faster_than_requests.get2str_list()`` HTTP GET body to string from a list.
+## - ``faster_than_requests.get2ndjson_list()`` HTTP GET body to NDJSON file from a list.
 ## - ``faster_than_requests.get2dict()`` HTTP GET body only to dictionary response.
 ## - ``faster_than_requests.get2json()`` HTTP GET body only to JSON response.
+## - ``faster_than_requests.get2json_pretty()`` HTTP GET body only to Pretty-Printed JSON response.
 ## - ``faster_than_requests.post2str()`` HTTP POST data only to string response.
 ## - ``faster_than_requests.post2dict()`` HTTP POST data only to dictionary response.
 ## - ``faster_than_requests.post2json()`` HTTP POST data to JSON response.
+## - ``faster_than_requests.post2json_pretty()`` HTTP POST data to Pretty-Printed JSON response.
 ## - ``faster_than_requests.requests()`` HTTP GET/POST/PUT/DELETE/PATCH,Headers,etc.
 ## - ``faster_than_requests.downloads()`` HTTP GET Download 1 file.
 ## - ``faster_than_requests.downloads_list()`` HTTP GET Download a list of files.
@@ -75,7 +75,22 @@ proc get2str_list*(list_of_urls: openArray[string]): seq[string] {.inline, expor
   for url in list_of_urls:
     result.add client.getContent(url)
 
+proc get2ndjson_list*(list_of_urls: openArray[string], ndjson_file_path: string) {.inline, discardable, exportpy.} =
+  ## HTTP GET body to NDJSON file from a list of URLs.
+  var
+    temp: string
+    ndjson = open(ndjson_file_path, fmWrite)
+  for url in list_of_urls:
+    temp = ""
+    temp.toUgly client.getContent(url).parseJson
+    ndjson.writeLine temp
+  ndjson.close()
+
 proc get2json*(url: string): string {.inline, exportpy.} =
+  ## HTTP GET body to JSON.
+  result.toUgly client.getContent(url).parseJson
+
+proc get2json_pretty*(url: string): string {.inline, exportpy.} =
   ## HTTP GET body to pretty-printed JSON.
   client.getContent(url).parseJson.pretty
 
@@ -89,6 +104,10 @@ proc post2str*(url, body: string): string {.inline, exportpy.} =
   client.postContent(url, body)
 
 proc post2json*(url, body: string): string {.inline, exportpy.} =
+  ## HTTP POST body to JSON.
+  result.toUgly client.postContent(url, body).parseJson
+
+proc post2json_pretty*(url, body: string): string {.inline, exportpy.} =
   ## HTTP POST body to pretty-printed JSON.
   client.postContent(url, body).parseJson.pretty
 
