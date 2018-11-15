@@ -2,7 +2,7 @@
 
 version       = "0.1.0"
 author        = "Juan Carlos"
-description   = "Faster than Requests"
+description   = "Faster than requests"
 license       = "MIT"
 srcDir        = "src"
 

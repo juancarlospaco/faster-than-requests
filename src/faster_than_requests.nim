@@ -60,14 +60,14 @@ proc deletes*(url: string): Table[string, string] {.inline, exportpy.} =
 
 proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]],
                debugs: bool = false): Table[string, string] {.inline, exportpy.} =
-  ## HTTP Requests low level function to dictionary.
+  ## HTTP requests low level function to dictionary.
   let headerss = newHttpHeaders(http_headers)
   if unlikely(debugs): echo url, "\n", http_method, "\n", body, "\n", headerss
   let r = client.request(url, http_method, body, headerss)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
    "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
-# Extra HTTP Functions, go beyond the ones from Requests/PyCurl.
+# Extra HTTP Functions, go beyond the ones from requests.
 
 proc get2str*(url: string): string {.inline, exportpy.} =
   ## HTTP GET body to string.
