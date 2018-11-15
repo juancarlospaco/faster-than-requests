@@ -40,4 +40,4 @@ print(requests.downloads_list([("http://httpbin.org/image/jpeg", "foo.jpg"),    
 
 print(requests.downloads_list_delay([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
                                      ("http://httpbin.org/image/svg",  "bar.svg")],
-                                     delay=3))
+                                    3)) # 3 Seconds Delay
