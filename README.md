@@ -60,17 +60,6 @@ print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 - `downloads_list_delay()` HTTP GET Download a list of files with delay, optional randomized delay.
 
 
-# Platforms
-
-- ✅ Linux
-- ✅ Windows
-- ✅ Mac
-- ✅ Android
-- ✅ Raspberry Pi
-- ✅ BSD
-- ✅ ReactOS
-
-
 # Docker
 
 - Make a quick test drive on Docker!.
@@ -81,6 +70,17 @@ $ ./run-docker.sh
 $ ./server4benchmarks &  # Inside Docker.
 $ python3 benchmark.py   # Inside Docker.
 ```
+
+
+# Platforms
+
+- ✅ Linux
+- ✅ Windows
+- ✅ Mac
+- ✅ Android
+- ✅ Raspberry Pi
+- ✅ BSD
+- ✅ ReactOS
 
 
 # FAQ
