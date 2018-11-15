@@ -1,3 +1,10 @@
+<!--
+  Title: Faster than Requests
+  Description: Faster requests for Python.
+  Author: JuanCarlos
+  -->
+<meta name='keywords' content='python, requests, faster, speed, benchmark, pycurl, wget, urllib'>
+
 # Faster-than-requests
 
 [![screenshot](https://source.unsplash.com/eH_ftJYhaTY/800x402)](https://youtu.be/QiKwnlyhKrk?t=5)
