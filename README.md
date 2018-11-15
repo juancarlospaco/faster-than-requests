@@ -62,11 +62,11 @@ print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 
 # Platforms
 
-✅ Windows
-✅ Linux
-✅ Mac
-✅ Android
-✅ Raspberry Pi
+- ✅ Linux
+- ✅ Windows
+- ✅ Mac
+- ✅ Android
+- ✅ Raspberry Pi
 
 
 # Docker
