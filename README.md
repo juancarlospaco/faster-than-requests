@@ -114,6 +114,11 @@ If you dont understand how to install it, you can just download, extract, put th
 
 `("key", "value")`
 
+- Whats the No SSL version for ?.
+
+No SSL is smaller but no HTTPS.
+Feel free to delete it if you want.
+
 - How can be faster than PyCurl ?.
 
 I dunno.
