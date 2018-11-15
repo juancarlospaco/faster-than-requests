@@ -67,6 +67,8 @@ print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 - ✅ Mac
 - ✅ Android
 - ✅ Raspberry Pi
+- ✅ BSD
+- ✅ ReactOS
 
 
 # Docker
