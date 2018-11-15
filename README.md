@@ -33,6 +33,24 @@ import faster_than_requests as requests
 print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 ```
 
+- ``gets()`` HTTP GET.
+- ``posts()`` HTTP POST.
+- ``puts()`` HTTP PUT.
+- ``deletes()`` HTTP DELETE.
+- ``patchs()`` HTTP PATCH.
+- ``get2str()`` HTTP GET body only :arrow_right: string.
+- ``get2str_list()`` HTTP GET body from a list :arrow_right: string.
+- ``get2ndjson_list()`` HTTP GET body from a list :arrow_right: NDJSON.
+- ``get2dict()`` HTTP GET body only :arrow_right: dictionary.
+- ``get2json()`` HTTP GET body only :arrow_right: JSON.
+- ``get2json_pretty()`` HTTP GET body only :arrow_right: Pretty-Printed JSON.
+- ``post2str()`` HTTP POST data only :arrow_right: string.
+- ``post2dict()`` HTTP POST data only :arrow_right: dictionary.
+- ``post2json()`` HTTP POST data :arrow_right: JSON.
+- ``post2json_pretty()`` HTTP POST data :arrow_right: Pretty-Printed JSON.
+- ``downloads()`` HTTP GET Download 1 file.
+- ``downloads_list()`` HTTP GET Download a list of files.
+
 
 # FAQ
 
