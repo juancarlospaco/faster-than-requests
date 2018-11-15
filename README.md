@@ -57,6 +57,17 @@ print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 - `downloads_list_delay()` HTTP GET Download a list of files with delay, optional randomized delay.
 
 
+# Docker
+
+- Make a quick test drive on Docker!.
+
+```bash
+$ ./build-docker.sh
+$ ./run-docker.sh
+$ ./run-benchmark.sh  # Inside Docker.
+```
+
+
 # FAQ
 
 - Whats the idea, inspiration, reason, etc ?.
