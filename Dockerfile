@@ -7,7 +7,7 @@ RUN pip3 install --upgrade pip==18.1
 RUN pip3 install --upgrade requests==2.20.1
 RUN pip3 install --upgrade urllib3==1.24.1
 RUN nimble -y refresh
-RUN nimble -y install nimpy
+RUN nimble -y install nimpy@0.1.0
 ADD src/faster_than_requests.nim /tmp/
 ADD src/faster_than_requests_nossl.nim /tmp/
 RUN nim c -d:release -d:ssl --app:lib --out:/tmp/faster_than_requests.so /tmp/faster_than_requests.nim
