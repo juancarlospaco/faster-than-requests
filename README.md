@@ -123,6 +123,10 @@ https://github.com/juancarlospaco/faster-than-requests/releases
 
 If you dont understand how to install it, you can just download, extract, put the files on the same folder as your `*.py` file and you are good to go.
 
+- Where to get help ?.
+
+https://github.com/juancarlospaco/faster-than-requests/issues
+
 - How to set the URL ?.
 
 `url="http://example.com"` (1st argument always).
