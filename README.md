@@ -59,6 +59,9 @@ print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 - `downloads_list()` HTTP GET Download a list of files.
 - `downloads_list_delay()` HTTP GET Download a list of files with delay, optional randomized delay.
 
+Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
+we have tiny functions with very few arguments that do one thing and do it as fast as possible.
+
 
 # Docker
 
