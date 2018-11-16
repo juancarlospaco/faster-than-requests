@@ -38,26 +38,26 @@ import faster_than_requests as requests
 print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 ```
 
-- `gets()` HTTP GET.
-- `posts()` HTTP POST.
-- `puts()` HTTP PUT.
-- `deletes()` HTTP DELETE.
-- `patchs()` HTTP PATCH.
-- `get2str()` HTTP GET body only :arrow_right: string.
-- `get2str_list()` HTTP GET body from a list :arrow_right: string.
-- `get2ndjson_list()` HTTP GET body from a list :arrow_right: NDJSON.
-- `get2dict()` HTTP GET body only :arrow_right: dictionary.
-- `get2json()` HTTP GET body only :arrow_right: JSON.
-- `get2json_pretty()` HTTP GET body only :arrow_right: Pretty-Printed JSON.
-- `get2assert()` HTTP GET body only to assert from expected argument for unittests.
-- `post2str()` HTTP POST data only :arrow_right: string.
-- `post2dict()` HTTP POST data only :arrow_right: dictionary.
-- `post2json()` HTTP POST data :arrow_right: JSON.
-- `post2json_pretty()` HTTP POST data :arrow_right: Pretty-Printed JSON.
-- `post2assert()` HTTP POST body only to assert from expected argument for unittests.
-- `downloads()` HTTP GET Download 1 file.
-- `downloads_list()` HTTP GET Download a list of files.
-- `downloads_list_delay()` HTTP GET Download a list of files with delay, optional randomized delay.
+- `gets(url: str)` HTTP GET.
+- `posts(url: str, body: str)` HTTP POST.
+- `puts(url: str, body: str)` HTTP PUT.
+- `deletes(url: str)` HTTP DELETE.
+- `patchs(url: str, body: str)` HTTP PATCH.
+- `get2str(url: str)` HTTP GET body only :arrow_right: string.
+- `get2str_list(list_of_urls: list)` HTTP GET body from a list :arrow_right: string.
+- `get2ndjson_list(list_of_urls: list, ndjson_file_path: str)` HTTP GET body from a list :arrow_right: NDJSON.
+- `get2dict(url: str)` HTTP GET body only :arrow_right: dictionary.
+- `get2json(url: str)` HTTP GET body only :arrow_right: JSON.
+- `get2json_pretty(url: str)` HTTP GET body only :arrow_right: Pretty-Printed JSON.
+- `get2assert(url: str)` HTTP GET body only to assert from expected argument for unittests.
+- `post2str(url: str, body: str)` HTTP POST data only :arrow_right: string.
+- `post2dict(url: str, body: str)` HTTP POST data only :arrow_right: dictionary.
+- `post2json(url: str, body: str)` HTTP POST data :arrow_right: JSON.
+- `post2json_pretty(url: str, body: str)` HTTP POST data :arrow_right: Pretty-Printed JSON.
+- `post2assert(url: str, body: str)` HTTP POST body only to assert from expected argument for unittests.
+- `downloads(url: str, filename: str)` HTTP GET Download 1 file.
+- `downloads_list(list_of_files: list)` HTTP GET Download a list of files.
+- `downloads_list_delay(list_of_files: list, delay: int, randoms: bool, debugs: bool)` HTTP GET Download a list of files with delay, optional randomized delay.
 
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
 we have tiny functions with very few arguments that do one thing and do it as fast as possible.
