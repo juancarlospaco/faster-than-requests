@@ -1,8 +1,10 @@
 FROM nimlang/nim
 RUN rm -rf /tmp/*
-RUN apt-get update -y --quiet
-RUN apt-get install -y curl python3-pycurl wget python3-wget python3-pip
-RUN apt-get clean -y
+RUN : \
+    && apt-get update -y --quiet \
+    && apt-get install -y curl python3-pycurl wget python3-wget python3-pip \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
 RUN pip3 install --upgrade pip==18.1
 RUN pip3 install --upgrade requests==2.20.1
 RUN pip3 install --upgrade urllib3==1.24.1
@@ -15,6 +17,5 @@ RUN nim c -d:release --app:lib --out:/tmp/faster_than_requests_nossl.so /tmp/fas
 ADD server4benchmarks.nim /tmp/
 RUN nim c -d:release /tmp/server4benchmarks.nim
 ADD benchmark.py /tmp/
-ADD run-benchmark.sh /tmp/
-RUN rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/nimblecache/ /tmp/*.nim
+RUN rm -rf /var/tmp/* /tmp/nimblecache/ /tmp/*.nim
 EXPOSE 5000
