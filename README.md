@@ -50,13 +50,13 @@ print(requests.gets("http://httpbin.org/get"))  # See Docs for more info.
 - `get2json(url: str)` HTTP GET body only :arrow_right: JSON.
 - `get2json_pretty(url: str)` HTTP GET body only :arrow_right: Pretty-Printed JSON.
 - `get2assert(url: str)` HTTP GET body only to assert from expected argument for unittests.
-- `getlist2list(list_of_urls: list)` HTTP GET body from a list of urls to a list of lowercased strings.
+- `getlist2list(list_of_urls: list)` HTTP GET body from a list of urls to a list of lowercased strings :arrow_right: list.
 - `post2str(url: str, body: str)` HTTP POST data only :arrow_right: string.
 - `post2dict(url: str, body: str)` HTTP POST data only :arrow_right: dictionary.
 - `post2json(url: str, body: str)` HTTP POST data :arrow_right: JSON.
 - `post2json_pretty(url: str, body: str)` HTTP POST data :arrow_right: Pretty-Printed JSON.
 - `post2assert(url: str, body: str)` HTTP POST body only to assert from expected argument for unittests.
-- `post2list(url: str, body: str)` HTTP POST body to a list of lowercased strings.
+- `post2list(url: str, body: str)` HTTP POST body to a list of lowercased strings :arrow_right: list.
 - `downloads(url: str, filename: str)` HTTP GET Download 1 file.
 - `downloads_list(list_of_files: list)` HTTP GET Download a list of files.
 - `downloads_list_delay(list_of_files: list, delay: int, randoms: bool, debugs: bool)` HTTP GET Download a list of files with delay, optional randomized delay.
