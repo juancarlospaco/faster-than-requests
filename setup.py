@@ -59,8 +59,7 @@ stdlib_asyncnet.c
 stdlib_httpclient.c
 stdlib_options.c
 stdlib_strformat.c
-faster_than_requests_faster_than_requests.c
-""".splitlines()
+faster_than_requests_faster_than_requests.c""".splitlines()
 
 
 setup(
