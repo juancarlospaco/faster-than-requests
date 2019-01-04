@@ -36,9 +36,9 @@
 ```python
 import faster_than_requests as requests
 
-print(requests.gets("http://httpbin.org/get"))  
-print(requests.posts("http://httpbin.org/post", "Some Data Here"))  
-requests.downloads("http://example.com/foo.jpg", "output.jpg") # See Docs for more info.
+print(requests.gets("http://httpbin.org/get"))                     # GET
+print(requests.posts("http://httpbin.org/post", "Some Data Here")) # POST
+requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs for more info.
 ```
 
 - `gets(url: str)` HTTP GET.
