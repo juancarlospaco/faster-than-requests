@@ -88,7 +88,6 @@ $ python3 benchmark.py   # Inside Docker.
 - ✅ Android
 - ✅ Raspberry Pi
 - ✅ BSD
-- ✅ ReactOS
 
 
 # FAQ
