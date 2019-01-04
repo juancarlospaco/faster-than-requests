@@ -26,7 +26,7 @@
 - Benchmarks run on Docker from Dockerfile on this repo.
 - Developers counted from the Contributors list of Git.
 - Speed is IRL time to complete 10000 HTTP local requests.
-- Stats as of year 2018.
+- Stats as of year 2019.
 
 </details>
 
