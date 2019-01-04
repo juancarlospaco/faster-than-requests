@@ -5,8 +5,8 @@ from setuptools import Extension
 from setuptools import setup
 
 
-extra_compile_args = ("-lm", "-lrt", "-s", "-ldl")
-extra_link_args = ("-c", "-w", "-flto", "-ffast-math", "-march=native", "-O3", "-fno-strict-aliasing", "-fPIC")
+extra_compile_args = []  # ("-lm", "-lrt", "-s", "-ldl")
+extra_link_args = ("-flto", "-ffast-math", "-march=native", "-O3")  # ("-c", "-w", "-flto", "-ffast-math", "-march=native", "-O3", "-fno-strict-aliasing", "-fPIC")
 sources = """nimbase.h
 stdlib_asyncstreams.c
 stdlib_httpcore.c
