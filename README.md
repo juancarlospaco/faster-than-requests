@@ -90,6 +90,14 @@ $ python3 benchmark.py   # Inside Docker.
 - ✅ BSD
 
 
+# Extras
+
+More Faster Libraries...
+
+- https://github.com/juancarlospaco/faster-than-csv#faster-than-csv
+- https://github.com/juancarlospaco/faster-than-walk#faster-than-walk
+
+
 # FAQ
 
 - Whats the idea, inspiration, reason, etc ?.
