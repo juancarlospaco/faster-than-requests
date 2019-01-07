@@ -27,7 +27,7 @@
 ## - Recommended way of importing is ``import faster_than_requests as requests``
 ## - SSL & Non-SSL versions available (Non-SSL is smaller but no HTTPS)
 import httpclient, json, tables, strutils, os, random, nimpy
-{.passL: "-s", passC: "-flto -ffast-math", optimization: speed.}
+{.passL: "-s", optimization: speed.}
 var client = newHttpClient(userAgent="")
 
 proc gets*(url: string): Table[string, string] {.inline, exportpy.} =
