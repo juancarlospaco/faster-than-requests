@@ -68,6 +68,11 @@ Instead of having a pair of functions with a lot of arguments that you should pr
 we have tiny functions with very few arguments that do one thing and do it as fast as possible.
 
 
+# Install
+
+- `pip install faster_than_requests`
+
+
 # Docker
 
 - Make a quick test drive on Docker!.
