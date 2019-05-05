@@ -3,9 +3,9 @@
 
 # Faster-than-Requests
 
-[![screenshot](https://source.unsplash.com/eH_ftJYhaTY/800x402)](https://youtu.be/QiKwnlyhKrk?t=5)
+[![screenshot](https://source.unsplash.com/eH_ftJYhaTY/800x402 "Please Star this repo on GitHub!")](https://youtu.be/QiKwnlyhKrk?t=5)
 
-![screenshot](temp.jpg)
+![screenshot](temp.jpg "Please Star this repo on GitHub!")
 
 | Library                       | Speed    | Files | LOC  | Dependencies          | Developers |
 |-------------------------------|----------|-------|------|-----------------------|------------|
@@ -26,7 +26,7 @@
 - Developers counted from the Contributors list of Git.
 - Speed is IRL time to complete 10000 HTTP local requests.
 - Stats as of year 2019.
-- Everything x86_64 64Bit.
+- x86_64 64Bit, SSD.
 
 </details>
 
@@ -89,7 +89,7 @@ To control the default values the following environment variables are available:
 
 - `pip install faster_than_requests`
 
-**Requires GCC and 64Bit.** *Please Star this repo on GitHub!*
+**Requires GCC and 64Bit.**
 
 
 # Docker
