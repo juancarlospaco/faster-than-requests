@@ -75,6 +75,8 @@ requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs fo
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
 we have tiny functions with very few arguments that do one thing and do it as fast as possible.
 
+A lot of functions are oriented to Data Science, Big Data, Open Data for HTTP REST JSON APIs.
+
 
 # Install
 
