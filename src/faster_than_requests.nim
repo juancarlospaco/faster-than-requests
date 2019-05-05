@@ -25,7 +25,6 @@
 ## - ``downloads_list(list_of_files: list)`` HTTP GET Download a list of files.
 ## - ``downloads_list_delay(list_of_files: list, delay: int, randoms: bool, debugs: bool)`` HTTP GET Download a list of files with delay.
 ## - Recommended way of importing is ``import faster_than_requests as requests``
-## - SSL & Non-SSL versions available (Non-SSL is smaller but no HTTPS)
 
 import httpclient, json, tables, strutils, os, random, nimpy
 
@@ -33,35 +32,35 @@ import httpclient, json, tables, strutils, os, random, nimpy
 var client = newHttpClient(userAgent="")
 
 
-proc gets*(url: string): Table[string, string] {. exportpy .} =
+proc get*(url: string): Table[string, string] {. exportpy .} =
   ## HTTP GET an URL to dictionary.
   let r = client.get(url)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
    "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
-proc posts*(url, body: string): Table[string, string] {. exportpy .} =
+proc post*(url, body: string): Table[string, string] {. exportpy .} =
   ## HTTP POST an URL to dictionary.
   let r = client.post(url, body)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
    "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
-proc puts*(url, body: string): Table[string, string] {. exportpy .} =
+proc put*(url, body: string): Table[string, string] {. exportpy .} =
   ## HTTP PUT an URL to dictionary.
   let r = client.request(url, HttpPut, body)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
    "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
-proc patchs*(url, body: string): Table[string, string] {. exportpy .} =
+proc patch*(url, body: string): Table[string, string] {. exportpy .} =
   ## HTTP PATCH an URL to dictionary.
   let r = client.request(url, HttpPatch, body)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
    "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
-proc deletes*(url: string): Table[string, string] {. exportpy .} =
+proc delete*(url: string): Table[string, string] {. exportpy .} =
   ## HTTP DELETE an URL to dictionary.
   let r = client.request(url, HttpDelete)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
@@ -78,7 +77,7 @@ proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key
    "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
-# Extra HTTP Functions, go beyond the ones from requests.
+########## Extra HTTP Functions, go beyond the ones from requests #############
 
 
 proc get2str*(url: string): string {. exportpy .} =
