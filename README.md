@@ -9,13 +9,13 @@
 
 | Library                       | Speed    | Files | LOC  | Dependencies          | Developers |
 |-------------------------------|----------|-------|------|-----------------------|------------|
-| PyWGET                        | `152.39` | 1     | 338  | Wget                  | >=17       |
-| Requests                      | `15.58`  | >=20  | 2558 | >=7                   | >=527      |
-| Requests (cached object)      |  `5.50`  | >=20  | 2558 | >=7                   | >=527      |
+| PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        |
+| Requests                      | `15.58`  | >20   | 2558 | >=7                   | >527       |
+| Requests (cached object)      |  `5.50`  | >20   | 2558 | >=7                   | >527       |
 | Urllib                        |  `4.00`  | ???   | 1200 | 0 (std lib)           | ???        |
-| Urllib3                       |  `3.55`  | >=40  | 5242 | 0 (No SSL), >=5 (SSL) | >=188      |
-| PyCurl                        |  `0.75`  | >=15  | 5932 | Curl, LibCurl         | >=50       |
-| PyCurl (no SSL)               |  `0.68`  | >=15  | 5932 | Curl, LibCurl         | >=50       |
+| Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       |
+| PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        |
+| PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        |
 | Faster_than_requests          |  `0.45`  | 1     | 75   | 0                     | 1          |
 
 <details>
