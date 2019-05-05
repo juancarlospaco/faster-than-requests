@@ -141,16 +141,14 @@ No.
 
 No.
 
+- How can I Install it ?.
+
+`pip install faster_than_requests`
+
 - Developer Documentation ?.
 
 [Yes.](https://github.com/juancarlospaco/faster-than-requests/raw/master/faster_than_requests_DOCS.zip)
 (Zip because GitHub marks the Repo as being JavaScript)
-
-- How can I Install it ?.
-
-https://github.com/juancarlospaco/faster-than-requests/releases
-
-If you dont understand how to install it, you can just download, extract, put the files on the same folder as your `*.py` file and you are good to go.
 
 - Where to get help ?.
 
@@ -177,11 +175,6 @@ https://github.com/juancarlospaco/faster-than-requests/issues
 - How to set an HTTP Header key=value ?.
 
 `("key", "value")`
-
-- Whats the No SSL version for ?.
-
-No SSL is smaller but no HTTPS.
-Feel free to delete it if you want.
 
 - Whats NDJSON ?.
 
