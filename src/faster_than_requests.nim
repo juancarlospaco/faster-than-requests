@@ -25,11 +25,31 @@
 ## - ``downloads_list(list_of_files: list)`` HTTP GET Download a list of files.
 ## - ``downloads_list_delay(list_of_files: list, delay: int, randoms: bool, debugs: bool)`` HTTP GET Download a list of files with delay.
 ## - Recommended way of importing is ``import faster_than_requests as requests``
-
-import httpclient, json, tables, strutils, os, random, nimpy
-
 {. passL: "-s", optimization: speed .}
-var client = newHttpClient(userAgent="")
+import httpclient, json, tables, random, nimpy, strutils
+from ospaths import getEnv
+from os import sleep
+
+const
+  progressMsg = """{"percentage": $3, "speed": "$4 Kb/Sec", "progress": $1, "total": $2}"""
+  debugProgress = getEnv("requests_debugprogress", "false").parseBool
+  proxyUrl = getEnv("https_proxy", getEnv"http_proxy").strip
+  proxyAuth = getEnv("https_proxy_auth", getEnv"http_proxy_auth").strip
+  proxi = if proxyUrl.len > 1: newProxy(proxyUrl, proxyAuth) else: nil
+
+var client = newHttpClient(timeout=getEnv("requests_timeout", "-1").parseInt,
+                           userAgent=getEnv("requests_useragent", ""), proxy=proxi,
+                           maxRedirects=getEnv("requests_maxredirects", "9").parseInt)
+
+when debugProgress:
+  client.onProgressChanged = (
+    proc (t, p, s: BiggestInt) = echo progressMsg.format(p, int(int(100 * p) / t.int), s div 1_000, t)
+  )
+
+
+proc setHeaders*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {. exportpy .} =
+  ## Set the HTTP Headers to the HTTP client.
+  client.headers = newHttpHeaders(headers)
 
 
 proc get*(url: string): Table[string, string] {. exportpy .} =
