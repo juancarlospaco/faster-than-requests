@@ -64,6 +64,8 @@ requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs fo
 - `downloads_list(list_of_files: list)` HTTP GET Download a list of files.
 - `downloads_list_delay(list_of_files: list, delay: int, randoms: bool, debugs: bool)` HTTP GET Download a list of files with delay, optional randomized delay.
 
+[For more Examples check the Examples.](https://github.com/juancarlospaco/faster-than-requests/blob/master/example/example.py)
+
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
 we have tiny functions with very few arguments that do one thing and do it as fast as possible.
 
