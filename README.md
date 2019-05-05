@@ -17,7 +17,7 @@
 | PyCurl                        |  `0.75`  | >=15  | 5932 | Curl, LibCurl         | >=50       |
 | PyCurl (no SSL)               |  `0.68`  | >=15  | 5932 | Curl, LibCurl         | >=50       |
 | Faster_than_requests (no SSL) |  `0.50`  | 1     | 75   | 0                     | 3          |
-| Faster_than_requests          |  `0.45`  | 1     | 75   | 0                     | 3          |
+| Faster_than_requests          |  `0.45`  | 1     | 75   | 0                     | 1          |
 
 <details>
 
@@ -27,8 +27,16 @@
 - Developers counted from the Contributors list of Git.
 - Speed is IRL time to complete 10000 HTTP local requests.
 - Stats as of year 2019.
+- Everything 64Bit.
 
 </details>
+
+
+# Install
+
+- `pip install faster_than_requests`
+
+**Requires GCC and 64Bit.**
 
 
 # Use
@@ -179,6 +187,6 @@ https://github.com/ndjson/ndjson-spec
 
 I dunno.
 
-- But Requests have more *options* ?.
+- It wont work on 32Bit?
 
-Yes.
+No.
