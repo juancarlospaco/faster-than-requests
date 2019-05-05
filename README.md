@@ -71,6 +71,19 @@ we have tiny functions with very few arguments that do one thing and do it as fa
 
 A lot of functions are oriented to Data Science, Big Data, Open Data, Web Scrapping for HTTP REST JSON APIs.
 
+<details>
+  <summary>Low Level API Extras</summary>
+
+To control the default values the following environment variables are available:
+- `requests_timeout` integer type, must be a non-zero positive value, milliseconds precision.
+- `requests_maxredirects` integer type, must be a non-zero positive value.
+- `requests_useragent` string type, can be empty string.
+- `requests_debugprogress` bool type, `true` or `false`.
+
+(slows down the performance so is not recommended for general use, if you dont know what to do dont touch them).
+
+</details>
+
 
 # Install
 
@@ -178,6 +191,16 @@ https://github.com/juancarlospaco/faster-than-requests/issues
 - How to set an HTTP Header key=value ?.
 
 `("key", "value")`
+
+- How to set HTTP Proxy ?.
+
+`export https_proxy = "http://yourProxyUrl:8080"`
+
+`export http_proxy =  "http://yourProxyUrl:8080"`
+
+Standard Linux Bash environment variables for proxy.
+
+It will be automatically read from the environment variables.
 
 - Whats NDJSON ?.
 
