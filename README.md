@@ -78,9 +78,7 @@ To control the default values the following environment variables are available:
 - `requests_timeout` integer type, must be a non-zero positive value, milliseconds precision.
 - `requests_maxredirects` integer type, must be a non-zero positive value.
 - `requests_useragent` string type, can be empty string.
-- `requests_debugprogress` bool type, `true` or `false`.
-
-(slows down the performance so is not recommended for general use, if you dont know what to do dont touch them).
+- `requests_debugprogress` bool type, slows down performance, not recommended for general use.
 
 </details>
 
