@@ -36,16 +36,16 @@
 ```python
 import faster_than_requests as requests
 
-print(requests.gets("http://httpbin.org/get"))                     # GET
-print(requests.posts("http://httpbin.org/post", "Some Data Here")) # POST
+print(requests.get("http://httpbin.org/get"))                      # GET
+print(requests.post("http://httpbin.org/post", "Some Data Here"))  # POST
 requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs for more info.
 ```
 
-- `gets(url: str)` HTTP GET.
-- `posts(url: str, body: str)` HTTP POST.
-- `puts(url: str, body: str)` HTTP PUT.
-- `deletes(url: str)` HTTP DELETE.
-- `patchs(url: str, body: str)` HTTP PATCH.
+- `get(url: str)` HTTP GET.
+- `post(url: str, body: str)` HTTP POST.
+- `put(url: str, body: str)` HTTP PUT.
+- `delete(url: str)` HTTP DELETE.
+- `patch(url: str, body: str)` HTTP PATCH.
 - `get2str(url: str)` HTTP GET body only :arrow_right: string.
 - `get2str_list(list_of_urls: list)` HTTP GET body from a list :arrow_right: string.
 - `get2ndjson_list(list_of_urls: list, ndjson_file_path: str)` HTTP GET body from a list :arrow_right: NDJSON.
