@@ -137,6 +137,10 @@ I dunno. (Not supported)
 
 No.
 
+- This runs with Clang ?.
+
+No.
+
 - Developer Documentation ?.
 
 [Yes.](https://github.com/juancarlospaco/faster-than-requests/raw/master/faster_than_requests_DOCS.zip)
