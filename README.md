@@ -133,6 +133,10 @@ No.
 
 I dunno. (Not supported)
 
+- This runs on 32Bit ?.
+
+No.
+
 - Developer Documentation ?.
 
 [Yes.](https://github.com/juancarlospaco/faster-than-requests/raw/master/faster_than_requests_DOCS.zip)
@@ -182,7 +186,3 @@ https://github.com/ndjson/ndjson-spec
 - How can be faster than PyCurl ?.
 
 I dunno.
-
-- It wont work on 32Bit?
-
-No.
