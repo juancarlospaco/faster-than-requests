@@ -25,7 +25,6 @@
 ## - ``downloads_list(list_of_files: list)`` HTTP GET Download a list of files.
 ## - ``downloads_list_delay(list_of_files: list, delay: int, randoms: bool, debugs: bool)`` HTTP GET Download a list of files with delay.
 ## - Recommended way of importing is ``import faster_than_requests as requests``
-{. passL: "-s", optimization: speed .}
 import httpclient, json, tables, random, nimpy, strutils
 from ospaths import getEnv
 from os import sleep
