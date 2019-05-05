@@ -53,7 +53,6 @@ def run_all_benchmarks(url='', repetitions=10_000, output_file="results.csv", **
     tests.append(('urllib3', "import urllib3; http_pool = urllib3.PoolManager()", "http_pool.urlopen('GET', '$url').read()"))
     tests.append(('pycurl', pycurl_setups, "mycurl.perform()"))
     tests.append(('pycurl_nossl', pycurl_setups_nossl, "mycurl.perform()"))
-    tests.append(('faster_than_requests_nossl', 'import faster_than_requests_nossl', "faster_than_requests_nossl.get2str('$url')"))
     tests.append(('faster_than_requests', 'import faster_than_requests', "faster_than_requests.get2str('$url')"))
 
     for test in tests:
