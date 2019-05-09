@@ -1,4 +1,4 @@
-<meta name='keywords' content='python, requests, faster, speed, benchmark, pycurl, wget, urllib, rapido, velocidad, optimizacion, cython, pypy, urllib3, urllib2, urllib4, urllib5, urllib6, urllib7, urllib8, urllib9, pywget, cpython, http, httpclient, curl, libcurl, ssl, docker, json, ndjson, https, rapido, veloz, performance, critical, compiled, module, modulo, loc, minimalismo, minimalism, simple, small, tiny, argentina, spanish, compare, mejora'>
+<meta name='keywords' content='python, requests, faster, speed, benchmark, pycurl, wget, urllib, rapido, velocidad, optimizacion, cython, pypy, urllib3, urllib2, urllib4, urllib5, urllib6, urllib7, urllib8, urllib9, pywget, cpython, http, httpclient, curl, libcurl, ssl, docker, json, ndjson, https, rapido, veloz, performance, critical, compiled, module, modulo, loc, minimalismo, minimalism, simple, small, tiny, argentina, spanish, compare, mejora, scraper, scrapy'>
 
 
 # Faster-than-Requests
@@ -40,6 +40,9 @@ print(requests.get("http://httpbin.org/get"))                      # GET
 print(requests.post("http://httpbin.org/post", "Some Data Here"))  # POST
 requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs for more info.
 ```
+
+
+# API
 
 - `get(url: str)` HTTP GET.
 - `post(url: str, body: str)` HTTP POST.
@@ -87,8 +90,6 @@ To control the default values the following environment variables are available:
 
 - `pip install faster_than_requests`
 
-**Requires GCC and 64Bit.**
-
 
 # Docker
 
@@ -119,6 +120,12 @@ More Faster Libraries...
 - https://github.com/juancarlospaco/faster-than-csv#faster-than-csv
 - https://github.com/juancarlospaco/faster-than-walk#faster-than-walk
 - We want to make Open Source faster, better, stronger.
+
+
+# Requisites
+
+- GCC.
+- 64Bit.
 
 
 # FAQ
