@@ -78,10 +78,10 @@ A lot of functions are oriented to Data Science, Big Data, Open Data, Web Scrapp
   <summary>Low Level API Extras</summary>
 
 To control the default values the following environment variables are available:
-- `requests_timeout` integer type, must be a non-zero positive value, milliseconds precision.
-- `requests_maxredirects` integer type, must be a non-zero positive value.
-- `requests_useragent` string type, can be empty string.
-- `requests_debugprogress` bool type, slows down performance, not recommended for general use.
+- `requests_timeout` `int` type, must be a non-zero positive value, milliseconds precision.
+- `requests_maxredirects` `int` type, must be a non-zero positive value.
+- `requests_useragent` `str type, can be empty string.
+- `requests_debugprogress` `bool` type, slows down performance, not recommended for general use.
 
 </details>
 
@@ -124,6 +124,7 @@ More Faster Libraries...
 
 # Requisites
 
+- Python 3.7+
 - GCC.
 - 64Bit.
 
