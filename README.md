@@ -614,7 +614,7 @@ https://github.com/juancarlospaco/faster-than-requests/issues
 
 - How to set an HTTP Header key=value ?.
 
-`("key", "value")`
+[setHeaders()](https://github.com/juancarlospaco/faster-than-requests#setheaders)
 
 - How to set HTTP Proxy ?.
 
