@@ -350,6 +350,9 @@ To control the default values the following environment variables are available:
 - `requests_useragent` `str` type, can be empty string.
 - `requests_debugprogress` `bool` type, slows down performance, not recommended for general use.
 
+Functions do not have internal `try: except:` blocks,
+so you can wrap them inside `try: except:` blocks if you need very resilient code.
+
 </details>
 
 
