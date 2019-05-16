@@ -144,7 +144,9 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, and returns a list of strin
 **Arguments:**
 - `list_of_urls` A list of the remote URLs, list type, required. Objects inside the list must be string type.
 
-**Returns:** List of Bodies, `list` type.
+**Returns:**
+List of response bodies, `list` type, values of the list are string type,
+values of the list can be empty string, can be empty list.
 
 </details>
 
@@ -225,7 +227,9 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 **Arguments:**
 - `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
 
-**Returns:** List of responses, string type, all strings will be lowercased and striped.
+**Returns:**
+List of response bodies, `list` type, values of the list are string type,
+values of the list can be empty string, can be empty list.
 
 </details>
 
@@ -305,7 +309,9 @@ Takes a list of URLs, makes 1 HTTP POST for each URL, returns a list of response
 **Arguments:**
 - `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
 
-**Returns:** List of responses, string type, all strings will be lowercased and striped.
+**Returns:**
+List of response bodies, `list` type, values of the list are string type,
+values of the list can be empty string, can be empty list.
 
 </details>
 
