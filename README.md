@@ -121,7 +121,7 @@ Takes an URL string, makes an HTTP GET and returns a string with the response Bo
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
-**Returns:** Body, `string` type.
+**Returns:** Response body, `string` type, can be empty string.
 
 </details>
 
@@ -226,7 +226,7 @@ Takes an URL, makes an HTTP POST, returns the response Body as string type.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
-**Returns:** Response, string type.
+**Returns:** Response body, `string` type, can be empty string.
 
 </details>
 
@@ -304,7 +304,7 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
-**Returns:** List of responses, string type, all strings will be lowercased and striped.
+**Returns:** None.
 
 </details>
 
