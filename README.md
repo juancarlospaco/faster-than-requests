@@ -51,6 +51,9 @@ Takes an URL string, makes an HTTP GET and returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
+Examples:
+- `url = "http://example.com"`
+
 **Returns:**
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
@@ -67,6 +70,10 @@ Takes an URL string, makes an HTTP POST and returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
+
+Examples:
+- `url = "http://example.com"`
+- `body = "My Body Data Here"`
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -85,6 +92,10 @@ Takes an URL string, makes an HTTP PUT and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
 
+Examples:
+- `url = "http://example.com"`
+- `body = "My Body Data Here"`
+
 **Returns:**
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
@@ -100,6 +111,9 @@ Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+
+Examples:
+- `url = "http://example.com"`
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -118,6 +132,10 @@ Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
 
+Examples:
+- `url = "http://example.com"`
+- `body = "My Body Data Here"`
+
 **Returns:**
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
@@ -134,6 +152,9 @@ Takes an URL string, makes an HTTP GET and returns a string with the response Bo
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
+Examples:
+- `url = "http://example.com"`
+
 **Returns:** Response body, `string` type, can be empty string.
 
 </details>
@@ -147,6 +168,9 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, and returns a list of strin
 
 **Arguments:**
 - `list_of_urls` A list of the remote URLs, list type, required. Objects inside the list must be string type.
+
+Examples:
+- `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
 
 **Returns:**
 List of response bodies, `list` type, values of the list are string type,
@@ -165,6 +189,10 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of strings w
 - `list_of_urls` A list of the remote URLs, list type, required. Objects inside the list must be string type.
 - `ndjson_file_path` Full path to a local writable NDJSON file, string type, required, file can be non-existent and it will be created, if it exists it will the overwritten.
 
+Examples:
+- `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
+- `ndjson_file_path = "/some/folder/some/file.ndjson"`
+
 **Returns:** None.
 
 </details>
@@ -178,6 +206,9 @@ Takes an URL, makes an HTTP GET, returns a dict with the response Body.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+
+Examples:
+- `url = "http://example.com"`
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -195,6 +226,9 @@ Takes an URL, makes an HTTP GET, returns a Minified Computer-friendly single-lin
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
+Examples:
+- `url = "http://example.com"`
+
 **Returns:** Response Body, Minified JSON, on a single line.
 
 </details>
@@ -208,6 +242,9 @@ Takes an URL, makes an HTTP GET, returns a Pretty-Printed Human-friendly Multi-l
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+
+Examples:
+- `url = "http://example.com"`
 
 **Returns:** Response Body, Pretty-Printed JSON, multi-line.
 
@@ -238,6 +275,9 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 **Arguments:**
 - `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
 
+Examples:
+- `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
+
 **Returns:**
 List of response bodies, `list` type, values of the list are string type,
 values of the list can be empty string, can be empty list.
@@ -254,6 +294,10 @@ Takes an URL, makes an HTTP POST, returns the response Body as string type.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
+Examples:
+- `url = "http://example.com"`
+- `body = "My Body Data Here"`
+
 **Returns:** Response body, `string` type, can be empty string.
 
 </details>
@@ -267,6 +311,10 @@ Takes an URL, makes a HTTP POST on that URL, returns a dict with the response.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+
+Examples:
+- `url = "http://example.com"`
+- `body = "My Body Data Here"`
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -284,6 +332,10 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
+Examples:
+- `url = "http://example.com"`
+- `body = "My Body Data Here"`
+
 **Returns:** Response, string type.
 
 </details>
@@ -297,6 +349,10 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+
+Examples:
+- `url = "http://example.com"`
+- `body = "My Body Data Here"`
 
 **Returns:** Response, string type.
 
@@ -328,6 +384,9 @@ Takes a list of URLs, makes 1 HTTP POST for each URL, returns a list of response
 **Arguments:**
 - `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
 
+Examples:
+- `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
+
 **Returns:**
 List of response bodies, `list` type, values of the list are string type,
 values of the list can be empty string, can be empty list.
@@ -344,6 +403,10 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 - `filename` the local filename, string type, required, must not be empty string, full path recommended, can be relative path, includes file extension.
+
+Examples:
+- `url = "http://example.com"`
+- `filename = "cat-memes.jpg"`
 
 **Returns:** None.
 
