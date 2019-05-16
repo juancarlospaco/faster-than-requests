@@ -296,6 +296,7 @@ Takes an URL, makes an HTTP POST on that URL, returns a response.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+- `body` the Body data, string type, required, can be empty string.
 - `expected` Response expected content, string type, required, can be empty string.
 
 **Returns:** None.
@@ -325,6 +326,7 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+- `filename` the local filename, string type, required, must not be empty string, full path recommended, can be relative path, includes file extension.
 
 **Returns:** None.
 
@@ -337,7 +339,13 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 Takes a list of URLs, makes 1 HTTP GET Download for each URL of the list.
 
 **Arguments:**
-- `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
+- `list_of_files` list of tuples, tuples must be 2 items long, first item is URL and second item is filename.
+The remote URL, string type, required, must not be empty string, is the first item on the tuple.
+The local filename, string type, required, must not be empty string, can be full path, can be relative path, must include file extension.
+
+Examples:
+- `list_of_files = [("http://example.com/cat.jpg", "kitten.jpg")]`
+- `list_of_files = [("http://example.com/cat.jpg", "kitten.jpg"), ("http://example.com/dog.jpg", "doge.jpg")]`
 
 **Returns:** None.
 
@@ -350,7 +358,16 @@ Takes a list of URLs, makes 1 HTTP GET Download for each URL of the list.
 Takes a list of URLs, makes 1 HTTP GET Download for each URL of the list of with a delay, optional randomized delay.
 
 **Arguments:**
-- `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
+- `delay` Delay between a download and the next one, integer type, required, must be non-zero positive integer value.
+- `randoms` Randomize the Delay, bool type, required, default is `False`.
+- `debugs` Debug the downloads, bool type, required, default is `False`.
+- `list_of_files` list of tuples, tuples must be 2 items long, first item is URL and second item is filename.
+The remote URL, string type, required, must not be empty string, is the first item on the tuple.
+The local filename, string type, required, must not be empty string, can be full path, can be relative path, must include file extension.
+
+Examples:
+- `list_of_files = [("http://example.com/cat.jpg", "kitten.jpg")]`
+- `list_of_files = [("http://example.com/cat.jpg", "kitten.jpg"), ("http://example.com/dog.jpg", "doge.jpg")]`
 
 **Returns:** None.
 
