@@ -485,6 +485,30 @@ Examples:
 </details>
 
 
+# requests()
+<details>
+
+**Description:**
+Low level API of Requests with everything available as argument to build a detailed custom HTTP request.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string.
+- `body` the Body data, string type, required, can be empty string.
+- `http_method` HTTP method, string type, required, must not be empty string, values can be `"GET"`, `"POST"`, etc.
+- `debugs` Debug mode, bool type, required, default is `False`.
+- `http_headers` HTTP Headers, list type, required,
+a list of tuples, tuples must be 2 items long,
+must not be empty list, must not be empty tuple,
+the first item of the tuple is the key and second item of the tuple is value,
+keys must not be empty string, values can be empty string, both must the stripped.
+
+**Returns:**
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
+
+</details>
+
+
 [**For more Examples check the Examples.**](https://github.com/juancarlospaco/faster-than-requests/blob/master/example/example.py)
 
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
