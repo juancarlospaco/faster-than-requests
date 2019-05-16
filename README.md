@@ -26,7 +26,7 @@
 - Developers counted from the Contributors list of Git.
 - Speed is IRL time to complete 10000 HTTP local requests.
 - Stats as of year 2019.
-- x86_64 64Bit, SSD.
+- x86_64 64Bit AMD, SSD, Arch Linux.
 
 </details>
 
