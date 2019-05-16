@@ -173,7 +173,7 @@ Takes an URL, makes an HTTP GET, returns a dict with the response Body.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
-**Returns:** 
+**Returns:**
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
 
@@ -213,6 +213,7 @@ Takes an URL, makes an HTTP GET, returns nothing, makes an assertion, useful for
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+- `expected` Response expected content, string type, required, can be empty string.
 
 **Returns:** None.
 
@@ -255,7 +256,7 @@ Takes an URL, makes a HTTP POST on that URL, returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
-**Returns:** 
+**Returns:**
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
 
@@ -295,6 +296,7 @@ Takes an URL, makes an HTTP POST on that URL, returns a response.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+- `expected` Response expected content, string type, required, can be empty string.
 
 **Returns:** None.
 
