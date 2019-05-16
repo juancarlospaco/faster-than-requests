@@ -36,13 +36,13 @@
 ```python
 import faster_than_requests as requests
 
-print(requests.get("http://httpbin.org/get"))                      # GET
-print(requests.post("http://httpbin.org/post", "Some Data Here"))  # POST
+print(requests.gets("http://httpbin.org/get"))                      # GET
+print(requests.posts("http://httpbin.org/post", "Some Data Here"))  # POST
 requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs for more info.
 ```
 
 
-# get()
+# gets()
 <details>
 
 **Description:**
@@ -61,7 +61,7 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
-# post()
+# posts()
 <details>
 
 **Description:**
@@ -103,7 +103,7 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
-# delete()
+# deletes()
 <details>
 
 **Description:**
