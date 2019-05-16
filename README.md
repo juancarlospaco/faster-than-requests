@@ -42,9 +42,7 @@ requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs fo
 ```
 
 
-# API
-
-### get()
+# get()
 <details>
 
 **Description:**
@@ -59,7 +57,8 @@ values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
-### post()
+
+# post()
 <details>
 
 **Description:**
@@ -75,7 +74,8 @@ values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
-### put()
+
+# put()
 <details>
 
 **Description:**
@@ -91,7 +91,8 @@ values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
-### delete()
+
+# delete()
 <details>
 
 **Description:**
@@ -106,7 +107,8 @@ values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
-### patch()
+
+# patch()
 <details>
 
 **Description:**
@@ -122,7 +124,8 @@ values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
-### get2str()
+
+# get2str()
 <details>
 
 **Description:**
@@ -135,7 +138,8 @@ Takes an URL string, makes an HTTP GET and returns a string with the response Bo
 
 </details>
 
-### get2str_list()
+
+# get2str_list()
 <details>
 
 **Description:**
@@ -150,7 +154,8 @@ values of the list can be empty string, can be empty list.
 
 </details>
 
-### get2ndjson_list()
+
+# get2ndjson_list()
 <details>
 
 **Description:**
@@ -164,7 +169,8 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of strings w
 
 </details>
 
-### get2dict()
+
+# get2dict()
 <details>
 
 **Description:**
@@ -179,7 +185,8 @@ values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
-### get2json()
+
+# get2json()
 <details>
 
 **Description:**
@@ -192,7 +199,8 @@ Takes an URL, makes an HTTP GET, returns a Minified Computer-friendly single-lin
 
 </details>
 
-### get2json_pretty()
+
+# get2json_pretty()
 <details>
 
 **Description:**
@@ -205,7 +213,8 @@ Takes an URL, makes an HTTP GET, returns a Pretty-Printed Human-friendly Multi-l
 
 </details>
 
-### get2assert()
+
+# get2assert()
 <details>
 
 **Description:**
@@ -219,7 +228,8 @@ Takes an URL, makes an HTTP GET, returns nothing, makes an assertion, useful for
 
 </details>
 
-### getlist2list()
+
+# getlist2list()
 <details>
 
 **Description:**
@@ -234,7 +244,8 @@ values of the list can be empty string, can be empty list.
 
 </details>
 
-### post2str()
+
+# post2str()
 <details>
 
 **Description:**
@@ -247,7 +258,8 @@ Takes an URL, makes an HTTP POST, returns the response Body as string type.
 
 </details>
 
-### post2dict()
+
+# post2dict()
 <details>
 
 **Description:**
@@ -262,7 +274,8 @@ values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
-### post2json()
+
+# post2json()
 <details>
 
 **Description:**
@@ -275,7 +288,8 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 
 </details>
 
-### post2json_pretty()
+
+# post2json_pretty()
 <details>
 
 **Description:**
@@ -288,7 +302,8 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 
 </details>
 
-### post2assert()
+
+# post2assert()
 <details>
 
 **Description:**
@@ -303,7 +318,8 @@ Takes an URL, makes an HTTP POST on that URL, returns a response.
 
 </details>
 
-### post2list()
+
+# post2list()
 <details>
 
 **Description:**
@@ -318,7 +334,8 @@ values of the list can be empty string, can be empty list.
 
 </details>
 
-### downloads()
+
+# downloads()
 <details>
 
 **Description:**
@@ -332,7 +349,8 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 
 </details>
 
-### downloads_list()
+
+# downloads_list()
 <details>
 
 **Description:**
@@ -351,7 +369,8 @@ Examples:
 
 </details>
 
-### downloads_list_delay()
+
+# downloads_list_delay()
 <details>
 
 **Description:**
@@ -373,7 +392,8 @@ Examples:
 
 </details>
 
-### setHeaders()
+
+# setHeaders()
 <details>
 
 **Description:**
