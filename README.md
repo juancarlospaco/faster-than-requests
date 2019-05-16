@@ -44,28 +44,296 @@ requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs fo
 
 # API
 
-- `get(url: str)` HTTP GET.
-- `post(url: str, body: str)` HTTP POST.
-- `put(url: str, body: str)` HTTP PUT.
-- `delete(url: str)` HTTP DELETE.
-- `patch(url: str, body: str)` HTTP PATCH.
-- `get2str(url: str)` HTTP GET body only :arrow_right: string.
-- `get2str_list(list_of_urls: list)` HTTP GET body from a list :arrow_right: string.
-- `get2ndjson_list(list_of_urls: list, ndjson_file_path: str)` HTTP GET body from a list :arrow_right: NDJSON.
-- `get2dict(url: str)` HTTP GET body only :arrow_right: dictionary.
-- `get2json(url: str)` HTTP GET body only :arrow_right: JSON.
-- `get2json_pretty(url: str)` HTTP GET body only :arrow_right: Pretty-Printed JSON.
-- `get2assert(url: str)` HTTP GET body only to assert from expected argument for unittests.
-- `getlist2list(list_of_urls: list)` HTTP GET body from a list of urls to a list of lowercased strings :arrow_right: list.
-- `post2str(url: str, body: str)` HTTP POST data only :arrow_right: string.
-- `post2dict(url: str, body: str)` HTTP POST data only :arrow_right: dictionary.
-- `post2json(url: str, body: str)` HTTP POST data :arrow_right: JSON.
-- `post2json_pretty(url: str, body: str)` HTTP POST data :arrow_right: Pretty-Printed JSON.
-- `post2assert(url: str, body: str)` HTTP POST body only to assert from expected argument for unittests.
-- `post2list(url: str, body: str)` HTTP POST body to a list of lowercased strings :arrow_right: list.
-- `downloads(url: str, filename: str)` HTTP GET Download 1 file.
-- `downloads_list(list_of_files: list)` HTTP GET Download a list of files.
-- `downloads_list_delay(list_of_files: list, delay: int, randoms: bool, debugs: bool)` HTTP GET Download a list of files with delay, optional randomized delay.
+##### get
+<details>
+
+**Description:**
+Takes an URL string, makes an HTTP GET and returns a dict with the response.
+
+**Arguments:**
+- `url` the remote URL, string type, required.
+
+**Returns:** Response, `dict` type.
+
+</details>
+
+##### post
+<details>
+
+**Description:**
+Takes an URL string, makes an HTTP POST and returns a dict with the response.
+
+**Arguments:**
+- `url` the remote URL, string type, required.
+- `body` the Body data, string type, required, can be empty string.
+
+**Returns:** Response, `dict` type.
+
+</details>
+
+##### put
+<details>
+
+**Description:**
+Takes an URL string, makes an HTTP PUT and returns a dict with the response.
+
+**Arguments:**
+- `url` the remote URL, string type, required.
+- `body` the Body data, string type, required, can be empty string.
+
+**Returns:** Response, `dict` type.
+
+</details>
+
+##### delete
+<details>
+
+**Description:**
+Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
+
+**Arguments:**
+- `url` the remote URL, string type, required.
+
+**Returns:** Response, `dict` type.
+
+</details>
+
+##### patch
+<details>
+
+**Description:**
+Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
+
+**Arguments:**
+- `url` the remote URL, string type, required.
+- `body` the Body data, string type, required, can be empty string.
+
+**Returns:** Response, `dict` type.
+
+</details>
+
+##### get2str
+<details>
+
+**Description:**
+Takes an URL string, makes an HTTP GET and returns a string with the response Body.
+
+**Arguments:**
+- `url` the remote URL, string type, required.
+
+**Returns:** Body, `string` type.
+
+</details>
+
+##### get2str_list
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET for each URL, and returns a list of strings with the response Body.
+
+**Arguments:**
+- `list_of_urls` A list of the remote URLs, list type, required. Objects inside the list must be string type.
+
+**Returns:** List of Bodies, `list` type.
+
+</details>
+
+##### get2ndjson_list
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of strings with the response, and writes the responses to a NDJSON file, it can accumulate several JSON responses into a single file.
+
+**Arguments:**
+- `list_of_urls` A list of the remote URLs, list type, required. Objects inside the list must be string type.
+- `ndjson_file_path` Full path to a local writable NDJSON file, string type, required, file can be non-existent and it will be created, if it exists it will the overwritten.
+
+**Returns:** None.
+
+</details>
+
+
+##### get2dict
+<details>
+
+**Description:**
+Takes an URL, makes an HTTP GET, returns a dict with the response Body.
+
+**Arguments:**
+- `url` the remote URL, string type, required.
+
+**Returns:** Response Body, dict type.
+
+</details>
+
+##### get2json
+<details>
+
+**Description:**
+Takes an URL, makes an HTTP GET, returns a Minified Computer-friendly single-line JSON with the response Body.
+
+**Arguments:**
+- `url` the remote URL, string type, required.
+
+**Returns:** Response Body, Minified JSON, on a single line.
+
+</details>
+
+##### get2json_pretty
+<details>
+
+**Description:**
+Takes an URL, makes an HTTP GET, returns a Pretty-Printed Human-friendly Multi-line JSON with the response Body.
+
+**Arguments:**
+- `url` the remote URL, string type, required.
+
+**Returns:** Response Body, Pretty-Printed JSON, multi-line.
+
+</details>
+
+##### get2assert
+<details>
+
+**Description:**
+Takes an URL, makes an HTTP GET, returns nothing, makes an assertion, useful for Unittest and Debug purposes.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string.
+
+**Returns:** None.
+
+</details>
+
+##### getlist2list
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses.
+
+**Arguments:**
+- `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
+
+**Returns:** List of responses, string type, all strings will be lowercased and striped.
+
+</details>
+
+##### post2str
+<details>
+
+**Description:**
+Takes an URL, makes an HTTP POST, returns the response Body as string type.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string.
+
+**Returns:** List of responses, string type, all strings will be lowercased and striped.
+
+</details>
+
+##### post2dict
+<details>
+
+**Description:**
+Takes an URL, makes a HTTP POST on that URL, returns a dict with the response.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string.
+
+**Returns:** List of responses, string type, all strings will be lowercased and striped.
+
+</details>
+
+##### post2json
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string.
+
+**Returns:** List of responses, string type, all strings will be lowercased and striped.
+
+</details>
+
+##### post2json_pretty
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string.
+
+**Returns:** List of responses, string type, all strings will be lowercased and striped.
+
+</details>
+
+##### post2assert
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string.
+
+**Returns:** List of responses, string type, all strings will be lowercased and striped.
+
+</details>
+
+##### post2list
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses.
+
+**Arguments:**
+- `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
+
+**Returns:** List of responses, string type, all strings will be lowercased and striped.
+
+</details>
+
+##### downloads
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string.
+
+**Returns:** List of responses, string type, all strings will be lowercased and striped.
+
+</details>
+
+##### downloads_list
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET Download for each URL of the list.
+
+**Arguments:**
+- `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
+
+**Returns:** None.
+
+</details>
+
+##### downloads_list_delay
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET Download for each URL of the list of with a delay, optional randomized delay.
+
+**Arguments:**
+- `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
+
+**Returns:** None.
+
+</details>
 
 [**For more Examples check the Examples.**](https://github.com/juancarlospaco/faster-than-requests/blob/master/example/example.py)
 
@@ -80,7 +348,7 @@ A lot of functions are oriented to Data Science, Big Data, Open Data, Web Scrapp
 To control the default values the following environment variables are available:
 - `requests_timeout` `int` type, must be a non-zero positive value, milliseconds precision.
 - `requests_maxredirects` `int` type, must be a non-zero positive value.
-- `requests_useragent` `str type, can be empty string.
+- `requests_useragent` `str` type, can be empty string.
 - `requests_debugprogress` `bool` type, slows down performance, not recommended for general use.
 
 </details>
@@ -124,9 +392,9 @@ More Faster Libraries...
 
 # Requisites
 
-- Python 3.7+
+- Python 3.
 - GCC.
-- 64Bit.
+- 64 Bit.
 
 
 # FAQ
