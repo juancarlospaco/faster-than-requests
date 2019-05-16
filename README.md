@@ -53,7 +53,9 @@ Takes an URL string, makes an HTTP GET and returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
-**Returns:** Response, `dict` type.
+**Returns:**
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
@@ -67,7 +69,9 @@ Takes an URL string, makes an HTTP POST and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
 
-**Returns:** Response, `dict` type.
+**Returns:**
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
@@ -81,7 +85,9 @@ Takes an URL string, makes an HTTP PUT and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
 
-**Returns:** Response, `dict` type.
+**Returns:**
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
@@ -94,7 +100,9 @@ Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
-**Returns:** Response, `dict` type.
+**Returns:**
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
@@ -108,7 +116,9 @@ Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
 
-**Returns:** Response, `dict` type.
+**Returns:**
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
@@ -161,7 +171,9 @@ Takes an URL, makes an HTTP GET, returns a dict with the response Body.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
-**Returns:** Response Body, dict type.
+**Returns:** 
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
@@ -239,7 +251,9 @@ Takes an URL, makes a HTTP POST on that URL, returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 
-**Returns:** Response, dict type.
+**Returns:** 
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
