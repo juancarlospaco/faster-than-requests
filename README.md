@@ -490,7 +490,7 @@ Examples:
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
 we have tiny functions with very few arguments that do one thing and do it as fast as possible.
 
-A lot of functions are oriented to Data Science, Big Data, Open Data, Web Scrapping for HTTP REST JSON APIs.
+A lot of functions are oriented to Data Science, Big Data, Open Data, Web Scrapping, working with HTTP REST JSON APIs.
 
 <details>
   <summary>Low Level API Extras</summary>
@@ -500,13 +500,6 @@ To control the default values the following environment variables are available:
 - `requests_maxredirects` `int` type, must be a non-zero positive value.
 - `requests_useragent` `str` type, can be empty string.
 - `requests_debugprogress` `bool` type, slows down performance, not recommended for general use.
-
-Functions do not have internal `try: except:` blocks,
-so you can wrap them inside `try: except:` blocks if you need very resilient code.
-
-Maybe it works on 32Bit, but is not supported, integer sizes are too small, and performance can be worse.
-
-Maybe it works on Python 2, but is not supported, and performance can be worse.
 
 </details>
 
@@ -640,3 +633,20 @@ https://github.com/ndjson/ndjson-spec
 - How can be faster than PyCurl ?.
 
 I dunno.
+
+- Why use Tuple instead of Dict for HTTP Headers ?.
+
+For speed performance reasons, `dict` is slower, bigger, heavier and mutable compared to `tuple`.
+
+- Why needs 64Bit ?.
+
+Maybe it works on 32Bit, but is not supported, integer sizes are too small, and performance can be worse.
+
+- Why needs Python 3 ?.
+
+Maybe it works on Python 2, but is not supported, and performance can be worse, we suggest to migrate to Python3.
+
+- Can I wrap the functions on a `try: except:` block ?.
+
+Functions do not have internal `try: except:` blocks,
+so you can wrap them inside `try: except:` blocks if you need very resilient code.
