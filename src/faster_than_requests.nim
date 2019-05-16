@@ -1,30 +1,3 @@
-## Faster than requests
-## ====================
-##
-## - ``gets(url: str)`` HTTP GET.
-## - ``posts(url: str, body: str)`` HTTP POST.
-## - ``puts(url: str, body: str)`` HTTP PUT.
-## - ``deletes(url: str)`` HTTP DELETE.
-## - ``patchs(url: str, body: str)`` HTTP PATCH.
-## - ``get2str(url: str)`` HTTP GET body only to string response.
-## - ``getlist2list(list_of_urls: list)`` HTTP GET body from a list of urls to a list of lowercased strings.
-## - ``get2str_list(list_of_urls: list)`` HTTP GET body to string from a list.
-## - ``get2ndjson_list(list_of_urls: list, ndjson_file_path: str)`` HTTP GET body to NDJSON file from a list.
-## - ``get2dict(url: str)`` HTTP GET body only to dictionary response.
-## - ``get2json(url: str)`` HTTP GET body only to JSON response.
-## - ``get2json_pretty(url: str)`` HTTP GET body only to Pretty-Printed JSON response.
-## - ``get2assert(url: str)`` HTTP GET body only to assert from expected argument for unittests.
-## - ``post2str(url: str, body: str)`` HTTP POST data only to string response.
-## - ``post2dict(url: str, body: str)`` HTTP POST data only to dictionary response.
-## - ``post2json(url: str, body: str)`` HTTP POST data to JSON response.
-## - ``post2json_pretty(url: str, body: str)`` HTTP POST data to Pretty-Printed JSON response.
-## - ``post2list(url: str, body: str)`` HTTP POST body to a list of lowercased strings.
-## - ``post2assert(url: str, body: str)`` HTTP POST body only to assert from expected argument for unittests.
-## - ``requests()`` HTTP GET/POST/PUT/DELETE/PATCH,Headers,etc.
-## - ``downloads(url: str, filename: str)`` HTTP GET Download 1 file.
-## - ``downloads_list(list_of_files: list)`` HTTP GET Download a list of files.
-## - ``downloads_list_delay(list_of_files: list, delay: int, randoms: bool, debugs: bool)`` HTTP GET Download a list of files with delay.
-## - Recommended way of importing is ``import faster_than_requests as requests``
 import httpclient, json, tables, random, nimpy, strutils
 from ospaths import getEnv
 from os import sleep
