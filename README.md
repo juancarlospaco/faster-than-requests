@@ -504,6 +504,10 @@ To control the default values the following environment variables are available:
 Functions do not have internal `try: except:` blocks,
 so you can wrap them inside `try: except:` blocks if you need very resilient code.
 
+Maybe it works on 32Bit, but is not supported, integer sizes are too small, and performance can be worse.
+
+Maybe it works on Python 2, but is not supported, and performance can be worse.
+
 </details>
 
 
