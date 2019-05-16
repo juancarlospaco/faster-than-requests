@@ -51,7 +51,7 @@ requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs fo
 Takes an URL string, makes an HTTP GET and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required.
+- `url` the remote URL, string type, required, must not be empty string.
 
 **Returns:** Response, `dict` type.
 
@@ -64,7 +64,7 @@ Takes an URL string, makes an HTTP GET and returns a dict with the response.
 Takes an URL string, makes an HTTP POST and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required.
+- `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
 
 **Returns:** Response, `dict` type.
@@ -78,7 +78,7 @@ Takes an URL string, makes an HTTP POST and returns a dict with the response.
 Takes an URL string, makes an HTTP PUT and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required.
+- `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
 
 **Returns:** Response, `dict` type.
@@ -92,7 +92,7 @@ Takes an URL string, makes an HTTP PUT and returns a dict with the response.
 Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required.
+- `url` the remote URL, string type, required, must not be empty string.
 
 **Returns:** Response, `dict` type.
 
@@ -105,7 +105,7 @@ Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
 Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required.
+- `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
 
 **Returns:** Response, `dict` type.
@@ -119,7 +119,7 @@ Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
 Takes an URL string, makes an HTTP GET and returns a string with the response Body.
 
 **Arguments:**
-- `url` the remote URL, string type, required.
+- `url` the remote URL, string type, required, must not be empty string.
 
 **Returns:** Body, `string` type.
 
@@ -160,7 +160,7 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of strings w
 Takes an URL, makes an HTTP GET, returns a dict with the response Body.
 
 **Arguments:**
-- `url` the remote URL, string type, required.
+- `url` the remote URL, string type, required, must not be empty string.
 
 **Returns:** Response Body, dict type.
 
@@ -173,7 +173,7 @@ Takes an URL, makes an HTTP GET, returns a dict with the response Body.
 Takes an URL, makes an HTTP GET, returns a Minified Computer-friendly single-line JSON with the response Body.
 
 **Arguments:**
-- `url` the remote URL, string type, required.
+- `url` the remote URL, string type, required, must not be empty string.
 
 **Returns:** Response Body, Minified JSON, on a single line.
 
@@ -186,7 +186,7 @@ Takes an URL, makes an HTTP GET, returns a Minified Computer-friendly single-lin
 Takes an URL, makes an HTTP GET, returns a Pretty-Printed Human-friendly Multi-line JSON with the response Body.
 
 **Arguments:**
-- `url` the remote URL, string type, required.
+- `url` the remote URL, string type, required, must not be empty string.
 
 **Returns:** Response Body, Pretty-Printed JSON, multi-line.
 
