@@ -293,6 +293,7 @@ Takes an URL, makes an HTTP POST, returns the response Body as string type.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+- `body` the Body data, string type, required, can be empty string.
 
 Examples:
 - `url = "http://example.com"`
@@ -311,6 +312,7 @@ Takes an URL, makes a HTTP POST on that URL, returns a dict with the response.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+- `body` the Body data, string type, required, can be empty string.
 
 Examples:
 - `url = "http://example.com"`
@@ -331,6 +333,7 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+- `body` the Body data, string type, required, can be empty string.
 
 Examples:
 - `url = "http://example.com"`
@@ -349,6 +352,7 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+- `body` the Body data, string type, required, can be empty string.
 
 Examples:
 - `url = "http://example.com"`
@@ -383,9 +387,11 @@ Takes a list of URLs, makes 1 HTTP POST for each URL, returns a list of response
 
 **Arguments:**
 - `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
+- `body` the Body data, string type, required, can be empty string.
 
 Examples:
 - `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
+- `body = "My Body Data Here"`
 
 **Returns:**
 List of response bodies, `list` type, values of the list are string type,
