@@ -24,14 +24,14 @@ proc setHeaders*(headers: openArray[tuple[key: string, val: string]] = @[("dnt",
   client.headers = newHttpHeaders(headers)
 
 
-proc get*(url: string): Table[string, string] {. exportpy .} =
+proc gets*(url: string): Table[string, string] {. exportpy .} =
   ## HTTP GET an URL to dictionary.
   let r = client.get(url)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
    "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
-proc post*(url, body: string): Table[string, string] {. exportpy .} =
+proc posts*(url, body: string): Table[string, string] {. exportpy .} =
   ## HTTP POST an URL to dictionary.
   let r = client.post(url, body)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
@@ -52,7 +52,7 @@ proc patch*(url, body: string): Table[string, string] {. exportpy .} =
    "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
-proc delete*(url: string): Table[string, string] {. exportpy .} =
+proc deletes*(url: string): Table[string, string] {. exportpy .} =
   ## HTTP DELETE an URL to dictionary.
   let r = client.request(url, HttpDelete)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
