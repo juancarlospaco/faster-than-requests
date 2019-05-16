@@ -373,6 +373,29 @@ Examples:
 
 </details>
 
+### setHeaders()
+<details>
+
+**Description:**
+Set the HTTP Headers from the arguments.
+
+**Arguments:**
+- `headers` HTTP Headers, list type, required,
+a list of tuples, tuples must be 2 items long,
+must not be empty list, must not be empty tuple,
+the first item of the tuple is the key and second item of the tuple is value,
+keys must not be empty string, values can be empty string, both must the stripped.
+
+Examples:
+- `headers = [("key", "value")]`
+- `headers = [("key0", "value0"), ("key1", "value1")]`
+- `headers = [("content-type", "text/plain"), ("dnt", "1")]`
+
+**Returns:** None.
+
+</details>
+
+
 [**For more Examples check the Examples.**](https://github.com/juancarlospaco/faster-than-requests/blob/master/example/example.py)
 
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
