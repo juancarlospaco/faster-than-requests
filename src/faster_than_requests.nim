@@ -85,11 +85,6 @@ proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[ke
   "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
-proc ini2scraper(ini: string): Table[string, string] {. exportpy .} =
-  # Take 1 INI file and create a high performance HTTP Scrapper like Scrapy.
-  discard
-
-
 ########## Extra HTTP Functions, go beyond the ones from requests #############
 
 
