@@ -2,8 +2,9 @@ import httpclient, json, tables, random, nimpy, strutils
 from ospaths import getEnv
 from os import sleep
 
-const
-  progressMsg = """{"percentage": $3, "speed": "$4 Kb/Sec", "progress": $1, "total": $2}"""
+const progressMsg = """{"percentage": $3, "speed": "$4 Kb/Sec", "progress": $1, "total": $2}"""
+
+let
   debugProgress = getEnv("requests_debugprogress", "false").parseBool
   proxyUrl = getEnv("https_proxy", getEnv"http_proxy").strip
   proxyAuth = getEnv("https_proxy_auth", getEnv"http_proxy_auth").strip
@@ -13,7 +14,7 @@ var client = newHttpClient(timeout=getEnv("requests_timeout", "-1").parseInt,
                            userAgent=getEnv("requests_useragent", ""), proxy=proxi,
                            maxRedirects=getEnv("requests_maxredirects", "9").parseInt)
 
-when debugProgress:
+if debugProgress:
   client.onProgressChanged = (
     proc (t, p, s: BiggestInt) = echo progressMsg.format(p, int(int(100 * p) / t.int), s div 1_000, t)
   )
