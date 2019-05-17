@@ -516,17 +516,6 @@ we have tiny functions with very few arguments that do one thing and do it as fa
 
 A lot of functions are oriented to Data Science, Big Data, Open Data, Web Scrapping, working with HTTP REST JSON APIs.
 
-<details>
-  <summary>Low Level API Extras</summary>
-
-To control the default values the following environment variables are available:
-- `requests_timeout` `int` type, must be a non-zero positive value, milliseconds precision.
-- `requests_maxredirects` `int` type, must be a non-zero positive value.
-- `requests_useragent` `str` type, can be empty string.
-- `requests_debugprogress` `bool` type, slows down performance, not recommended for general use.
-
-</details>
-
 
 # Install
 
@@ -569,6 +558,25 @@ More Faster Libraries...
 - Python 3.
 - GCC.
 - 64 Bit.
+
+
+##### Low Level API Extras
+
+To control the default values the following optional Bash environment variables are available:
+
+- `requests_timeout` Timeout, `int` type, must be a non-zero positive value, milliseconds precision.
+- `requests_maxredirects` Maximum Redirects, `int` type, must be a non-zero positive value.
+- `requests_useragent` User Agent, `str` type, can be empty string.
+- `requests_debugprogress` Debug Progress, `bool` type, slows down performance, not recommended for general use.
+
+Examples:
+
+```bash
+$ export https_proxy = "http://yourProxyUrl:8080"
+$ export requests_maxredirects = "42"
+```
+
+- **This is 100% Optional. This is provided as Extra features.**
 
 
 # FAQ
