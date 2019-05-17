@@ -603,6 +603,7 @@ Examples:
 ```bash
 $ export https_proxy = "http://yourProxyUrl:8080"
 $ export requests_maxredirects = "42"
+$ # This is the Bash command line terminal!.
 ```
 
 - **This is 100% Optional. This is provided as Extra features.**
