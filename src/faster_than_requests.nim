@@ -1,6 +1,8 @@
-import httpclient, json, tables, random, nimpy, strutils
+import httpclient, json, tables, nimpy, strutils
+from random import randomize, rand
 from ospaths import getEnv
 from os import sleep
+
 
 const progressMsg = """{"percentage": $3, "speed": "$4 Kb/Sec", "progress": $1, "total": $2}"""
 
