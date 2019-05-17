@@ -1,7 +1,8 @@
 import httpclient, json, tables, nimpy, strutils
-from random import randomize, rand
-from ospaths import getEnv
+
 from os import sleep
+from ospaths import getEnv
+from random import randomize, rand
 
 
 const progressMsg = """{"percentage": $3, "speed": "$4 Kb/Sec", "progress": $1, "total": $2}"""
@@ -82,6 +83,11 @@ proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[ke
     r = client.request(url, http_method, body, newHttpHeaders(http_headers))
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
   "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
+
+
+proc ini2scraper(ini: string): Table[string, string] {. exportpy .} =
+  # Take 1 INI file and create a high performance HTTP Scrapper like Scrapy.
+  discard
 
 
 ########## Extra HTTP Functions, go beyond the ones from requests #############
