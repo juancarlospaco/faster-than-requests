@@ -5,10 +5,7 @@ from ospaths import getEnv
 from random import randomize, rand
 
 
-const progressMsg = """{"percentage": $3, "speed": "$4 Kb/Sec", "progress": $1, "total": $2}"""
-
 let
-  debugProgress = getEnv("requests_debugprogress", "false").parseBool
   proxyUrl = getEnv("https_proxy", getEnv"http_proxy").strip
   proxyAuth = getEnv("https_proxy_auth", getEnv"http_proxy_auth").strip
   proxi = if proxyUrl.len > 1: newProxy(proxyUrl, proxyAuth) else: nil
@@ -16,11 +13,6 @@ let
 var client = newHttpClient(timeout=getEnv("requests_timeout", "-1").parseInt,
                            userAgent=getEnv("requests_useragent", ""), proxy=proxi,
                            maxRedirects=getEnv("requests_maxredirects", "9").parseInt)
-
-if debugProgress:
-  client.onProgressChanged = (
-    proc (t, p, s: BiggestInt) = echo progressMsg.format(p, int(int(100 * p) / t.int), s div 1_000, t)
-  )
 
 
 proc setHeaders*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {. exportpy .} =
@@ -77,6 +69,16 @@ proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[ke
                 proxyUrl: string = "", proxyAuth: string = "", userAgent: string = "",
                 timeout: int =  -1, maxRedirects: int = 9): Table[string, string] {. exportpy .} =
   ## HTTP requests low level function to dictionary with extra options.
+  let
+    proxxi = if proxyUrl.len > 1: newProxy(proxyUrl.strip, proxyAuth.strip) else: nil
+    client = newHttpClient(timeout=timeout, userAgent=userAgent, proxy=proxxi, maxRedirects=maxRedirects)
+    r = client.request(url, http_method, body, newHttpHeaders(http_headers))
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
+  "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
+
+
+proc json2scraper(ini: string): Table[string, string] {. exportpy .} =
+  # Take 1 INI file and create a high performance HTTP Scrapper like Scrapy.
   let
     proxxi = if proxyUrl.len > 1: newProxy(proxyUrl.strip, proxyAuth.strip) else: nil
     client = newHttpClient(timeout=timeout, userAgent=userAgent, proxy=proxxi, maxRedirects=maxRedirects)
