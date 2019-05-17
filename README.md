@@ -509,6 +509,37 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
+
+# requests2()
+<details>
+
+**Description:**
+Low level API of Requests with everything available as argument with extra options to build a detailed custom HTTP request.
+Its like `request()` function but re-imagined with different features.
+May be slower than `request()`.
+
+**Arguments:**
+- `url` Remote URL, string type, required, must not be empty string.
+- `body` the Body data, string type, required, can be empty string.
+- `proxyUrl` Full URL of your Network Proxy, string type, required, can be empty string.
+- `proxyAuth` Auth of your Network Proxy if any, string type, required, can be empty string.
+- `userAgent` User Agent to use for the requests, string type, required, can be empty string.
+- `timeout` Timeout, integer type, Milliseconds precision, must be non-zero positive integer, can be `-1`.
+- `maxRedirects` Maximum Redirects, integer type, must be non-zero positive integer, can be `1`.
+- `http_method` HTTP method, string type, required, must not be empty string, values can be `"GET"`, `"POST"`, etc.
+- `http_headers` HTTP Headers, list type, required,
+a list of tuples, tuples must be 2 items long,
+must not be empty list, must not be empty tuple,
+the first item of the tuple is the key and second item of the tuple is value,
+keys must not be empty string, values can be empty string, both must the stripped.
+
+**Returns:**
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
+
+</details>
+
+
 [**For more Examples check the Examples.**](https://github.com/juancarlospaco/faster-than-requests/blob/master/example/example.py)
 
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
