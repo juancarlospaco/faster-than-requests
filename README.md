@@ -712,3 +712,11 @@ Maybe it works on Python 2, but is not supported, and performance can be worse, 
 
 Functions do not have internal `try: except:` blocks,
 so you can wrap them inside `try: except:` blocks if you need very resilient code.
+
+- How to Build the project ?.
+
+`build.sh`
+
+- How to Package the project ?.
+
+`package.sh`
