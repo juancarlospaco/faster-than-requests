@@ -9,7 +9,6 @@ from os import listdir
 sources = []
 for c_source_file in listdir():
     if c_source_file.endswith(".c"):
-        print(f"    C Source file = { c_source_file }")
         sources.append(c_source_file)
 
 
