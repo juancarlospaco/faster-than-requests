@@ -77,16 +77,6 @@ proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[ke
   "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
-proc json2scraper(ini: string): Table[string, string] {. exportpy .} =
-  # Take 1 INI file and create a high performance HTTP Scrapper like Scrapy.
-  let
-    proxxi = if proxyUrl.len > 1: newProxy(proxyUrl.strip, proxyAuth.strip) else: nil
-    client = newHttpClient(timeout=timeout, userAgent=userAgent, proxy=proxxi, maxRedirects=maxRedirects)
-    r = client.request(url, http_method, body, newHttpHeaders(http_headers))
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-  "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
-
-
 ########## Extra HTTP Functions, go beyond the ones from requests #############
 
 
