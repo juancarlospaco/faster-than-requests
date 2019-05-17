@@ -1,2 +1,2 @@
-include *.c
-include nimbase.h
+recursive-include . *.c
+recursive-include . nimbase.h
