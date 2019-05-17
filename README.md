@@ -680,6 +680,10 @@ https://github.com/juancarlospaco/faster-than-requests/issues
 
 - How to set HTTP Proxy ?.
 
+[requests2()](https://github.com/juancarlospaco/faster-than-requests#requests2)
+
+OR
+
 `export https_proxy = "http://yourProxyUrl:8080"`
 
 `export http_proxy =  "http://yourProxyUrl:8080"`
