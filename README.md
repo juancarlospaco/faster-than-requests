@@ -594,9 +594,9 @@ More Faster Libraries...
 
 To control the default values the following optional Bash environment variables are available:
 
-- `requests_timeout` Timeout, `int` type, must be a non-zero positive value, milliseconds precision.
-- `requests_maxredirects` Maximum Redirects, `int` type, must be a non-zero positive value.
-- `requests_useragent` User Agent, `str` type, can be empty string.
+- `requests_timeout` Timeout, `int` type, must be a non-zero positive value, milliseconds precision, can be `-1`.
+- `requests_maxredirects` Maximum Redirects, `int` type, must be a non-zero positive value, can be `1`.
+- `requests_useragent` User Agent, `str` type, can be empty string, recommended empty string.
 
 Examples:
 
