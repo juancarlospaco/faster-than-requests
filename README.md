@@ -733,7 +733,11 @@ so you can wrap them inside `try: except:` blocks if you need very resilient cod
 
 - PIP fails to install or fails build the wheel ?.
 
-Add at the end of the PIP install command ` --no-cache-dir --no-binary :all: `, not my Bug.
+Add at the end of the PIP install command:
+
+` --isolated --disable-pip-version-check --no-cache-dir --no-binary :all: `
+
+Not my Bug.
 
 - How to Build the project ?.
 
