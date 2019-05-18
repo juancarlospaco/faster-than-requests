@@ -30,16 +30,6 @@ var client = newHttpClient(timeout=getEnv("requests_timeout", "-1").parseInt,
                            maxRedirects=getEnv("requests_maxredirects", "9").parseInt)
 
 
-proc debugConfig*() {. discardable, exportpy .} =
-  ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
-  echo debugCfg
-
-
-proc setHeaders*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {. exportpy .} =
-  ## Set the HTTP Headers to the HTTP client.
-  client.headers = newHttpHeaders(headers)
-
-
 proc gets*(url: string): Table[string, string] {. exportpy .} =
   ## HTTP GET an URL to dictionary.
   let r = client.get(url)
@@ -97,7 +87,31 @@ proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[ke
   "content-length": $r.contentLength, "headers": replace($r.headers," @[", " [")}.toTable
 
 
+proc setHeaders*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {. exportpy .} =
+  ## Set the HTTP Headers to the HTTP client.
+  client.headers = newHttpHeaders(headers)
+
+
 ########## Extra HTTP Functions, go beyond the ones from requests #############
+
+
+proc debugConfig*() {. discardable, exportpy .} =
+  ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
+  echo debugCfg
+
+
+proc tuples2json*(tuples: openArray[tuple[key: string, val: string]]): string {. exportpy .} =
+  ## Convert Tuples to JSON Minified.
+  var temp = parseJson("{}")
+  for item in tuples: temp.add(item[0], %item[1])
+  result.toUgly(temp)
+
+
+proc tuples2json_pretty*(tuples: openArray[tuple[key: string, val: string]]): string {. exportpy .} =
+  ## Convert Tuples to JSON Pretty-Printed.
+  var temp = parseJson("{}")
+  for item in tuples: temp.add(item[0], %item[1])
+  result = temp.pretty
 
 
 proc get2str*(url: string): string {. exportpy .} =
