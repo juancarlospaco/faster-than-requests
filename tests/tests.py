@@ -24,6 +24,15 @@ class TestName(unittest.TestCase):
 
     def test_debugConfig(self):
         self.assertIsNone(faster_than_requests.debugConfig())
+    
+    def test_get2ndjson_list(self):
+        self.assertIsNone(faster_than_requests.get2ndjson_list(["http://httpbin.org/json", "http://httpbin.org/json"], "output.ndjson"))
+
+    def test_downloads_list(self):
+        self.assertIsNone(faster_than_requests.downloads_list([("http://httpbin.org/image/jpeg", "foo.jpg"), ("http://httpbin.org/image/svg",  "bar.svg")]))
+
+    def test_downloads(self):
+        self.assertIsNone(faster_than_requests.downloads("http://httpbin.org/image/jpeg", "foo.jpeg")))
 
     def test_tuples2json(self):
         self.assertEqual(faster_than_requests.tuples2json([("key0", "value0"), ("key1", "value1")]), '{"key0":"value0","key1":"value1"}')
@@ -82,19 +91,8 @@ class TestName(unittest.TestCase):
             faster_than_requests.requests2("http://httpbin.org/get", "get", "", [("key", "value")],
                                userAgent="FasterThanRequests", timeout=9000, maxRedirects=9), dict)
 
-    def test_downloads(self):
-        self.assertIsInstance(faster_than_requests.downloads("http://httpbin.org/image/jpeg", "foo.jpeg")), None)
-
     def test_get2str_list(self):
         self.assertIsInstance(faster_than_requests.get2str_list(["http://httpbin.org/json", "http://httpbin.org/xml"]), dict)
-
-    def test_get2ndjson_list(self):
-        self.assertIsInstance(faster_than_requests.get2ndjson_list(["http://httpbin.org/json",
-                                 "http://httpbin.org/json"], "output.ndjson"), None)
-
-    def test_downloads_list(self):
-        self.assertIsInstance(faster_than_requests.downloads_list([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
-                                ("http://httpbin.org/image/svg",  "bar.svg")]), None)
 
 
 if __name__.__contains__("__main__"):
