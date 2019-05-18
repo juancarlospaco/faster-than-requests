@@ -731,6 +731,10 @@ Maybe it works on Python 2, but is not supported, and performance can be worse, 
 Functions do not have internal `try: except:` blocks,
 so you can wrap them inside `try: except:` blocks if you need very resilient code.
 
+- PIP fails to install or fails build the wheel ?.
+
+Add at the end of the PIP install command ` --no-cache-dir --no-binary :all: `, not my Bug.
+
 - How to Build the project ?.
 
 `build.sh`
