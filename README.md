@@ -539,6 +539,20 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
+# debugConfig()
+<details>
+
+**Description:**
+Debug the internal Configuration of the library, takes no arguments, returns nothing,
+prints the pretty-printed human-friendly multi-line JSON Configuration to standard output terminal.
+
+**Arguments:** None.
+
+**Returns:** None.
+
+</details>
+
+
 [**For more Examples check the Examples.**](https://github.com/juancarlospaco/faster-than-requests/blob/master/example/example.py)
 
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
