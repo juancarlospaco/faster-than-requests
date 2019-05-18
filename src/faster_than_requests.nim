@@ -5,6 +5,21 @@ from ospaths import getEnv
 from random import randomize, rand
 
 
+const debugCfg = pretty( %*{
+  "proxyUrl":     getEnv("https_proxy", getEnv"http_proxy"),
+  "timeout":      getEnv"requests_timeout",
+  "userAgent":    getEnv"requests_useragent",
+  "maxRedirects": getEnv"requests_maxredirects",
+  "nimVersion":   NimVersion,
+  "httpCore":     defUserAgent,
+  "compileDate":  CompileDate & "T" & CompileTime,
+  "cpu":          hostCPU,
+  "os":           hostOS,
+  "endian":       cpuEndian,
+  "release":      defined(release),
+  "biggestInt":   int.high
+})
+
 let
   proxyUrl = getEnv("https_proxy", getEnv"http_proxy").strip
   proxyAuth = getEnv("https_proxy_auth", getEnv"http_proxy_auth").strip
@@ -13,6 +28,11 @@ let
 var client = newHttpClient(timeout=getEnv("requests_timeout", "-1").parseInt,
                            userAgent=getEnv("requests_useragent", ""), proxy=proxi,
                            maxRedirects=getEnv("requests_maxredirects", "9").parseInt)
+
+
+proc debugConfig*() {. discardable, exportpy .} =
+  ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
+  echo debugCfg
 
 
 proc setHeaders*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {. exportpy .} =
