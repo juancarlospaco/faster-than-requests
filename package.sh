@@ -11,5 +11,5 @@ rm --verbose --force nimbase.h
 
 
 # pip3 uninstall faster_than_requests --yes
-# pip3 install dist/faster_than_requests-0.2.zip --no-binary :all:
+# pip3 install dist/faster_than_requests-0.5.zip --no-binary :all:
 # python -c "import faster_than_requests"
