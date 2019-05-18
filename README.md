@@ -553,6 +553,44 @@ prints the pretty-printed human-friendly multi-line JSON Configuration to standa
 </details>
 
 
+# tuples2json_pretty()
+<details>
+
+**Description:**
+Convert Tuples to JSON, this is a UX improvement just for convenience, this is 100% optional,
+returns the Tuples converted to pretty-printed human-friendly multi-line JSON.
+
+**Arguments:**
+- `tuples` A list containing Tuples, list type, required,
+a list of tuples, tuples must be 2 items long,
+must not be empty list, must not be empty tuple,
+the first item of the tuple is the key and second item of the tuple is value,
+keys must not be empty string, values can be empty string, both must the stripped.
+
+**Returns:** JSON, string type.
+
+</details>
+
+
+# tuples2json()
+<details>
+
+**Description:**
+Convert Tuples to JSON, this is a UX improvement just for convenience, this is 100% optional,
+returns the Tuples converted to Minified computer-friendly single-line JSON.
+
+**Arguments:**
+- `tuples` A list containing Tuples, list type, required,
+a list of tuples, tuples must be 2 items long,
+must not be empty list, must not be empty tuple,
+the first item of the tuple is the key and second item of the tuple is value,
+keys must not be empty string, values can be empty string, both must the stripped.
+
+**Returns:** JSON, string type.
+
+</details>
+
+
 [**For more Examples check the Examples.**](https://github.com/juancarlospaco/faster-than-requests/blob/master/example/example.py)
 
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
