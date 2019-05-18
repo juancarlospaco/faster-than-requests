@@ -10,7 +10,10 @@ import json
 
 from random import randint
 
-import faster_than_requests
+try:
+    import faster_than_requests
+except:
+    print("Tests require faster_than_requests installed and working.")
 
 
 # Random order for tests runs. (Original is: -1 if x<y, 0 if x==y, 1 if x>y).
