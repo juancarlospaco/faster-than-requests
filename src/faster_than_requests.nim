@@ -5,7 +5,7 @@ from ospaths import getEnv
 from random import randomize, rand
 
 
-const debugCfg = pretty( %*{
+const debugCfg = pretty(%*{
   "proxyUrl":     getEnv("https_proxy", getEnv"http_proxy"),
   "timeout":      getEnv"requests_timeout",
   "userAgent":    getEnv"requests_useragent",
