@@ -1,5 +1,6 @@
 import faster_than_requests as requests
 
+
 print(requests.gets("http://httpbin.org/get"))              # HTTP GET.
 
 print(requests.posts("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""))      # HTTP POST.
@@ -45,4 +46,10 @@ print(requests.downloads_list_delay([("http://httpbin.org/image/jpeg", "foo.jpg"
                                      ("http://httpbin.org/image/svg",  "bar.svg")],
                                     3))  # 3 Seconds Delay
 
-print(requests.setHeaders([("key", "value")]))             # Set HTTP Headers example.
+requests.setHeaders([("key", "value")])                    # Set HTTP Headers example.
+
+requests.debugConfig()                                     # Debug the internal Configuration.
+
+print(requests.tuples2json([("key0", "value0"), ("key1", "value1")]))
+
+print(requests.tuples2json_pretty([("key0", "value0"), ("key1", "value1")]))
