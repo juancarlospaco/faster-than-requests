@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-"""Faster Than Requests."""
+"""Faster Than faster_than_requests."""
 
 
 import unittest
@@ -18,7 +18,7 @@ unittest.TestLoader.sortTestMethodsUsing = lambda _, x, y: randint(-1, 1)
 
 class TestName(unittest.TestCase):
 
-    """Faster Than Requests."""
+    """Faster Than faster_than_requests."""
 
     maxDiff, __slots__ = None, ()
 
@@ -39,61 +39,61 @@ class TestName(unittest.TestCase):
         self.assertIsInstance(faster_than_requests.gets("http://httpbin.org/get"), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.posts("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
+        self.assertIsInstance(faster_than_requests.posts("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.put("http://httpbin.org/put", """{"foo": "bar", "baz": true}"""), dict)
+        self.assertIsInstance(faster_than_requests.put("http://httpbin.org/put", """{"foo": "bar", "baz": true}"""), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.deletes("http://httpbin.org/delete"), dict)
+        self.assertIsInstance(faster_than_requests.deletes("http://httpbin.org/delete"), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.patch("http://httpbin.org/patch", """{"foo": "bar", "baz": true}"""), dict)
+        self.assertIsInstance(faster_than_requests.patch("http://httpbin.org/patch", """{"foo": "bar", "baz": true}"""), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.get2str("http://httpbin.org/get"), str)
+        self.assertIsInstance(faster_than_requests.get2str("http://httpbin.org/get"), str)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.get2dict("http://httpbin.org/get"), dict)
+        self.assertIsInstance(faster_than_requests.get2dict("http://httpbin.org/get"), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.get2json("http://httpbin.org/get"), dict)
+        self.assertIsInstance(faster_than_requests.get2json("http://httpbin.org/get"), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.get2json_pretty("http://httpbin.org/get"), dict)
+        self.assertIsInstance(faster_than_requests.get2json_pretty("http://httpbin.org/get"), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.post2str("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
+        self.assertIsInstance(faster_than_requests.post2str("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.post2dict("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
+        self.assertIsInstance(faster_than_requests.post2dict("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.post2json("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
+        self.assertIsInstance(faster_than_requests.post2json("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.post2json_pretty("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
+        self.assertIsInstance(faster_than_requests.post2json_pretty("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.requests("http://httpbin.org/get", "get", "", [("key", "value")]), dict)
+        self.assertIsInstance(faster_than_requests.faster_than_requests("http://httpbin.org/get", "get", "", [("key", "value")]), dict)
 
     def test_tuples2json(self):
         self.assertIsInstance(
-            requests.requests2("http://httpbin.org/get", "get", "", [("key", "value")],
+            faster_than_requests.requests2("http://httpbin.org/get", "get", "", [("key", "value")],
                                userAgent="FasterThanRequests", timeout=9000, maxRedirects=9), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.downloads("http://httpbin.org/image/jpeg", "foo.jpeg")), None)
+        self.assertIsInstance(faster_than_requests.downloads("http://httpbin.org/image/jpeg", "foo.jpeg")), None)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.get2str_list(["http://httpbin.org/json", "http://httpbin.org/xml"]), dict)
+        self.assertIsInstance(faster_than_requests.get2str_list(["http://httpbin.org/json", "http://httpbin.org/xml"]), dict)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.get2ndjson_list(["http://httpbin.org/json",
+        self.assertIsInstance(faster_than_requests.get2ndjson_list(["http://httpbin.org/json",
                                  "http://httpbin.org/json"], "output.ndjson"), None)
 
     def test_tuples2json(self):
-        self.assertIsInstance(requests.downloads_list([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
+        self.assertIsInstance(faster_than_requests.downloads_list([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
                                 ("http://httpbin.org/image/svg",  "bar.svg")]), None)
 
 
