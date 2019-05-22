@@ -789,3 +789,7 @@ Not my Bug.
 - How to Package the project ?.
 
 `package.sh`
+
+- This requires Nimble ?.
+
+No.
