@@ -799,3 +799,7 @@ No.
 Unmmodified raw output of Python `timeit` module.
 
 Please send Pull Request to Python to improve the output of `timeit`.
+
+- The LoC is a lie, not counting the lines of code of the Compiler ?.
+
+Projects that use Cython wont count the whole Cython on the LoC, so we wont neither.
