@@ -793,3 +793,9 @@ Not my Bug.
 - This requires Nimble ?.
 
 No.
+
+- Whats the unit of measurement for speed ?.
+
+Unmmodified raw output of Python `timeit` module.
+
+Please send Pull Request to Python to improve the output of `timeit`.
