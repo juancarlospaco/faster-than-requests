@@ -666,6 +666,15 @@ $ # This is the Bash command line terminal!.
 - **This is 100% Optional. This is provided as Extra features.**
 
 
+# Windows
+
+- If installation fails on Windows, just use the Source Code:
+
+![win-compile](https://user-images.githubusercontent.com/1189414/63147831-b8bf6100-bfd5-11e9-9e6e-91d61040f139.png "Git Clone and Compile on Windows 10 with only Git and Nim installed, just 2 commands!")
+
+- Git Clone and Compile on Windows 10 on just 2 commands!.
+
+
 # FAQ
 
 - Whats the idea, inspiration, reason, etc ?.
