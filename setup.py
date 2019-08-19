@@ -17,8 +17,8 @@ setup(
         Extension(
             name               = "faster_than_requests",
             sources            = sources,
-            extra_compile_args = ["-flto", "-ffast-math", "-march=native", "-O3"],
-            extra_link_args    = ["-flto", "-ffast-math", "-march=native", "-O3", "-s"],
+            extra_compile_args = ["-flto", "-ffast-math", "-march=native", "-mtune=native", "-O3", "-fno-ident", "-fsingle-precision-constant"],
+            extra_link_args    = ["-s"],
             include_dirs       = ["."],
         )
     ]
