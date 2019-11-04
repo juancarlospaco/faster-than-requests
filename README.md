@@ -7,6 +7,15 @@
 
 ![screenshot](temp.jpg "Please Star this repo on GitHub!")
 
+![](https://img.shields.io/github/languages/top/juancarlospaco/faster-than-requests?style=for-the-badge)
+![](https://img.shields.io/github/stars/juancarlospaco/faster-than-requests?style=for-the-badge "Star faster-than-requests on GitHub!")
+![](https://img.shields.io/maintenance/yes/2019?style=for-the-badge "2019")
+![](https://img.shields.io/github/languages/code-size/juancarlospaco/faster-than-requests?style=for-the-badge)
+![](https://img.shields.io/github/issues-raw/juancarlospaco/faster-than-requests?style=for-the-badge "Bugs")
+![](https://img.shields.io/github/issues-pr-raw/juancarlospaco/faster-than-requests?style=for-the-badge "PRs")
+![](https://img.shields.io/github/commit-activity/y/juancarlospaco/faster-than-requests?style=for-the-badge)
+![](https://img.shields.io/github/last-commit/juancarlospaco/faster-than-requests?style=for-the-badge "Commits")
+
 | Library                       | Speed    | Files | LOC  | Dependencies          | Developers |
 |-------------------------------|----------|-------|------|-----------------------|------------|
 | PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        |
@@ -675,6 +684,12 @@ $ # This is the Bash command line terminal!.
 - Git Clone and Compile on Windows 10 on just 2 commands!.
 - [Alternatively you can try Docker for Windows.](https://docs.docker.com/docker-for-windows)
 - **The file extension must be `.pyd`, NOT `.dll`. Compile with `-d:ssl` to use HTTPS.**
+
+
+# Stars
+
+![Star faster-than-requests on GitHub](https://starchart.cc/juancarlospaco/faster-than-requests.svg "Star faster-than-requests on GitHub!")
+
 
 # FAQ
 
