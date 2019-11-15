@@ -177,6 +177,7 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, and returns a list of strin
 
 **Arguments:**
 - `list_of_urls` A list of the remote URLs, list type, required. Objects inside the list must be string type.
+- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
 
 Examples:
 - `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
@@ -438,6 +439,7 @@ Takes a list of URLs, makes 1 HTTP GET Download for each URL of the list.
 - `list_of_files` list of tuples, tuples must be 2 items long, first item is URL and second item is filename.
 The remote URL, string type, required, must not be empty string, is the first item on the tuple.
 The local filename, string type, required, must not be empty string, can be full path, can be relative path, must include file extension.
+- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
 
 Examples:
 - `list_of_files = [("http://example.com/cat.jpg", "kitten.jpg")]`
