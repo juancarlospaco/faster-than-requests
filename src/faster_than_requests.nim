@@ -108,9 +108,13 @@ proc getlist2list*(list_of_urls: openArray[string]): seq[seq[string]] {.exportpy
   for url in list_of_urls: result.add client.getContent(url).strip.toLowerAscii.splitlines
 
 
-proc get2str_list*(list_of_urls: openArray[string]): seq[string] {.exportpy.} =
+proc get2str_list*(list_of_urls: openArray[string], threads: bool = false): seq[string] {.exportpy.} =
   ## HTTP GET body to string from a list of URLs.
-  for url in list_of_urls: result.add client.getContent(url)
+  if threads:
+    result = newSeq[string](list_of_urls.len)
+    for i, url in list_of_urls: result[i] = ^ spawn client.getContent(url)
+  else:
+    for url in list_of_urls: result.add client.getContent(url)
 
 
 proc get2ndjson_list*(list_of_urls: openArray[string], ndjson_file_path: string) {.discardable, exportpy.} =
