@@ -1,3 +1,4 @@
 *.c
 *.h
 dist/*.zip
+*.so
