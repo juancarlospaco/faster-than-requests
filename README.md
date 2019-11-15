@@ -16,6 +16,8 @@
 ![](https://img.shields.io/github/commit-activity/y/juancarlospaco/faster-than-requests?style=for-the-badge)
 ![](https://img.shields.io/github/last-commit/juancarlospaco/faster-than-requests?style=for-the-badge "Commits")
 
+<img src="http://feeds.feedburner.com/RecentCommitsToFaster-than-requestsmaster.1.gif" title="Recent Commits to Faster Than Requests" width="99%">
+
 | Library                       | Speed    | Files | LOC  | Dependencies          | Developers |
 |-------------------------------|----------|-------|------|-----------------------|------------|
 | PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        |
