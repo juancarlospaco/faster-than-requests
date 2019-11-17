@@ -50,12 +50,7 @@ jobs:
         export PATH=$HOME/.nimble/bin:$PATH
         nimble -y install nimpy
 
-    # - name: Nimble Check package validity
-    #   run: |
-    #     export PATH=$HOME/.nimble/bin:$PATH
-    #     nimble check
-
-    # - name: Compile project
-    #   run: |
-    #     export PATH=$HOME/.nimble/bin:$PATH
-    #     nimble build
+    - name: Compile project
+      run: |
+        export PATH=$HOME/.nimble/bin:$PATH
+        nim c --app:lib -d:release --out:faster_than_requests.pyd src/faster_than_requests.nim
