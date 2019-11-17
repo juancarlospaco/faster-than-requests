@@ -1,4 +1,4 @@
-name: Build Nim 👑
+name: PYTHON
 
 on: [push]
 
@@ -10,7 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
-    - uses: actions/setup-node@v1
 
     - name: Set Global Environment Variables
       uses: allenevans/set-env@v1.0.0
@@ -20,9 +19,6 @@ jobs:
 
     - name: Update Python PIP
       run: pip install --upgrade --disable-pip-version-check pip
-
-    - name: Update NodeJS NPM
-      run: npm install npm
 
     - name: Cache choosenim
       id: cache-choosenim
@@ -49,10 +45,10 @@ jobs:
         export PATH=$HOME/.nimble/bin:$PATH
         nimble -y refresh
 
-    # - name: Nimble Install dependencies
-    #   run: |
-    #     export PATH=$HOME/.nimble/bin:$PATH
-    #     nimble -y install nimpy
+    - name: Nimble Install dependencies
+      run: |
+        export PATH=$HOME/.nimble/bin:$PATH
+        nimble -y install nimpy
 
     # - name: Nimble Check package validity
     #   run: |
