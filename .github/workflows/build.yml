@@ -1,0 +1,65 @@
+name: Build Nim 👑
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+    - uses: actions/setup-node@v1
+
+    - name: Set Global Environment Variables
+      uses: allenevans/set-env@v1.0.0
+      with:
+        CHOOSENIM_CHOOSE_VERSION: "1.0.2"
+        CHOOSENIM_NO_ANALYTICS: 1
+
+    - name: Update Python PIP
+      run: pip install --upgrade --disable-pip-version-check pip
+
+    - name: Update NodeJS NPM
+      run: npm install npm
+
+    - name: Cache choosenim
+      id: cache-choosenim
+      uses: actions/cache@v1
+      with:
+        path: ~/.choosenim
+        key: ${{ runner.os }}-choosenim-1.0.2
+
+    - name: Cache nimble
+      id: cache-nimble
+      uses: actions/cache@v1
+      with:
+        path: ~/.nimble
+        key: ${{ runner.os }}-nimble-1.0.2
+
+    - name: Install Nim via Choosenim
+      if: steps.cache-choosenim.outputs.cache-hit != 'true' || steps.cache-nimble.outputs.cache-hit != 'true'
+      run: |
+        curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
+        sh init.sh -y
+
+    - name: Nimble Refresh
+      run: |
+        export PATH=$HOME/.nimble/bin:$PATH
+        nimble -y refresh
+
+    - name: Nimble Install dependencies
+      run: |
+        export PATH=$HOME/.nimble/bin:$PATH
+        nimble -y install nimpy
+
+    # - name: Nimble Check package validity
+    #   run: |
+    #     export PATH=$HOME/.nimble/bin:$PATH
+    #     nimble check
+
+    # - name: Compile project
+    #   run: |
+    #     export PATH=$HOME/.nimble/bin:$PATH
+    #     nimble build
