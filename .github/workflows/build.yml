@@ -59,3 +59,6 @@ jobs:
       run: |
         export PATH=$HOME/.nimble/bin:$PATH
         nim c --app:lib -d:release -d:danger --out:faster_than_requests.pyd src/faster_than_requests.nim
+
+    - name: Strip Binary
+      run: strip --strip-all faster_than_requests.pyd
