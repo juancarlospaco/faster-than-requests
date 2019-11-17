@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
@@ -50,12 +50,12 @@ jobs:
         export PATH=$HOME/.nimble/bin:$PATH
         nimble -y install nimpy
 
-    - name: Compile project DEBUG Mode
+    - name: Compile DEBUG Mode
       run: |
         export PATH=$HOME/.nimble/bin:$PATH
         nim c --app:lib --out:faster_than_requests.pyd src/faster_than_requests.nim
 
-    - name: Compile project RELEASE Mode
+    - name: Compile RELEASE Mode
       run: |
         export PATH=$HOME/.nimble/bin:$PATH
         nim c --app:lib -d:release -d:danger --out:faster_than_requests.pyd src/faster_than_requests.nim
