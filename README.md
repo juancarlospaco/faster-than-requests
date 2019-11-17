@@ -16,6 +16,8 @@
 ![](https://img.shields.io/github/commit-activity/y/juancarlospaco/faster-than-requests?style=for-the-badge)
 ![](https://img.shields.io/github/last-commit/juancarlospaco/faster-than-requests?style=for-the-badge "Commits")
 
+<img src="http://feeds.feedburner.com/RecentCommitsToFaster-than-requestsmaster.1.gif" title="Recent Commits to Faster Than Requests" width="99%" height="75px">
+
 | Library                       | Speed    | Files | LOC  | Dependencies          | Developers |
 |-------------------------------|----------|-------|------|-----------------------|------------|
 | PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        |
@@ -830,3 +832,6 @@ Please send Pull Request to Python to improve the output of `timeit`.
 - The LoC is a lie, not counting the lines of code of the Compiler ?.
 
 Projects that use Cython wont count the whole Cython on the LoC, so we wont neither.
+
+
+[  ⬆️  ⬆️  ⬆️  ⬆️  ](#faster-than-requests "Go to top")
