@@ -49,10 +49,10 @@ jobs:
         export PATH=$HOME/.nimble/bin:$PATH
         nimble -y refresh
 
-    - name: Nimble Install dependencies
-      run: |
-        export PATH=$HOME/.nimble/bin:$PATH
-        nimble -y install nimpy
+    # - name: Nimble Install dependencies
+    #   run: |
+    #     export PATH=$HOME/.nimble/bin:$PATH
+    #     nimble -y install nimpy
 
     # - name: Nimble Check package validity
     #   run: |
