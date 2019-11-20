@@ -47,9 +47,10 @@
 ```python
 import faster_than_requests as requests
 
-print(requests.get("http://httpbin.org/get"))                      # GET
-print(requests.post("http://httpbin.org/post", "Some Data Here"))  # POST
-requests.downloads("http://example.com/foo.jpg", "output.jpg")     # See Docs for more info.
+requests.get("http://httpbin.org/get")                     # GET
+requests.post("http://httpbin.org/post", "Some Data Here") # POST
+requests.download("http://example.com/foo.jpg", "out.jpg") # Download a file
+requests.scrapper(["https://nim-lang.org"], threads=True)  # Multi-Threaded Web Scrapper
 ```
 
 
@@ -63,7 +64,7 @@ Takes an URL string, makes an HTTP GET and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string.
 
 Examples:
-- `url = "http://example.com"`
+- `get("http://example.com")`
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -83,8 +84,7 @@ Takes an URL string, makes an HTTP POST and returns a dict with the response.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
-- `url = "http://example.com"`
-- `body = "My Body Data Here"`
+- `post("http://httpbin.org/post", "Some Data Here")`
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -104,8 +104,7 @@ Takes an URL string, makes an HTTP PUT and returns a dict with the response.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
-- `url = "http://example.com"`
-- `body = "My Body Data Here"`
+- `put("http://httpbin.org/post", "Some Data Here")`
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -124,7 +123,7 @@ Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string.
 
 Examples:
-- `url = "http://example.com"`
+- `delete("http://example.com/api/something")`
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -144,8 +143,7 @@ Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
-- `url = "http://example.com"`
-- `body = "My Body Data Here"`
+- `patch("http://example.com", "My Body Data Here")`
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -400,7 +398,7 @@ values of the list can be empty string, can be empty list.
 </details>
 
 
-# downloads()
+# download()
 <details>
 
 **Description:**
@@ -419,7 +417,7 @@ Examples:
 </details>
 
 
-# downloads2()
+# download2()
 <details>
 
 **Description:**
