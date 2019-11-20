@@ -53,12 +53,12 @@ jobs:
     - name: Compile DEBUG Mode
       run: |
         export PATH=$HOME/.nimble/bin:$PATH
-        nim c --app:lib --out:faster_than_requests.pyd src/faster_than_requests.nim
+        nim c -d:ssl --app:lib --threads:on --out:faster_than_requests.so src/faster_than_requests.nim
 
     - name: Compile RELEASE Mode
       run: |
         export PATH=$HOME/.nimble/bin:$PATH
-        nim c --app:lib -d:release -d:danger --out:faster_than_requests.pyd src/faster_than_requests.nim
+        nim c --app:lib --threads:on -d:release -d:danger -d:ssl --out:faster_than_requests.so src/faster_than_requests.nim
 
     - name: Strip Binary
       run: strip --strip-all faster_than_requests.pyd
