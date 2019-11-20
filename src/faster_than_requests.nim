@@ -1,4 +1,4 @@
-import httpclient, json, tables, strutils, os, random, threadpool, htmlparser, xmltree, sequtils, nimpy
+import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, nimpy
 
 let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY").strip
 var client = newHttpClient(timeout = getEnv("requests_timeout", "-1").parseInt, userAgent = defUserAgent,
@@ -41,8 +41,7 @@ proc delete*(url: string): Table[string, string] {.exportpy.} =
     "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
-proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]],
-                debugs: bool = false): Table[string, string] {.exportpy.} =
+proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], debugs: bool = false): Table[string, string] {.exportpy.} =
   ## HTTP requests low level function to dictionary.
   let headerss = newHttpHeaders(http_headers)
   if unlikely(debugs): echo url, "\n", http_method, "\n", body, "\n", headerss
@@ -51,9 +50,8 @@ proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key
     "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
-proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]],
-                proxyUrl: string = "", proxyAuth: string = "", userAgent: string = "",
-                timeout: int = -1, maxRedirects: int = 9): Table[string, string] {.exportpy.} =
+proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], proxyUrl: string = "",
+    proxyAuth: string = "", userAgent: string = "", timeout: int = -1, maxRedirects: int = 9): Table[string, string] {.exportpy.} =
   ## HTTP requests low level function to dictionary with extra options.
   let
     proxxi = if unlikely(proxyUrl.len > 1): newProxy(proxyUrl.strip, proxyAuth.strip) else: nil
@@ -68,10 +66,10 @@ proc setHeaders*(headers: openArray[tuple[key: string, val: string]] = @[("dnt",
   client.headers = newHttpHeaders(headers)
 
 
-########## Extra HTTP Functions, go beyond the ones from requests #############
+# ^ Basic HTTP Functions ########### V Extra HTTP Functions, go beyond requests
 
 
-proc debugConfig*() {.discardable, exportpy.} =
+proc debugs*() {.discardable, exportpy.} =
   ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
   echo static(pretty(%*{
     "proxyUrl": getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY"), "timeout": getEnv"requests_timeout", "userAgent": getEnv"requests_useragent",
