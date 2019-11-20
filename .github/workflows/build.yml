@@ -65,3 +65,6 @@ jobs:
 
     - name: Import Binary
       run: python3 -c "import faster_than_requests"
+
+    - name: Unittests
+      run: python3 tests/tests.py
