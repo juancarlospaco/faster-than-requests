@@ -61,4 +61,4 @@ jobs:
         nim c --app:lib --threads:on -d:release -d:danger -d:ssl --out:faster_than_requests.so src/faster_than_requests.nim
 
     - name: Strip Binary
-      run: strip --strip-all faster_than_requests.pyd
+      run: strip --strip-all faster_than_requests.so
