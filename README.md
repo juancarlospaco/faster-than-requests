@@ -178,6 +178,56 @@ values of the dict can be empty string, but keys are always consistent.
 
 # Extras: Go beyond requests
 
+## scrapper()
+<details>
+
+**Description:**
+Multi-Threaded Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
+
+**Arguments:**
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list.
+- `html_tag` HTML Tag to parse, string type, optional, defaults to `"a"` being Links.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
+- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requestsscrapper(["https://nim-lang.org", "http://example.com"], case_insensitive=False, threads=True)
+```
+
+**Returns:** Scrapped Webs.
+
+</details>
+
+
+
+## scrapper2()
+<details>
+
+**Description:**
+Multi-Tag Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
+
+**Arguments:**
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list.
+- `list_of_tags` List of HTML Tags to parse, List type, optional, defaults to `["a"]` being Links.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.scrapper2(["https://nim-lang.org", "http://example.com"], list_of_tags=["h1", "h2"], case_insensitive=False)
+```
+
+**Returns:** Scrapped Webs.
+
+</details>
+
+
 
 ## get2str()
 <details>
@@ -291,57 +341,6 @@ requests.get2json("http://example.com", pretty_print=True)
 ```
 
 **Returns:** Response Body, Minified or Pretty-Printed JSON.
-
-</details>
-
-
-
-## scrapper()
-<details>
-
-**Description:**
-Multi-Threaded Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
-
-**Arguments:**
-- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list.
-- `html_tag` HTML Tag to parse, string type, optional, defaults to `"a"` being Links.
-- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`.
-- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
-- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
-
-Examples:
-
-```python
-import faster_than_requests as requests
-requestsscrapper(["https://nim-lang.org", "http://example.com"], case_insensitive=False, threads=True)
-```
-
-**Returns:** Scrapped Webs.
-
-</details>
-
-
-
-## scrapper2()
-<details>
-
-**Description:**
-Multi-Tag Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
-
-**Arguments:**
-- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list.
-- `list_of_tags` List of HTML Tags to parse, List type, optional, defaults to `["a"]` being Links.
-- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`.
-- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
-
-Examples:
-
-```python
-import faster_than_requests as requests
-requests.scrapper2(["https://nim-lang.org", "http://example.com"], list_of_tags=["h1", "h2"], case_insensitive=False)
-```
-
-**Returns:** Scrapped Webs.
 
 </details>
 
