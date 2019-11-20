@@ -64,7 +64,11 @@ Takes an URL string, makes an HTTP GET and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string.
 
 Examples:
-- `get("http://example.com")`
+
+```python
+import faster_than_requests as requests
+requests.get("http://example.com")
+```
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -84,7 +88,12 @@ Takes an URL string, makes an HTTP POST and returns a dict with the response.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
-- `post("http://httpbin.org/post", "Some Data Here")`
+
+```python
+import faster_than_requests as requests
+requests.post("http://httpbin.org/post", "Some Data Here")
+```
+
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -104,7 +113,12 @@ Takes an URL string, makes an HTTP PUT and returns a dict with the response.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
-- `put("http://httpbin.org/post", "Some Data Here")`
+
+```python
+import faster_than_requests as requests
+requests.put("http://httpbin.org/post", "Some Data Here")
+```
+
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -123,7 +137,12 @@ Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string.
 
 Examples:
-- `delete("http://example.com/api/something")`
+
+```python
+import faster_than_requests as requests
+requests.delete("http://example.com/api/something")
+```
+
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -143,13 +162,21 @@ Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
-- `patch("http://example.com", "My Body Data Here")`
+
+```python
+import faster_than_requests as requests
+requests.patch("http://example.com", "My Body Data Here")
+```
+
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
 
 </details>
+
+
+# Extras: Go beyond requests
 
 
 # get2str()
@@ -162,7 +189,11 @@ Takes an URL string, makes an HTTP GET and returns a string with the response Bo
 - `url` the remote URL, string type, required, must not be empty string.
 
 Examples:
-- `url = "http://example.com"`
+
+```python
+import faster_than_requests as requests
+requests.get2str("http://example.com")
+```
 
 **Returns:** Response body, `string` type, can be empty string.
 
@@ -180,7 +211,11 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, and returns a list of strin
 - `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
 
 Examples:
-- `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
+
+```python
+import faster_than_requests as requests
+requests.get2str2(["http://example.com/foo", "http://example.com/bar"], threads = True)
+```
 
 **Returns:**
 List of response bodies, `list` type, values of the list are string type,
@@ -200,8 +235,11 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of strings w
 - `ndjson_file_path` Full path to a local writable NDJSON file, string type, required, file can be non-existent and it will be created, if it exists it will the overwritten.
 
 Examples:
-- `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
-- `ndjson_file_path = "/some/folder/some/file.ndjson"`
+
+```python
+import faster_than_requests as requests
+requests.get2ndjson(["http://example.com/foo", "http://example.com/bar"], "/some/folder/some/file.ndjson")
+```
 
 **Returns:** None.
 
@@ -218,7 +256,11 @@ Takes an URL, makes an HTTP GET, returns a dict with the response Body.
 - `url` the remote URL, string type, required, must not be empty string.
 
 Examples:
-- `url = "http://example.com"`
+
+```python
+import faster_than_requests as requests
+requests.get2dict("http://example.com")
+```
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -238,7 +280,11 @@ Takes an URL, makes an HTTP GET, returns a Minified Computer-friendly single-lin
 - `pretty_print` Pretty Printed JSON, optional, defaults to `False`.
 
 Examples:
-- `url = "http://example.com"`
+
+```python
+import faster_than_requests as requests
+requests.get2json("http://example.com", pretty_print=True)
+```
 
 **Returns:** Response Body, Minified or Pretty-Printed JSON.
 
@@ -259,7 +305,11 @@ Multi-Threaded Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
 - `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
 
 Examples:
-- `my_scrapped_webs = scrapper(["https://nim-lang.org", "https://nim-lang.org"])`
+
+```python
+import faster_than_requests as requests
+requestsscrapper(["https://nim-lang.org", "http://example.com"], case_insensitive=False, threads=True)
+```
 
 **Returns:** Scrapped Webs.
 
@@ -279,7 +329,11 @@ Multi-Tag Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
 - `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
 
 Examples:
-- `my_scrapped_webs = scrapper2(["https://nim-lang.org", "https://nim-lang.org"], ["a", "h1"])`
+
+```python
+import faster_than_requests as requests
+requests.scrapper2(["https://nim-lang.org", "http://example.com"], list_of_tags=["h1", "h2"], case_insensitive=False)
+```
 
 **Returns:** Scrapped Webs.
 
@@ -295,6 +349,13 @@ Takes an URL, makes an HTTP GET, returns nothing, makes an assertion, useful for
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 - `expected` Response expected content, string type, required, can be empty string.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.get2assert("http://example.com/api/returns_int", "42")
+```
 
 **Returns:** None.
 
@@ -312,8 +373,11 @@ Takes an URL, makes an HTTP POST, returns the response Body as string type.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
-- `url = "http://example.com"`
-- `body = "My Body Data Here"`
+
+```python
+import faster_than_requests as requests
+requests.post2str("http://example.com/api/foo", "My Body Data Here")
+```
 
 **Returns:** Response body, `string` type, can be empty string.
 
@@ -331,8 +395,11 @@ Takes an URL, makes a HTTP POST on that URL, returns a dict with the response.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
-- `url = "http://example.com"`
-- `body = "My Body Data Here"`
+
+```python
+import faster_than_requests as requests
+requests.post2dict("http://example.com/api/foo", "My Body Data Here")
+```
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -353,8 +420,11 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 - `pretty_print` Pretty Printed JSON, optional, defaults to `False`.
 
 Examples:
-- `url = "http://example.com"`
-- `body = "My Body Data Here"`
+
+```python
+import faster_than_requests as requests
+requests.post2json("http://example.com/api/foo", "My Body Data Here")
+```
 
 **Returns:** Response, string type.
 
@@ -372,6 +442,13 @@ Takes an URL, makes an HTTP POST on that URL, returns a response.
 - `body` the Body data, string type, required, can be empty string.
 - `expected` Response expected content, string type, required, can be empty string.
 
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.post2assert("http://example.com/api/foo", "My Body Data Here")
+```
+
 **Returns:** None.
 
 </details>
@@ -388,8 +465,11 @@ Takes a list of URLs, makes 1 HTTP POST for each URL, returns a list of response
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
-- `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
-- `body = "My Body Data Here"`
+
+```python
+import faster_than_requests as requests
+requests.post2list("http://example.com/api/foo", "My Body Data Here")
+```
 
 **Returns:**
 List of response bodies, `list` type, values of the list are string type,
@@ -409,8 +489,11 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 - `filename` the local filename, string type, required, must not be empty string, full path recommended, can be relative path, includes file extension.
 
 Examples:
-- `url = "http://example.com"`
-- `filename = "cat-memes.jpg"`
+
+```python
+import faster_than_requests as requests
+requests.download("http://example.com/api/foo", "my_file.ext")
+```
 
 **Returns:** None.
 
@@ -431,8 +514,11 @@ The local filename, string type, required, must not be empty string, can be full
 - `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
 
 Examples:
-- `list_of_files = downloads2([("http://example.com/cat.jpg", "kitten.jpg")])`
-- `list_of_files = downloads2([("http://example.com/cat.jpg", "kitten.jpg"), ("http://example.com/dog.jpg", "doge.jpg")])`
+
+```python
+import faster_than_requests as requests
+requests.download2([("http://example.com/cat.jpg", "kitten.jpg"), ("http://example.com/dog.jpg", "doge.jpg")])
+```
 
 **Returns:** None.
 
@@ -453,9 +539,21 @@ the first item of the tuple is the key and second item of the tuple is value,
 keys must not be empty string, values can be empty string, both must the stripped.
 
 Examples:
-- `headers = [("key", "value")]`
-- `headers = [("key0", "value0"), ("key1", "value1")]`
-- `headers = [("content-type", "text/plain"), ("dnt", "1")]`
+
+```python
+import faster_than_requests as requests
+requests.setHeaders(headers = [("key", "value")])
+```
+
+```python
+import faster_than_requests as requests
+requests.setHeaders([("key0", "value0"), ("key1", "value1")])
+```
+
+```python
+import faster_than_requests as requests
+requests.setHeaders([("content-type", "text/plain"), ("dnt", "1")])
+```
 
 **Returns:** None.
 
@@ -522,6 +620,14 @@ values of the dict can be empty string, but keys are always consistent.
 **Description:**
 Debug the internal Configuration of the library, takes no arguments, returns nothing,
 prints the pretty-printed human-friendly multi-line JSON Configuration to standard output terminal.
+
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.debugs()
+```
 
 **Arguments:** None.
 
