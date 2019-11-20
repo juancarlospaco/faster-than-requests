@@ -5,7 +5,7 @@
 
 [![screenshot](https://source.unsplash.com/eH_ftJYhaTY/800x402 "Please Star this repo on GitHub!")](https://youtu.be/QiKwnlyhKrk?t=5)
 
-![screenshot](temp.jpg "Please Star this repo on GitHub!")
+![screenshot](temp.png "Please Star this repo on GitHub!")
 
 ![](https://img.shields.io/github/languages/top/juancarlospaco/faster-than-requests?style=for-the-badge)
 ![](https://img.shields.io/github/stars/juancarlospaco/faster-than-requests?style=for-the-badge "Star faster-than-requests on GitHub!")
