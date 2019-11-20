@@ -263,6 +263,27 @@ Examples:
 </details>
 
 
+# scrapper()
+<details>
+
+**Description:**
+Multi-Threaded Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
+
+**Arguments:**
+- `list_of_urls` list of URLs, URL must be string type, required, must not be empty list.
+- `html_tag` HTML Tag to parse, string type, optional, defaults to `"a"` being Links.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
+- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
+
+Examples:
+- `my_scrapped_webs = scrapper(["https://nim-lang.org", "https://nim-lang.org"])`
+
+**Returns:** Scrapped Webs.
+
+</details>
+
+
 # get2assert()
 <details>
 
