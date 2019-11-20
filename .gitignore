@@ -2,3 +2,5 @@
 *.h
 dist/*.zip
 *.so
+*.pyd
+*.dll
