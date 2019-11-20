@@ -74,6 +74,9 @@ requests.get("http://example.com")
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
 
+**See Also:**
+[get2str()](https://github.com/juancarlospaco/faster-than-requests#get2str) and [get2str2()](https://github.com/juancarlospaco/faster-than-requests#get2str2)
+
 </details>
 
 
