@@ -77,6 +77,7 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
+
 # post()
 <details>
 
@@ -94,12 +95,12 @@ import faster_than_requests as requests
 requests.post("http://httpbin.org/post", "Some Data Here")
 ```
 
-
 **Returns:**
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
 
 </details>
+
 
 
 # put()
@@ -119,12 +120,12 @@ import faster_than_requests as requests
 requests.put("http://httpbin.org/post", "Some Data Here")
 ```
 
-
 **Returns:**
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
 
 </details>
+
 
 
 # delete()
@@ -143,12 +144,12 @@ import faster_than_requests as requests
 requests.delete("http://example.com/api/something")
 ```
 
-
 **Returns:**
 Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
 
 </details>
+
 
 
 # patch()
@@ -167,7 +168,6 @@ Examples:
 import faster_than_requests as requests
 requests.patch("http://example.com", "My Body Data Here")
 ```
-
 
 **Returns:**
 Response, `dict` type, values of the dict are string type,
@@ -200,6 +200,7 @@ requests.get2str("http://example.com")
 </details>
 
 
+
 # get2str2()
 <details>
 
@@ -224,6 +225,7 @@ values of the list can be empty string, can be empty list.
 </details>
 
 
+
 # get2ndjson()
 <details>
 
@@ -244,6 +246,7 @@ requests.get2ndjson(["http://example.com/foo", "http://example.com/bar"], "/some
 **Returns:** None.
 
 </details>
+
 
 
 # get2dict()
@@ -269,6 +272,7 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
+
 # get2json()
 <details>
 
@@ -289,6 +293,7 @@ requests.get2json("http://example.com", pretty_print=True)
 **Returns:** Response Body, Minified or Pretty-Printed JSON.
 
 </details>
+
 
 
 # scrapper()
@@ -316,6 +321,7 @@ requestsscrapper(["https://nim-lang.org", "http://example.com"], case_insensitiv
 </details>
 
 
+
 # scrapper2()
 <details>
 
@@ -340,6 +346,7 @@ requests.scrapper2(["https://nim-lang.org", "http://example.com"], list_of_tags=
 </details>
 
 
+
 # get2assert()
 <details>
 
@@ -362,6 +369,7 @@ requests.get2assert("http://example.com/api/returns_int", "42")
 </details>
 
 
+
 # post2str()
 <details>
 
@@ -382,6 +390,7 @@ requests.post2str("http://example.com/api/foo", "My Body Data Here")
 **Returns:** Response body, `string` type, can be empty string.
 
 </details>
+
 
 
 # post2dict()
@@ -408,6 +417,7 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
+
 # post2json()
 <details>
 
@@ -431,6 +441,7 @@ requests.post2json("http://example.com/api/foo", "My Body Data Here")
 </details>
 
 
+
 # post2assert()
 <details>
 
@@ -452,6 +463,7 @@ requests.post2assert("http://example.com/api/foo", "My Body Data Here")
 **Returns:** None.
 
 </details>
+
 
 
 # post2list()
@@ -478,6 +490,7 @@ values of the list can be empty string, can be empty list.
 </details>
 
 
+
 # download()
 <details>
 
@@ -498,6 +511,7 @@ requests.download("http://example.com/api/foo", "my_file.ext")
 **Returns:** None.
 
 </details>
+
 
 
 # download2()
@@ -525,7 +539,8 @@ requests.download2([("http://example.com/cat.jpg", "kitten.jpg"), ("http://examp
 </details>
 
 
-# setHeaders()
+
+# set_headers()
 <details>
 
 **Description:**
@@ -542,22 +557,23 @@ Examples:
 
 ```python
 import faster_than_requests as requests
-requests.setHeaders(headers = [("key", "value")])
+requests.set_headers(headers = [("key", "value")])
 ```
 
 ```python
 import faster_than_requests as requests
-requests.setHeaders([("key0", "value0"), ("key1", "value1")])
+requests.set_headers([("key0", "value0"), ("key1", "value1")])
 ```
 
 ```python
 import faster_than_requests as requests
-requests.setHeaders([("content-type", "text/plain"), ("dnt", "1")])
+requests.set_headers([("content-type", "text/plain"), ("dnt", "1")])
 ```
 
 **Returns:** None.
 
 </details>
+
 
 
 # requests()
@@ -582,6 +598,7 @@ Response, `dict` type, values of the dict are string type,
 values of the dict can be empty string, but keys are always consistent.
 
 </details>
+
 
 
 # requests2()
@@ -614,6 +631,7 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
+
 # debugs()
 <details>
 
@@ -636,6 +654,7 @@ requests.debugs()
 </details>
 
 
+
 # tuples2json()
 <details>
 
@@ -653,6 +672,7 @@ keys must not be empty string, values can be empty string, both must the strippe
 **Returns:** JSON, string type.
 
 </details>
+
 
 
 [**For more Examples check the Examples and Tests.**](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/example.py)
