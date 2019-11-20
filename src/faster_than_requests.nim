@@ -128,11 +128,6 @@ proc get2dict*(url: string): seq[Table[string, string]] {.exportpy.} =
   for i in client.getContent(url).parseJson.pairs: result.add {i[0]: i[1].pretty}.toTable
 
 
-proc get2assert*(url, expected: string) {.discardable, exportpy.} =
-  ## HTTP GET body to assert.
-  doAssert client.getContent(url).strip == expected.strip
-
-
 proc post2str*(url, body: string): string {.exportpy.} =
   ## HTTP POST body to string.
   client.postContent(url, body)
@@ -151,11 +146,6 @@ proc post2json*(url, body: string, pretty_print: bool = false): string {.exportp
 proc post2dict*(url, body: string): seq[Table[string, string]] {.exportpy.} =
   ## HTTP POST body to dictionary.
   for i in client.postContent(url, body).parseJson.pairs: result.add {i[0]: i[1].pretty}.toTable
-
-
-proc post2assert*(url, body, expected: string) {.discardable, exportpy.} =
-  ## HTTP POST body to assert.
-  doAssert client.postContent(url, body).strip == expected.strip
 
 
 proc download*(url, filename: string) {.discardable, exportpy.} =
