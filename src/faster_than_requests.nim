@@ -1,12 +1,5 @@
 import httpclient, json, tables, strutils, os, random, threadpool, htmlparser, xmltree, sequtils, nimpy
 
-const debugMsg = pretty(%*{
-  "proxyUrl": getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY"), "timeout": getEnv"requests_timeout", "userAgent": getEnv"requests_useragent",
-  "maxRedirects": getEnv"requests_maxredirects", "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS,
-  "endian": cpuEndian, "release": defined(release), "danger": defined(danger), "CompileDate": CompileDate,  "CompileTime": CompileTime,
-  "tempDir": getTempDir(), "ssl": defined(ssl), "currentCompilerExe": getCurrentCompilerExe(), "int.high": int.high
-})
-
 let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY").strip
 
 var client = newHttpClient(timeout = getEnv("requests_timeout", "-1").parseInt, userAgent = defUserAgent,
@@ -81,21 +74,24 @@ proc setHeaders*(headers: openArray[tuple[key: string, val: string]] = @[("dnt",
 
 proc debugConfig*() {.discardable, exportpy.} =
   ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
-  echo debugMsg
+  echo static(pretty(%*{
+    "proxyUrl": getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY"), "timeout": getEnv"requests_timeout", "userAgent": getEnv"requests_useragent",
+    "maxRedirects": getEnv"requests_maxredirects", "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS,
+    "endian": cpuEndian, "release": defined(release), "danger": defined(danger), "CompileDate": CompileDate,  "CompileTime": CompileTime,
+    "tempDir": getTempDir(), "ssl": defined(ssl), "currentCompilerExe": getCurrentCompilerExe(), "int.high": int.high
+  }))
 
 
-proc tuples2json*(tuples: openArray[tuple[key: string, val: string]]): string {.exportpy.} =
+proc tuples2json*(tuples: openArray[tuple[key: string, val: string]], pretty_print: bool = false): string {.exportpy.} =
   ## Convert Tuples to JSON Minified.
-  var temp = parseJson("{}")
-  for item in tuples: temp.add(item[0], %item[1])
-  result.toUgly(temp)
-
-
-proc tuples2json_pretty*(tuples: openArray[tuple[key: string, val: string]]): string {.exportpy.} =
-  ## Convert Tuples to JSON Pretty-Printed.
-  var temp = parseJson("{}")
-  for item in tuples: temp.add(item[0], %item[1])
-  result = temp.pretty
+  if unlikely(pretty_print):
+    var temp = parseJson("{}")
+    for item in tuples: temp.add(item[0], %item[1])
+    result.toUgly(temp)
+  else:
+    var temp = parseJson("{}")
+    for item in tuples: temp.add(item[0], %item[1])
+    result = temp.pretty
 
 
 proc get2str*(url: string): string {.exportpy.} =
@@ -103,12 +99,7 @@ proc get2str*(url: string): string {.exportpy.} =
   client.getContent(url)
 
 
-proc getlist2list*(list_of_urls: openArray[string]): seq[seq[string]] {.exportpy.} =
-  ## HTTP GET body from a list of urls to a list of lowercased strings (this is designed for quick web scrapping).
-  for url in list_of_urls: result.add client.getContent(url).strip.toLowerAscii.splitlines
-
-
-proc get2str_list*(list_of_urls: openArray[string], threads: bool = false): seq[string] {.exportpy.} =
+proc get2str2*(list_of_urls: openArray[string], threads: bool = false): seq[string] {.exportpy.} =
   ## HTTP GET body to string from a list of URLs.
   if threads:
     result = newSeq[string](list_of_urls.len)
@@ -117,7 +108,7 @@ proc get2str_list*(list_of_urls: openArray[string], threads: bool = false): seq[
     for url in list_of_urls: result.add client.getContent(url)
 
 
-proc get2ndjson_list*(list_of_urls: openArray[string], ndjson_file_path: string) {.discardable, exportpy.} =
+proc get2ndjson*(list_of_urls: openArray[string], ndjson_file_path: string) {.discardable, exportpy.} =
   ## HTTP GET body to NDJSON file from a list of URLs.
   var
     temp: string
@@ -129,14 +120,9 @@ proc get2ndjson_list*(list_of_urls: openArray[string], ndjson_file_path: string)
   ndjson.close()
 
 
-proc get2json*(url: string): string {.exportpy.} =
+proc get2json*(url: string, pretty_print: bool = false): string {.exportpy.} =
   ## HTTP GET body to JSON.
-  result.toUgly client.getContent(url).parseJson
-
-
-proc get2json_pretty*(url: string): string {.exportpy.} =
-  ## HTTP GET body to pretty-printed JSON.
-  client.getContent(url).parseJson.pretty
+  if unlikely(pretty_print): result = client.getContent(url).parseJson.pretty else: result.toUgly client.getContent(url).parseJson
 
 
 proc get2dict*(url: string): seq[Table[string, string]] {.exportpy.} =
@@ -155,18 +141,13 @@ proc post2str*(url, body: string): string {.exportpy.} =
 
 
 proc post2list*(url, body: string): seq[string] {.exportpy.} =
-  ## HTTP POST body to list of lowercased strings (this is designed for quick web scrapping).
-  client.postContent(url).strip.toLowerAscii.splitLines
+  ## HTTP POST body to list of strings (this is designed for quick web scrapping).
+  client.postContent(url).strip.splitLines
 
 
-proc post2json*(url, body: string): string {.exportpy.} =
+proc post2json*(url, body: string, pretty_print: bool = false): string {.exportpy.} =
   ## HTTP POST body to JSON.
-  result.toUgly client.postContent(url, body).parseJson
-
-
-proc post2json_pretty*(url, body: string): string {.exportpy.} =
-  ## HTTP POST body to pretty-printed JSON.
-  client.postContent(url, body).parseJson.pretty
+  if unlikely(pretty_print): result = client.postContent(url, body).parseJson.pretty else: result.toUgly client.postContent(url, body).parseJson
 
 
 proc post2dict*(url, body: string): seq[Table[string, string]] {.exportpy.} =
@@ -184,23 +165,17 @@ proc downloads*(url, filename: string) {.discardable, exportpy.} =
   client.downloadFile(url, filename)
 
 
-proc downloads_list*(list_of_files: openArray[tuple[url: string, filename: string]], threads: bool = false) {.discardable, exportpy.} =
+proc downloads2*(list_of_files: openArray[tuple[url: string, filename: string]], threads: bool = false, delay: int = 0) {.discardable, exportpy.} =
   ## Download a list of files ASAP, like [(url, filename), (url, filename), ...], threads=True will use multi-threading.
-  if threads:
-    for item in list_of_files: spawn client.downloadFile(item[0], item[1])
+  if likely(delay == 0):
+    if likely(threads):
+      for item in list_of_files: spawn client.downloadFile(item[0], item[1])
+    else:
+      for item in list_of_files: client.downloadFile(item[0], item[1])
   else:
-    for item in list_of_files: client.downloadFile(item[0], item[1])
-
-
-proc downloads_list_delay*(list_of_files: openArray[tuple[url: string, filename: string]],
-                            delay: int, randoms: bool = false, debugs: bool = false) {.discardable, exportpy.} =
-  ## Download a list of files with delay, like [(url, filename), (url, filename), ...]
-  var espera = delay * 1000
-  if unlikely(randoms): randomize()
-  for item in list_of_files:
-    if unlikely(debugs): echo item
-    sleep(if unlikely(randoms): espera.rand else: espera)
-    client.downloadFile(item[0], item[1])
+    for item in list_of_files:
+      sleep delay
+      client.downloadFile(item[0], item[1])
 
 
 proc scrapper*(list_of_urls: openArray[string], html_tag: string = "a", case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false): seq[string] {.exportpy.} =
