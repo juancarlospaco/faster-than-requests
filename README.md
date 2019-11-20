@@ -18,7 +18,7 @@
 
 <img src="http://feeds.feedburner.com/RecentCommitsToFaster-than-requestsmaster.1.gif" title="Recent Commits to Faster Than Requests" width="99%" height="75px">
 
-| Library                       | Speed    | Files | LOC  | Dependencies          | Developers | Multi-Threaded Web Scrapper |
+| Library                       | Speed    | Files | LOC  | Dependencies          | Developers | Multi-Threaded Web Scrapper Builtin |
 |-------------------------------|----------|-------|------|-----------------------|------------|-----------------------------|
 | PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        | No                          |
 | Requests                      | `15.58`  | >20   | 2558 | >=7                   | >527       | No                          |
@@ -27,7 +27,7 @@
 | Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | No                          |
 | PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | No                          |
 | PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | No                          |
-| Faster_than_requests          |  `0.45`  | 1     | 75   | 0                     | 1          | Yes, Builtin                |
+| Faster_than_requests          |  `0.45`  | 1     | 75   | 0                     | 1          | Yes                         |
 
 <details>
 
