@@ -518,7 +518,7 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
-# debugConfig()
+# debugs()
 <details>
 
 **Description:**
