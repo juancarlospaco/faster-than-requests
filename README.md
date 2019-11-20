@@ -752,10 +752,6 @@ No.
 
 No.
 
-- How can I Install it ?.
-
-`pip install faster_than_requests`
-
 - Developer Documentation ?.
 
 [Yes.](https://github.com/juancarlospaco/faster-than-requests/raw/master/faster_than_requests_DOCS.zip)
@@ -768,16 +764,6 @@ https://github.com/juancarlospaco/faster-than-requests/issues
 - How to set the URL ?.
 
 `url="http://example.com"` (1st argument always).
-
-- How to set the HTTP Method ?.
-
-`http_method="get"` for GET.
-
-`http_method="post"` for POST.
-
-`http_method="put"` for PUT.
-
-`http_method="patch"` for PATCH.
 
 - How to set the HTTP Body ?.
 
