@@ -37,7 +37,7 @@ print(requests.get2ndjson(["http://httpbin.org/json", "http://httpbin.org/json"]
 print(requests.download2([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
                             ("http://httpbin.org/image/svg",  "bar.svg")]))
 
-requests.setHeaders([("key", "value")])                    # Set HTTP Headers example.
+requests.set_headers([("key", "value")])                    # Set HTTP Headers example.
 
 requests.debugConfig()                                     # Debug the internal Configuration.
 
