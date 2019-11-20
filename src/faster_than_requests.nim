@@ -158,12 +158,12 @@ proc post2assert*(url, body, expected: string) {.discardable, exportpy.} =
   doAssert client.postContent(url, body).strip == expected.strip
 
 
-proc downloads*(url, filename: string) {.discardable, exportpy.} =
+proc download*(url, filename: string) {.discardable, exportpy.} =
   ## Download a file ASAP, from url, filename arguments.
   client.downloadFile(url, filename)
 
 
-proc downloads2*(list_of_files: openArray[tuple[url: string, filename: string]], threads: bool = false, delay: int = 0) {.discardable, exportpy.} =
+proc download2*(list_of_files: openArray[tuple[url: string, filename: string]], threads: bool = false, delay: int = 0) {.discardable, exportpy.} =
   ## Download a list of files ASAP, like [(url, filename), (url, filename), ...], threads=True will use multi-threading.
   if likely(delay == 0):
     if likely(threads):
