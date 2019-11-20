@@ -62,3 +62,6 @@ jobs:
 
     - name: Strip Binary
       run: strip --strip-all faster_than_requests.so
+
+    - name: Import Binary
+      run: python3 -c "import faster_than_requests"
