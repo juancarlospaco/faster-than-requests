@@ -27,7 +27,7 @@
 | Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | No                          |
 | PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | No                          |
 | PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | No                          |
-| Faster_than_requests          |  `0.45`  | 1     | 75   | 0                     | 1          | Yes, 2, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scrapper.py#L2) |
+| Faster_than_requests          |  `0.45`  | 1     | 99   | 0                     | 1          | Yes, 2, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scrapper.py#L2) |
 
 <details>
 
@@ -171,7 +171,7 @@ Examples:
 </details>
 
 
-# get2str_list()
+# get2str2()
 <details>
 
 **Description:**
@@ -191,7 +191,7 @@ values of the list can be empty string, can be empty list.
 </details>
 
 
-# get2ndjson_list()
+# get2ndjson()
 <details>
 
 **Description:**
@@ -237,28 +237,12 @@ Takes an URL, makes an HTTP GET, returns a Minified Computer-friendly single-lin
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
+- `pretty_print` Pretty Printed JSON, optional, defaults to `False`.
 
 Examples:
 - `url = "http://example.com"`
 
-**Returns:** Response Body, Minified JSON, on a single line.
-
-</details>
-
-
-# get2json_pretty()
-<details>
-
-**Description:**
-Takes an URL, makes an HTTP GET, returns a Pretty-Printed Human-friendly Multi-line JSON with the response Body.
-
-**Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
-
-Examples:
-- `url = "http://example.com"`
-
-**Returns:** Response Body, Pretty-Printed JSON, multi-line.
+**Returns:** Response Body, Minified or Pretty-Printed JSON.
 
 </details>
 
@@ -319,25 +303,6 @@ Takes an URL, makes an HTTP GET, returns nothing, makes an assertion, useful for
 </details>
 
 
-# getlist2list()
-<details>
-
-**Description:**
-Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses.
-
-**Arguments:**
-- `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
-
-Examples:
-- `list_of_urls = ["http://example.com/foo", "http://example.com/bar"]`
-
-**Returns:**
-List of response bodies, `list` type, values of the list are string type,
-values of the list can be empty string, can be empty list.
-
-</details>
-
-
 # post2str()
 <details>
 
@@ -387,25 +352,7 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
-
-Examples:
-- `url = "http://example.com"`
-- `body = "My Body Data Here"`
-
-**Returns:** Response, string type.
-
-</details>
-
-
-# post2json_pretty()
-<details>
-
-**Description:**
-Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses.
-
-**Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
-- `body` the Body data, string type, required, can be empty string.
+- `pretty_print` Pretty Printed JSON, optional, defaults to `False`.
 
 Examples:
 - `url = "http://example.com"`
@@ -472,7 +419,7 @@ Examples:
 </details>
 
 
-# downloads_list()
+# downloads2()
 <details>
 
 **Description:**
@@ -482,34 +429,12 @@ Takes a list of URLs, makes 1 HTTP GET Download for each URL of the list.
 - `list_of_files` list of tuples, tuples must be 2 items long, first item is URL and second item is filename.
 The remote URL, string type, required, must not be empty string, is the first item on the tuple.
 The local filename, string type, required, must not be empty string, can be full path, can be relative path, must include file extension.
+- `delay` Delay between a download and the next one, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `0`, must be a positive integer value.
 - `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
 
 Examples:
-- `list_of_files = [("http://example.com/cat.jpg", "kitten.jpg")]`
-- `list_of_files = [("http://example.com/cat.jpg", "kitten.jpg"), ("http://example.com/dog.jpg", "doge.jpg")]`
-
-**Returns:** None.
-
-</details>
-
-
-# downloads_list_delay()
-<details>
-
-**Description:**
-Takes a list of URLs, makes 1 HTTP GET Download for each URL of the list of with a delay, optional randomized delay.
-
-**Arguments:**
-- `delay` Delay between a download and the next one, integer type, required, must be non-zero positive integer value.
-- `randoms` Randomize the Delay, bool type, required, default is `False`.
-- `debugs` Debug the downloads, bool type, required, default is `False`.
-- `list_of_files` list of tuples, tuples must be 2 items long, first item is URL and second item is filename.
-The remote URL, string type, required, must not be empty string, is the first item on the tuple.
-The local filename, string type, required, must not be empty string, can be full path, can be relative path, must include file extension.
-
-Examples:
-- `list_of_files = [("http://example.com/cat.jpg", "kitten.jpg")]`
-- `list_of_files = [("http://example.com/cat.jpg", "kitten.jpg"), ("http://example.com/dog.jpg", "doge.jpg")]`
+- `list_of_files = downloads2([("http://example.com/cat.jpg", "kitten.jpg")])`
+- `list_of_files = downloads2([("http://example.com/cat.jpg", "kitten.jpg"), ("http://example.com/dog.jpg", "doge.jpg")])`
 
 **Returns:** None.
 
@@ -603,25 +528,6 @@ prints the pretty-printed human-friendly multi-line JSON Configuration to standa
 **Arguments:** None.
 
 **Returns:** None.
-
-</details>
-
-
-# tuples2json_pretty()
-<details>
-
-**Description:**
-Convert Tuples to JSON, this is a UX improvement just for convenience, this is 100% optional,
-returns the Tuples converted to pretty-printed human-friendly multi-line JSON.
-
-**Arguments:**
-- `tuples` A list containing Tuples, list type, required,
-a list of tuples, tuples must be 2 items long,
-must not be empty list, must not be empty tuple,
-the first item of the tuple is the key and second item of the tuple is value,
-keys must not be empty string, values can be empty string, both must the stripped.
-
-**Returns:** JSON, string type.
 
 </details>
 
