@@ -28,13 +28,13 @@ print(requests.requests("http://httpbin.org/get", "get", "", [("key", "value")])
 print(requests.requests2("http://httpbin.org/get", "get", "", [("key", "value")],
                           userAgent="FasterThanRequests", timeout=9000, maxRedirects=9)) # HTTP GET/POST/PUT/DELETE/PATCH,Headers,etc.
 
-print(requests.downloads("http://httpbin.org/image/jpeg", "foo.jpeg"))                  # HTTP GET Download 1 file.
+print(requests.download("http://httpbin.org/image/jpeg", "foo.jpeg"))                  # HTTP GET Download 1 file.
 
 print(requests.get2str2(["http://httpbin.org/json", "http://httpbin.org/xml"]))     # HTTP GET body to string from a list.
 
 print(requests.get2ndjson(["http://httpbin.org/json", "http://httpbin.org/json"], "output.ndjson")) # HTTP GET body to NDJSON file from a list.
 
-print(requests.downloads2([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
+print(requests.download2([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
                             ("http://httpbin.org/image/svg",  "bar.svg")]))
 
 requests.setHeaders([("key", "value")])                    # Set HTTP Headers example.
