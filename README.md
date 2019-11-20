@@ -347,29 +347,6 @@ requests.scrapper2(["https://nim-lang.org", "http://example.com"], list_of_tags=
 
 
 
-# get2assert()
-<details>
-
-**Description:**
-Takes an URL, makes an HTTP GET, returns nothing, makes an assertion, useful for Unittest and Debug purposes.
-
-**Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
-- `expected` Response expected content, string type, required, can be empty string.
-
-Examples:
-
-```python
-import faster_than_requests as requests
-requests.get2assert("http://example.com/api/returns_int", "42")
-```
-
-**Returns:** None.
-
-</details>
-
-
-
 # post2str()
 <details>
 
@@ -437,30 +414,6 @@ requests.post2json("http://example.com/api/foo", "My Body Data Here")
 ```
 
 **Returns:** Response, string type.
-
-</details>
-
-
-
-# post2assert()
-<details>
-
-**Description:**
-Takes an URL, makes an HTTP POST on that URL, returns a response.
-
-**Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
-- `body` the Body data, string type, required, can be empty string.
-- `expected` Response expected content, string type, required, can be empty string.
-
-Examples:
-
-```python
-import faster_than_requests as requests
-requests.post2assert("http://example.com/api/foo", "My Body Data Here")
-```
-
-**Returns:** None.
 
 </details>
 
