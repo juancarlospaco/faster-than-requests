@@ -1,13 +1,13 @@
 import faster_than_requests as requests
 
 
-print(requests.gets("http://httpbin.org/get"))              # HTTP GET.
+print(requests.get("http://httpbin.org/get"))              # HTTP GET.
 
-print(requests.posts("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""))      # HTTP POST.
+print(requests.post("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""))      # HTTP POST.
 
 print(requests.put("http://httpbin.org/put", """{"foo": "bar", "baz": true}"""))        # HTTP PUT.
 
-print(requests.deletes("http://httpbin.org/delete"))        # HTTP DELETE.
+print(requests.delete("http://httpbin.org/delete"))        # HTTP DELETE.
 
 print(requests.patch("http://httpbin.org/patch", """{"foo": "bar", "baz": true}"""))    # HTTP PATCH.
 
