@@ -68,5 +68,5 @@ jobs:
 
     - name: Unittests
       run: |
-        ln -svf faster_than_requests.so tests/faster_than_requests.so
+        cp -v faster_than_requests.so tests/faster_than_requests.so
         python3 tests/tests.py
