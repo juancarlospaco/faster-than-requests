@@ -1,20 +1,19 @@
 import httpclient, json, tables, strutils, os, random, threadpool, htmlparser, xmltree, sequtils, nimpy
 
 let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY").strip
-
 var client = newHttpClient(timeout = getEnv("requests_timeout", "-1").parseInt, userAgent = defUserAgent,
   proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH").strip) else: nil),
   maxRedirects = getEnv("requests_maxredirects", "9").parseInt)
 
 
-proc gets*(url: string): Table[string, string] {.exportpy.} =
+proc get*(url: string): Table[string, string] {.exportpy.} =
   ## HTTP GET an URL to dictionary.
   let r = client.get(url)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
     "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
-proc posts*(url, body: string): Table[string, string] {.exportpy.} =
+proc post*(url, body: string): Table[string, string] {.exportpy.} =
   ## HTTP POST an URL to dictionary.
   let r = client.post(url, body)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
@@ -35,7 +34,7 @@ proc patch*(url, body: string): Table[string, string] {.exportpy.} =
     "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
-proc deletes*(url: string): Table[string, string] {.exportpy.} =
+proc delete*(url: string): Table[string, string] {.exportpy.} =
   ## HTTP DELETE an URL to dictionary.
   let r = client.request(url, HttpDelete)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
