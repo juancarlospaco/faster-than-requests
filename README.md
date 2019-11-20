@@ -179,7 +179,7 @@ values of the dict can be empty string, but keys are always consistent.
 # Extras: Go beyond requests
 
 
-# get2str()
+## get2str()
 <details>
 
 **Description:**
@@ -201,7 +201,7 @@ requests.get2str("http://example.com")
 
 
 
-# get2str2()
+## get2str2()
 <details>
 
 **Description:**
@@ -226,7 +226,7 @@ values of the list can be empty string, can be empty list.
 
 
 
-# get2ndjson()
+## get2ndjson()
 <details>
 
 **Description:**
@@ -249,7 +249,7 @@ requests.get2ndjson(["http://example.com/foo", "http://example.com/bar"], "/some
 
 
 
-# get2dict()
+## get2dict()
 <details>
 
 **Description:**
@@ -273,7 +273,7 @@ values of the dict can be empty string, but keys are always consistent.
 
 
 
-# get2json()
+## get2json()
 <details>
 
 **Description:**
@@ -296,7 +296,7 @@ requests.get2json("http://example.com", pretty_print=True)
 
 
 
-# scrapper()
+## scrapper()
 <details>
 
 **Description:**
@@ -322,7 +322,7 @@ requestsscrapper(["https://nim-lang.org", "http://example.com"], case_insensitiv
 
 
 
-# scrapper2()
+## scrapper2()
 <details>
 
 **Description:**
@@ -347,7 +347,7 @@ requests.scrapper2(["https://nim-lang.org", "http://example.com"], list_of_tags=
 
 
 
-# post2str()
+## post2str()
 <details>
 
 **Description:**
@@ -370,7 +370,7 @@ requests.post2str("http://example.com/api/foo", "My Body Data Here")
 
 
 
-# post2dict()
+## post2dict()
 <details>
 
 **Description:**
@@ -395,7 +395,7 @@ values of the dict can be empty string, but keys are always consistent.
 
 
 
-# post2json()
+## post2json()
 <details>
 
 **Description:**
@@ -419,7 +419,7 @@ requests.post2json("http://example.com/api/foo", "My Body Data Here")
 
 
 
-# post2list()
+## post2list()
 <details>
 
 **Description:**
@@ -444,7 +444,7 @@ values of the list can be empty string, can be empty list.
 
 
 
-# download()
+## download()
 <details>
 
 **Description:**
@@ -467,7 +467,7 @@ requests.download("http://example.com/api/foo", "my_file.ext")
 
 
 
-# download2()
+## download2()
 <details>
 
 **Description:**
@@ -493,7 +493,7 @@ requests.download2([("http://example.com/cat.jpg", "kitten.jpg"), ("http://examp
 
 
 
-# set_headers()
+## set_headers()
 <details>
 
 **Description:**
@@ -529,7 +529,7 @@ requests.set_headers([("content-type", "text/plain"), ("dnt", "1")])
 
 
 
-# requests()
+## requests()
 <details>
 
 **Description:**
@@ -554,7 +554,7 @@ values of the dict can be empty string, but keys are always consistent.
 
 
 
-# requests2()
+## requests2()
 <details>
 
 **Description:**
@@ -585,7 +585,7 @@ values of the dict can be empty string, but keys are always consistent.
 
 
 
-# debugs()
+## debugs()
 <details>
 
 **Description:**
@@ -608,7 +608,7 @@ requests.debugs()
 
 
 
-# tuples2json()
+## tuples2json()
 <details>
 
 **Description:**
