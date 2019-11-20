@@ -62,7 +62,7 @@ proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[ke
   "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
-proc setHeaders*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {.exportpy.} =
+proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {.exportpy.} =
   ## Set the HTTP Headers to the HTTP client.
   client.headers = newHttpHeaders(headers)
 
