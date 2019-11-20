@@ -50,7 +50,7 @@ import faster_than_requests as requests
 requests.get("http://httpbin.org/get")                     # GET
 requests.post("http://httpbin.org/post", "Some Data Here") # POST
 requests.download("http://example.com/foo.jpg", "out.jpg") # Download a file
-requests.scrapper(["https://nim-lang.org"], threads=True)  # Multi-Threaded Web Scrapper
+requests.scrapper(["http://foo.io", "http://bar.io"], threads=True)  # Multi-Threaded Web Scrapper
 ```
 
 
