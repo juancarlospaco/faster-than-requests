@@ -1,4 +1,4 @@
-import httpclient, json, tables, strutils, os, random, threadpool, nimpy
+import httpclient, json, tables, strutils, os, random, threadpool, htmlparser, xmltree, sequtils, nimpy
 
 const debugMsg = pretty(%*{
   "proxyUrl": getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY"), "timeout": getEnv"requests_timeout", "userAgent": getEnv"requests_useragent",
@@ -201,3 +201,13 @@ proc downloads_list_delay*(list_of_files: openArray[tuple[url: string, filename:
     if unlikely(debugs): echo item
     sleep(if unlikely(randoms): espera.rand else: espera)
     client.downloadFile(item[0], item[1])
+
+
+proc scrapper*(list_of_urls: openArray[string], html_tag: string = "a", case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false): seq[string] {.exportpy.} =
+  ## Multi-Threaded Ready-Made Web Scrapper from a list of URLs.
+  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+  result = newSeq[string](urls.len)
+  if likely(threads):
+    for i, url in urls: result[i] = ^ spawn $findAll(parseHtml(newHttpClient().getContent(url)), html_tag, case_insensitive)
+  else:
+    for i, url in urls: result[i] = $findAll(parseHtml(newHttpClient().getContent(url)), html_tag, case_insensitive)
