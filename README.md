@@ -270,7 +270,7 @@ Examples:
 Multi-Threaded Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
 
 **Arguments:**
-- `list_of_urls` list of URLs, URL must be string type, required, must not be empty list.
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list.
 - `html_tag` HTML Tag to parse, string type, optional, defaults to `"a"` being Links.
 - `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`.
 - `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
@@ -278,6 +278,26 @@ Multi-Threaded Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
 
 Examples:
 - `my_scrapped_webs = scrapper(["https://nim-lang.org", "https://nim-lang.org"])`
+
+**Returns:** Scrapped Webs.
+
+</details>
+
+
+# scrapper2()
+<details>
+
+**Description:**
+Multi-Tag Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
+
+**Arguments:**
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list.
+- `list_of_tags` List of HTML Tags to parse, List type, optional, defaults to `["a"]` being Links.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
+
+Examples:
+- `my_scrapped_webs = scrapper2(["https://nim-lang.org", "https://nim-lang.org"], ["a", "h1"])`
 
 **Returns:** Scrapped Webs.
 
