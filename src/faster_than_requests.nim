@@ -1,5 +1,6 @@
 import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, nimpy
 
+
 let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY").strip
 var client = newHttpClient(timeout = getEnv("requests_timeout", "-1").parseInt, userAgent = defUserAgent,
   proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH").strip) else: nil),
