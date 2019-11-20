@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+- **Please paste the output of `faster_than_requests.debugs()`.**
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
