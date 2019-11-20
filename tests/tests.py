@@ -39,7 +39,7 @@ class TestName(unittest.TestCase):
         self.assertIsNone(faster_than_requests.download("http://httpbin.org/image/jpeg", "foo.jpeg"))
 
     def test_tuples2json(self):
-        self.assertEqual(faster_than_requests.tuples2json([("key0", "value0"), ("key1", "value1")]), '{"key0":"value0","key1":"value1"}')
+        self.assertEqual(faster_than_requests.tuples2json([("key0", "value0"), ("key1", "value1")]), '{\n  "key0": "value0",\n  "key1": "value1"\n}')
 
     def test_gets(self):
         self.assertIsInstance(faster_than_requests.get("http://httpbin.org/get"), dict)
@@ -89,13 +89,6 @@ class TestName(unittest.TestCase):
 
     def test_get2str_list(self):
         self.assertIsInstance(faster_than_requests.get2str2(["http://httpbin.org/json", "http://httpbin.org/xml"]), list)
-
-    def test_tuples2json_pretty(self):
-        self.assertEqual(faster_than_requests.tuples2json([("key0", "value0"), ("key1", "value1")]),
-        '''{
-  "key0": "value0",
-  "key1": "value1"
-}''')
 
 
 if __name__.__contains__("__main__"):
