@@ -211,3 +211,11 @@ proc scrapper*(list_of_urls: openArray[string], html_tag: string = "a", case_ins
     for i, url in urls: result[i] = ^ spawn $findAll(parseHtml(client.getContent(url)), html_tag, case_insensitive)
   else:
     for i, url in urls: result[i] = $findAll(parseHtml(client.getContent(url)), html_tag, case_insensitive)
+
+
+proc scrapper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], case_insensitive: bool = true, deduplicate_urls: bool = false): seq[seq[string]] {.exportpy.} =
+  ## Multi-Tag Ready-Made Web Scrapper from a 1 URL.
+  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+  result = newSeq[seq[string]](urls.len)
+  for i, url in urls:
+    for tag in list_of_tags: result[i].add $findAll(parseHtml(client.getContent(url)), tag, case_insensitive)
