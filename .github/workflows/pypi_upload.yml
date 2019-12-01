@@ -20,9 +20,9 @@ jobs:
         TWINE_NON_INTERACTIVE: 1
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        TWINE_REPOSITORY_URL: "https://test.pypi.org/legacy/"
-        TWINE_REPOSITORY: "https://test.pypi.org/legacy/"
         MAIN_MODULE: "src/faster_than_requests.nim"
+        #TWINE_REPOSITORY_URL: "https://test.pypi.org/legacy/"
+        #TWINE_REPOSITORY: "https://test.pypi.org/legacy/"
 
     - name: Update Python PIP
       run: pip3 install --upgrade --disable-pip-version-check pip setuptools twine
