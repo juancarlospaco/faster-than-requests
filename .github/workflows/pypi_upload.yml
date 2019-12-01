@@ -71,4 +71,4 @@ jobs:
     - name: Publish to PYPI
       run: |
         python3 setup.py --verbose sdist --formats=zip
-        # twine upload --verbose --disable-progress-bar dist/*
+        twine upload --verbose --disable-progress-bar dist/*
