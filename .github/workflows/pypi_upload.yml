@@ -56,7 +56,7 @@ jobs:
         export PATH=$HOME/.nimble/bin:$PATH
         nimble -y install nimpy
 
-    - name: Prepare Folders
+    - name: Prepare Files
       run: |
         mkdir --verbose --parents dist/
         rm --verbose --force --recursive *.c *.h *.so *.pyd *.egg-info/ dist/*.zip
@@ -70,4 +70,5 @@ jobs:
     - name: Publish to PYPI
       run: |
         python3 setup.py --verbose sdist --formats=zip
+        rm --verbose --force --recursive *.c *.h *.so *.pyd *.egg-info/
         twine upload --verbose --disable-progress-bar dist/*.zip
