@@ -58,7 +58,7 @@ jobs:
 
     - name: Prepare Folders
       run: |
-        mkdir --verbose dist/
+        mkdir --verbose --parents dist/
         rm --verbose --force --recursive *.c *.h *.so *.pyd *.egg-info/ dist/*.zip
         cp --verbose --force ~/.choosenim/toolchains/nim-$CHOOSENIM_CHOOSE_VERSION/lib/nimbase.h nimbase.h
 
