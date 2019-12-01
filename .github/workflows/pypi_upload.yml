@@ -65,7 +65,6 @@ jobs:
     - name: Compile to C
       run: |
         export PATH=$HOME/.nimble/bin:$PATH
-        # nimble build
         nim compileToC --compileOnly -d:release -d:danger -d:ssl --threads:on --app:lib --opt:speed --gc:markAndSweep --nimcache:. src/faster_than_requests.nim
 
     - name: Publish to PYPI
