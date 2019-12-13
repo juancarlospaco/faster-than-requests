@@ -18,7 +18,7 @@
 
 <img src="http://feeds.feedburner.com/RecentCommitsToFaster-than-requestsmaster.1.gif" title="Recent Commits to Faster Than Requests" width="99%" height="75px">
 
-| Library                       | Speed    | Files | LOC  | Dependencies          | Developers | Multi-Threaded Web Scrapper Built-in |
+| Library                       | Speed    | Files | LOC  | Dependencies          | Developers | Multi-Threaded Web Scraper Built-in |
 |-------------------------------|----------|-------|------|-----------------------|------------|-----------------------------|
 | PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        | No                          |
 | Requests                      | `15.58`  | >20   | 2558 | >=7                   | >527       | No                          |
@@ -27,7 +27,7 @@
 | Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | No                          |
 | PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | No                          |
 | PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | No                          |
-| Faster_than_requests          |  `0.45`  | 1     | 99   | 0                     | 1          | Yes, 2, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scrapper.py#L2) |
+| Faster_than_requests          |  `0.45`  | 1     | 99   | 0                     | 1          | Yes, 3, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
 
 <details>
 
@@ -50,7 +50,7 @@ import faster_than_requests as requests
 requests.get("http://httpbin.org/get")                              # GET
 requests.post("http://httpbin.org/post", "Some Data Here")          # POST
 requests.download("http://example.com/foo.jpg", "out.jpg")          # Download a file
-requests.scrapper(["http://foo.io", "http://bar.io"], threads=True) # Multi-Threaded Web Scrapper
+requests.scraper(["http://foo.io", "http://bar.io"], threads=True) # Multi-Threaded Web Scraper
 ```
 
 
@@ -181,55 +181,84 @@ values of the dict can be empty string, but keys are always consistent.
 
 # Extras: Go beyond requests
 
-## scrapper()
+## scraper()
 <details>
 
 **Description:**
-Multi-Threaded Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
+Multi-Threaded Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 
 **Arguments:**
-- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list.
-- `html_tag` HTML Tag to parse, string type, optional, defaults to `"a"` being Links.
-- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`.
-- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
-- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["http://example.io"]`.
+- `html_tag` HTML Tag to parse, string type, optional, defaults to `"a"` being Links, example `"h1"`.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`, example `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`, example `False`.
+- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, optional, omitting it will Not use Multi-Threading.
 
 Examples:
 
 ```python
 import faster_than_requests as requests
-requestsscrapper(["https://nim-lang.org", "http://example.com"], case_insensitive=False, threads=True)
+requests.scraper(["https://nim-lang.org", "http://example.com"], case_insensitive=False, threads=True)
 ```
 
-**Returns:** Scrapped Webs.
+**Returns:** Scraped Webs.
 
 </details>
 
 
 
-## scrapper2()
+## scraper2()
 <details>
 
 **Description:**
-Multi-Tag Ready-Made URL-Deduplicating Web Scrapper from a list of URLs.
+Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 
 **Arguments:**
-- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list.
-- `list_of_tags` List of HTML Tags to parse, List type, optional, defaults to `["a"]` being Links.
-- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`.
-- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`.
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["http://example.io"]`.
+- `list_of_tags` List of HTML Tags to parse, List type, optional, defaults to `["a"]` being Links, example `["h1", "h2"]`.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`, example `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`, example `False`.
 
 Examples:
 
 ```python
 import faster_than_requests as requests
-requests.scrapper2(["https://nim-lang.org", "http://example.com"], list_of_tags=["h1", "h2"], case_insensitive=False)
+requests.scraper2(["https://nim-lang.org", "http://example.com"], list_of_tags=["h1", "h2"], case_insensitive=False)
 ```
 
-**Returns:** Scrapped Webs.
+**Returns:** Scraped Webs.
 
 </details>
 
+
+## scraper3()
+<details>
+
+**Description:**
+Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
+
+**Arguments:**
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["http://example.io"]`.
+- `list_of_tags` List of HTML Tags to parse, List type, optional, defaults to `["a"]` being Links, example `["h1", "h2"]`.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`, example `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`, example `False`.
+- `start_with` Match at the start of the line, similar to `str.startswith()`, optional, example `"<cite "`.
+- `ends_with` Match at the end of the line, similar to `str.endswith()`, optional, example `"</cite>"`.
+- `line_start` Slice the line at the start by this index, optional, defaults to `0` meaning no slicing since string start at index 0, example `"3"` cuts off 3 letters of the line at the start.
+- `line_end` Slice the line at the end by this *reverse* index, optional, defaults to `1` meaning no slicing since string ends at reverse index 1, example `"9"` cuts off 9 letters of the line at the end.
+- `pre_replacements` List of tuples of strings to replace *before* parsing, replacements are in parallel, List type, optional, example `[("old", "new"), ("red", "blue")]` will replace `"old"` with `"new"` and will replace `"red"` with `"blue"`.
+- `post_replacements` List of tuples of strings to replace *after* parsing, replacements are in parallel, List type, optional, example `[("old", "new"), ("red", "blue")]` will replace `"old"` with `"new"` and will replace `"red"` with `"blue"`.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.scraper3(["https://nim-lang.org", "http://example.com"], list_of_tags=["h1", "h2"], case_insensitive=False)
+```
+
+**Returns:** Scraped Webs.
+
+</details>
 
 
 ## get2str()
