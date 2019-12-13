@@ -61,7 +61,7 @@ requests.scraper(["http://foo.io", "http://bar.io"], threads=True) # Multi-Threa
 Takes an URL string, makes an HTTP GET and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
+- `url` the remote URL, string type, required, must not be empty string, example `https://dev.to`.
 
 Examples:
 
@@ -88,7 +88,7 @@ values of the dict can be empty string, but keys are always consistent.
 Takes an URL string, makes an HTTP POST and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
+- `url` the remote URL, string type, required, must not be empty string, example `https://dev.to`.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
@@ -113,7 +113,7 @@ values of the dict can be empty string, but keys are always consistent.
 Takes an URL string, makes an HTTP PUT and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
+- `url` the remote URL, string type, required, must not be empty string, example `https://nim-lang.org`.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
@@ -138,7 +138,7 @@ values of the dict can be empty string, but keys are always consistent.
 Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
+- `url` the remote URL, string type, required, must not be empty string, example `https://nim-lang.org`.
 
 Examples:
 
@@ -162,7 +162,7 @@ values of the dict can be empty string, but keys are always consistent.
 Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
 
 **Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
+- `url` the remote URL, string type, required, must not be empty string, example `https://archlinux.org`.
 - `body` the Body data, string type, required, can be empty string.
 
 Examples:
@@ -268,7 +268,7 @@ requests.scraper3(["https://nim-lang.org", "http://example.com"], list_of_tags=[
 Takes an URL string, makes an HTTP GET and returns a string with the response Body.
 
 **Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
+- `url` the remote URL, string type, required, must not be empty string, example `https://archlinux.org`.
 
 Examples:
 
@@ -338,7 +338,7 @@ requests.get2ndjson(["http://example.com/foo", "http://example.com/bar"], "/some
 Takes an URL, makes an HTTP GET, returns a dict with the response Body.
 
 **Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
+- `url` the remote URL, string type, required, must not be empty string, example `https://alpinelinux.org`.
 
 Examples:
 
@@ -362,7 +362,7 @@ values of the dict can be empty string, but keys are always consistent.
 Takes an URL, makes an HTTP GET, returns a Minified Computer-friendly single-line JSON with the response Body.
 
 **Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
+- `url` the remote URL, string type, required, must not be empty string, example `https://alpinelinux.org`.
 - `pretty_print` Pretty Printed JSON, optional, defaults to `False`.
 
 Examples:
