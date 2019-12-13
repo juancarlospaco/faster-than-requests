@@ -47,9 +47,9 @@
 ```python
 import faster_than_requests as requests
 
-requests.get("http://httpbin.org/get")                              # GET
-requests.post("http://httpbin.org/post", "Some Data Here")          # POST
-requests.download("http://example.com/foo.jpg", "out.jpg")          # Download a file
+requests.get("http://httpbin.org/get")                             # GET
+requests.post("http://httpbin.org/post", "Some Data Here")         # POST
+requests.download("http://example.com/foo.jpg", "out.jpg")         # Download a file
 requests.scraper(["http://foo.io", "http://bar.io"], threads=True) # Multi-Threaded Web Scraper
 ```
 
@@ -742,6 +742,7 @@ $ # This is the Bash command line terminal!.
 
 - Git Clone and Compile on Windows 10 on just 2 commands!.
 - [Alternatively you can try Docker for Windows.](https://docs.docker.com/docker-for-windows)
+- [Alternatively you can try WSL for Windows.](https://docs.microsoft.com/en-us/windows/wsl/about)
 - **The file extension must be `.pyd`, NOT `.dll`. Compile with `-d:ssl` to use HTTPS.**
 
 
