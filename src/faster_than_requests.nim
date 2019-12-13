@@ -182,7 +182,7 @@ proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], ca
     for tag in list_of_tags: result[i].add $findAll(parseHtml(client.getContent(url)), tag, case_insensitive)
 
 
-proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, case_insensitive: bool = true, deduplicate_urls: bool = false, pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[]): seq[seq[string]] =
+proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, case_insensitive: bool = true, deduplicate_urls: bool = false, pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[]): seq[seq[string]] {.exportpy.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
   result = newSeq[seq[string]](urls.len)
   for i, url in urls:
