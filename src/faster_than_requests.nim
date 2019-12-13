@@ -10,36 +10,31 @@ var client = newHttpClient(timeout = getEnv("requests_timeout", "-1").parseInt, 
 proc get*(url: string): Table[string, string] {.exportpy.} =
   ## HTTP GET an URL to dictionary.
   let r = client.get(url)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-    "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc post*(url, body: string): Table[string, string] {.exportpy.} =
   ## HTTP POST an URL to dictionary.
   let r = client.post(url, body)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-    "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc put*(url, body: string): Table[string, string] {.exportpy.} =
   ## HTTP PUT an URL to dictionary.
   let r = client.request(url, HttpPut, body)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-    "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc patch*(url, body: string): Table[string, string] {.exportpy.} =
   ## HTTP PATCH an URL to dictionary.
   let r = client.request(url, HttpPatch, body)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-    "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc delete*(url: string): Table[string, string] {.exportpy.} =
   ## HTTP DELETE an URL to dictionary.
   let r = client.request(url, HttpDelete)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-    "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], debugs: bool = false): Table[string, string] {.exportpy.} =
@@ -47,8 +42,7 @@ proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key
   let headerss = newHttpHeaders(http_headers)
   if unlikely(debugs): echo url, "\n", http_method, "\n", body, "\n", headerss
   let r = client.request(url, http_method, body, headerss)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-    "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], proxyUrl: string = "",
@@ -58,8 +52,7 @@ proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[ke
     proxxi = if unlikely(proxyUrl.len > 1): newProxy(proxyUrl.strip, proxyAuth.strip) else: nil
     client = newHttpClient(timeout = timeout, userAgent = userAgent, proxy = proxxi, maxRedirects = maxRedirects)
     r = client.request(url, http_method, body, newHttpHeaders(http_headers))
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-  "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {.exportpy.} =
@@ -189,7 +182,6 @@ proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], st
     for tag in list_of_tags:
       for item in findAll(parseHtml(if pre_replacements.len > 0: client.getContent(url).multiReplace(pre_replacements) else: client.getContent(url)), tag, case_insensitive):
         if start_with.len > 0 and end_with.len > 0:
-          if strip($item).startsWith(start_with) and strip($item).endsWith(end_with):
-            result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
+          if strip($item).startsWith(start_with) and strip($item).endsWith(end_with): result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
           else: continue
         else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
