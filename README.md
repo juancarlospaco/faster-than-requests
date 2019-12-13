@@ -190,9 +190,9 @@ Multi-Threaded Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 **Arguments:**
 - `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["http://example.io"]`.
 - `html_tag` HTML Tag to parse, string type, optional, defaults to `"a"` being Links, example `"h1"`.
-- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`, example `True`.
-- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`, example `False`.
-- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, optional, omitting it will Not use Multi-Threading.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, boolean type, optional, defaults to `True`, example `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, boolean type, optional, defaults to `False`, example `False`.
+- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, boolean type, optional, omitting it will Not use Multi-Threading.
 
 Examples:
 
@@ -216,8 +216,8 @@ Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 **Arguments:**
 - `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["http://example.io"]`.
 - `list_of_tags` List of HTML Tags to parse, List type, optional, defaults to `["a"]` being Links, example `["h1", "h2"]`.
-- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`, example `True`.
-- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`, example `False`.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, boolean type, optional, defaults to `True`, example `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, boolean type, optional, defaults to `False`, example `False`.
 
 Examples:
 
@@ -240,12 +240,12 @@ Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 **Arguments:**
 - `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["http://example.io"]`.
 - `list_of_tags` List of HTML Tags to parse, List type, optional, defaults to `["a"]` being Links, example `["h1", "h2"]`.
-- `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`, example `True`.
-- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`, example `False`.
-- `start_with` Match at the start of the line, similar to `str().startswith()`, optional, example `"<cite "`.
-- `ends_with` Match at the end of the line, similar to `str().endswith()`, optional, example `"</cite>"`.
-- `line_start` Slice the line at the start by this index, optional, defaults to `0` meaning no slicing since string start at index 0, example `3` cuts off 3 letters of the line at the start.
-- `line_end` Slice the line at the end by this *reverse* index, optional, defaults to `1` meaning no slicing since string ends at reverse index 1, example `9` cuts off 9 letters of the line at the end.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, boolean type, optional, defaults to `True`, example `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, boolean type, optional, defaults to `False`, example `False`.
+- `start_with` Match at the start of the line, similar to `str().startswith()`, string type, optional, example `"<cite "`.
+- `ends_with` Match at the end of the line, similar to `str().endswith()`,  string type, optional, example `"</cite>"`.
+- `line_start` Slice the line at the start by this index, integer type, optional, defaults to `0` meaning no slicing since string start at index 0, example `3` cuts off 3 letters of the line at the start.
+- `line_end` Slice the line at the end by this *reverse* index, integer type, optional, defaults to `1` meaning no slicing since string ends at reverse index 1, example `9` cuts off 9 letters of the line at the end.
 - `pre_replacements` List of tuples of strings to replace *before* parsing, replacements are in parallel, List type, optional, example `[("old", "new"), ("red", "blue")]` will replace `"old"` with `"new"` and will replace `"red"` with `"blue"`.
 - `post_replacements` List of tuples of strings to replace *after* parsing, replacements are in parallel, List type, optional, example `[("old", "new"), ("red", "blue")]` will replace `"old"` with `"new"` and will replace `"red"` with `"blue"`.
 
