@@ -242,10 +242,10 @@ Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 - `list_of_tags` List of HTML Tags to parse, List type, optional, defaults to `["a"]` being Links, example `["h1", "h2"]`.
 - `case_insensitive` Case Insensitive, `True` for Case Insensitive, optional, defaults to `True`, example `True`.
 - `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, optional, defaults to `False`, example `False`.
-- `start_with` Match at the start of the line, similar to `str.startswith()`, optional, example `"<cite "`.
-- `ends_with` Match at the end of the line, similar to `str.endswith()`, optional, example `"</cite>"`.
-- `line_start` Slice the line at the start by this index, optional, defaults to `0` meaning no slicing since string start at index 0, example `"3"` cuts off 3 letters of the line at the start.
-- `line_end` Slice the line at the end by this *reverse* index, optional, defaults to `1` meaning no slicing since string ends at reverse index 1, example `"9"` cuts off 9 letters of the line at the end.
+- `start_with` Match at the start of the line, similar to `str().startswith()`, optional, example `"<cite "`.
+- `ends_with` Match at the end of the line, similar to `str().endswith()`, optional, example `"</cite>"`.
+- `line_start` Slice the line at the start by this index, optional, defaults to `0` meaning no slicing since string start at index 0, example `3` cuts off 3 letters of the line at the start.
+- `line_end` Slice the line at the end by this *reverse* index, optional, defaults to `1` meaning no slicing since string ends at reverse index 1, example `9` cuts off 9 letters of the line at the end.
 - `pre_replacements` List of tuples of strings to replace *before* parsing, replacements are in parallel, List type, optional, example `[("old", "new"), ("red", "blue")]` will replace `"old"` with `"new"` and will replace `"red"` with `"blue"`.
 - `post_replacements` List of tuples of strings to replace *after* parsing, replacements are in parallel, List type, optional, example `[("old", "new"), ("red", "blue")]` will replace `"old"` with `"new"` and will replace `"red"` with `"blue"`.
 
