@@ -166,8 +166,7 @@ proc download2*(list_of_files: openArray[tuple[url: string, filename: string]], 
       client.downloadFile(item[0], item[1])
 
 
-proc scrapper*(list_of_urls: openArray[string], html_tag: string = "a", case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false): seq[string] {.exportpy.} =
-  ## Multi-Threaded Ready-Made Web Scrapper from a list of URLs.
+proc scraper*(list_of_urls: openArray[string], html_tag: string = "a", case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false): seq[string] {.exportpy.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
   result = newSeq[string](urls.len)
   if likely(threads):
@@ -176,9 +175,21 @@ proc scrapper*(list_of_urls: openArray[string], html_tag: string = "a", case_ins
     for i, url in urls: result[i] = $findAll(parseHtml(client.getContent(url)), html_tag, case_insensitive)
 
 
-proc scrapper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], case_insensitive: bool = true, deduplicate_urls: bool = false): seq[seq[string]] {.exportpy.} =
-  ## Multi-Tag Ready-Made Web Scrapper from a 1 URL.
+proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], case_insensitive: bool = true, deduplicate_urls: bool = false): seq[seq[string]] {.exportpy.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
   result = newSeq[seq[string]](urls.len)
   for i, url in urls:
     for tag in list_of_tags: result[i].add $findAll(parseHtml(client.getContent(url)), tag, case_insensitive)
+
+
+proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, case_insensitive: bool = true, deduplicate_urls: bool = false, pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[]): seq[seq[string]] =
+  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+  result = newSeq[seq[string]](urls.len)
+  for i, url in urls:
+    for tag in list_of_tags:
+      for item in findAll(parseHtml(if pre_replacements.len > 0: client.getContent(url).multiReplace(pre_replacements) else: client.getContent(url)), tag, case_insensitive):
+        if start_with.len > 0 and end_with.len > 0:
+          if strip($item).startsWith(start_with) and strip($item).endsWith(end_with):
+            result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
+          else: continue
+        else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
