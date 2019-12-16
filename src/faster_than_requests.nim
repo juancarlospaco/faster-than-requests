@@ -13,9 +13,9 @@ proc get*(url: string): Table[string, string] {.exportpy.} =
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
-proc post*(url, body: string): Table[string, string] {.exportpy.} =
+proc post*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): Table[string, string] {.exportpy.} =
   ## HTTP POST an URL to dictionary.
-  let r = client.post(url, body)
+  let r = client.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
 
 
@@ -121,24 +121,28 @@ proc get2dict*(url: string): seq[Table[string, string]] {.exportpy.} =
   for i in client.getContent(url).parseJson.pairs: result.add {i[0]: i[1].pretty}.toTable
 
 
-proc post2str*(url, body: string): string {.exportpy.} =
+proc post2str*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): string {.exportpy.} =
   ## HTTP POST body to string.
-  client.postContent(url, body)
+  client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
-proc post2list*(url, body: string): seq[string] {.exportpy.} =
+proc post2list*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): seq[string] {.exportpy.} =
   ## HTTP POST body to list of strings (this is designed for quick web scrapping).
-  client.postContent(url).strip.splitLines
+  client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).strip.splitLines
 
 
-proc post2json*(url, body: string, pretty_print: bool = false): string {.exportpy.} =
+proc post2json*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[], pretty_print: bool = false): string {.exportpy.} =
   ## HTTP POST body to JSON.
-  if unlikely(pretty_print): result = client.postContent(url, body).parseJson.pretty else: result.toUgly client.postContent(url, body).parseJson
+  if unlikely(pretty_print):
+    result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson.pretty
+  else:
+    result.toUgly client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson
 
 
-proc post2dict*(url, body: string): seq[Table[string, string]] {.exportpy.} =
+proc post2dict*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): seq[Table[string, string]] {.exportpy.} =
   ## HTTP POST body to dictionary.
-  for i in client.postContent(url, body).parseJson.pairs: result.add {i[0]: i[1].pretty}.toTable
+  for i in client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson.pairs:
+    result.add {i[0]: i[1].pretty}.toTable
 
 
 proc download*(url, filename: string) {.discardable, exportpy.} =
