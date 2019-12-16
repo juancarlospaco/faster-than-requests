@@ -90,6 +90,7 @@ Takes an URL string, makes an HTTP POST and returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string, example `https://dev.to`.
 - `body` the Body data, string type, required, can be empty string.
+- `multipart_data` MultiPart data, optional, list of tupes type, must not be empty list, example `[("key", "value")]`.
 
 Examples:
 
@@ -387,6 +388,7 @@ Takes an URL, makes an HTTP POST, returns the response Body as string type.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
+- `multipart_data` MultiPart data, optional, list of tupes type, must not be empty list, example `[("key", "value")]`.
 
 Examples:
 
@@ -410,6 +412,7 @@ Takes an URL, makes a HTTP POST on that URL, returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
+- `multipart_data` MultiPart data, optional, list of tupes type, must not be empty list, example `[("key", "value")]`.
 
 Examples:
 
@@ -435,6 +438,7 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string.
 - `body` the Body data, string type, required, can be empty string.
+- `multipart_data` MultiPart data, optional, list of tupes type, must not be empty list, example `[("key", "value")]`.
 - `pretty_print` Pretty Printed JSON, optional, defaults to `False`.
 
 Examples:
@@ -459,6 +463,7 @@ Takes a list of URLs, makes 1 HTTP POST for each URL, returns a list of response
 **Arguments:**
 - `list_of_urls` the remote URLS, list type, required, the objects inside the list must be string type.
 - `body` the Body data, string type, required, can be empty string.
+- `multipart_data` MultiPart data, optional, list of tupes type, must not be empty list, example `[("key", "value")]`.
 
 Examples:
 
