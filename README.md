@@ -855,11 +855,11 @@ Not my Bug.
 
 - How to Build the project ?.
 
-`build.sh`
+`build.sh` or `build.nims`
 
 - How to Package the project ?.
 
-`package.sh`
+`package.sh` or `package.nims`
 
 - This requires Nimble ?.
 
