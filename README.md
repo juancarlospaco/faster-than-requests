@@ -27,7 +27,7 @@
 | Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | No                          |
 | PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | No                          |
 | PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | No                          |
-| Faster_than_requests          |  `0.45`  | 1     | 99   | 0                     | 1          | Yes, 3, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
+| Faster_than_requests          |  `0.45`  | 1     | 99   | 0                     | 1          | Yes, 4, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
 
 <details>
 
