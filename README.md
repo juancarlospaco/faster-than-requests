@@ -237,6 +237,7 @@ requests.scraper2(["https://nim-lang.org", "http://example.com"], list_of_tags=[
 
 **Description:**
 Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
+This Scraper is designed with lots of extra options on the arguments.
 
 **Arguments:**
 - `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["http://example.io"]`.
