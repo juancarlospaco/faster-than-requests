@@ -189,3 +189,24 @@ proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], st
           if strip($item).startsWith(start_with) and strip($item).endsWith(end_with): result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
           else: continue
         else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
+
+
+proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, html_output: bool = true, verbose: bool = true, delay: Natural = 0) {.exportpy, discardable.} =
+  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+  var src, dir, htmls: string
+  for i, url in urls:
+    if likely(verbose): echo i, "\t", url
+    dir = folder / $i
+    if not existsOrCreateDir(dir) and verbose: echo i, "\t", dir
+    for i2, img_tag in findAll(parseHtml(client.getContent(url)), if picture: "source" else: "img", case_insensitive):
+      htmls &= img_tag
+      src = img_tag.attr(if picture: "srcset" else: "src")
+      if likely(src.len > 1):
+        if likely(verbose): echo dir / $i & "_" & $i2 & force_extension, "\t", src
+        if https_only:
+          if src.normalize.startsWith("https:"): client.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
+        else: client.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
+      sleep delay
+    if likely(html_output):
+      if likely(verbose): echo  i, "\t", dir / $i & ".html"
+      writeFile(dir / $i & ".html", htmls)
