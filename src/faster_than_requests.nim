@@ -185,11 +185,12 @@ proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], ca
         sleep delay
 
 
-proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, case_insensitive: bool = true, deduplicate_urls: bool = false, pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[]): seq[seq[string]] {.exportpy.} =
+proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, case_insensitive: bool = true, deduplicate_urls: bool = false, delay: Natural = 0, pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[]): seq[seq[string]] {.exportpy.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
   result = newSeq[seq[string]](urls.len)
   for i, url in urls:
     for tag in list_of_tags:
+      sleep delay
       for item in findAll(parseHtml(if pre_replacements.len > 0: client.getContent(url).multiReplace(pre_replacements) else: client.getContent(url)), tag, case_insensitive):
         if start_with.len > 0 and end_with.len > 0:
           if strip($item).startsWith(start_with) and strip($item).endsWith(end_with): result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
