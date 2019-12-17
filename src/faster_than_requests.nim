@@ -198,7 +198,7 @@ proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], st
         else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
 
 
-proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, html_output: bool = true, verbose: bool = true, delay: Natural = 0) {.exportpy, discardable.} =
+proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, print_alt: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, html_output: bool = true, verbose: bool = true, delay: Natural = 0) {.exportpy, discardable.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
   var src, dir, htmls: string
   for i, url in urls:
@@ -208,6 +208,7 @@ proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), forc
     for i2, img_tag in findAll(parseHtml(client.getContent(url)), if picture: "source" else: "img", case_insensitive):
       htmls &= img_tag
       src = img_tag.attr(if picture: "srcset" else: "src")
+      if unlikely(print_alt): echo img_tag.attr("alt")
       if likely(src.len > 1):
         if likely(verbose): echo dir / $i & "_" & $i2 & force_extension, "\t", src
         if https_only:
