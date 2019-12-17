@@ -259,6 +259,9 @@ You can think of this scraper as a parallel evolution of the original scraper.
 - `line_end` Slice the line at the end by this *reverse* index, integer type, optional, defaults to `1` meaning no slicing since string ends at reverse index 1, example `9` cuts off 9 letters of the line at the end.
 - `pre_replacements` List of tuples of strings to replace *before* parsing, replacements are in parallel, List type, optional, example `[("old", "new"), ("red", "blue")]` will replace `"old"` with `"new"` and will replace `"red"` with `"blue"`.
 - `post_replacements` List of tuples of strings to replace *after* parsing, replacements are in parallel, List type, optional, example `[("old", "new"), ("red", "blue")]` will replace `"old"` with `"new"` and will replace `"red"` with `"blue"`.
+- `agent` User Agent, string type, optional, must not be empty string.
+- `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
+- `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
 
 Examples:
 
@@ -295,6 +298,9 @@ You can think of this scraper as a parallel evolution of the original scraper.
 - `verbose` Verbose, print to terminal console the progress, bool type, optional, defaults to `True`, example `False`.
 - `print_alt` print to terminal console the `alt` attribute of the Images and Photos, bool type, optional, defaults to `False`, example `True`.
 - `picture` Scrap images from the new HTML5 `<picture>` tags instead of `<img>` tags, `<picture>` are Responsive images for several resolutions but also you get duplicated images, bool type, optional, defaults to `False`, example `True`.
+- `agent` User Agent, string type, optional, must not be empty string.
+- `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
+- `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
 
 Examples:
 
