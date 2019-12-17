@@ -227,6 +227,12 @@ You can think of this scraper as a parallel evolution of the original scraper.
 - `verbose` Verbose, print to terminal console the progress, bool type, optional, defaults to `True`, example `False`.
 - `delay` Delay between a download and the next one, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `0`, must be a positive integer value, example `42`.
 - `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, boolean type, optional, omitting it will Not use Multi-Threading.
+- `agent` User Agent, string type, optional, must not be empty string.
+- `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
+- `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
+- `header` HTTP Header, any HTTP Headers can be put here, list type, optional, example `[("key", "value")]`.
+- `proxy_url` HTTPS Proxy Full URL, string type, optional, must not be empty string.
+- `proxy_auth` HTTPS Proxy Authentication, string type, optional, defaults to `""`, empty string is ignored.
 
 Examples:
 
