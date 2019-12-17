@@ -172,17 +172,20 @@ proc scraper*(list_of_urls: openArray[string], html_tag: string = "a", case_inse
     for i, url in urls: result[i] = $findAll(parseHtml(client.getContent(url)), html_tag, case_insensitive)
 
 
-proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], verbose: bool = true, case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false, delay: Natural = 0): seq[seq[XmlNode]] {.exportpy.} =
+proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], verbose: bool = true, case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false, delay: Natural = 0, timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, header: seq[(string, string)] = @[("DNT", "1")], proxy_url: string = "", proxy_auth: string = ""): seq[seq[XmlNode]] {.exportpy.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+  let proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
+  var cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = proxi, timeout = timeout)
+  cliente.headers = newHttpHeaders(header)
   result = newSeq[seq[XmlNode]](urls.len)
   if likely(threads):
     for i, url in urls:
-      for tag in list_of_tags: result[i] = ^ spawn findAll(parseHtml(client.getContent(url)), tag, case_insensitive)
+      for tag in list_of_tags: result[i] = ^ spawn findAll(parseHtml(cliente.getContent(url)), tag, case_insensitive)
   else:
     for i, url in urls:
       if likely(verbose): echo i, "\t", url
       for tag in list_of_tags:
-        result[i] = findAll(parseHtml(client.getContent(url)), tag, case_insensitive)
+        result[i] = findAll(parseHtml(cliente.getContent(url)), tag, case_insensitive)
         sleep delay
 
 
