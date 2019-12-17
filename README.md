@@ -262,6 +262,39 @@ requests.scraper3(["https://nim-lang.org", "http://example.com"], list_of_tags=[
 </details>
 
 
+## scraper4()
+<details>
+
+**Description:**
+Images and Photos Ready-Made Web Scraper from a list of URLs.
+
+The Images and Photos scraped from the first URL will be put into a new sub-folder named `0`,
+Images and Photos scraped from the second URL will be put into a new sub-folder named `1`, and so on.
+
+**Arguments:**
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["https://unsplash.com/s/photos/cat", "https://unsplash.com/s/photos/dog"]`.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, boolean type, optional, defaults to `True`, example `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, boolean type, optional, defaults to `False`, example `False`.
+- `delay` Delay between a download and the next one, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `0`, must be a positive integer value.
+- `folder` Directory to download Images and Photos, string type, optional, defaults to current folder, must not be empty string, example `/tmp`.
+- `force_extension` Force file extension to be this file extension, string type, optional, defaults to `".jpg"`, must not be empty string, example `".png"`.
+- `https_only` Force to download images on Secure HTTPS only ignoring plain HTTP, bool type, optional, defaults to `False`, example `True`.
+- `html_output` Collect all scraped Images and Photos into 1 HTML file with all elements scraped, bool type, optional, defaults to `True`, example `False`.
+- `verbose` Verbose, print to terminal console the progress, bool type, optional, defaults to `True`, example `False`.
+- `picture` Scrap images from the new HTML5 `<picture>` tags instead of `<img>` tags, `<picture>` are Responsive images for several resolutions but also you get duplicated images, bool type, optional, defaults to `False`, example `True`.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.scraper4(["https://unsplash.com/s/photos/cat", "https://unsplash.com/s/photos/dog"])
+```
+
+**Returns:** None.
+
+</details>
+
+
 ## get2str()
 <details>
 
