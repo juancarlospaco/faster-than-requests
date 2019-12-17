@@ -185,35 +185,37 @@ proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], ca
         sleep delay
 
 
-proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, case_insensitive: bool = true, deduplicate_urls: bool = false, delay: Natural = 0, pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[]): seq[seq[string]] {.exportpy.} =
+proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, case_insensitive: bool = true, deduplicate_urls: bool = false, delay: Natural = 0, pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[], timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5): seq[seq[string]] {.exportpy.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+  let cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, timeout = timeout)
   result = newSeq[seq[string]](urls.len)
   for i, url in urls:
     for tag in list_of_tags:
       sleep delay
-      for item in findAll(parseHtml(if pre_replacements.len > 0: client.getContent(url).multiReplace(pre_replacements) else: client.getContent(url)), tag, case_insensitive):
+      for item in findAll(parseHtml(if pre_replacements.len > 0: cliente.getContent(url).multiReplace(pre_replacements) else: cliente.getContent(url)), tag, case_insensitive):
         if start_with.len > 0 and end_with.len > 0:
           if strip($item).startsWith(start_with) and strip($item).endsWith(end_with): result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
           else: continue
         else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
 
 
-proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, print_alt: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, html_output: bool = true, verbose: bool = true, delay: Natural = 0) {.exportpy, discardable.} =
+proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, print_alt: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, html_output: bool = true, verbose: bool = true, delay: Natural = 0, timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5) {.exportpy, discardable.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+  let cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, timeout = timeout)
   var src, dir, htmls: string
   for i, url in urls:
     if likely(verbose): echo i, "\t", url
     dir = folder / $i
     if not existsOrCreateDir(dir) and verbose: echo i, "\t", dir
-    for i2, img_tag in findAll(parseHtml(client.getContent(url)), if picture: "source" else: "img", case_insensitive):
+    for i2, img_tag in findAll(parseHtml(cliente.getContent(url)), if picture: "source" else: "img", case_insensitive):
       htmls &= img_tag
       src = img_tag.attr(if picture: "srcset" else: "src")
       if unlikely(print_alt): echo img_tag.attr("alt")
       if likely(src.len > 1):
         if likely(verbose): echo dir / $i & "_" & $i2 & force_extension, "\t", src
         if https_only:
-          if src.normalize.startsWith("https:"): client.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
-        else: client.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
+          if src.normalize.startsWith("https:"): cliente.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
+        else: cliente.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
       sleep delay
     if likely(html_output):
       if likely(verbose): echo  i, "\t", dir / $i & ".html"
