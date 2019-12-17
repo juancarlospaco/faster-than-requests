@@ -150,7 +150,7 @@ proc download*(url, filename: string) {.discardable, exportpy.} =
   client.downloadFile(url, filename)
 
 
-proc download2*(list_of_files: openArray[tuple[url: string, filename: string]], threads: bool = false, delay: int = 0) {.discardable, exportpy.} =
+proc download2*(list_of_files: openArray[tuple[url: string, filename: string]], threads: bool = false, delay: Natural = 0) {.discardable, exportpy.} =
   ## Download a list of files ASAP, like [(url, filename), (url, filename), ...], threads=True will use multi-threading.
   if likely(delay == 0):
     if likely(threads):
@@ -172,11 +172,17 @@ proc scraper*(list_of_urls: openArray[string], html_tag: string = "a", case_inse
     for i, url in urls: result[i] = $findAll(parseHtml(client.getContent(url)), html_tag, case_insensitive)
 
 
-proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], case_insensitive: bool = true, deduplicate_urls: bool = false): seq[seq[string]] {.exportpy.} =
+proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false, delay: Natural = 0): seq[seq[XmlNode]] {.exportpy.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
-  result = newSeq[seq[string]](urls.len)
-  for i, url in urls:
-    for tag in list_of_tags: result[i].add $findAll(parseHtml(client.getContent(url)), tag, case_insensitive)
+  result = newSeq[seq[XmlNode]](urls.len)
+  if likely(threads):
+    for i, url in urls:
+      for tag in list_of_tags: result[i] = ^ spawn findAll(parseHtml(client.getContent(url)), tag, case_insensitive)
+  else:
+    for i, url in urls:
+      for tag in list_of_tags:
+        result[i] = findAll(parseHtml(client.getContent(url)), tag, case_insensitive)
+        sleep delay
 
 
 proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, case_insensitive: bool = true, deduplicate_urls: bool = false, pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[]): seq[seq[string]] {.exportpy.} =
