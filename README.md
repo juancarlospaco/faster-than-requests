@@ -201,7 +201,7 @@ Examples:
 
 ```python
 import faster_than_requests as requests
-requests.scraper(["https://nim-lang.org", "http://example.com"], case_insensitive=False, threads=True)
+requests.scraper(["https://nim-lang.org", "http://example.com"], threads=True)
 ```
 
 **Returns:** Scraped Webs.
