@@ -188,6 +188,8 @@ values of the dict can be empty string, but keys are always consistent.
 **Description:**
 Multi-Threaded Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 
+Requests are processed asynchronously. This means that it doesn’t need to wait for a request to be finished to be processed.
+
 **Arguments:**
 - `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["http://example.io"]`.
 - `html_tag` HTML Tag to parse, string type, optional, defaults to `"a"` being Links, example `"h1"`.
@@ -213,7 +215,7 @@ requests.scraper(["https://nim-lang.org", "http://example.com"], case_insensitiv
 
 **Description:**
 Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
-
+Requests are processed asynchronously. This means that it doesn’t need to wait for a request to be finished to be processed.
 You can think of this scraper as a parallel evolution of the original scraper.
 
 **Arguments:**
