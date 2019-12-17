@@ -262,6 +262,7 @@ You can think of this scraper as a parallel evolution of the original scraper.
 - `agent` User Agent, string type, optional, must not be empty string.
 - `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
 - `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
+- `header` HTTP Header, any HTTP Headers can be put here, list type, optional, example `[("key", "value")]`.
 
 Examples:
 
@@ -301,6 +302,7 @@ You can think of this scraper as a parallel evolution of the original scraper.
 - `agent` User Agent, string type, optional, must not be empty string.
 - `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
 - `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
+- `header` HTTP Header, any HTTP Headers can be put here, list type, optional, example `[("key", "value")]`.
 
 Examples:
 
