@@ -263,6 +263,8 @@ You can think of this scraper as a parallel evolution of the original scraper.
 - `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
 - `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
 - `header` HTTP Header, any HTTP Headers can be put here, list type, optional, example `[("key", "value")]`.
+- `proxy_url` HTTPS Proxy Full URL, string type, optional, must not be empty string.
+- `proxy_auth` HTTPS Proxy Authentication, string type, optional, defaults to `""`, empty string is ignored.
 
 Examples:
 
@@ -303,6 +305,8 @@ You can think of this scraper as a parallel evolution of the original scraper.
 - `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
 - `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
 - `header` HTTP Header, any HTTP Headers can be put here, list type, optional, example `[("key", "value")]`.
+- `proxy_url` HTTPS Proxy Full URL, string type, optional, must not be empty string.
+- `proxy_auth` HTTPS Proxy Authentication, string type, optional, defaults to `""`, empty string is ignored.
 
 Examples:
 
