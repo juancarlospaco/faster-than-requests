@@ -206,7 +206,7 @@ proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], st
         else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
 
 
-proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, print_alt: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, visited_urls: bool = true, html_output: bool = true, verbose: bool = true, delay: Natural = 0, timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, header: seq[(string, string)] = @[("DNT", "1")], proxy_url: string = "", proxy_auth: string = "") {.exportpy, discardable.} =
+proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, print_alt: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, visited_urls: bool = true, html_output: bool = true, csv_output: bool = true, verbose: bool = true, delay: Natural = 0, timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, header: seq[(string, string)] = @[("DNT", "1")], proxy_url: string = "", proxy_auth: string = "") {.exportpy, discardable.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
   let proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
   var
@@ -236,3 +236,6 @@ proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), forc
     if likely(html_output):
       if likely(verbose): echo  i, "\t", dir / $i & ".html"
       writeFile(dir / $i & ".html", htmls)
+    if likely(csv_output):
+      if likely(verbose): echo  i, "\t", dir / $i & ".csv"
+      writeFile(dir / $i & ".csv", visited.join",")
