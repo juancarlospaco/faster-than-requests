@@ -206,12 +206,14 @@ proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], st
         else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
 
 
-proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, print_alt: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, html_output: bool = true, verbose: bool = true, delay: Natural = 0, timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, header: seq[(string, string)] = @[("DNT", "1")], proxy_url: string = "", proxy_auth: string = "") {.exportpy, discardable.} =
+proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, print_alt: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, visited_urls: bool = true, html_output: bool = true, verbose: bool = true, delay: Natural = 0, timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, header: seq[(string, string)] = @[("DNT", "1")], proxy_url: string = "", proxy_auth: string = "") {.exportpy, discardable.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
   let proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
-  var cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = proxi, timeout = timeout)
+  var
+    visited: seq[string]
+    src, dir, htmls: string
+    cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = proxi, timeout = timeout)
   cliente.headers = newHttpHeaders(header)
-  var src, dir, htmls: string
   for i, url in urls:
     if likely(verbose): echo i, "\t", url
     dir = folder / $i
@@ -221,10 +223,15 @@ proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), forc
       src = img_tag.attr(if picture: "srcset" else: "src")
       if unlikely(print_alt): echo img_tag.attr("alt")
       if likely(src.len > 1):
+        visited.add src
         if likely(verbose): echo dir / $i & "_" & $i2 & force_extension, "\t", src
         if https_only:
-          if src.normalize.startsWith("https:"): cliente.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
-        else: cliente.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
+          if src.normalize.startsWith("https:"):
+            if likely(visited_urls and src notin visited):
+              cliente.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
+        else:
+          if likely(visited_urls and src notin visited):
+            cliente.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
       sleep delay
     if likely(html_output):
       if likely(verbose): echo  i, "\t", dir / $i & ".html"
