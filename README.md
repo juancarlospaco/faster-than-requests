@@ -188,6 +188,7 @@ values of the dict can be empty string, but keys are always consistent.
 **Description:**
 Multi-Threaded Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 All arguments are optional, it only needs the URL to get to work.
+Scraper is designed to be like a 2-Step Web Scraper, that makes a first pass collecting all URL Links and then a second pass actually fetching those URLs.
 Requests are processed asynchronously. This means that it doesn’t need to wait for a request to be finished to be processed.
 
 **Arguments:**
@@ -216,6 +217,7 @@ requests.scraper(["https://nim-lang.org", "http://example.com"], threads=True)
 **Description:**
 Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 All arguments are optional, it only needs the URL to get to work.
+Scraper is designed to be like a 2-Step Web Scraper, that makes a first pass collecting all URL Links and then a second pass actually fetching those URLs.
 Requests are processed asynchronously. This means that it doesn’t need to wait for a request to be finished to be processed.
 You can think of this scraper as a parallel evolution of the original scraper.
 
@@ -253,6 +255,7 @@ requests.scraper2(["https://nim-lang.org", "http://example.com"], list_of_tags=[
 Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
 This Scraper is designed with lots of extra options on the arguments.
 All arguments are optional, it only needs the URL to get to work.
+Scraper is designed to be like a 2-Step Web Scraper, that makes a first pass collecting all URL Links and then a second pass actually fetching those URLs.
 You can think of this scraper as a parallel evolution of the original scraper.
 
 **Arguments:**
