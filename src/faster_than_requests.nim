@@ -221,11 +221,9 @@ proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), forc
     for i2, img_tag in findAll(parseHtml(cliente.getContent(url)), if picture: "source" else: "img", case_insensitive):
       htmls &= img_tag
       src = img_tag.attr(if picture: "srcset" else: "src")
-      if unlikely(print_alt): echo img_tag.attr("alt")
-      if src.len < 2: continue
-      if https_only and not src.normalize.startsWith("https:"): continue
-      if visited_urls and src in visited: continue
+      if src.len < 2 or https_only and not src.normalize.startsWith("https:") or visited_urls and src in visited: continue
       visited.add src
+      if unlikely(print_alt): echo img_tag.attr("alt")
       if likely(verbose): echo dir / $i & "_" & $i2 & force_extension, "\t", src
       cliente.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
       sleep delay
