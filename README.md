@@ -334,6 +334,48 @@ requests.scraper4(["https://unsplash.com/s/photos/cat", "https://unsplash.com/s/
 </details>
 
 
+## scraper5()
+<details>
+
+**Description:**
+Recursive Web Scraper to SQLite Database, you give it an URL, it gives back an SQLite.
+
+SQLite database can be visualized with any SQLite WYSIWYG, like https://sqlitebrowser.org
+If the script gets interrupted like with CTRL+C it will try its best to keep data consistent.
+All arguments are optional, it only needs the URL and SQLite file path to get to work.
+You can think of this scraper as a parallel evolution of the original scraper.
+
+**Arguments:**
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["https://unsplash.com/s/photos/cat", "https://unsplash.com/s/photos/dog"]`.
+- `sqlite_file_path` Full file path to a new SQLite Database, must be `.db` file extension, string type, required, must not be empty string, example `"scraped_data.db"`.
+- `skip_ends_with` Skip the URL if ends with this pattern, list type, optional, must not be empty list, example `[".jpg", ".pdf"]`.
+- `case_insensitive` Case Insensitive, `True` for Case Insensitive, boolean type, optional, defaults to `True`, example `True`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, boolean type, optional, defaults to `False`, example `False`.
+- `visited_urls` Do not visit same URL twice, even if redirected into, keeps track of visited URLs, bool type, optional, defaults to `True`.
+- `delay` Delay between a download and the next one, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `0`, must be a positive integer value, example `42`.
+- `https_only` Force to download images on Secure HTTPS only ignoring plain HTTP, sometimes HTTPS may redirect to HTTP, bool type, optional, defaults to `False`, example `True`.
+- `only200` Only commit to Database the successful scraping pages, ignore all errors, bool type, optional, example `True`.
+- `agent` User Agent, string type, optional, must not be empty string.
+- `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
+- `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
+- `max_loops` Maximum total Loops to do while scraping, like a global guard for infinite redirections, integer type, optional, example `999`.
+- `max_deep` Maximum total scraping Recursive Deep, like a global guard for infinite deep recursivity, integer type, optional, example `999`.
+- `header` HTTP Header, any HTTP Headers can be put here, list type, optional, example `[("key", "value")]`.
+- `proxy_url` HTTPS Proxy Full URL, string type, optional, must not be empty string.
+- `proxy_auth` HTTPS Proxy Authentication, string type, optional, defaults to `""`, empty string is ignored.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.scraper5(["https://example.com"], "scraped_data.db")
+```
+
+**Returns:** None.
+
+</details>
+
+
 ## get2str()
 <details>
 
