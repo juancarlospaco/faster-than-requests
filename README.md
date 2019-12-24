@@ -340,6 +340,8 @@ requests.scraper4(["https://unsplash.com/s/photos/cat", "https://unsplash.com/s/
 **Description:**
 Recursive Web Scraper to SQLite Database, you give it an URL, it gives back an SQLite.
 
+![](sqlite-scraper.png)
+
 SQLite database can be visualized with any SQLite WYSIWYG, like https://sqlitebrowser.org
 If the script gets interrupted like with CTRL+C it will try its best to keep data consistent.
 All arguments are optional, it only needs the URL and SQLite file path to get to work.
