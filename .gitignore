@@ -4,3 +4,7 @@ dist/*.zip
 *.so
 *.pyd
 *.dll
+*.svg
+*.jpeg
+*.jpg
+*.ndjson
