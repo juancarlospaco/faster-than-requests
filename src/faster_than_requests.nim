@@ -1,4 +1,4 @@
-import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, nimpy
+import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, nimpy
 
 
 let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY").strip
@@ -233,3 +233,59 @@ proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), forc
     if likely(csv_output):
       if likely(verbose): echo  i, "\t", dir / $i & ".csv"
       writeFile(dir / $i & ".csv", visited.join",")
+
+
+proc scraper5*(list_of_urls: seq[string], sqlite_file_path: string, skip_ends_with: seq[string] = @[".jpg", ".png", ".pdf"], https_only: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, visited_urls: bool = true, verbose: bool = true, delay: Natural = 0, timeout: int = -1, max_loops: uint16 = uint16.high, max_deep: byte = byte.high, only200: bool = false, agent: string = defUserAgent, redirects: byte = 5.byte, header: seq[(string, string)] = @[("DNT", "1")], proxy_url: string = "", proxy_auth: string = "") {.discardable, exportpy, noreturn.} =
+  const table = sql"""create table if not exists web(
+    id          integer   primary key,
+    date        timestamp not null     default (strftime('%s', 'now')),
+    url         text      not null,
+    body        text      not null,
+    headers     text      not null,
+    status      text      not null,
+    contenttype text      not null,
+    deep        integer   not null
+  ); """
+  doAssert sqlite_file_path.endsWith".db", "sqlite_file_path must be *.db file extension: " & sqlite_file_path
+  let
+    db = db_sqlite.open(sqlite_file_path, "", "", "")
+    proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
+  doAssert db.tryExec(table), "Error creating SQLite table or database: " & sqlite_file_path
+  var
+    deep: byte
+    loop: uint16
+    visited, tempLinks: seq[string]
+    href, links: string
+    urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+    cliente = newHttpClient(userAgent = agent, maxRedirects = redirects.int16, proxy = proxi, timeout = timeout)
+  cliente.headers = newHttpHeaders(header)
+  while urls.len > 0:
+    if loop > max_loops: break
+    loop = 0.uint16
+    for i, url in urls:
+      if deep > max_deep: break
+      deep = 0.byte
+      if likely(verbose): echo i, "\t", url
+      for i2, link in findAll(parseHtml(cliente.getContent(url)), "a", case_insensitive):
+        links &= $link & ",\n"
+        href = link.attr("href")
+        if likely(href.len > 1):
+          for to_skip in skip_ends_with:
+            if href.endsWith(to_skip): continue
+          if href.startsWith("/"): href = url & href
+          if visited_urls and href in visited: continue
+          visited.add href
+          tempLinks.add href
+          if https_only and not href.normalize.startsWith("https:"): continue
+          if likely(verbose): echo i2, "\t", href
+          let req = cliente.get(href)
+          if only200 and req.status != "200 OK": continue
+          if not db.tryExec(sql"""INSERT INTO web(
+            url,  body,             headers,              status,     contenttype,     deep) VALUES (?,?,?,?,?,?)""",
+            href, req.body.strip(), pretty(%req.headers), req.status, req.contentType, deep): continue
+        sleep delay
+      inc deep
+      inc loop
+    urls = deduplicate(tempLinks)
+  db.close()
+  writeFile(sqlite_file_path.replace(".db", ".csv"), links)
