@@ -187,6 +187,9 @@ values of the dict can be empty string, but keys are always consistent.
 
 **Description:**
 Multi-Threaded Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
+
+![](multithread-scraper.png)
+
 All arguments are optional, it only needs the URL to get to work.
 Scraper is designed to be like a 2-Step Web Scraper, that makes a first pass collecting all URL Links and then a second pass actually fetching those URLs.
 Requests are processed asynchronously. This means that it doesn’t need to wait for a request to be finished to be processed.
@@ -253,6 +256,9 @@ requests.scraper2(["https://nim-lang.org", "http://example.com"], list_of_tags=[
 
 **Description:**
 Multi-Tag Ready-Made URL-Deduplicating Web Scraper from a list of URLs.
+
+![](multitag-scraper.png)
+
 This Scraper is designed with lots of extra options on the arguments.
 All arguments are optional, it only needs the URL to get to work.
 Scraper is designed to be like a 2-Step Web Scraper, that makes a first pass collecting all URL Links and then a second pass actually fetching those URLs.
@@ -295,6 +301,8 @@ requests.scraper3(["https://nim-lang.org", "http://example.com"], list_of_tags=[
 
 **Description:**
 Images and Photos Ready-Made Web Scraper from a list of URLs.
+
+![](photo-scraper.png)
 
 The Images and Photos scraped from the first URL will be put into a new sub-folder named `0`,
 Images and Photos scraped from the second URL will be put into a new sub-folder named `1`, and so on.
