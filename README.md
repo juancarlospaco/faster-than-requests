@@ -344,6 +344,7 @@ Recursive Web Scraper to SQLite Database, you give it an URL, it gives back an S
 
 SQLite database can be visualized with any SQLite WYSIWYG, like https://sqlitebrowser.org
 If the script gets interrupted like with CTRL+C it will try its best to keep data consistent.
+Additionally it will create a CSV file with all the scraped URLs.
 All arguments are optional, it only needs the URL and SQLite file path to get to work.
 You can think of this scraper as a parallel evolution of the original scraper.
 
