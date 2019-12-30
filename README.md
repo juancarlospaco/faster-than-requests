@@ -180,6 +180,29 @@ values of the dict can be empty string, but keys are always consistent.
 </details>
 
 
+# head()
+<details>
+
+**Description:**
+Takes an URL string, makes an HTTP HEAD and returns a dict with the response.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string, example `https://nim-lang.org`.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.head("http://example.com/api/something")
+```
+
+**Returns:**
+Response, `dict` type, values of the dict are string type,
+values of the dict can be empty string, but keys are always consistent.
+
+</details>
+
+
 # Extras: Go beyond requests
 
 ## scraper()
