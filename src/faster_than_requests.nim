@@ -1,4 +1,4 @@
-import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, nimpy
+import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, re, nimpy
 
 
 let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY").strip
@@ -295,3 +295,28 @@ proc scraper5*(list_of_urls: seq[string], sqlite_file_path: string, skip_ends_wi
     urls = deduplicate(tempLinks)
   db.close()
   writeFile(sqlite_file_path.replace(".db", ".csv"), links)
+
+
+proc scraper6*(list_of_urls: seq[string], list_of_regex: seq[string], multiline: bool = false, dot: bool = false, extended: bool = false, case_insensitive: bool = true, post_replacement_regex: string = "",
+  post_replacement_by: string = "", re_start: Natural = 0, start_with: string = "", end_with: string = "", verbose: bool = true, deduplicate_urls: bool = false, delay: Natural = 0,
+  header: seq[(string, string)] = @[("DNT", "1")], timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, proxy_url: string = "", proxy_auth: string = ""): seq[seq[string]] {.exportpy.} =
+  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+  let proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
+  var cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = proxi, timeout = timeout)
+  cliente.headers = newHttpHeaders(header)
+  result = newSeq[seq[string]](urls.len)
+  var reflags = {reStudy}
+  if case_insensitive: incl(reflags, reIgnoreCase)
+  if multiline: incl(reflags, reMultiLine)
+  if dot: incl(reflags, reDotAll)
+  if extended: incl(reflags, reExtended)
+  for i, url in urls:
+    if likely(verbose): echo i, "\t", url
+    for rege in list_of_regex:
+      sleep delay
+      for item in findAll(cliente.getContent(url), re(rege, reflags), re_start):
+        if start_with.len > 0 and end_with.len > 0:
+          if item.startsWith(re(start_with, reflags)) and item.endsWith(re(end_with, reflags)):
+            result[i].add(if post_replacement_regex.len > 0 and post_replacement_by.len > 0: replacef(item, re(post_replacement_regex, reflags), post_replacement_by) else: item)
+          else: continue
+        else: result[i].add(if post_replacement_regex.len > 0 and post_replacement_by.len > 0: replacef(item, re(post_replacement_regex, reflags), post_replacement_by) else: item)

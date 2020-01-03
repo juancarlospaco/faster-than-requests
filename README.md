@@ -412,6 +412,56 @@ requests.scraper5(["https://example.com"], "scraped_data.db")
 </details>
 
 
+## scraper6()
+<details>
+
+**Description:**
+Multi-Regex Web Scraper from a list of URLs.
+Scrap web content using a list of Perl Compatible Regular Expressions (PCRE standard).
+You can configure the Regular Expressions to be case insensitive or multiline or extended.
+
+This Scraper is designed for developers that know Regular Expressions.
+All arguments are optional, it only needs the URL and the Regex to get to work.
+You can think of this scraper as a parallel evolution of the original scraper.
+
+**Regex Arguments:**
+(Arguments focused on Regular Expression parsing and matching)
+
+- `list_of_regex` List of Perl Compatible Regular Expressions (PCRE standard) to match the URL against, List type, required, example `["(www|http:|https:)+[^\s]+[\w]"]`.
+- `case_insensitive` Case Insensitive Regular Expressions, do caseless matching, `True` for Case Insensitive, boolean type, optional, defaults to `False`, example `True`.
+- `multiline` Multi-Line Regular Expressions, `^` and `$` match newlines within data, boolean type, optional, defaults to `False`, example `True`.
+- `extended` Extended Regular Expressions, ignore all whitespaces and `#` comments, boolean type, optional, defaults to `False`, example `True`.
+- `dot` Dot `.` matches anything, including new lines, boolean type, optional, defaults to `False`, example `True`.
+- `start_with` Perl Compatible Regular Expression to match at the start of the line, similar to `str().startswith()` but with Regular Expressions, string type, optional.
+- `ends_with`  Perl Compatible Regular Expression to match at the end of the line,  similar to `str().endswith()` but with Regular Expressions, string type, optional.
+- `post_replacement_regex` List of Perl Compatible Regular Expressions (PCRE standard) to replace *after* parsing, List type, optional, this option works with `post_replacement_by`, this is like a Regex post-processing, this option is for experts on Regular Expressions.
+- `post_replacement_by` List of strings **to replace by** *after* parsing, List type, optional, this option works with `post_replacement_regex`, this is like a Regex post-processing, this option is for experts on Regular Expressions.
+- `re_start` Perl Compatible Regular Expression matchs start at this index, integer type, optional, defaults to `0`, this option is for experts on Regular Expressions.
+
+**Arguments:**
+- `list_of_urls` List of URLs, URL must be string type, required, must not be empty list, example `["http://example.io"]`.
+- `deduplicate_urls` Deduplicate `list_of_urls` removing repeated URLs, boolean type, optional, defaults to `False`, example `False`.
+- `delay` Delay between a download and the next one, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `0`, must be a positive integer value, example `42`.
+- `agent` User Agent, string type, optional, must not be empty string.
+- `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
+- `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
+- `header` HTTP Header, any HTTP Headers can be put here, list type, optional, example `[("key", "value")]`.
+- `proxy_url` HTTPS Proxy Full URL, string type, optional, must not be empty string.
+- `proxy_auth` HTTPS Proxy Authentication, string type, optional, defaults to `""`, empty string is ignored.
+- `verbose` Verbose, print to terminal console the progress, bool type, optional, defaults to `True`, example `False`.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.scraper6(["http://nim-lang.org", "http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"])
+```
+
+**Returns:** Scraped Webs.
+
+</details>
+
+
 ## get2str()
 <details>
 
