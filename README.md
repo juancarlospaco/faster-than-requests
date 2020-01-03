@@ -27,7 +27,7 @@
 | Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | :negative_squared_cross_mark:       |
 | PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       |
 | PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       |
-| Faster_than_requests          |  `0.45`  | 1     | 99   | 0                     | 1          | :heavy_check_mark: 5, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
+| Faster_than_requests          |  `0.45`  | 1     | 99   | 0                     | 1          | :heavy_check_mark: 6, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
 
 <details>
 
@@ -434,8 +434,8 @@ You can think of this scraper as a parallel evolution of the original scraper.
 - `dot` Dot `.` matches anything, including new lines, boolean type, optional, defaults to `False`, example `True`.
 - `start_with` Perl Compatible Regular Expression to match at the start of the line, similar to `str().startswith()` but with Regular Expressions, string type, optional.
 - `ends_with`  Perl Compatible Regular Expression to match at the end of the line,  similar to `str().endswith()` but with Regular Expressions, string type, optional.
-- `post_replacement_regex` List of Perl Compatible Regular Expressions (PCRE standard) to replace *after* parsing, List type, optional, this option works with `post_replacement_by`, this is like a Regex post-processing, this option is for experts on Regular Expressions.
-- `post_replacement_by` List of strings **to replace by** *after* parsing, List type, optional, this option works with `post_replacement_regex`, this is like a Regex post-processing, this option is for experts on Regular Expressions.
+- `post_replacement_regex` Perl Compatible Regular Expressions (PCRE standard) to replace *after* parsing, List type, optional, this option works with `post_replacement_by`, this is like a Regex post-processing, this option is for experts on Regular Expressions.
+- `post_replacement_by` string **to replace by** *after* parsing, List type, optional, this option works with `post_replacement_regex`, this is like a Regex post-processing, this option is for experts on Regular Expressions.
 - `re_start` Perl Compatible Regular Expression matchs start at this index, integer type, optional, defaults to `0`, this option is for experts on Regular Expressions.
 
 **Arguments:**
