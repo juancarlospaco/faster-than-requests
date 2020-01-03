@@ -416,7 +416,7 @@ requests.scraper5(["https://example.com"], "scraped_data.db")
 <details>
 
 **Description:**
-Multi-Regex Web Scraper from a list of URLs.
+Regex powered Web Scraper from a list of URLs.
 Scrap web content using a list of Perl Compatible Regular Expressions (PCRE standard).
 You can configure the Regular Expressions to be case insensitive or multiline or extended.
 
