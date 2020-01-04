@@ -990,11 +990,6 @@ No.
 
 No.
 
-- Developer Documentation ?.
-
-[Yes.](https://github.com/juancarlospaco/faster-than-requests/raw/master/faster_than_requests_DOCS.zip)
-(Zip because GitHub marks the Repo as being JavaScript)
-
 - Where to get help ?.
 
 https://github.com/juancarlospaco/faster-than-requests/issues
