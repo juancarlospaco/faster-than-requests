@@ -421,6 +421,8 @@ Scrap web content using a list of Perl Compatible Regular Expressions (PCRE stan
 You can configure the Regular Expressions to be case insensitive or multiline or extended.
 
 This Scraper is designed for developers that know Regular Expressions.
+[Learn Regular Expressions.](https://github.com/ziishaned/learn-regex#translations)
+
 All arguments are optional, it only needs the URL and the Regex to get to work.
 You can think of this scraper as a parallel evolution of the original scraper.
 
