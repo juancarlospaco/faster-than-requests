@@ -40,7 +40,7 @@ proc delete*(url: string): Table[string, string] {.exportpy.} =
 proc head*(url: string): Table[string, string] {.exportpy.} =
   ## HTTP HEAD an URL to dictionary.
   let r = client.head(url)
-  {"content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  {"content-type": r.contentType, "status": r.status, "version": r.version, "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], debugs: bool = false): Table[string, string] {.exportpy.} =
