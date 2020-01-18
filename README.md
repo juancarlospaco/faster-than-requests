@@ -958,6 +958,11 @@ $ # This is the Bash command line terminal!.
 ![Star faster-than-requests on GitHub](https://starchart.cc/juancarlospaco/faster-than-requests.svg "Star faster-than-requests on GitHub!")
 
 
+# Sponsors
+
+- **None. Become a Sponsor and help improve this library with the features you want!.**
+
+
 # FAQ
 
 - Whats the idea, inspiration, reason, etc ?.

@@ -7,38 +7,38 @@ var client = newHttpClient(timeout = getEnv("requests_timeout", "-1").parseInt, 
   maxRedirects = getEnv("requests_maxredirects", "9").parseInt)
 
 
+template response2table(r: Response): Table[string, string] =
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
+  "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")}.toTable
+
+
 proc get*(url: string): Table[string, string] {.exportpy.} =
   ## HTTP GET an URL to dictionary.
-  let r = client.get(url)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.get(url))
 
 
 proc post*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): Table[string, string] {.exportpy.} =
   ## HTTP POST an URL to dictionary.
-  let r = client.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
 
 
 proc put*(url, body: string): Table[string, string] {.exportpy.} =
   ## HTTP PUT an URL to dictionary.
-  let r = client.request(url, HttpPut, body)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, HttpPut, body))
 
 
 proc patch*(url, body: string): Table[string, string] {.exportpy.} =
   ## HTTP PATCH an URL to dictionary.
-  let r = client.request(url, HttpPatch, body)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, HttpPatch, body))
 
 
 proc delete*(url: string): Table[string, string] {.exportpy.} =
   ## HTTP DELETE an URL to dictionary.
-  let r = client.request(url, HttpDelete)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, HttpDelete))
 
 
 proc head*(url: string): Table[string, string] {.exportpy.} =
-  ## HTTP HEAD an URL to dictionary.
+  ## HTTP HEAD an URL to dictionary. HEAD do NOT have body by definition. May NOT have contentLength sometimes.
   let r = client.head(url)
   {"content-type": r.contentType, "status": r.status, "version": r.version, "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")}.toTable
 
@@ -47,8 +47,7 @@ proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key
   ## HTTP requests low level function to dictionary.
   let headerss = newHttpHeaders(http_headers)
   if unlikely(debugs): echo url, "\n", http_method, "\n", body, "\n", headerss
-  let r = client.request(url, http_method, body, headerss)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, http_method, body, headerss))
 
 
 proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], proxyUrl: string = "",
@@ -57,8 +56,7 @@ proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[ke
   let
     proxxi = if unlikely(proxyUrl.len > 1): newProxy(proxyUrl.strip, proxyAuth.strip) else: nil
     client = newHttpClient(timeout = timeout, userAgent = userAgent, proxy = proxxi, maxRedirects = maxRedirects)
-    r = client.request(url, http_method, body, newHttpHeaders(http_headers))
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, http_method, body, newHttpHeaders(http_headers)))
 
 
 proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {.exportpy.} =
