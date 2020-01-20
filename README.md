@@ -53,6 +53,18 @@ requests.download("http://example.com/foo.jpg", "out.jpg")         # Download a 
 requests.scraper(["http://foo.io", "http://bar.io"], threads=True) # Multi-Threaded Web Scraper
 ```
 
+# Table Of Contents
+
+| | | |
++-+-+-+
+| [get()](#get)           | [post()](#post)             | [put()](#put)                 | [head()](#head)           |
+| [patch()](#patch)       | [delete()](#delete)         | [download()](#download)       | [download2()](#download2) |
+| [scraper()](#scraper)   | [scraper2()](#scraper2)     | [scraper3()](#scraper3)       | [scraper4()](#scraper4)   |
+| [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [debugs()](#debugs)           | [get2str()](#get2str)     |
+| [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
+| [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
+| [requests()](#requests) | [requests2()](#requests2)   | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) |
+
 
 # get()
 <details>
