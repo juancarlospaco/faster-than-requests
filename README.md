@@ -66,6 +66,7 @@ requests.scraper(["http://foo.io", "http://bar.io"], threads=True) # Multi-Threa
 | [requests()](#requests) | [requests2()](#requests2)   | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) |
 | [How to set Timeout](#How-to-set-Timeout) | [How to set Max Redirects](#How-to-set-Max-Redirects) | [How to set User Agent](#How-to-set-User-Agent) | [How to set Proxy](#How-to-set-Proxy) |
 | [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
+| [PyPI](https://pypi.org/project/faster-than-requests) | [GitHub Actions](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON) | [Examples](https://github.com/juancarlospaco/faster-than-requests/tree/master/examples) | [Sponsors](#sponsors) |
 
 
 # get()
