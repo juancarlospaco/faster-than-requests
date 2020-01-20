@@ -1023,6 +1023,7 @@ More Faster Libraries...
 # Sponsors
 
 - **None. Become a Sponsor and help improve this library with the features you want!.**
+- If you are a company or commercial user we need Sponsors!.
 
 
 # FAQ
