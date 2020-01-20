@@ -55,8 +55,8 @@ requests.scraper(["http://foo.io", "http://bar.io"], threads=True) # Multi-Threa
 
 # Table Of Contents
 
-| | | |
-+-+-+-+
+|                         |                             |                               |                           |
+|+-----------------------+|+---------------------------+|+-----------------------------+|+-------------------------+|
 | [get()](#get)           | [post()](#post)             | [put()](#put)                 | [head()](#head)           |
 | [patch()](#patch)       | [delete()](#delete)         | [download()](#download)       | [download2()](#download2) |
 | [scraper()](#scraper)   | [scraper2()](#scraper2)     | [scraper3()](#scraper3)       | [scraper4()](#scraper4)   |
