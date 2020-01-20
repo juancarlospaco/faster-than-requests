@@ -1,10 +1,10 @@
 import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, re, nimpy
 
 
-let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY").strip
-var client = newHttpClient(timeout = getEnv("requests_timeout", "-1").parseInt, userAgent = defUserAgent,
-  proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH").strip) else: nil),
-  maxRedirects = getEnv("requests_maxredirects", "9").parseInt)
+let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY")
+var client = newHttpClient(timeout = getEnv("REQUESTS_TIMEOUT", "-1").parseInt, userAgent = getEnv("REQUESTS_USERAGENT", defUserAgent),
+  proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH")) else: nil),
+  maxRedirects = getEnv("REQUESTS_MAXREDIRECTS", "9").parseInt)
 
 
 template response2table(r: Response): Table[string, string] =
@@ -70,11 +70,15 @@ proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt"
 proc debugs*() {.discardable, exportpy.} =
   ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
   echo static(pretty(%*{
-    "proxyUrl": getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY"), "timeout": getEnv"requests_timeout", "userAgent": getEnv"requests_useragent",
-    "maxRedirects": getEnv"requests_maxredirects", "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS,
+    "proxyUrl": getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY"), "timeout": getEnv"REQUESTS_TIMEOUT", "userAgent": getEnv"REQUESTS_USERAGENT",
+    "maxRedirects": getEnv"REQUESTS_MAXREDIRECTS", "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS,
     "endian": cpuEndian, "release": defined(release), "danger": defined(danger), "CompileDate": CompileDate,  "CompileTime": CompileTime,
     "tempDir": getTempDir(), "ssl": defined(ssl), "currentCompilerExe": getCurrentCompilerExe(), "int.high": int.high
   }))
+
+if unlikely(getEnv("REQUESTS_DEBUG", "false").parseBool):
+  debugs()
+  client.onProgressChanged = (proc (t, p, s: BiggestInt) = echo("{\"speed\": ", s div 1000, ",\t\"progress\": ", p, ",\t\"remaining\": ", t - p, ",\t\"total\": ", t, "}"))
 
 
 proc tuples2json*(tuples: openArray[tuple[key: string, val: string]], pretty_print: bool = false): string {.exportpy.} =
