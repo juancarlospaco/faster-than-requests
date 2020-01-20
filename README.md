@@ -867,7 +867,7 @@ keys must not be empty string, values can be empty string, both must the strippe
 
 # How to set Timeout
 
-Set Timeout by changing the environment variable `REQUESTS_TIMEOUT`, `int` type, must be a non-zero positive value, milliseconds precision, can be `-1`.
+Set Timeout by changing the environment variable `REQUESTS_TIMEOUT`, `int` type, must be a non-zero positive value, milliseconds precision, `1000` is `1` Second, can be `-1`.
 This is 100% Optional, this is provided as Extra feature.
 
 Examples:
