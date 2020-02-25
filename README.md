@@ -1017,6 +1017,12 @@ Reboot after install. Administrator required for install. Everything must be 64B
 
 If that fails too, dont waste time and go directly for [Docker for Windows.](https://docs.docker.com/docker-for-windows).
 
+For info about how to install Git for Windows, read Git for Windows Documentation.
+
+For info about how to install Nim, read Nim Documentation.
+
+For info about how to install Docker for Windows, read Docker for Windows Documentation.
+
 - Git Clone and Compile on Windows 10 on just 2 commands!.
 - [Alternatively you can try Docker for Windows.](https://docs.docker.com/docker-for-windows)
 - [Alternatively you can try WSL for Windows.](https://docs.microsoft.com/en-us/windows/wsl/about)
