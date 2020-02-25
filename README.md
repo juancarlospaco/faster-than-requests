@@ -1006,10 +1006,12 @@ More Faster Libraries...
 
 # Windows
 
-- Documentation assumes experience with Git, GitHub, Compiled software and PC with Administrator account.
+- Documentation assumes experience with Git, GitHub, cmd, Compiled software, PC with Administrator.
 - If installation fails on Windows, just use the Source Code:
 
 ![win-compile](https://user-images.githubusercontent.com/1189414/63147831-b8bf6100-bfd5-11e9-9e6e-91d61040f139.png "Git Clone and Compile on Windows 10 with only Git and Nim installed, just 2 commands!")
+
+As you can see on the screenshot the only needed software is [Git for Windows](https://github.com/git-for-windows/git/releases/latest) and [Nim](https://github.com/dom96/choosenim#windows). Reboot after install.
 
 - Git Clone and Compile on Windows 10 on just 2 commands!.
 - [Alternatively you can try Docker for Windows.](https://docs.docker.com/docker-for-windows)
