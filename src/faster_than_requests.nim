@@ -1,54 +1,53 @@
 import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, re, nimpy
 
 
-let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY").strip
-var client = newHttpClient(timeout = getEnv("requests_timeout", "-1").parseInt, userAgent = defUserAgent,
-  proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH").strip) else: nil),
-  maxRedirects = getEnv("requests_maxredirects", "9").parseInt)
+let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY")
+var client = newHttpClient(timeout = getEnv("REQUESTS_TIMEOUT", "-1").parseInt, userAgent = getEnv("REQUESTS_USERAGENT", defUserAgent),
+  proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH")) else: nil),
+  maxRedirects = getEnv("REQUESTS_MAXREDIRECTS", "9").parseInt)
+
+
+template response2table(r: Response): Table[string, string] =
+  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
+  "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc get*(url: string): Table[string, string] {.exportpy.} =
   ## HTTP GET an URL to dictionary.
-  let r = client.get(url)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.get(url))
 
 
 proc post*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): Table[string, string] {.exportpy.} =
   ## HTTP POST an URL to dictionary.
-  let r = client.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
 
 
 proc put*(url, body: string): Table[string, string] {.exportpy.} =
   ## HTTP PUT an URL to dictionary.
-  let r = client.request(url, HttpPut, body)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, HttpPut, body))
 
 
 proc patch*(url, body: string): Table[string, string] {.exportpy.} =
   ## HTTP PATCH an URL to dictionary.
-  let r = client.request(url, HttpPatch, body)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, HttpPatch, body))
 
 
 proc delete*(url: string): Table[string, string] {.exportpy.} =
   ## HTTP DELETE an URL to dictionary.
-  let r = client.request(url, HttpDelete)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, HttpDelete))
 
 
 proc head*(url: string): Table[string, string] {.exportpy.} =
-  ## HTTP HEAD an URL to dictionary.
+  ## HTTP HEAD an URL to dictionary. HEAD do NOT have body by definition. May NOT have contentLength sometimes.
   let r = client.head(url)
-  {"content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  {"content-type": r.contentType, "status": r.status, "version": r.version, "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")}.toTable
 
 
 proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], debugs: bool = false): Table[string, string] {.exportpy.} =
   ## HTTP requests low level function to dictionary.
   let headerss = newHttpHeaders(http_headers)
   if unlikely(debugs): echo url, "\n", http_method, "\n", body, "\n", headerss
-  let r = client.request(url, http_method, body, headerss)
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, http_method, body, headerss))
 
 
 proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], proxyUrl: string = "",
@@ -57,8 +56,7 @@ proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[ke
   let
     proxxi = if unlikely(proxyUrl.len > 1): newProxy(proxyUrl.strip, proxyAuth.strip) else: nil
     client = newHttpClient(timeout = timeout, userAgent = userAgent, proxy = proxxi, maxRedirects = maxRedirects)
-    r = client.request(url, http_method, body, newHttpHeaders(http_headers))
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version, "content-length": $r.contentLength, "headers": replace($r.headers, " @[", " [")}.toTable
+  response2table(client.request(url, http_method, body, newHttpHeaders(http_headers)))
 
 
 proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {.exportpy.} =
@@ -72,11 +70,15 @@ proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt"
 proc debugs*() {.discardable, exportpy.} =
   ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
   echo static(pretty(%*{
-    "proxyUrl": getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY"), "timeout": getEnv"requests_timeout", "userAgent": getEnv"requests_useragent",
-    "maxRedirects": getEnv"requests_maxredirects", "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS,
+    "proxyUrl": getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY"), "timeout": getEnv"REQUESTS_TIMEOUT", "userAgent": getEnv"REQUESTS_USERAGENT",
+    "maxRedirects": getEnv"REQUESTS_MAXREDIRECTS", "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS,
     "endian": cpuEndian, "release": defined(release), "danger": defined(danger), "CompileDate": CompileDate,  "CompileTime": CompileTime,
     "tempDir": getTempDir(), "ssl": defined(ssl), "currentCompilerExe": getCurrentCompilerExe(), "int.high": int.high
   }))
+
+if unlikely(getEnv("REQUESTS_DEBUG", "false").parseBool):
+  debugs()
+  client.onProgressChanged = (proc (t, p, s: BiggestInt) = echo("{\"speed\": ", s div 1000, ",\t\"progress\": ", p, ",\t\"remaining\": ", t - p, ",\t\"total\": ", t, "}"))
 
 
 proc tuples2json*(tuples: openArray[tuple[key: string, val: string]], pretty_print: bool = false): string {.exportpy.} =

@@ -53,6 +53,21 @@ requests.download("http://example.com/foo.jpg", "out.jpg")         # Download a 
 requests.scraper(["http://foo.io", "http://bar.io"], threads=True) # Multi-Threaded Web Scraper
 ```
 
+# Table Of Contents
+
+|                         |                             |                               |                           |
+|:-----------------------:|:---------------------------:|:-----------------------------:|:-------------------------:|
+| [get()](#get)           | [post()](#post)             | [put()](#put)                 | [head()](#head)           |
+| [patch()](#patch)       | [delete()](#delete)         | [download()](#download)       | [download2()](#download2) |
+| [scraper()](#scraper)   | [scraper2()](#scraper2)     | [scraper3()](#scraper3)       | [scraper4()](#scraper4)   |
+| [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [debugs()](#debugs)           | [get2str()](#get2str)     |
+| [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
+| [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
+| [requests()](#requests) | [requests2()](#requests2)   | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) |
+| [How to set Timeout](#How-to-set-Timeout) | [How to set Max Redirects](#How-to-set-Max-Redirects) | [How to set User Agent](#How-to-set-User-Agent) | [How to set Proxy](#How-to-set-Proxy) |
+| [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
+| [PyPI](https://pypi.org/project/faster-than-requests) | [GitHub Actions / CI](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON) | [Examples](https://github.com/juancarlospaco/faster-than-requests/tree/master/examples) | [Sponsors](#sponsors) |
+
 
 # get()
 <details>
@@ -865,6 +880,73 @@ keys must not be empty string, values can be empty string, both must the strippe
 </details>
 
 
+# How to set Timeout
+
+Set Timeout by changing the environment variable `REQUESTS_TIMEOUT`, `int` type, must be a non-zero positive value, milliseconds precision, `1000` is `1` Second, can be `-1`.
+This is 100% Optional, this is provided as Extra feature.
+
+Examples:
+
+```bash
+$ export REQUESTS_TIMEOUT = 42000
+$ # This is the Bash command line terminal!.
+```
+
+
+# How to set Max Redirects
+
+Set Max Redirects by changing the environment variable `REQUESTS_MAXREDIRECTS`, `int` type, must be a zero or positive value, can be `1`, can be `0`.
+This is 100% Optional, this is provided as Extra feature.
+
+Examples:
+
+```bash
+$ export REQUESTS_MAXREDIRECTS = 3
+$ # This is the Bash command line terminal!.
+```
+
+
+# How to set User Agent
+
+Set User Agent by changing the environment variable `REQUESTS_USERAGENT`, `str` type, can be empty string, can be `""`.
+This is 100% Optional, this is provided as Extra feature.
+
+Examples:
+
+```bash
+$ export REQUESTS_USERAGENT = ""
+$ # This is the Bash command line terminal!.
+```
+
+
+# How to set Proxy
+
+Set Proxy by changing the environment variable `HTTPS_PROXY` or ,`HTTP_PROXY`, `str` type, empty string is No proxy.
+
+Set Proxy Authentication by changing the environment variable `HTTPS_PROXY_AUTH` or ,`HTTP_PROXY_AUTH`, `str` type, empty string is No Auth.
+This is 100% Optional, this is provided as Extra feature.
+
+Examples:
+
+```bash
+$ export HTTPS_PROXY = "http://yourProxyUrl:8080"
+$ # This is the Bash command line terminal!.
+```
+
+
+# How to set Debug Mode
+
+Set Debug Mode by changing the environment variable `REQUESTS_DEBUG`, `bool` type, can be empty string,
+Debug Mode prints progress in real time each second on the terminal as JSON string, Debug Mode is slow.
+This is 100% Optional, this is provided as Extra feature.
+
+Examples:
+
+```bash
+$ export REQUESTS_DEBUG = "true"
+$ # This is the Bash command line terminal!.
+```
+
 
 [**For more Examples check the Examples and Tests.**](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/example.py)
 
@@ -922,30 +1004,24 @@ More Faster Libraries...
 - 64 Bit.
 
 
-##### Low Level API Extras
-
-To control the default values the following optional Bash environment variables are available:
-
-- `requests_timeout` Timeout, `int` type, must be a non-zero positive value, milliseconds precision, can be `-1`.
-- `requests_maxredirects` Maximum Redirects, `int` type, must be a zero or positive value, can be `1`, can be `0`.
-- `requests_useragent` User Agent, `str` type, can be empty string, recommended empty string, can be `""`.
-
-Examples:
-
-```bash
-$ export https_proxy = "http://yourProxyUrl:8080"
-$ export requests_maxredirects = "42"
-$ # This is the Bash command line terminal!.
-```
-
-- **This is 100% Optional. This is provided as Extra features.**
-
-
 # Windows
 
+- Documentation assumes experience with Git, GitHub, cmd, Compiled software, PC with Administrator.
 - If installation fails on Windows, just use the Source Code:
 
 ![win-compile](https://user-images.githubusercontent.com/1189414/63147831-b8bf6100-bfd5-11e9-9e6e-91d61040f139.png "Git Clone and Compile on Windows 10 with only Git and Nim installed, just 2 commands!")
+
+As you can see on the screenshot the only needed software is [Git for Windows](https://github.com/git-for-windows/git/releases/latest) and [Nim](https://github.com/dom96/choosenim#windows). 
+
+Reboot after install. Administrator required for install. Everything must be 64Bit.
+
+If that fails too, dont waste time and go directly for [Docker for Windows.](https://docs.docker.com/docker-for-windows).
+
+For info about how to install Git for Windows, read Git for Windows Documentation.
+
+For info about how to install Nim, read Nim Documentation.
+
+For info about how to install Docker for Windows, read Docker for Windows Documentation.
 
 - Git Clone and Compile on Windows 10 on just 2 commands!.
 - [Alternatively you can try Docker for Windows.](https://docs.docker.com/docker-for-windows)
@@ -956,6 +1032,12 @@ $ # This is the Bash command line terminal!.
 # Stars
 
 ![Star faster-than-requests on GitHub](https://starchart.cc/juancarlospaco/faster-than-requests.svg "Star faster-than-requests on GitHub!")
+
+
+# Sponsors
+
+- **None. Become a Sponsor and help improve this library with the features you want!.**
+- If you are a company or commercial user we need Sponsors!.
 
 
 # FAQ
