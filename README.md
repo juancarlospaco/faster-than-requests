@@ -1017,13 +1017,13 @@ Reboot after install. Administrator required for install. Everything must be 64B
 
 If that fails too, dont waste time and go directly for [Docker for Windows.](https://docs.docker.com/docker-for-windows).
 
-For info about how to install Git for Windows, read Git for Windows Documentation.
+For info about how to install [Git for Windows](https://github.com/git-for-windows/git/releases/latest), read [Git for Windows](https://github.com/git-for-windows/git/releases/latest) Documentation.
 
-For info about how to install Nim, read Nim Documentation.
+[For info about how to install Nim, read Nim Documentation.](https://nim-lang.org/install.html)
 
-For info about how to install Docker for Windows, read Docker for Windows Documentation.
+For info about how to install [Docker for Windows.](https://docs.docker.com/docker-for-windows), read [Docker for Windows.](https://docs.docker.com/docker-for-windows) Documentation.
 
-GitHub Actions Build everything from zero on each push, use it as guidance too.
+[GitHub Actions Build everything from zero on each push, use it as guidance too.](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON)
 
 - Git Clone and Compile on Windows 10 on just 2 commands!.
 - [Alternatively you can try Docker for Windows.](https://docs.docker.com/docker-for-windows)
