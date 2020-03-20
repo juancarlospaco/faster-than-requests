@@ -171,6 +171,27 @@ proc download2*(list_of_files: openArray[tuple[url: string, filename: string]], 
       client.downloadFile(item[0], item[1])
 
 
+proc download3*(list_of_files: openArray[tuple[url: string, filename: string]], delay: Positive = 1, tries: Positive = 9, backoff: Positive = 2, jitter: Positive = 2, verbose: bool = true) {.discardable, exportpy.} =
+  ## Download a list of files ASAP, but if fails, retry again and again.
+  var mdelay: Positive = delay
+  var mtries: Positive = tries
+  while tries > 1:
+    try:
+      if likely(verbose): echo "Retry " & $mtries & " of " & $tries
+      for item in list_of_files:
+        sleep mdelay
+        if likely(verbose): echo item
+        client.downloadFile(item[0], item[1])
+      return
+    except:
+      if likely(verbose):
+        echo getCurrentExceptionMsg()
+        echo "Retrying in " & $mdelay & " microseconds" & (if mtries < 3: " (Warning: This is the last Retry!)." else: "...")
+      sleep mdelay + mtries mod jitter * 100
+      dec mtries
+      mdelay *= backoff
+
+
 proc scraper*(list_of_urls: openArray[string], html_tag: string = "a", case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false): seq[string] {.exportpy.} =
   let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
   result = newSeq[string](urls.len)

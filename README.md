@@ -745,6 +745,66 @@ requests.download2([("http://example.com/cat.jpg", "kitten.jpg"), ("http://examp
 </details>
 
 
+## download3()
+<details>
+
+**Description:**
+Takes a list of URLs, makes 1 HTTP GET Download for each URL of the list.
+It will Retry again and again in loop until the file is downloaded or `tries` is `0`, whatever happens first.
+If all retries have failed and `tries` is `0` it will error out.
+
+**Arguments:**
+- `list_of_files` list of tuples, tuples must be 2 items long, first item is URL and second item is filename.
+The remote URL, string type, required, must not be empty string, is the first item on the tuple.
+The local filename, string type, required, must not be empty string, can be full path, can be relative path, must include file extension.
+- `delay` Delay between a download and the next one, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `0`, must be a positive integer value.
+- `tries` how many Retries to try, positive integer type, optional, defaults to `9`, must be a positive integer value.
+- `backoff` Back-Off between retries, positive integer type, optional, defaults to `2`, must be a positive integer value.
+- `jitter` Jitter applied to the Back-Off between retries (Modulo math operation), positive integer type, optional, defaults to `2`, must be a positive integer value.
+- `verbose` be Verbose, bool type, optional, defaults to `True`.
+
+**Returns:** None.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.download3(
+  [("http://INVALID/cat.jpg", "kitten.jpg"), ("http://INVALID/dog.jpg", "doge.jpg")],
+  delay = 1, tries = 9, backoff = 2, jitter = 2, verbose = True,
+)
+```
+
+Examples of Failed download output (intended):
+
+```console
+$ python3 example_fail_all_retry.py
+
+Retry: 3 of 3
+(url: "http://NONEXISTENT", filename: "a.json")
+No such file or directory
+Additional info: "Name or service not known"
+Retrying in 64 microseconds...
+Retry: 2 of 3
+(url: "http://NONEXISTENT", filename: "a.json")
+No such file or directory
+Additional info: "Name or service not known"
+Retrying in 128 microseconds (Warning: This is the last Retry!).
+Retry: 1 of 3
+(url: "http://NONEXISTENT", filename: "a.json")
+No such file or directory
+Additional info: "Name or service not known"
+Retrying in 256 microseconds (Warning: This is the last Retry!).
+Traceback (most recent call last):
+  File "example_fail_all_retry.py", line 3, in <module>
+    downloader.download3()
+  ...
+
+$
+```
+
+</details>
+
 
 ## set_headers()
 <details>
