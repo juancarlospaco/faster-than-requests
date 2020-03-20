@@ -1028,6 +1028,11 @@ For info about how to install Docker for Windows, read Docker for Windows Docume
 - [Alternatively you can try WSL for Windows.](https://docs.microsoft.com/en-us/windows/wsl/about)
 - **The file extension must be `.pyd`, NOT `.dll`. Compile with `-d:ssl` to use HTTPS.**
 
+```
+nimble install nimpy
+nim c -d:danger --app:lib --out:faster_than_requests.pyd faster_than_requests.nim
+```
+
 
 # Stars
 
