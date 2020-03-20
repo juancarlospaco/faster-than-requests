@@ -1032,7 +1032,7 @@ For info about how to install [Docker for Windows.](https://docs.docker.com/dock
 
 ```
 nimble install nimpy
-nim c -d:danger --app:lib --out:faster_than_requests.pyd faster_than_requests.nim
+nim c -d:ssl -d:danger --app:lib --out:faster_than_requests.pyd faster_than_requests.nim
 ```
 
 
