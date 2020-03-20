@@ -1023,6 +1023,8 @@ For info about how to install Nim, read Nim Documentation.
 
 For info about how to install Docker for Windows, read Docker for Windows Documentation.
 
+GitHub Actions Build everything from zero on each push, use it as guidance too.
+
 - Git Clone and Compile on Windows 10 on just 2 commands!.
 - [Alternatively you can try Docker for Windows.](https://docs.docker.com/docker-for-windows)
 - [Alternatively you can try WSL for Windows.](https://docs.microsoft.com/en-us/windows/wsl/about)
