@@ -1011,7 +1011,7 @@ More Faster Libraries...
 
 ![win-compile](https://user-images.githubusercontent.com/1189414/63147831-b8bf6100-bfd5-11e9-9e6e-91d61040f139.png "Git Clone and Compile on Windows 10 with only Git and Nim installed, just 2 commands!")
 
-As you can see on the screenshot the only needed software is [Git for Windows](https://github.com/git-for-windows/git/releases/latest) and [Nim](https://github.com/dom96/choosenim#windows).
+As you can see on the screenshot **the only needed software is [Git for Windows](https://github.com/git-for-windows/git/releases/latest) and [Nim](https://github.com/dom96/choosenim#windows).**
 
 Reboot after install. Administrator required for install. Everything must be 64Bit.
 
