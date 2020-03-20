@@ -9,11 +9,10 @@
 
 ![](https://img.shields.io/github/languages/top/juancarlospaco/faster-than-requests?style=for-the-badge)
 ![](https://img.shields.io/github/stars/juancarlospaco/faster-than-requests?style=for-the-badge "Star faster-than-requests on GitHub!")
-![](https://img.shields.io/maintenance/yes/2019?style=for-the-badge "2019")
+![](https://img.shields.io/maintenance/yes/2020?style=for-the-badge "2020")
 ![](https://img.shields.io/github/languages/code-size/juancarlospaco/faster-than-requests?style=for-the-badge)
 ![](https://img.shields.io/github/issues-raw/juancarlospaco/faster-than-requests?style=for-the-badge "Bugs")
 ![](https://img.shields.io/github/issues-pr-raw/juancarlospaco/faster-than-requests?style=for-the-badge "PRs")
-![](https://img.shields.io/github/commit-activity/y/juancarlospaco/faster-than-requests?style=for-the-badge)
 ![](https://img.shields.io/github/last-commit/juancarlospaco/faster-than-requests?style=for-the-badge "Commits")
 
 <img src="http://feeds.feedburner.com/RecentCommitsToFaster-than-requestsmaster.1.gif" title="Recent Commits to Faster Than Requests" width="99%" height="75px">
