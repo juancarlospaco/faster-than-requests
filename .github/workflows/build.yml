@@ -14,7 +14,7 @@ jobs:
     - name: Set Global Environment Variables
       uses: allenevans/set-env@v1.0.0
       with:
-        CHOOSENIM_CHOOSE_VERSION: "1.0.4"
+        CHOOSENIM_CHOOSE_VERSION: "1.2.0"
         CHOOSENIM_NO_ANALYTICS: 1
 
     - name: Update Python PIP
