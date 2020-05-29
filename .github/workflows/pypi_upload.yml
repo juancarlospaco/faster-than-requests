@@ -11,65 +11,29 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
+    - uses: jiro4989/setup-nim-action@v1.0.2
+      with:
+        nim-version: '1.2.0'
 
     - name: Set Global Environment Variables
       uses: allenevans/set-env@v1.0.0
       with:
-        CHOOSENIM_CHOOSE_VERSION: "1.2.0"
-        CHOOSENIM_NO_ANALYTICS: 1
         TWINE_NON_INTERACTIVE: 1
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        MAIN_MODULE: "src/faster_than_requests.nim"
+        MAIN_MODULE: "faster_than_requests.nim"
         #TWINE_REPOSITORY_URL: "https://test.pypi.org/legacy/"
         #TWINE_REPOSITORY: "https://test.pypi.org/legacy/"
 
     - name: Update Python PIP
       run: pip3 install --upgrade --disable-pip-version-check pip setuptools twine
 
-    - name: Cache choosenim
-      id: cache-choosenim
-      uses: actions/cache@v1
-      with:
-        path: ~/.choosenim
-        key: ${{ runner.os }}-choosenim-$CHOOSENIM_CHOOSE_VERSION
-
-    - name: Cache nimble
-      id: cache-nimble
-      uses: actions/cache@v1
-      with:
-        path: ~/.nimble
-        key: ${{ runner.os }}-nimble-$CHOOSENIM_CHOOSE_VERSION
-
-    - name: Install Nim via Choosenim
-      if: steps.cache-choosenim.outputs.cache-hit != 'true' || steps.cache-nimble.outputs.cache-hit != 'true'
-      run: |
-        curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
-        sh init.sh -y
-
-    - name: Nimble Refresh
-      run: |
-        export PATH=$HOME/.nimble/bin:$PATH
-        nimble -y refresh
-
-    - name: Nimble Install dependencies
-      run: |
-        export PATH=$HOME/.nimble/bin:$PATH
-        nimble -y install nimpy
-
     - name: Prepare Files
       run: |
         mkdir --verbose --parents dist/
-        rm --verbose --force --recursive *.c *.h *.so *.pyd *.egg-info/ dist/*.zip
-        cp --verbose --force ~/.choosenim/toolchains/nim-$CHOOSENIM_CHOOSE_VERSION/lib/nimbase.h nimbase.h
-
-    - name: Compile to C
-      run: |
-        export PATH=$HOME/.nimble/bin:$PATH
-        nim compileToC --compileOnly -d:release -d:danger -d:ssl --threads:on --app:lib --opt:speed --gc:markAndSweep --nimcache:. $MAIN_MODULE
+        rm --verbose --force --recursive dist/*.zip
 
     - name: Publish to PYPI
       run: |
         python3 setup.py --verbose sdist --formats=zip
-        rm --verbose --force --recursive *.c *.h *.so *.pyd *.egg-info/
         twine upload --verbose --disable-progress-bar dist/*.zip
