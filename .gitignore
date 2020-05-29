@@ -8,3 +8,5 @@ dist/*.zip
 *.jpeg
 *.jpg
 *.ndjson
+__pycache__/
+faster_than_requests.egg-info/
