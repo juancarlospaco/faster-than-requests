@@ -10,22 +10,12 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
-
-    - name: Set Global Environment Variables
-      uses: allenevans/set-env@v1.0.0
+    - uses: jiro4989/setup-nim-action@v1.0.2
       with:
-        CHOOSENIM_CHOOSE_VERSION: "1.2.0"
-        CHOOSENIM_NO_ANALYTICS: 1
+        nim-version: '1.2.0'
 
     - name: Update Python PIP
       run: pip install --upgrade --disable-pip-version-check pip
-
-    - name: Cache choosenim
-      id: cache-choosenim
-      uses: actions/cache@v1
-      with:
-        path: ~/.choosenim
-        key: ${{ runner.os }}-choosenim-$CHOOSENIM_CHOOSE_VERSION
 
     - name: Cache nimble
       id: cache-nimble
@@ -33,12 +23,6 @@ jobs:
       with:
         path: ~/.nimble
         key: ${{ runner.os }}-nimble-$CHOOSENIM_CHOOSE_VERSION
-
-    - name: Install Nim via Choosenim
-      if: steps.cache-choosenim.outputs.cache-hit != 'true' || steps.cache-nimble.outputs.cache-hit != 'true'
-      run: |
-        curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
-        sh init.sh -y
 
     - name: Nimble Refresh
       run: |
