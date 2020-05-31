@@ -1,8 +1,6 @@
 *.c
 *.h
 dist/*.zip
-*.so
-*.pyd
 *.dll
 *.svg
 *.jpeg
