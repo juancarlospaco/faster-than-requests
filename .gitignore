@@ -1,6 +1,6 @@
 *.c
 *.h
-dist/*.zip
+dist/
 *.dll
 *.svg
 *.jpeg
@@ -9,5 +9,6 @@ dist/*.zip
 *.egg
 *.so
 *.pyd
+*.dll
 __pycache__/
 *.egg-info/
