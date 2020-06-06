@@ -7,5 +7,7 @@ dist/*.zip
 *.jpg
 *.ndjson
 *.egg
+*.so
+*.pyd
 __pycache__/
-faster_than_requests.egg-info/
+*.egg-info/
