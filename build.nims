@@ -21,6 +21,7 @@ const rootFolder = system.getCurrentDir()
 --compileOnly
 --define:danger
 --define:release
+--define:ssl
 --exceptions:goto
 --gc:markAndSweep
 --tlsEmulation:off
