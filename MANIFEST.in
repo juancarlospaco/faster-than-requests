@@ -1,7 +1,0 @@
-exclude . README.md
-exclude . LICENSE
-
-include . *.nim
-include . *.nims
-include . *.nimf
-include . *.cfg
