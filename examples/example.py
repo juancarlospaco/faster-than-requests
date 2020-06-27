@@ -23,11 +23,6 @@ print(requests.post2dict("http://httpbin.org/post", """{"foo": "bar", "baz": tru
 
 print(requests.post2json("http://httpbin.org/post", """{"foo": "bar", "baz": true}""")) # HTTP POST data to JSON response.
 
-print(requests.requests("http://httpbin.org/get", "get", "", [("key", "value")]))       # HTTP GET/POST/PUT/DELETE/PATCH,Headers,etc.
-
-print(requests.requests2("http://httpbin.org/get", "get", "", [("key", "value")],
-                          userAgent="FasterThanRequests", timeout=9000, maxRedirects=9)) # HTTP GET/POST/PUT/DELETE/PATCH,Headers,etc.
-
 print(requests.download("http://httpbin.org/image/jpeg", "foo.jpeg"))                  # HTTP GET Download 1 file.
 
 print(requests.get2str2(["http://httpbin.org/json", "http://httpbin.org/xml"]))     # HTTP GET body to string from a list.
