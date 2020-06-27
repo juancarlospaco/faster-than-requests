@@ -80,13 +80,6 @@ class TestName(unittest.TestCase):
     def test_post2json_pretty(self):
         self.assertTrue(dict(json.loads(faster_than_requests.post2json("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""))))
 
-    def test_requests(self):
-        self.assertIsInstance(faster_than_requests.requests("http://httpbin.org/get", "get", "", [("key", "value")]), dict)
-
-    def test_requests2(self):
-        self.assertIsInstance(
-            faster_than_requests.requests2("http://httpbin.org/get", "get", "", [("key", "value")], userAgent="FasterThanRequests", timeout=9000, maxRedirects=9), dict)
-
     def test_get2str_list(self):
         self.assertIsInstance(faster_than_requests.get2str2(["http://httpbin.org/json", "http://httpbin.org/xml"]), list)
 
