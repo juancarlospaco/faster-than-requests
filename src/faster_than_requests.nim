@@ -1,70 +1,63 @@
 import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, re, nimpy
 
 
-let proxyUrl = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY")
-var client = newHttpClient(timeout = getEnv("REQUESTS_TIMEOUT", "-1").parseInt, userAgent = getEnv("REQUESTS_USERAGENT", defUserAgent),
-  proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH")) else: nil),
-  maxRedirects = getEnv("REQUESTS_MAXREDIRECTS", "9").parseInt)
-
+template clientify(userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string; timeout: int; http_headers: openArray[tuple[key: string, val: string]]): HttpClient =
+  newHttpClient(userAgent = userAgent, maxRedirects = maxRedirects, headers = newHttpHeaders(http_headers),
+    proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil), timeout = timeout)
 
 template response2table(r: Response): Table[string, string] =
   {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
   "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")}.toTable
 
 
-proc get*(url: string): Table[string, string] {.exportpy.} =
+proc get*(url: string; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP GET an URL to dictionary.
-  response2table(client.get(url))
+  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).get(url))
 
 
-proc post*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): Table[string, string] {.exportpy.} =
+proc post*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP POST an URL to dictionary.
-  response2table(client.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
+  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
 
 
-proc put*(url, body: string): Table[string, string] {.exportpy.} =
+proc put*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP PUT an URL to dictionary.
-  response2table(client.request(url, HttpPut, body))
+  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).put(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
 
 
-proc patch*(url, body: string): Table[string, string] {.exportpy.} =
+proc patch*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP PATCH an URL to dictionary.
-  response2table(client.request(url, HttpPatch, body))
+  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).patch(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
 
 
-proc delete*(url: string): Table[string, string] {.exportpy.} =
+proc delete*(url: string; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP DELETE an URL to dictionary.
-  response2table(client.request(url, HttpDelete))
+  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).delete(url))
 
 
-proc head*(url: string): Table[string, string] {.exportpy.} =
+proc head*(url: string; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP HEAD an URL to dictionary. HEAD do NOT have body by definition. May NOT have contentLength sometimes.
-  let r = client.head(url)
-  {"content-type": r.contentType, "status": r.status, "version": r.version, "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")}.toTable
+  let r = create(Response, sizeOf Response)
+  r[] = clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).head(url)
+  result = {"content-type": r[].contentType, "status": r[].status, "version": r[].version,
+    "content-length": try: $r[].contentLength except: "0", "headers": replace($r[].headers, " @[", " [")}.toTable
+  dealloc r
 
 
-proc requests*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], debugs: bool = false): Table[string, string] {.exportpy.} =
-  ## HTTP requests low level function to dictionary.
-  let headerss = newHttpHeaders(http_headers)
-  if unlikely(debugs): echo url, "\n", http_method, "\n", body, "\n", headerss
-  response2table(client.request(url, http_method, body, headerss))
+# ^ Basic HTTP Functions ########### V Extra HTTP Functions, go beyond requests
 
 
-proc requests2*(url, http_method, body: string, http_headers: openArray[tuple[key: string, val: string]], proxyUrl: string = "",
-    proxyAuth: string = "", userAgent: string = "", timeout: int = -1, maxRedirects: int = 9): Table[string, string] {.exportpy.} =
-  ## HTTP requests low level function to dictionary with extra options.
-  let
-    proxxi = if unlikely(proxyUrl.len > 1): newProxy(proxyUrl.strip, proxyAuth.strip) else: nil
-    client = newHttpClient(timeout = timeout, userAgent = userAgent, proxy = proxxi, maxRedirects = maxRedirects)
-  response2table(client.request(url, http_method, body, newHttpHeaders(http_headers)))
+let proxyUrl = createU(string, sizeOf string)
+proxyUrl[] = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY")
+var client = newHttpClient(timeout = getEnv("REQUESTS_TIMEOUT", "-1").parseInt, userAgent = getEnv("REQUESTS_USERAGENT", defUserAgent),
+  proxy = (if unlikely(proxyUrl[].len > 1): newProxy(proxyUrl[], getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH")) else: nil),
+  maxRedirects = getEnv("REQUESTS_MAXREDIRECTS", "9").parseInt)
+dealloc proxyUrl
 
 
 proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {.exportpy.} =
   ## Set the HTTP Headers to the HTTP client.
   client.headers = newHttpHeaders(headers)
-
-
-# ^ Basic HTTP Functions ########### V Extra HTTP Functions, go beyond requests
 
 
 proc debugs*() {.discardable, exportpy.} =
@@ -76,6 +69,7 @@ proc debugs*() {.discardable, exportpy.} =
     "tempDir": getTempDir(), "ssl": defined(ssl), "currentCompilerExe": getCurrentCompilerExe(), "int.high": int.high
   }))
 
+
 if unlikely(getEnv("REQUESTS_DEBUG", "false").parseBool):
   debugs()
   client.onProgressChanged = (proc (t, p, s: BiggestInt) = echo("{\"speed\": ", s div 1000, ",\t\"progress\": ", p, ",\t\"remaining\": ", t - p, ",\t\"total\": ", t, "}"))
@@ -83,17 +77,18 @@ if unlikely(getEnv("REQUESTS_DEBUG", "false").parseBool):
 
 proc tuples2json*(tuples: openArray[tuple[key: string, val: string]], pretty_print: bool = false): string {.exportpy.} =
   ## Convert Tuples to JSON Minified.
+  let temp = createU(JsonNode, sizeOf JsonNode)
+  temp[] = %*{}
   if unlikely(pretty_print):
-    var temp = parseJson("{}")
-    for item in tuples: temp.add(item[0], %item[1])
-    result.toUgly(temp)
+    for item in tuples: temp[].add(item[0], %item[1])
+    result.toUgly(temp[])
   else:
-    var temp = parseJson("{}")
-    for item in tuples: temp.add(item[0], %item[1])
-    result = temp.pretty
+    for item in tuples: temp[].add(item[0], %item[1])
+    result = temp[].pretty
+  dealloc temp
 
 
-proc get2str*(url: string): string {.exportpy.} =
+proc get2str*(url: sink string): string {.exportpy.} =
   ## HTTP GET body to string.
   client.getContent(url)
 
@@ -109,14 +104,12 @@ proc get2str2*(list_of_urls: openArray[string], threads: bool = false): seq[stri
 
 proc get2ndjson*(list_of_urls: openArray[string], ndjson_file_path: string) {.discardable, exportpy.} =
   ## HTTP GET body to NDJSON file from a list of URLs.
-  var
-    temp: string
-    ndjson = open(ndjson_file_path, fmWrite)
+  let temp = create(string, sizeOf string)
   for url in list_of_urls:
-    temp = ""
-    temp.toUgly client.getContent(url).parseJson
-    ndjson.writeLine temp
-  ndjson.close()
+    temp[].toUgly client.getContent(url).parseJson
+    temp[].add "\n"
+  writeFile(ndjson_file_path, temp[])
+  dealloc temp
 
 
 proc get2json*(url: string, pretty_print: bool = false): string {.exportpy.} =
@@ -173,23 +166,27 @@ proc download2*(list_of_files: openArray[tuple[url: string, filename: string]], 
 
 proc download3*(list_of_files: openArray[tuple[url: string, filename: string]], delay: Positive = 1, tries: Positive = 9, backoff: Positive = 2, jitter: Positive = 2, verbose: bool = true) {.discardable, exportpy.} =
   ## Download a list of files ASAP, but if fails, retry again and again.
-  var mdelay: Positive = delay
-  var mtries: Positive = tries
-  while tries > 1:
+  let mdelay = createU(int, sizeOf int)
+  mdelay[] = delay
+  let mtries = createU(int, sizeOf int)
+  mtries[] = tries
+  while mtries[] > 1:
     try:
-      if likely(verbose): echo "Retry " & $mtries & " of " & $tries
+      if likely(verbose): echo "Retry " & $mtries[] & " of " & $tries
       for item in list_of_files:
-        sleep mdelay
+        sleep mdelay[]
         if likely(verbose): echo item
         client.downloadFile(item[0], item[1])
       return
     except:
       if likely(verbose):
         echo getCurrentExceptionMsg()
-        echo "Retrying in " & $mdelay & " microseconds" & (if mtries < 3: " (Warning: This is the last Retry!)." else: "...")
-      sleep mdelay + mtries mod jitter * 100
-      dec mtries
-      mdelay *= backoff
+        echo "Retrying in " & $mdelay[] & " microseconds" & (if mtries[] < 3: " (Warning: This is the last Retry!)." else: "...")
+      sleep mdelay[] + mtries[] mod jitter * 100
+      dec mtries[]
+      mdelay[] *= backoff
+  dealloc mdelay
+  dealloc mtries
 
 
 proc scraper*(list_of_urls: openArray[string], html_tag: string = "a", case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false): seq[string] {.exportpy.} =
@@ -219,20 +216,22 @@ proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], ve
 
 
 proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, verbose: bool = true, case_insensitive: bool = true, deduplicate_urls: bool = false, delay: Natural = 0, header: seq[(string, string)] = @[("DNT", "1")], pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[], timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, proxy_url: string = "", proxy_auth: string = ""): seq[seq[string]] {.exportpy.} =
-  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
-  let proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
-  var cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = proxi, timeout = timeout)
-  cliente.headers = newHttpHeaders(header)
-  result = newSeq[seq[string]](urls.len)
-  for i, url in urls:
+  let urls = createU(seq[string], sizeOf seq[string])
+  urls[] = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
+  let cliente = createU(HttpClient, sizeOf HttpClient)
+  cliente[] = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = (if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil), timeout = timeout, headers = newHttpHeaders(header))
+  result = newSeq[seq[string]](urls[].len)
+  for i, url in urls[]:
     if likely(verbose): echo i, "\t", url
     for tag in list_of_tags:
       sleep delay
-      for item in findAll(parseHtml(if pre_replacements.len > 0: cliente.getContent(url).multiReplace(pre_replacements) else: cliente.getContent(url)), tag, case_insensitive):
+      for item in findAll(parseHtml(if pre_replacements.len > 0: cliente[].getContent(url).multiReplace(pre_replacements) else: cliente[].getContent(url)), tag, case_insensitive):
         if start_with.len > 0 and end_with.len > 0:
           if strip($item).startsWith(start_with) and strip($item).endsWith(end_with): result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
           else: continue
         else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
+  dealloc cliente
+  dealloc urls
 
 
 proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, print_alt: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, visited_urls: bool = true, html_output: bool = true, csv_output: bool = true, verbose: bool = true, delay: Natural = 0, timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, header: seq[(string, string)] = @[("DNT", "1")], proxy_url: string = "", proxy_auth: string = "") {.exportpy, discardable.} =
