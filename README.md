@@ -65,8 +65,7 @@ requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Re
 | [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
 | [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
 | [requests()](#requests) |                             | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) |
-| [download3()](#download3) |                           |                               |                               |
-| [How to set Timeout](#How-to-set-Timeout) | [How to set Max Redirects](#How-to-set-Max-Redirects) | [How to set User Agent](#How-to-set-User-Agent) | [How to set Proxy](#How-to-set-Proxy) |
+| [download3()](#download3) | [How to set DEBUG mode](#how-to-set-debug-mode) |                               |                               |
 | [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
 | [PyPI](https://pypi.org/project/faster-than-requests) | [GitHub Actions / CI](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON) | [Examples](https://github.com/juancarlospaco/faster-than-requests/tree/master/examples) | [Sponsors](#sponsors) |
 
@@ -941,60 +940,6 @@ keys must not be empty string, values can be empty string, both must the strippe
 **Returns:** JSON, string type.
 
 </details>
-
-
-# How to set Timeout
-
-Set Timeout by changing the environment variable `REQUESTS_TIMEOUT`, `int` type, must be a non-zero positive value, milliseconds precision, `1000` is `1` Second, can be `-1`.
-This is 100% Optional, this is provided as Extra feature.
-
-Examples:
-
-```bash
-$ export REQUESTS_TIMEOUT = 42000
-$ # This is the Bash command line terminal!.
-```
-
-
-# How to set Max Redirects
-
-Set Max Redirects by changing the environment variable `REQUESTS_MAXREDIRECTS`, `int` type, must be a zero or positive value, can be `1`, can be `0`.
-This is 100% Optional, this is provided as Extra feature.
-
-Examples:
-
-```bash
-$ export REQUESTS_MAXREDIRECTS = 3
-$ # This is the Bash command line terminal!.
-```
-
-
-# How to set User Agent
-
-Set User Agent by changing the environment variable `REQUESTS_USERAGENT`, `str` type, can be empty string, can be `""`.
-This is 100% Optional, this is provided as Extra feature.
-
-Examples:
-
-```bash
-$ export REQUESTS_USERAGENT = ""
-$ # This is the Bash command line terminal!.
-```
-
-
-# How to set Proxy
-
-Set Proxy by changing the environment variable `HTTPS_PROXY` or ,`HTTP_PROXY`, `str` type, empty string is No proxy.
-
-Set Proxy Authentication by changing the environment variable `HTTPS_PROXY_AUTH` or ,`HTTP_PROXY_AUTH`, `str` type, empty string is No Auth.
-This is 100% Optional, this is provided as Extra feature.
-
-Examples:
-
-```bash
-$ export HTTPS_PROXY = "http://yourProxyUrl:8080"
-$ # This is the Bash command line terminal!.
-```
 
 
 # How to set Debug Mode
