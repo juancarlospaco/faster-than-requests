@@ -64,8 +64,7 @@ requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Re
 | [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [debugs()](#debugs)           | [get2str()](#get2str)     |
 | [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
 | [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
-| [requests()](#requests) |                             | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) |
-| [download3()](#download3) | [How to set DEBUG mode](#how-to-set-debug-mode) |                               |                               |
+| [download3()](#download3) | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) | [How to set DEBUG mode](#how-to-set-debug-mode) |
 | [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
 | [PyPI](https://pypi.org/project/faster-than-requests) | [GitHub Actions / CI](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON) | [Examples](https://github.com/juancarlospaco/faster-than-requests/tree/master/examples) | [Sponsors](#sponsors) |
 
@@ -878,31 +877,6 @@ requests.set_headers([("content-type", "text/plain"), ("dnt", "1")])
 </details>
 
 
-
-## requests()
-<details>
-
-**Description:**
-Low level API of Requests with everything available as argument to build a detailed custom HTTP request.
-
-**Arguments:**
-- `url` the remote URL, string type, required, must not be empty string.
-- `body` the Body data, string type, required, can be empty string.
-- `http_method` HTTP method, string type, required, must not be empty string, values can be `"GET"`, `"POST"`, etc.
-- `debugs` Debug mode, bool type, required, default is `False`.
-- `http_headers` HTTP Headers, list type, required,
-a list of tuples, tuples must be 2 items long,
-must not be empty list, must not be empty tuple,
-the first item of the tuple is the key and second item of the tuple is value,
-keys must not be empty string, values can be empty string, both must the stripped.
-
-**Returns:**
-Response, `dict` type, values of the dict are string type,
-values of the dict can be empty string, but keys are always consistent.
-
-</details>
-
-
 **Description:**
 Debug the internal Configuration of the library, takes no arguments, returns nothing,
 prints the pretty-printed human-friendly multi-line JSON Configuration to standard output terminal.
@@ -1105,19 +1079,6 @@ https://github.com/juancarlospaco/faster-than-requests/issues
 
 [setHeaders()](https://github.com/juancarlospaco/faster-than-requests#setheaders)
 
-- How to set HTTP Proxy ?.
-
-[requests2()](https://github.com/juancarlospaco/faster-than-requests#requests2)
-
-OR
-
-`export https_proxy = "http://yourProxyUrl:8080"`
-
-`export http_proxy =  "http://yourProxyUrl:8080"`
-
-Standard Linux Bash environment variables for proxy.
-
-It will be automatically read from the environment variables.
 
 - Whats NDJSON ?.
 
