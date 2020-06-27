@@ -58,8 +58,8 @@ requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Re
 
 |                         |                             |                               |                           |
 |:-----------------------:|:---------------------------:|:-----------------------------:|:-------------------------:|
-| [get()](#get)           | [post()](#post)             | [put()](#put)                 | [head()](#head)           |
-| [patch()](#patch)       | [delete()](#delete)         | [download()](#download)       | [download2()](#download2) |
+| [**get()**](#get)       | [**post()**](#post)         | [**put()**](#put)             | [**head()**](#head)       |
+| [**patch()**](#patch)   | [**delete()**](#delete)     | [download()](#download)       | [download2()](#download2) |
 | [scraper()](#scraper)   | [scraper2()](#scraper2)     | [scraper3()](#scraper3)       | [scraper4()](#scraper4)   |
 | [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [debugs()](#debugs)           | [get2str()](#get2str)     |
 | [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
