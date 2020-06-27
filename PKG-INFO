@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: faster-than-requests
-Version: 1.0
+Version: 1.2.4
 Summary: Faster & simpler requests replacement for Python
 Home-page: https://github.com/juancarlospaco/faster-than-requests
 Author: Juan Carlos
