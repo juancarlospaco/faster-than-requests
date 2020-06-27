@@ -12,7 +12,7 @@ jobs:
     - uses: actions/setup-python@v1
     - uses: jiro4989/setup-nim-action@v1.0.2
       with:
-        nim-version: '1.2.0'
+        nim-version: '1.2.4'
 
     - name: Update Python PIP
       run: pip install --upgrade --disable-pip-version-check pip
