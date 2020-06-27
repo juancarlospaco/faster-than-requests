@@ -7,4 +7,4 @@ headers = [
   ("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36")
 ]
 
-print(faster_than_requests.requests("http://httpbin.org/get", "get", "", headers))
+print(faster_than_requests.get("http://httpbin.org/get", http_headers = headers))
