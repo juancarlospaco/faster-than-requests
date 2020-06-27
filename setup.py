@@ -1,4 +1,5 @@
-import os, sys, pathlib, setuptools
+import os, sys, pathlib, setuptools, sysconfig
+from setuptools.command.build_ext import build_ext
 
 if sys.platform.startswith("lin"):
   folder = "lin" # OS is Linux
@@ -12,7 +13,13 @@ for c_source_file in os.listdir(folder): # Walk the folder with C files.
   if c_source_file.endswith(".c"):       # Collect all C files.
     sources.append(str(pathlib.Path(folder) / c_source_file))
 
+class NoSuffixBuilder(build_ext):
+  def get_ext_filename(self, ext_name): # NO Suffix
+    filename = super().get_ext_filename(ext_name)
+    return filename.replace(sysconfig.get_config_var('EXT_SUFFIX'), "") + pathlib.Path(filename).suffix
+
 setuptools.setup(
+  cmdclass = {"build_ext": NoSuffixBuilder},
   ext_modules = [
     setuptools.Extension(
       name = "faster_than_requests",
