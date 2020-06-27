@@ -849,13 +849,13 @@ $
 
 **Description:**
 Set the HTTP Headers from the arguments.
+**This is for the functions that NOT allow `http_headers` as argument.**
 
 **Arguments:**
-- `headers` HTTP Headers, list type, required,
-a list of tuples, tuples must be 2 items long,
-must not be empty list, must not be empty tuple,
-the first item of the tuple is the key and second item of the tuple is value,
-keys must not be empty string, values can be empty string, both must the stripped.
+- `http_headers` HTTP Headers, List of Tuples type, required, example `[("key", "value")]`, example `[("DNT", "1")]`.
+  List of tuples, tuples must be 2 items long, must not be empty list, must not be empty tuple,
+  the first item of the tuple is the key and second item of the tuple is value,
+  keys must not be empty string, values can be empty string, both must the stripped.
 
 Examples:
 
