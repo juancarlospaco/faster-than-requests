@@ -64,7 +64,7 @@ requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Re
 | [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [debugs()](#debugs)           | [get2str()](#get2str)     |
 | [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
 | [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
-| [requests()](#requests) | [requests2()](#requests2)   | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) |
+| [requests()](#requests) |                             | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) |
 | [download3()](#download3) |                           |                               |                               |
 | [How to set Timeout](#How-to-set-Timeout) | [How to set Max Redirects](#How-to-set-Max-Redirects) | [How to set User Agent](#How-to-set-User-Agent) | [How to set Proxy](#How-to-set-Proxy) |
 | [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
@@ -79,6 +79,12 @@ Takes an URL string, makes an HTTP GET and returns a dict with the response.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string, example `https://dev.to`.
+- `userAgent` User Agent, string type, optional, should not be empty string.
+- `maxRedirects` Maximum Redirects, int type, optional, defaults to `9`, example `5`, example `1`.
+- `proxyUrl` Proxy URL, string type, optional, if is `""` then NO Proxy is used, defaults to `""`, example `172.15.256.1:666`.
+- `proxyAuth` Proxy Auth, string type, optional, if `proxyUrl` is `""` then is ignored, defaults to `""`.
+- `timeout` Timeout, int type, optional, Milliseconds precision, defaults to `-1`, example `9999`, example `666`.
+- `http_headers` HTTP Headers, List of Tuples type, optional, example `[("key", "value")]`, example `[("DNT", "1")]`.
 
 Examples:
 
@@ -108,6 +114,12 @@ Takes an URL string, makes an HTTP POST and returns a dict with the response.
 - `url` the remote URL, string type, required, must not be empty string, example `https://dev.to`.
 - `body` the Body data, string type, required, can be empty string. To Post Files use this too.
 - `multipart_data` MultiPart data, optional, list of tupes type, must not be empty list, example `[("key", "value")]`.
+- `userAgent` User Agent, string type, optional, should not be empty string.
+- `maxRedirects` Maximum Redirects, int type, optional, defaults to `9`, example `5`, example `1`.
+- `proxyUrl` Proxy URL, string type, optional, if is `""` then NO Proxy is used, defaults to `""`, example `172.15.256.1:666`.
+- `proxyAuth` Proxy Auth, string type, optional, if `proxyUrl` is `""` then is ignored, defaults to `""`.
+- `timeout` Timeout, int type, optional, Milliseconds precision, defaults to `-1`, example `9999`, example `666`.
+- `http_headers` HTTP Headers, List of Tuples type, optional, example `[("key", "value")]`, example `[("DNT", "1")]`.
 
 Examples:
 
@@ -133,6 +145,12 @@ Takes an URL string, makes an HTTP PUT and returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string, example `https://nim-lang.org`.
 - `body` the Body data, string type, required, can be empty string.
+- `userAgent` User Agent, string type, optional, should not be empty string.
+- `maxRedirects` Maximum Redirects, int type, optional, defaults to `9`, example `5`, example `1`.
+- `proxyUrl` Proxy URL, string type, optional, if is `""` then NO Proxy is used, defaults to `""`, example `172.15.256.1:666`.
+- `proxyAuth` Proxy Auth, string type, optional, if `proxyUrl` is `""` then is ignored, defaults to `""`.
+- `timeout` Timeout, int type, optional, Milliseconds precision, defaults to `-1`, example `9999`, example `666`.
+- `http_headers` HTTP Headers, List of Tuples type, optional, example `[("key", "value")]`, example `[("DNT", "1")]`.
 
 Examples:
 
@@ -157,6 +175,12 @@ Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string, example `https://nim-lang.org`.
+- `userAgent` User Agent, string type, optional, should not be empty string.
+- `maxRedirects` Maximum Redirects, int type, optional, defaults to `9`, example `5`, example `1`.
+- `proxyUrl` Proxy URL, string type, optional, if is `""` then NO Proxy is used, defaults to `""`, example `172.15.256.1:666`.
+- `proxyAuth` Proxy Auth, string type, optional, if `proxyUrl` is `""` then is ignored, defaults to `""`.
+- `timeout` Timeout, int type, optional, Milliseconds precision, defaults to `-1`, example `9999`, example `666`.
+- `http_headers` HTTP Headers, List of Tuples type, optional, example `[("key", "value")]`, example `[("DNT", "1")]`.
 
 Examples:
 
@@ -182,6 +206,12 @@ Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string, example `https://archlinux.org`.
 - `body` the Body data, string type, required, can be empty string.
+- `userAgent` User Agent, string type, optional, should not be empty string.
+- `maxRedirects` Maximum Redirects, int type, optional, defaults to `9`, example `5`, example `1`.
+- `proxyUrl` Proxy URL, string type, optional, if is `""` then NO Proxy is used, defaults to `""`, example `172.15.256.1:666`.
+- `proxyAuth` Proxy Auth, string type, optional, if `proxyUrl` is `""` then is ignored, defaults to `""`.
+- `timeout` Timeout, int type, optional, Milliseconds precision, defaults to `-1`, example `9999`, example `666`.
+- `http_headers` HTTP Headers, List of Tuples type, optional, example `[("key", "value")]`, example `[("DNT", "1")]`.
 
 Examples:
 
@@ -205,6 +235,12 @@ Takes an URL string, makes an HTTP HEAD and returns a dict with the response.
 
 **Arguments:**
 - `url` the remote URL, string type, required, must not be empty string, example `https://nim-lang.org`.
+- `userAgent` User Agent, string type, optional, should not be empty string.
+- `maxRedirects` Maximum Redirects, int type, optional, defaults to `9`, example `5`, example `1`.
+- `proxyUrl` Proxy URL, string type, optional, if is `""` then NO Proxy is used, defaults to `""`, example `172.15.256.1:666`.
+- `proxyAuth` Proxy Auth, string type, optional, if `proxyUrl` is `""` then is ignored, defaults to `""`.
+- `timeout` Timeout, int type, optional, Milliseconds precision, defaults to `-1`, example `9999`, example `666`.
+- `http_headers` HTTP Headers, List of Tuples type, optional, example `[("key", "value")]`, example `[("DNT", "1")]`.
 
 Examples:
 
@@ -867,41 +903,6 @@ values of the dict can be empty string, but keys are always consistent.
 
 </details>
 
-
-
-## requests2()
-<details>
-
-**Description:**
-Low level API of Requests with everything available as argument with extra options to build a detailed custom HTTP request.
-Its like `request()` function but re-imagined with different features.
-May be slower than `request()`.
-
-**Arguments:**
-- `url` Remote URL, string type, required, must not be empty string.
-- `body` the Body data, string type, required, can be empty string.
-- `proxyUrl` Full URL of your Network Proxy, string type, required, can be empty string.
-- `proxyAuth` Auth of your Network Proxy if any, string type, required, can be empty string.
-- `userAgent` User Agent to use for the requests, string type, required, can be empty string.
-- `timeout` Timeout, integer type, Milliseconds precision, must be non-zero positive integer, can be `-1`.
-- `maxRedirects` Maximum Redirects, integer type, must be non-zero positive integer, can be `1`.
-- `http_method` HTTP method, string type, required, must not be empty string, values can be `"GET"`, `"POST"`, etc.
-- `http_headers` HTTP Headers, list type, required,
-a list of tuples, tuples must be 2 items long,
-must not be empty list, must not be empty tuple,
-the first item of the tuple is the key and second item of the tuple is value,
-keys must not be empty string, values can be empty string, both must the stripped.
-
-**Returns:**
-Response, `dict` type, values of the dict are string type,
-values of the dict can be empty string, but keys are always consistent.
-
-</details>
-
-
-
-## debugs()
-<details>
 
 **Description:**
 Debug the internal Configuration of the library, takes no arguments, returns nothing,
