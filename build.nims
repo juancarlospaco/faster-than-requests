@@ -27,6 +27,7 @@ const rootFolder = system.getCurrentDir()
 --tlsEmulation:off
 --define:noSignalHandler
 --excessiveStackTrace:off
+--define:nimDisableCertificateValidation
 --outdir:getTempDir() # Save the *.so to /tmp, so is not on the package
 
 # writeFile("upload2pypi.sh", "twine upload --verbose --repository-url 'https://test.pypi.org/legacy/' --comment 'Powered by https://Nim-lang.org' dist/*.zip\n")
