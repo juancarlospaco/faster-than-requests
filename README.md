@@ -44,7 +44,6 @@
 # Use
 
 ```python
-import nimporter
 import faster_than_requests as requests
 
 requests.get("http://httpbin.org/get")                                      # GET
@@ -84,7 +83,6 @@ Takes an URL string, makes an HTTP GET and returns a dict with the response.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.get("http://example.com")
 ```
@@ -114,7 +112,6 @@ Takes an URL string, makes an HTTP POST and returns a dict with the response.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.post("http://httpbin.org/post", "Some Data Here")
 ```
@@ -140,7 +137,6 @@ Takes an URL string, makes an HTTP PUT and returns a dict with the response.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.put("http://httpbin.org/post", "Some Data Here")
 ```
@@ -165,7 +161,6 @@ Takes an URL string, makes an HTTP DELETE and returns a dict with the response.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.delete("http://example.com/api/something")
 ```
@@ -191,7 +186,6 @@ Takes an URL string, makes an HTTP PATCH and returns a dict with the response.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.patch("http://example.com", "My Body Data Here")
 ```
@@ -215,7 +209,6 @@ Takes an URL string, makes an HTTP HEAD and returns a dict with the response.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.head("http://example.com/api/something")
 ```
@@ -251,7 +244,6 @@ Requests are processed asynchronously. This means that it doesn’t need to wait
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.scraper(["https://nim-lang.org", "http://example.com"], threads=True)
 ```
@@ -290,7 +282,6 @@ You can think of this scraper as a parallel evolution of the original scraper.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.scraper2(["https://nim-lang.org", "http://example.com"], list_of_tags=["h1", "h2"], case_insensitive=False)
 ```
@@ -336,7 +327,6 @@ You can think of this scraper as a parallel evolution of the original scraper.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.scraper3(["https://nim-lang.org", "http://example.com"], list_of_tags=["h1", "h2"], case_insensitive=False)
 ```
@@ -383,7 +373,6 @@ You can think of this scraper as a parallel evolution of the original scraper.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.scraper4(["https://unsplash.com/s/photos/cat", "https://unsplash.com/s/photos/dog"])
 ```
@@ -431,7 +420,6 @@ You can think of this scraper as a parallel evolution of the original scraper.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.scraper5(["https://example.com"], "scraped_data.db")
 ```
@@ -484,7 +472,6 @@ You can think of this scraper as a parallel evolution of the original scraper.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.scraper6(["http://nim-lang.org", "http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"])
 ```
@@ -506,7 +493,6 @@ Takes an URL string, makes an HTTP GET and returns a string with the response Bo
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.get2str("http://example.com")
 ```
@@ -530,7 +516,6 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, and returns a list of strin
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.get2str2(["http://example.com/foo", "http://example.com/bar"], threads = True)
 ```
@@ -556,7 +541,6 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of strings w
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.get2ndjson(["http://example.com/foo", "http://example.com/bar"], "/some/folder/some/file.ndjson")
 ```
@@ -579,7 +563,6 @@ Takes an URL, makes an HTTP GET, returns a dict with the response Body.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.get2dict("http://example.com")
 ```
@@ -605,7 +588,6 @@ Takes an URL, makes an HTTP GET, returns a Minified Computer-friendly single-lin
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.get2json("http://example.com", pretty_print=True)
 ```
@@ -630,7 +612,6 @@ Takes an URL, makes an HTTP POST, returns the response Body as string type.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.post2str("http://example.com/api/foo", "My Body Data Here")
 ```
@@ -655,7 +636,6 @@ Takes an URL, makes a HTTP POST on that URL, returns a dict with the response.
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.post2dict("http://example.com/api/foo", "My Body Data Here")
 ```
@@ -683,7 +663,6 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.post2json("http://example.com/api/foo", "My Body Data Here")
 ```
@@ -708,7 +687,6 @@ Takes a list of URLs, makes 1 HTTP POST for each URL, returns a list of response
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.post2list("http://example.com/api/foo", "My Body Data Here")
 ```
@@ -734,7 +712,6 @@ Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of responses
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.download("http://example.com/api/foo", "my_file.ext")
 ```
@@ -761,7 +738,6 @@ The local filename, string type, required, must not be empty string, can be full
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.download2([("http://example.com/cat.jpg", "kitten.jpg"), ("http://example.com/dog.jpg", "doge.jpg")])
 ```
@@ -794,7 +770,6 @@ The local filename, string type, required, must not be empty string, can be full
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.download3(
   [("http://INVALID/cat.jpg", "kitten.jpg"), ("http://INVALID/dog.jpg", "doge.jpg")],
@@ -849,19 +824,16 @@ keys must not be empty string, values can be empty string, both must the strippe
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.set_headers(headers = [("key", "value")])
 ```
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.set_headers([("key0", "value0"), ("key1", "value1")])
 ```
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.set_headers([("content-type", "text/plain"), ("dnt", "1")])
 ```
@@ -939,7 +911,6 @@ prints the pretty-printed human-friendly multi-line JSON Configuration to standa
 Examples:
 
 ```python
-import nimporter
 import faster_than_requests as requests
 requests.debugs()
 ```
