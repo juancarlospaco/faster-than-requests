@@ -37,7 +37,7 @@ proc delete*(url: string; userAgent: string = defUserAgent; maxRedirects: int = 
 
 proc head*(url: string; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP HEAD an URL to dictionary. HEAD do NOT have body by definition. May NOT have contentLength sometimes.
-  let r = create(Response, sizeOf Response)
+  let r = createU(Response, sizeOf Response)
   r[] = clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).head(url)
   result = {"content-type": r[].contentType, "status": r[].status, "version": r[].version,
     "content-length": try: $r[].contentLength except: "0", "headers": replace($r[].headers, " @[", " [")}.toTable
@@ -63,8 +63,7 @@ proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt"
 proc debugs*() {.discardable, exportpy.} =
   ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
   echo static(pretty(%*{
-    "proxyUrl": getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY"), "timeout": getEnv"REQUESTS_TIMEOUT", "userAgent": getEnv"REQUESTS_USERAGENT",
-    "maxRedirects": getEnv"REQUESTS_MAXREDIRECTS", "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS,
+    "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS, "debug": getEnv("REQUESTS_DEBUG", "false").parseBool,
     "endian": cpuEndian, "release": defined(release), "danger": defined(danger), "CompileDate": CompileDate,  "CompileTime": CompileTime,
     "tempDir": getTempDir(), "ssl": defined(ssl), "currentCompilerExe": getCurrentCompilerExe(), "int.high": int.high
   }))
