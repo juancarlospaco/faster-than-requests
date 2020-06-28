@@ -67,8 +67,7 @@ proc multipartdata2str*(multipart_data: seq[tuple[name: string, content: string]
 proc urlparse*(url: string): array[9, string] {.exportpy.} =
   let u = createU(Uri, sizeOf Uri)
   u[] = uri.parseUri(url)
-  result = [u[].scheme, u[].username, u[].password, u[].hostname,
-    u[].port, u[].path, u[].query, u[].anchor, $u[].opaque]
+  result = [u[].scheme, u[].username, u[].password, u[].hostname, u[].port, u[].path, u[].query, u[].anchor, $u[].opaque]
   dealloc u
 
 
