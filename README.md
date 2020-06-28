@@ -66,7 +66,7 @@ requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Re
 | [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
 | [download3()](#download3) | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) | [multipartdata2str()](#multipartdata2str) |
 | [datauri()](#datauri)   | [urlparse()](#urlparse)     | [urlencode()](#urlencode)     | [urldecode()](#urldecode) |
-| [encodequery()](#encodequery) | [encodexml()](#encodexml) | [How to set DEBUG mode](#how-to-set-debug-mode) | [minify_html()](#minify-html) |
+| [encodequery()](#encodequery) | [encodexml()](#encodexml) | [How to set DEBUG mode](#how-to-set-debug-mode) | [minifyhtml()](#minifyhtml) |
 | [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
 | [PyPI](https://pypi.org/project/faster-than-requests) | [GitHub Actions / CI](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON) | [Examples](https://github.com/juancarlospaco/faster-than-requests/tree/master/examples) | [Sponsors](#sponsors) |
 
@@ -1043,7 +1043,7 @@ requests.encodexml("<h1>Hello World</h1>")
 </details>
 
 
-## minify_html()
+## minifyhtml()
 <details>
 
 **Description:**
@@ -1056,7 +1056,7 @@ Examples:
 
 ```python
 import faster_than_requests as requests
-requests.minify_html("<h1>Hello</h1>          <h1>World</h1>")
+requests.minifyhtml("<h1>Hello</h1>          <h1>World</h1>")
 ```
 
 **Returns:** string.
