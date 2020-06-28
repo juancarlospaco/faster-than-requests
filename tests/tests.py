@@ -35,26 +35,29 @@ class TestName(unittest.TestCase):
   def test_downloads_list(self):
     self.assertIsNone(faster_than_requests.download2([("http://httpbin.org/image/jpeg", "foo.jpg"), ("http://httpbin.org/image/svg",  "bar.svg")]))
 
-  def test_downloads(self):
+  def test_download(self):
     self.assertIsNone(faster_than_requests.download("http://httpbin.org/image/jpeg", "foo.jpeg"))
 
   def test_tuples2json(self):
     self.assertEqual(faster_than_requests.tuples2json([("key0", "value0"), ("key1", "value1")]), '{\n  "key0": "value0",\n  "key1": "value1"\n}')
 
-  def test_gets(self):
+  def test_get(self):
     self.assertIsInstance(faster_than_requests.get("http://httpbin.org/get"), dict)
 
-  def test_posts(self):
+  def test_post(self):
     self.assertIsInstance(faster_than_requests.post("http://httpbin.org/post", """{"foo": "bar", "baz": true}"""), dict)
 
   def test_put(self):
     self.assertIsInstance(faster_than_requests.put("http://httpbin.org/put", """{"foo": "bar", "baz": true}"""), dict)
 
-  def test_deletes(self):
+  def test_delete(self):
     self.assertIsInstance(faster_than_requests.delete("http://httpbin.org/delete"), dict)
 
   def test_patch(self):
     self.assertIsInstance(faster_than_requests.patch("http://httpbin.org/patch", """{"foo": "bar", "baz": true}"""), dict)
+
+  def test_head(self):
+    self.assertIsInstance(faster_than_requests.head("http://httpbin.org/get"), dict)
 
   def test_get2str(self):
     self.assertTrue(dict(json.loads(faster_than_requests.get2str("http://httpbin.org/get"))))
