@@ -26,7 +26,7 @@
 | Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | :negative_squared_cross_mark:       |
 | PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       |
 | PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       |
-| Faster_than_requests          |  `0.45`  | 1     | 99   | 0                     | 1          | :heavy_check_mark: 6, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
+| Faster_than_requests          |  `0.40`  | 1     | 99   | 0                     | 1          | :heavy_check_mark: 6, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
 
 <details>
 
@@ -35,7 +35,7 @@
 - Benchmarks run on Docker from Dockerfile on this repo.
 - Developers counted from the Contributors list of Git.
 - Speed is IRL time to complete 10000 HTTP local requests.
-- Stats as of year 2019.
+- Stats as of year 2020.
 - x86_64 64Bit AMD, SSD, Arch Linux.
 
 </details>
