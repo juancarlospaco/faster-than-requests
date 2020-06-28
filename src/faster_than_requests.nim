@@ -59,19 +59,16 @@ proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt"
   ## Set the HTTP Headers to the HTTP client.
   client.headers = newHttpHeaders(headers)
 
+
 proc multipartdata2str*(multipart_data: seq[tuple[name: string, content: string]]): string {.exportpy.} =
   $newMultipartData(multipart_data)
 
 
-# proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.exportpy.} =
-#   uri.getDataUri(data, mime, encoding)
-
-
-proc urlparse*(url: string): auto {.exportpy.} =
+proc urlparse*(url: string): array[9, string] {.exportpy.} =
   let u = createU(Uri, sizeOf Uri)
   u[] = uri.parseUri(url)
-  result = (scheme: u[].scheme, username: u[].username, password: u[].password, hostname: u[].hostname,
-    port: u[].port, path: u[].path, query: u[].query, anchor: u[].anchor, opaque: u[].opaque)
+  result = [u[].scheme, u[].username, u[].password, u[].hostname,
+    u[].port, u[].path, u[].query, u[].anchor, $u[].opaque]
   dealloc u
 
 
@@ -100,6 +97,10 @@ proc encodexml*(s: string): string {.exportpy.} =
 
 proc minifyhtml(html: string): string {.exportpy.} =
   html.strip.unindent.replace(re">\s+<", "> <")
+
+
+# proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.exportpy.} =
+#   uri.getDataUri(data, mime, encoding)
 
 
 proc debugs*() {.discardable, exportpy.} =
