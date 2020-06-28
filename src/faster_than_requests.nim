@@ -98,6 +98,10 @@ proc encodexml*(s: string): string {.exportpy.} =
     else: add(result, s[i])
 
 
+proc minifyhtml(html: string): string {.exportpy.} =
+  html.strip.unindent.replace(re">\s+<", "> <")
+
+
 proc debugs*() {.discardable, exportpy.} =
   ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
   echo static(pretty(%*{
