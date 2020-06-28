@@ -32,11 +32,14 @@ class TestName(unittest.TestCase):
   def test_get2ndjson_list(self):
     self.assertIsNone(faster_than_requests.get2ndjson(["http://httpbin.org/json", "http://httpbin.org/json"], "output.ndjson"))
 
-  def test_downloads_list(self):
-    self.assertIsNone(faster_than_requests.download2([("http://httpbin.org/image/jpeg", "foo.jpg"), ("http://httpbin.org/image/svg",  "bar.svg")]))
-
   def test_download(self):
     self.assertIsNone(faster_than_requests.download("http://httpbin.org/image/jpeg", "foo.jpeg"))
+
+  def test_download2(self):
+    self.assertIsNone(faster_than_requests.download2([("http://httpbin.org/image/jpeg", "foo.jpg"), ("http://httpbin.org/image/svg",  "bar.svg")]))
+
+  def test_download3(self):
+    self.assertIsNone(faster_than_requests.download3( [("http://httpbin.org/image/jpeg", "foo.jpeg")] ))
 
   def test_tuples2json(self):
     self.assertEqual(faster_than_requests.tuples2json([("key0", "value0"), ("key1", "value1")]), '{\n  "key0": "value0",\n  "key1": "value1"\n}')
