@@ -878,12 +878,12 @@ requests.set_headers([("content-type", "text/plain"), ("dnt", "1")])
 </details>
 
 
-# multipartdata2str()
+## multipartdata2str()
 <details>
 
 **Description:**
-Takes MultiPart Data and returns a string representation.
-Converts MultipartData to 1 human readable string.
+Takes MultiPart Data and returns a string representation. Converts MultipartData to 1 human readable string.
+The human-friendly representation is not machine-friendly, so is not Serialization nor Stringification, just for humans.
 
 **Arguments:**
 - `multipart_data` MultiPart data, optional, list of tupes type, must not be empty list, example `[("key", "value")]`.
