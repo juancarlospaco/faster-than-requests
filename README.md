@@ -64,7 +64,8 @@ requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Re
 | [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [debugs()](#debugs)           | [get2str()](#get2str)     |
 | [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
 | [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
-| [download3()](#download3) | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) | [How to set DEBUG mode](#how-to-set-debug-mode) |
+| [download3()](#download3) | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) | [multipartdata2str()](#multipartdata2str) |
+[How to set DEBUG mode](#how-to-set-debug-mode) |       |                               |                           |
 | [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
 | [PyPI](https://pypi.org/project/faster-than-requests) | [GitHub Actions / CI](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON) | [Examples](https://github.com/juancarlospaco/faster-than-requests/tree/master/examples) | [Sponsors](#sponsors) |
 
