@@ -1,4 +1,4 @@
-import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, re, nimpy
+import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, re, uri, nimpy
 
 
 template clientify(userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string; timeout: int; http_headers: openArray[tuple[key: string, val: string]]): HttpClient =
@@ -6,8 +6,8 @@ template clientify(userAgent: string; maxRedirects: int; proxyUrl: string; proxy
     proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil), timeout = timeout)
 
 template response2table(r: Response): Table[string, string] =
-  {"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-  "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")}.toTable
+  toTable({"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
+  "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")})
 
 
 proc get*(url: string; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
@@ -61,6 +61,42 @@ proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt"
 
 proc multipartdata2str*(multipart_data: seq[tuple[name: string, content: string]]): string {.exportpy.} =
   $newMultipartData(multipart_data)
+
+
+# proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.exportpy.} =
+#   uri.getDataUri(data, mime, encoding)
+
+
+proc urlparse*(url: string): auto {.exportpy.} =
+  let u = createU(Uri, sizeOf Uri)
+  u[] = uri.parseUri(url)
+  result = (scheme: u[].scheme, username: u[].username, password: u[].password, hostname: u[].hostname,
+    port: u[].port, path: u[].path, query: u[].query, anchor: u[].anchor, opaque: u[].opaque)
+  dealloc u
+
+
+proc urlencode*(url: string; use_plus: bool = true): string {.exportpy.} =
+  uri.encodeUrl(url, use_plus)
+
+
+proc urldecode*(url: string; use_plus: bool = true): string {.exportpy.} =
+  uri.decodeUrl(url, use_plus)
+
+
+proc encodequery*(query: openArray[(string, string)]; use_plus: bool = true; omit_eq: bool = true): string {.exportpy.} =
+  uri.encodeQuery(query, use_plus, omit_eq)
+
+
+proc encodexml*(s: string): string {.exportpy.} =
+  result = newStringOfCap(s.len + s.len shr 2)
+  for i in 0..len(s) - 1:
+    case s[i]
+    of '&': add(result, "&amp;")
+    of '<': add(result, "&lt;")
+    of '>': add(result, "&gt;")
+    of '\"': add(result, "&quot;")
+    else: add(result, s[i])
+
 
 proc debugs*() {.discardable, exportpy.} =
   ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
