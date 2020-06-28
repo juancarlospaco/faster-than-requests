@@ -65,6 +65,8 @@ requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Re
 | [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
 | [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
 | [download3()](#download3) | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) | [multipartdata2str()](#multipartdata2str) |
+| [datauri()](#datauri)   | [urlparse()](#urlparse)     | [urlencode()](#urlencode)     | [urldecode()](#urldecode) |
+| [encodequery()](#encodequery) | [encodexml()](#encodexml) | | |
 [How to set DEBUG mode](#how-to-set-debug-mode) |       |                               |                           |
 | [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
 | [PyPI](https://pypi.org/project/faster-than-requests) | [GitHub Actions / CI](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON) | [Examples](https://github.com/juancarlospaco/faster-than-requests/tree/master/examples) | [Sponsors](#sponsors) |
@@ -884,6 +886,7 @@ requests.set_headers([("content-type", "text/plain"), ("dnt", "1")])
 **Description:**
 Takes MultiPart Data and returns a string representation. Converts MultipartData to 1 human readable string.
 The human-friendly representation is not machine-friendly, so is not Serialization nor Stringification, just for humans.
+It is faster and different than stdlib `parse_multipart`.
 
 **Arguments:**
 - `multipart_data` MultiPart data, optional, list of tupes type, must not be empty list, example `[("key", "value")]`.
@@ -900,24 +903,146 @@ requests.multipartdata2str([("key", "value")])
 </details>
 
 
-**Description:**
-Debug the internal Configuration of the library, takes no arguments, returns nothing,
-prints the pretty-printed human-friendly multi-line JSON Configuration to standard output terminal.
+## datauri()
+<details>
 
+**Description:**
+Takes data and returns a [standard Base64 Data URI (RFC-2397).](https://tools.ietf.org/html/rfc2397)
+At the time of writing Python stdlib does not have a function that returns Data URI (RFC-2397) on `base64` module.
+This can be used as URL on HTML/CSS/JS. It is faster and different than stdlib `base64`.
+
+**Arguments:**
+- `data` Arbitrary Data, string type, required.
+- `mime` MIME Type of `data`, string type, required, example `"text/plain"`.
+- `encoding` Encoding, string type, required, defaults to `"utf-8"`, example `"utf-8"`, `"utf-8"` is recommended.
 
 Examples:
 
 ```python
 import faster_than_requests as requests
-requests.debugs()
+requests.datauri("Nim", "text/plain")
 ```
 
-**Arguments:** None.
-
-**Returns:** None.
+**Returns:** string.
 
 </details>
 
+
+## urlparse()
+<details>
+
+**Description:**
+Parse any URL and return parsed primitive values like
+`scheme`, `username`, `password`, `hostname`, `port`, `path`, `query`, `anchor`, `opaque`, etc.
+It is faster and different than stdlib `urlparse`.
+
+**Arguments:**
+- `url` The URL, string type, required.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.urlparse("https://nim-lang.org")
+```
+
+**Returns:** `scheme`, `username`, `password`, `hostname`, `port`, `path`, `query`, `anchor`, `opaque`, etc.
+
+</details>
+
+
+## urlencode()
+<details>
+
+**Description:**
+Encodes a URL according to RFC-3986, string to string.
+It is faster and different than stdlib `urlencode`.
+
+**Arguments:**
+- `url` The URL, string type, required.
+- `use_plus` When `use_plus` is `true`, spaces are encoded as `+` instead of `%20`.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.urlparse("https://nim-lang.org", use_plus = True)
+```
+
+**Returns:** string.
+
+</details>
+
+
+## urldecode()
+<details>
+
+**Description:**
+Decodes a URL according to RFC-3986, string to string.
+It is faster and different than stdlib `unquote`.
+
+**Arguments:**
+- `url` The URL, string type, required.
+- `use_plus` When `use_plus` is `true`, spaces are decoded as `+` instead of `%20`.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.urldecode(r"https%3A%2F%2Fnim-lang.org", use_plus = False)
+```
+
+**Returns:** string.
+
+</details>
+
+
+## encodequery()
+<details>
+
+**Description:**
+Encode a URL according to RFC-3986, string to string.
+It is faster and different than stdlib `quote_plus`.
+
+**Arguments:**
+- `query` List of Tuples, required, example `[("key", "value")]`, example `[("DNT", "1")]`.
+- `omit_eq` If the value is an empty string then the `=""` is omitted, unless `omit_eq` is `false`.
+- `use_plus` When `use_plus` is `true`, spaces are decoded as `+` instead of `%20`.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.encodequery([("key", "value")], use_plus = True, omit_eq = True)
+```
+
+**Returns:** string.
+
+</details>
+
+
+
+## encodexml()
+<details>
+
+**Description:**
+Convert the characters `&`, `<`, `>`, `"` in a string to an HTML-safe string, output is Valid XML.
+Use this if you need to display text that might contain such characters in HTML, SVG or XML.
+It is faster and different than stdlib `html.escape`.
+
+**Arguments:**
+- `s` Arbitrary string, required.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.encodexml("<h1>Hello World</h1>")
+```
+
+**Returns:** string.
+
+</details>
 
 
 ## tuples2json()
@@ -935,6 +1060,27 @@ the first item of the tuple is the key and second item of the tuple is value,
 keys must not be empty string, values can be empty string, both must the stripped.
 
 **Returns:** JSON, string type.
+
+</details>
+
+
+## debugs
+<details>
+**Description:**
+Debug the internal Configuration of the library, takes no arguments, returns nothing,
+prints the pretty-printed human-friendly multi-line JSON Configuration to standard output terminal.
+
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.debugs()
+```
+
+**Arguments:** None.
+
+**Returns:** None.
 
 </details>
 
