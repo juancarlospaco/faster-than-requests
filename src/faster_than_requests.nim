@@ -10,35 +10,35 @@ template response2table(r: Response): Table[string, string] =
   "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")})
 
 
-proc get*(url: string; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc get*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP GET an URL to dictionary.
-  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).get(url))
+  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).get(url))
 
 
-proc post*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc post*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP POST an URL to dictionary.
-  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
+  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
 
 
-proc put*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc put*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP PUT an URL to dictionary.
-  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).put(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
+  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).put(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
 
 
-proc patch*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc patch*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP PATCH an URL to dictionary.
-  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).patch(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
+  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).patch(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
 
 
-proc delete*(url: string; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc delete*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP DELETE an URL to dictionary.
-  response2table(clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).delete(url))
+  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).delete(url))
 
 
-proc head*(url: string; userAgent: string = defUserAgent; maxRedirects: int = 9; proxyUrl: string = ""; proxyAuth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc head*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP HEAD an URL to dictionary. HEAD do NOT have body by definition. May NOT have contentLength sometimes.
   let r = createU(Response, sizeOf Response)
-  r[] = clientify(userAgent, maxRedirects, proxyUrl, proxyAuth, timeout, http_headers).head(url)
+  r[] = clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).head(url)
   result = {"content-type": r[].contentType, "status": r[].status, "version": r[].version,
     "content-length": try: $r[].contentLength except: "0", "headers": replace($r[].headers, " @[", " [")}.toTable
   dealloc r
