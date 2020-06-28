@@ -87,7 +87,7 @@ class TestName(unittest.TestCase):
     self.assertEqual(faster_than_requests.multipartdata2str([("key", "value")]), '------------------------------ 0 ------------------------------\nname="key"\n\nvalue\n')
 
   def test_urlparse(self):
-    self.assertEqual(faster_than_requests.urlparse("https://www.google.com/search?q=faster-than-requests"), ['https', '', '', 'www.google.com', '', '/search', 'q=faster-than-requests', '', "False"])
+    self.assertEqual(faster_than_requests.urlparse("https://www.google.com/search?q=faster-than-requests"), ['https', '', '', 'www.google.com', '', '/search', 'q=faster-than-requests', '', "false"])
 
   def test_urlencode(self):
     self.assertEqual(faster_than_requests.urlencode("http://nim-lang.org"), r'http%3A%2F%2Fnim-lang.org')
