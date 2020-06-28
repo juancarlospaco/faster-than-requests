@@ -101,7 +101,7 @@ class TestName(unittest.TestCase):
   def test_encodexml(self):
     self.assertEqual(faster_than_requests.encodexml("<h1>Hello World</h1>"), "&lt;h1&gt;Hello World&lt;/h1&gt;")
 
-  def test_encodexml(self):
+  def test_minifyhtml(self):
     self.assertEqual(faster_than_requests.minifyhtml("\n  <h1>Hello</h1>  \n   <h1>World</h1>  \n"), "<h1>Hello</h1> <h1>World</h1>")
 
 
