@@ -26,7 +26,7 @@ class TestName(unittest.TestCase):
 
   maxDiff, __slots__ = None, ()
 
-  def test_debugConfig(self):
+  def test_debugs(self):
     self.assertIsNone(faster_than_requests.debugs())
 
   def test_get2ndjson_list(self):
