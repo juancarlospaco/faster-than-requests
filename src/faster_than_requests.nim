@@ -59,6 +59,8 @@ proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt"
   ## Set the HTTP Headers to the HTTP client.
   client.headers = newHttpHeaders(headers)
 
+proc multipartdata2str*(multipart_data: seq[tuple[name: string, content: string]]): string {.exportpy.} =
+  $newMultipartData(multipart_data)
 
 proc debugs*() {.discardable, exportpy.} =
   ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
