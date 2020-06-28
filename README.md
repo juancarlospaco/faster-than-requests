@@ -877,6 +877,28 @@ requests.set_headers([("content-type", "text/plain"), ("dnt", "1")])
 </details>
 
 
+# multipartdata2str()
+<details>
+
+**Description:**
+Takes MultiPart Data and returns a string representation.
+Converts MultipartData to 1 human readable string.
+
+**Arguments:**
+- `multipart_data` MultiPart data, optional, list of tupes type, must not be empty list, example `[("key", "value")]`.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.multipartdata2str([("key", "value")])
+```
+
+**Returns:** string.
+
+</details>
+
+
 **Description:**
 Debug the internal Configuration of the library, takes no arguments, returns nothing,
 prints the pretty-printed human-friendly multi-line JSON Configuration to standard output terminal.
