@@ -87,7 +87,7 @@ class TestName(unittest.TestCase):
     self.assertEqual(faster_than_requests.multipartdata2str([("key", "value")]), '------------------------------ 0 ------------------------------\nname="key"\n\nvalue\n')
 
   def test_urlparse(self):
-    self.assertEqual(faster_than_requests.urlparse("https://www.google.com/search?q=faster-than-requests"), ('https', '', '', 'www.google.com', '', '/search', 'q=faster-than-requests', '', False))
+    self.assertEqual(faster_than_requests.urlparse("https://www.google.com/search?q=faster-than-requests"), ['https', '', '', 'www.google.com', '', '/search', 'q=faster-than-requests', '', "False"])
 
   def test_urlencode(self):
     self.assertEqual(faster_than_requests.urlencode("http://nim-lang.org"), r'http%3A%2F%2Fnim-lang.org')
@@ -104,6 +104,8 @@ class TestName(unittest.TestCase):
   def test_minifyhtml(self):
     self.assertEqual(faster_than_requests.minifyhtml("\n  <h1>Hello</h1>  \n   <h1>World</h1>  \n"), "<h1>Hello</h1> <h1>World</h1>")
 
+  # def test_datauri(self):
+  #   self.assertEqual(faster_than_requests.datauri("Nim", "text/plain"), "data:text/plain;charset=utf-8;base64,Tmlt")
 
 
 if __name__.__contains__("__main__"):
