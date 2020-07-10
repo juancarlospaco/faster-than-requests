@@ -62,7 +62,7 @@ requests.scraper7("http://python.org", "body > div.someclass a#someid"])    # CS
 | [**get()**](#get)       | [**post()**](#post)         | [**put()**](#put)             | [**head()**](#head)       |
 | [**patch()**](#patch)   | [**delete()**](#delete)     | [download()](#download)       | [download2()](#download2) |
 | [scraper()](#scraper)   | [scraper2()](#scraper2)     | [scraper3()](#scraper3)       | [scraper4()](#scraper4)   |
-| [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [scraper7()](#scraper4)       | [get2str()](#get2str)     |
+| [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [scraper7()](#scraper7)       | [get2str()](#get2str)     |
 | [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
 | [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
 | [download3()](#download3) | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) | [multipartdata2str()](#multipartdata2str) |
