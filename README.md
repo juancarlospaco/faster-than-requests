@@ -522,7 +522,7 @@ requests.scraper6(["http://nim-lang.org", "http://python.org"], ["(www|http:|htt
 ## scraper7()
 <details>
 
-![](css_selectors.png)
+![](https://raw.githubusercontent.com/juancarlospaco/faster-than-requests/master/css_selectors.png)
 
 **Description:**
 CSS Selector powered Web Scraper. Scrap web content using a CSS Selector.
