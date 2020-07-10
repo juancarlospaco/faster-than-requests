@@ -26,7 +26,7 @@
 | Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | :negative_squared_cross_mark:       |
 | PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       |
 | PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       |
-| Faster_than_requests          |  `0.40`  | 1     | 99   | 0                     | 1          | :heavy_check_mark: 6, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
+| Faster_than_requests          |  `0.40`  | 1     | 99   | 0                     | 1          | :heavy_check_mark: 7, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
 
 <details>
 
@@ -52,6 +52,7 @@ requests.download("http://example.com/foo.jpg", "out.jpg")                  # Do
 requests.scraper(["http://foo.io", "http://bar.io"], threads=True)          # Multi-Threaded Web Scraper
 requests.scraper5(["http://foo.io"], sqlite_file_path="database.db")        # URL-to-SQLite Web Scraper
 requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Regex-powered Web Scraper
+requests.scraper7("http://python.org", "body > div.someclass a#someid"])    # CSS Selector Web Scraper
 ```
 
 # Table Of Contents
@@ -61,12 +62,13 @@ requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Re
 | [**get()**](#get)       | [**post()**](#post)         | [**put()**](#put)             | [**head()**](#head)       |
 | [**patch()**](#patch)   | [**delete()**](#delete)     | [download()](#download)       | [download2()](#download2) |
 | [scraper()](#scraper)   | [scraper2()](#scraper2)     | [scraper3()](#scraper3)       | [scraper4()](#scraper4)   |
-| [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [debugs()](#debugs)           | [get2str()](#get2str)     |
+| [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [scraper7()](#scraper4)       | [get2str()](#get2str)     |
 | [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
 | [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
 | [download3()](#download3) | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) | [multipartdata2str()](#multipartdata2str) |
 | [datauri()](#datauri)   | [urlparse()](#urlparse)     | [urlencode()](#urlencode)     | [urldecode()](#urldecode) |
-| [encodequery()](#encodequery) | [encodexml()](#encodexml) | [How to set DEBUG mode](#how-to-set-debug-mode) | [minifyhtml()](#minifyhtml) |
+| [encodequery()](#encodequery) | [encodexml()](#encodexml) | [debugs()](#debugs)       | [minifyhtml()](#minifyhtml) |
+| [How to set DEBUG mode](#how-to-set-debug-mode) |     |                               |                           |
 | [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
 | [PyPI](https://pypi.org/project/faster-than-requests) | [GitHub Actions / CI](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON) | [Examples](https://github.com/juancarlospaco/faster-than-requests/tree/master/examples) | [Sponsors](#sponsors) |
 
@@ -510,6 +512,53 @@ Examples:
 ```python
 import faster_than_requests as requests
 requests.scraper6(["http://nim-lang.org", "http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"])
+```
+
+**Returns:** Scraped Webs.
+
+</details>
+
+
+## scraper7()
+<details>
+
+**Description:**
+CSS Selector powered Web Scraper. Scrap web content using a CSS Selector.
+The CSS Syntax does NOT take Regex nor Regex-like syntax nor literal attribute values.
+
+All arguments are optional, it only needs the URL and CSS Selector to get to work.
+You can think of this scraper as a parallel evolution of the original scraper.
+
+**Arguments:**
+- `url` URL against, string type, required, must not be empty string, example `"http://python.org"`.
+- `css_selector` CSS Selector, string type, required, must not be empty string, example `"body nav.class ul.menu > li > a"`.
+- `agent` User Agent, string type, optional, must not be empty string.
+- `redirects` Maximum Redirects, integer type, optional, defaults to `5`, must be positive integer.
+- `timeout` Timeout, MicroSeconds precision (1000 = 1 Second), integer type, optional, defaults to `-1`, must be a positive integer value, example `42`.
+- `header` HTTP Header, any HTTP Headers can be put here, list type, optional, example `[("key", "value")]`.
+- `proxy_url` HTTPS Proxy Full URL, string type, optional, must not be empty string.
+- `proxy_auth` HTTPS Proxy Authentication, string type, optional, defaults to `""`, empty string is ignored.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.scraper7("http://python.org", "body > div.class a#someid")
+```
+
+```python
+import faster_than_requests as requests
+requests.scraper7("https://nim-lang.org", "a.pure-menu-link")
+
+[
+  '<a class="pure-menu-link" href="/blog.html">Blog</a>',
+  '<a class="pure-menu-link" href="/features.html">Features</a>',
+  '<a class="pure-menu-link" href="/install.html">Download</a>',
+  '<a class="pure-menu-link" href="/learn.html">Learn</a>',
+  '<a class="pure-menu-link" href="/documentation.html">Documentation</a>',
+  '<a class="pure-menu-link" href="https://forum.nim-lang.org">Forum</a>',
+  '<a class="pure-menu-link" href="https://github.com/nim-lang/Nim">Source</a>'
+]
 ```
 
 **Returns:** Scraped Webs.
