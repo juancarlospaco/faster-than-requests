@@ -563,6 +563,9 @@ requests.scraper7("https://nim-lang.org", "a.pure-menu-link")
 ]
 ```
 
+More examples:
+https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/web_scraper_via_css_selectors.py
+
 **Returns:** Scraped Webs.
 
 </details>
