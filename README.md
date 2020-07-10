@@ -522,9 +522,11 @@ requests.scraper6(["http://nim-lang.org", "http://python.org"], ["(www|http:|htt
 ## scraper7()
 <details>
 
+![](css_selectors.png)
+
 **Description:**
 CSS Selector powered Web Scraper. Scrap web content using a CSS Selector.
-The CSS Syntax does NOT take Regex nor Regex-like syntax nor literal attribute values.
+The CSS Syntax does NOT take Regex nor Regex-like syntax nor literal tag attribute values.
 
 All arguments are optional, it only needs the URL and CSS Selector to get to work.
 You can think of this scraper as a parallel evolution of the original scraper.
