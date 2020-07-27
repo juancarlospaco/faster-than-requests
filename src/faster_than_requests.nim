@@ -1,5 +1,7 @@
 import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, re, uri, strtabs, algorithm, pegs, nimpy
 
+when defined(windows) and not defined(amd64): {.warning: "64Bit is required".}
+when defined(windows) and not defined(gcc):   {.warning: "GCC for Windows is required".}
 
 template clientify(userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string; timeout: int; http_headers: openArray[tuple[key: string, val: string]]): HttpClient =
   newHttpClient(userAgent = userAgent, maxRedirects = maxRedirects, headers = newHttpHeaders(http_headers),
