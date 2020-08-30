@@ -1221,7 +1221,7 @@ STRING_LITERAL(TM__wDGC8Xtv5r3PSmcDG9aTygg_59, "debugs", 6);
 STRING_LITERAL(TM__wDGC8Xtv5r3PSmcDG9aTygg_61, "{\012  \"nimVersion\": \"1.3.5\",\012  \"httpCore\": \"Nim httpclient/1.3.5\""
 ",\012  \"cpu\": \"amd64\",\012  \"os\": \"windows\",\012  \"debug\": false,\012  \"endi"
 "an\": \"littleEndian\",\012  \"release\": true,\012  \"danger\": true,\012  \"Com"
-"pileDate\": \"2020-08-30\",\012  \"CompileTime\": \"21:32:53\",\012  \"tempDir"
+"pileDate\": \"2020-08-30\",\012  \"CompileTime\": \"21:52:02\",\012  \"tempDir"
 "\": \"C:\\\\Users\\\\RUNNER~1\\\\AppData\\\\Local\\\\Temp\\\\\",\012  \"ssl\": true,"
 "\012  \"currentCompilerExe\": \"D:\\\\a\\\\faster-than-requests\\\\faster-th"
 "an-requests\\\\Nim\\\\bin\\\\nim.exe\",\012  \"int.high\": 92233720368547758"
