@@ -1,56 +1,148 @@
-name: PYTHON
+name: Build
 
 on: [push]
+#on:
+#  release:
+#    types: [created]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: true
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    name: ${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
-    - uses: jiro4989/setup-nim-action@v1.0.2
+
+    - name: Set Environment Variables
+      uses: allenevans/set-env@v1.0.0
       with:
-        nim-version: '1.2.4'
+        PACKAGE_NAME:    "faster_than_requests"
+        PACKAGE_VERSION: "1.2.6"
+        MAIN_MODULE:     "src/faster_than_csv.nim"
+        GITHUB_TOKEN:    ${{ secrets.COMMIT_TOKEN }}
+
 
     - name: Update Python PIP
-      run: pip install --upgrade --disable-pip-version-check pip
+      run: pip3 install --quiet --user --upgrade --disable-pip-version-check pip twine
 
-    - name: Cache nimble
-      id: cache-nimble
-      uses: actions/cache@v1
-      with:
-        path: ~/.nimble
-        key: ${{ runner.os }}-nimble-$CHOOSENIM_CHOOSE_VERSION
+
+    - name: Clone Nim
+      run: |
+        git clone -q --depth 1 https://github.com/nim-lang/Nim.git
+        echo "::add-path::$PWD/Nim/bin"
+
+
+    - name: Build Nim (Unix)
+      if: runner.os == 'Linux' || runner.os == 'macOS'
+      run: |
+        cd Nim
+        ./build_all.sh
+
+
+    - name: Build Nim (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        cd Nim
+        ./build_all.bat
+
 
     - name: Nimble Refresh
-      run: |
-        export PATH=$HOME/.nimble/bin:$PATH
-        nimble -y refresh
+      run: nimble -y refresh
+
 
     - name: Nimble Install dependencies
+      run: nimble -y install nimpy
+
+
+    - name: Prepare Folders
+      if: runner.os == 'Linux'
+      run: mkdir -p dist/lin dist/win dist/mac dist/$PACKAGE_NAME.egg-info
+
+
+    - name: Prepare Files
+      if: runner.os == 'Linux'
       run: |
-        export PATH=$HOME/.nimble/bin:$PATH
-        nimble -y install nimpy
+        touch dist/LICENSE dist/$PACKAGE_NAME.egg-info/zip-safe dist/$PACKAGE_NAME.egg-info/top_level.txt dist/$PACKAGE_NAME.egg-info/requires.txt dist/$PACKAGE_NAME.egg-info/dependency_links.txt
+        cp --force $PWD/setup.py          dist/setup.py
+        cp --force $PWD/setup.cfg         dist/setup.cfg
+        cp --force $PWD/Nim/lib/nimbase.h dist/lin/nimbase.h
+        cp --force $PWD/Nim/lib/nimbase.h dist/win/nimbase.h
+        cp --force $PWD/Nim/lib/nimbase.h dist/mac/nimbase.h
+        cp --force $PWD/PKG-INFO          dist/$PACKAGE_NAME.egg-info/PKG-INFO
 
-    - name: Compile DEBUG Mode
+
+    - name: Nim Check
+      if: runner.os == 'Linux'
+      run: nim check --styleCheck:hint $MAIN_MODULE
+
+
+    - name: Compile Debug & import (Unix)
+      if: runner.os == 'Linux' || runner.os == 'macOS'
       run: |
-        export PATH=$HOME/.nimble/bin:$PATH
-        nim c -d:ssl --app:lib --threads:on --out:faster_than_requests.so src/faster_than_requests.nim
+        nim c --app:lib --out:$PACKAGE_NAME.so $MAIN_MODULE
+        python3 -c "import $PACKAGE_NAME"
 
-    - name: Compile RELEASE Mode
+
+    - name: Compile Debug & import (Windows)
+      if: runner.os == 'Windows'
       run: |
-        export PATH=$HOME/.nimble/bin:$PATH
-        nim c --app:lib --threads:on -d:release -d:danger -d:ssl --out:faster_than_requests.so src/faster_than_requests.nim
+        nim c --app:lib --out:${{ env.PACKAGE_NAME }}.pyd ${{ env.MAIN_MODULE }}
+        python.exe -c "import ${{ env.PACKAGE_NAME }}"
 
-    - name: Strip Binary
-      run: strip --strip-all faster_than_requests.so
 
-    - name: Import Binary
-      run: python3 -c "import faster_than_requests"
-
-    - name: Unittests
+    - name: Compile (Linux)
+      if: runner.os == 'Linux'
       run: |
-        cp -v faster_than_requests.so tests/faster_than_requests.so
-        python3 tests/tests.py
+        nim compileToC --compileOnly:on --nimcache:dist/lin/                            \
+        -d:danger -d:release -d:nimBinaryStdFiles -d:noSignalHandler -d:lto             \
+        --app:lib --opt:speed --cpu:amd64 --forceBuild --compileOnly --tlsEmulation:off \
+        --stackTrace:off --exceptions:goto --gc:markAndSweep  --excessiveStackTrace:off \
+        ${{ env.MAIN_MODULE }}
+
+
+    - name: Compile (Mac)
+      if: runner.os == 'macOS'
+      run: |
+        nim compileToC --compileOnly:on --nimcache:dist/mac/                            \
+        -d:danger -d:release -d:nimBinaryStdFiles -d:noSignalHandler -d:lto             \
+        --app:lib --opt:speed --cpu:amd64 --forceBuild --compileOnly --tlsEmulation:off \
+        --stackTrace:off --exceptions:goto --gc:markAndSweep  --excessiveStackTrace:off \
+        ${{ env.MAIN_MODULE }}
+
+
+    - name: Compile (Windows)
+      if: runner.os == 'Windows'
+      run: nim compileToC --compileOnly:on --nimcache:dist/win/ -d:danger -d:release -d:nimBinaryStdFiles -d:noSignalHandler -d:lto --app:lib --opt:speed --cpu:amd64 --forceBuild --compileOnly --tlsEmulation:on --stackTrace:off --exceptions:goto --gc:markAndSweep  --excessiveStackTrace:off ${{ env.MAIN_MODULE }}
+
+
+    - name: Clean out
+      if: runner.os == 'Linux'
+      run: rm --force --verbose dist/lin/*.json dist/win/*.json dist/mac/*.json dist/lin/*.c.o dist/win/*.c.o dist/mac/*.c.o
+
+
+    - name: Compress to ZIP
+      if: runner.os == 'Linux'
+      run: |
+        cd dist
+        rm --force --verbose *.zip
+        zip -9 -T -v -r $PACKAGE_NAME-$PACKAGE_VERSION.zip *
+
+
+    - uses: EndBug/add-and-commit@v4
+      with:
+        add: 'dist'
+        force: true
+        message: 'Fully Automated Luxury Python'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+    - name: Cache Nim
+      uses: actions/cache@v1
+      with:
+        path: $PWD/Nim/
+        key: ${{ runner.os }}-nim
