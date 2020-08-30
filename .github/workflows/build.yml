@@ -162,9 +162,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-    #- name: Upload to PYPI  # If everything worked, then upload to PYPI
-    #  if: runner.os == 'Linux'
-    #  run: twine upload --verbose --disable-progress-bar --comment "Powered by https://Nim-lang.org" dist/*.zip
+    - name: Upload to PYPI  # If everything worked, then upload to PYPI
+      if: runner.os == 'Linux'
+      run: twine upload --verbose --disable-progress-bar --comment "Powered by https://Nim-lang.org" dist/*.zip
 
 
     - name: Cache Nim # Cache the Nim compiler build
