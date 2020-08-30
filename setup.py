@@ -1,5 +1,7 @@
-import os, sys, pathlib, setuptools, sysconfig
+import os, sys, pathlib, setuptools, sysconfig, platform
 from setuptools.command.build_ext import build_ext
+
+assert platform.architecture()[0] == "64bit", "ERROR: Python must be 64 Bit!. OS must be 64 Bit!."
 
 if sys.platform.startswith("lin"):
   folder = "lin" # OS is Linux
