@@ -22,7 +22,7 @@ jobs:
       with:
         PACKAGE_NAME:    "faster_than_requests"
         PACKAGE_VERSION: "1.2.6"
-        MAIN_MODULE:     "src/faster_than_csv.nim"
+        MAIN_MODULE:     "src/faster_than_requests.nim"
         GITHUB_TOKEN:    ${{ secrets.COMMIT_TOKEN }}
 
 
@@ -77,7 +77,7 @@ jobs:
 
     - name: Nim Check
       if: runner.os == 'Linux'
-      run: nim check --styleCheck:hint $MAIN_MODULE
+      run: nim check --styleCheck:hint ${{ env.MAIN_MODULE }}
 
 
     - name: Compile Debug & import (Unix)
