@@ -17,122 +17,143 @@ jobs:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
 
+
+    - name: Get Git Commit Short Hash
+      id: vars
+      shell: bash
+      run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+
     - name: Set Environment Variables
       uses: allenevans/set-env@v1.0.0
       with:
-        PACKAGE_NAME:    "faster_than_requests"
-        PACKAGE_VERSION: "1.2.6"
-        MAIN_MODULE:     "src/faster_than_requests.nim"
-        GITHUB_TOKEN:    ${{ secrets.COMMIT_TOKEN }}
+        MAIN_MODULE:           "src/faster_than_requests.nim"
+        PACKAGE_NAME:          "faster_than_requests"
+        TWINE_USERNAME:        ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD:        ${{ secrets.PYPI_PASSWORD }}
+        PACKAGE_VERSION:       ${{ steps.vars.outputs.sha_short }}
+        TWINE_NON_INTERACTIVE: 1
 
 
-    - name: Update Python PIP
-      run: pip3 install --quiet --user --upgrade --disable-pip-version-check pip twine
+    - name: Update Python PIP           # Update to avoid PIP bugs.
+      run: pip3 install --quiet --upgrade --disable-pip-version-check pip twine
 
 
-    - name: Clone Nim
+    - name: Clone Nim                   # Clone Nim
       run: |
         git clone -q --depth 1 https://github.com/nim-lang/Nim.git
         echo "::add-path::$PWD/Nim/bin"
 
 
-    - name: Build Nim (Unix)
+    - name: Build Nim (Unix)            # Build Nim for Linux and Mac
       if: runner.os == 'Linux' || runner.os == 'macOS'
       run: |
         cd Nim
         ./build_all.sh
 
 
-    - name: Build Nim (Windows)
+    - name: Build Nim (Windows)         # Build Nim for Windows
       if: runner.os == 'Windows'
       run: |
         cd Nim
         ./build_all.bat
 
 
-    - name: Nimble Refresh
+    - name: Nimble Refresh              # Refresh Nimble packages list
       run: nimble -y refresh
 
 
-    - name: Nimble Install dependencies
+    - name: Nimble Install dependencies # Install Nimpy
       run: nimble -y install nimpy
 
 
-    - name: Prepare Folders
+    - name: Prepare Folders             # Prepare folders for the Python package
       if: runner.os == 'Linux'
       run: mkdir -p dist/lin dist/win dist/mac dist/$PACKAGE_NAME.egg-info
 
 
-    - name: Prepare Files
+    - name: Prepare Files               # Prepare files for the Python package
       if: runner.os == 'Linux'
       run: |
         touch dist/LICENSE dist/$PACKAGE_NAME.egg-info/zip-safe dist/$PACKAGE_NAME.egg-info/top_level.txt dist/$PACKAGE_NAME.egg-info/requires.txt dist/$PACKAGE_NAME.egg-info/dependency_links.txt
-        cp --force $PWD/setup.py          dist/setup.py
-        cp --force $PWD/setup.cfg         dist/setup.cfg
-        cp --force $PWD/Nim/lib/nimbase.h dist/lin/nimbase.h
-        cp --force $PWD/Nim/lib/nimbase.h dist/win/nimbase.h
-        cp --force $PWD/Nim/lib/nimbase.h dist/mac/nimbase.h
-        cp --force $PWD/PKG-INFO          dist/$PACKAGE_NAME.egg-info/PKG-INFO
+        cp --force $PWD/setup.py           dist/setup.py
+        cp --force $PWD/Nim/lib/nimbase.h  dist/lin/nimbase.h
+        cp --force $PWD/Nim/lib/nimbase.h  dist/win/nimbase.h
+        cp --force $PWD/Nim/lib/nimbase.h  dist/mac/nimbase.h
 
 
-    - name: Nim Check
+    - name: Delay                       # Linux must finish last.
       if: runner.os == 'Linux'
-      run: nim check --styleCheck:hint ${{ env.MAIN_MODULE }}
+      run: sleep 5m
 
 
-    - name: Compile Debug & import (Unix)
+    - name: SemVer                      # Use Git Hash as versioning.
+      if: runner.os == 'Linux'
+      run: |
+        cp --force $PWD/setup.cfg dist/setup.cfg
+        date +"%y.%m.%d" >>       dist/setup.cfg
+        cp --force $PWD/PKG-INFO  dist/$PACKAGE_NAME.egg-info/PKG-INFO
+        date +"%y.%m.%d" >>       dist/$PACKAGE_NAME.egg-info/PKG-INFO
+
+
+    - name: Nim Check                   # Check code style and semantic.
+      if: runner.os == 'Linux'
+      run: nim check --styleCheck:hint $MAIN_MODULE
+
+
+    - name: Compile Debug & import (Unix)  # Compile and import to check if its working
       if: runner.os == 'Linux' || runner.os == 'macOS'
       run: |
         nim c --app:lib --out:$PACKAGE_NAME.so $MAIN_MODULE
         python3 -c "import $PACKAGE_NAME"
 
 
-    - name: Compile Debug & import (Windows)
+    - name: Compile Debug & import (Windows) # Compile and import to check if its working
       if: runner.os == 'Windows'
       run: |
         nim c --app:lib --out:${{ env.PACKAGE_NAME }}.pyd ${{ env.MAIN_MODULE }}
         python.exe -c "import ${{ env.PACKAGE_NAME }}"
 
 
-    - name: Compile (Linux)
+    - name: Compile (Linux) # Compile to C for Linux
       if: runner.os == 'Linux'
       run: |
-        nim compileToC --compileOnly:on --nimcache:dist/lin/                            \
+        nim compileToC --compileOnly:on --noLinking:on --nimcache:dist/lin/             \
         -d:danger -d:release -d:nimBinaryStdFiles -d:noSignalHandler -d:lto             \
         --app:lib --opt:speed --cpu:amd64 --forceBuild --compileOnly --tlsEmulation:off \
         --stackTrace:off --exceptions:goto --gc:markAndSweep  --excessiveStackTrace:off \
         ${{ env.MAIN_MODULE }}
 
 
-    - name: Compile (Mac)
+    - name: Compile (Mac) # Compile to C for Mac
       if: runner.os == 'macOS'
       run: |
-        nim compileToC --compileOnly:on --nimcache:dist/mac/                            \
+        nim compileToC --compileOnly:on --noLinking:on --nimcache:dist/mac/             \
         -d:danger -d:release -d:nimBinaryStdFiles -d:noSignalHandler -d:lto             \
         --app:lib --opt:speed --cpu:amd64 --forceBuild --compileOnly --tlsEmulation:off \
         --stackTrace:off --exceptions:goto --gc:markAndSweep  --excessiveStackTrace:off \
         ${{ env.MAIN_MODULE }}
 
 
-    - name: Compile (Windows)
+    - name: Compile (Windows) # Compile to C for Windows
       if: runner.os == 'Windows'
-      run: nim compileToC --compileOnly:on --nimcache:dist/win/ -d:danger -d:release -d:nimBinaryStdFiles -d:noSignalHandler -d:lto --app:lib --opt:speed --cpu:amd64 --forceBuild --compileOnly --tlsEmulation:on --stackTrace:off --exceptions:goto --gc:markAndSweep  --excessiveStackTrace:off ${{ env.MAIN_MODULE }}
+      run: nim compileToC --compileOnly:on --noLinking:on --nimcache:dist/win/ -d:danger -d:release -d:nimBinaryStdFiles -d:noSignalHandler -d:lto --app:lib --opt:speed --cpu:amd64 --forceBuild --compileOnly --tlsEmulation:on --stackTrace:off --exceptions:goto --gc:markAndSweep  --excessiveStackTrace:off ${{ env.MAIN_MODULE }}
 
 
-    - name: Clean out
+    - name: Clean out (Linux) # Clean out
       if: runner.os == 'Linux'
-      run: rm --force --verbose dist/lin/*.json dist/win/*.json dist/mac/*.json dist/lin/*.c.o dist/win/*.c.o dist/mac/*.c.o
+      run: rm --force dist/lin/*.json dist/win/*.json dist/mac/*.json
 
 
-    - name: Compress to ZIP
+    - name: Compress to ZIP  # Make Python package
       if: runner.os == 'Linux'
       run: |
         cd dist
         rm --force --verbose *.zip
-        zip -9 -T -v -r $PACKAGE_NAME-$PACKAGE_VERSION.zip *
+        zip -9 -T -v -r $PACKAGE_NAME-${{ env.PACKAGE_VERSION }}.zip *
 
 
-    - uses: EndBug/add-and-commit@v4
+    - uses: EndBug/add-and-commit@v4  # Commit everything to Git repo
       with:
         add: 'dist'
         force: true
@@ -141,7 +162,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-    - name: Cache Nim
+    #- name: Upload to PYPI  # If everything worked, then upload to PYPI
+    #  if: runner.os == 'Linux'
+    #  run: twine upload --verbose --disable-progress-bar --comment "Powered by https://Nim-lang.org" dist/*.zip
+
+
+    - name: Cache Nim # Cache the Nim compiler build
       uses: actions/cache@v1
       with:
         path: $PWD/Nim/
