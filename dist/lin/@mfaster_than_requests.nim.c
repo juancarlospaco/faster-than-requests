@@ -1077,7 +1077,7 @@ STRING_LITERAL(TM__wDGC8Xtv5r3PSmcDG9aTygg_59, "debugs", 6);
 STRING_LITERAL(TM__wDGC8Xtv5r3PSmcDG9aTygg_61, "{\012  \"nimVersion\": \"1.3.5\",\012  \"httpCore\": \"Nim httpclient/1.3.5\""
 ",\012  \"cpu\": \"amd64\",\012  \"os\": \"linux\",\012  \"debug\": false,\012  \"endian"
 "\": \"littleEndian\",\012  \"release\": true,\012  \"danger\": true,\012  \"Compi"
-"leDate\": \"2020-08-30\",\012  \"CompileTime\": \"02:46:22\",\012  \"tempDir\":"
+"leDate\": \"2020-08-30\",\012  \"CompileTime\": \"03:02:05\",\012  \"tempDir\":"
 " \"/tmp/\",\012  \"ssl\": true,\012  \"currentCompilerExe\": \"/home/runner/w"
 "ork/faster-than-requests/faster-than-requests/Nim/bin/nim\",\012  \"i"
 "nt.high\": 9223372036854775807\012}", 414);
