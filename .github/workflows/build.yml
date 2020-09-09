@@ -114,11 +114,11 @@ jobs:
         cp -f $PWD/Nim/lib/nimbase.h  dist/mac/nimbase.h
 
 
-    - name: Generate Documentation (Linux)
-      if: runner.os == 'Linux'
-      run: |
-        nim doc --out:docs/index.html ${{ env.MAIN_MODULE }}
-        nim rst2tex --out:docs/${{ env.PACKAGE_NAME }}.tex ${{ env.MAIN_MODULE }}
+    # - name: Generate Documentation (Linux)
+    #   if: runner.os == 'Linux'
+    #   run: |
+    #     nim doc --out:docs/index.html ${{ env.MAIN_MODULE }}
+    #     nim rst2tex --out:docs/${{ env.PACKAGE_NAME }}.tex ${{ env.MAIN_MODULE }}
 
 
     - name: Compile Debug & import (Unix)
@@ -197,15 +197,15 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-    - name: Commit Documentation (Linux)
-      uses: EndBug/add-and-commit@v4  # Commit everything to Git repo
-      if: runner.os == 'Linux'
-      with:
-        add: 'docs'
-        force: true
-        message: ${{ steps.vars.outputs.semver_date }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Commit Documentation (Linux)
+    #   uses: EndBug/add-and-commit@v4  # Commit everything to Git repo
+    #   if: runner.os == 'Linux'
+    #   with:
+    #     add: 'docs'
+    #     force: true
+    #     message: ${{ steps.vars.outputs.semver_date }}
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
     - name: Upload to PYPI (Linux)  # If everything worked, then upload to PYPI
