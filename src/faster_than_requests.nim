@@ -195,7 +195,7 @@ proc download*(url, filename: string) {.discardable, exportpy.} =
 
 
 proc download2*(list_of_files: openArray[tuple[url: string, filename: string]], threads: bool = false, delay: Natural = 0) {.discardable, exportpy.} =
-  ## Download a list of files ASAP, like [(url, filename), (url, filename), ...], threads=True will use multi-threading.
+  ## Download a list of files ASAP, like ``[(url, filename), (url, filename), ...],``, ``threads=True`` will use multi-threading.
   if likely(delay == 0):
     if likely(threads):
       for item in list_of_files: spawn client.downloadFile(item[0], item[1])
