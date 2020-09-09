@@ -173,14 +173,12 @@ __AVR__
 #  define N_STDCALL(rettype, name) rettype __stdcall name
 #  define N_SYSCALL(rettype, name) rettype __syscall name
 #  define N_FASTCALL(rettype, name) rettype __fastcall name
-#  define N_THISCALL(rettype, name) rettype __thiscall name
 #  define N_SAFECALL(rettype, name) rettype __stdcall name
 /* function pointers with calling convention: */
 #  define N_CDECL_PTR(rettype, name) rettype (__cdecl *name)
 #  define N_STDCALL_PTR(rettype, name) rettype (__stdcall *name)
 #  define N_SYSCALL_PTR(rettype, name) rettype (__syscall *name)
 #  define N_FASTCALL_PTR(rettype, name) rettype (__fastcall *name)
-#  define N_THISCALL_PTR(rettype, name) rettype (__thiscall *name)
 #  define N_SAFECALL_PTR(rettype, name) rettype (__stdcall *name)
 
 #  ifdef __cplusplus
@@ -264,21 +262,6 @@ __AVR__
 #include <limits.h>
 #include <stddef.h>
 
-// define NIM_STATIC_ASSERT
-// example use case: CT sizeof for importc types verification
-// where we have {.completeStruct.} (or lack of {.incompleteStruct.})
-#if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L)
-#define NIM_STATIC_ASSERT(x, msg) _Static_assert((x), msg)
-#elif defined(__cplusplus)
-#define NIM_STATIC_ASSERT(x, msg) static_assert((x), msg)
-#else
-#define NIM_STATIC_ASSERT(x, msg) typedef int NIM_STATIC_ASSERT_AUX[(x) ? 1 : -1];
-// On failure, your C compiler will say something like:
-//   "error: 'NIM_STATIC_ASSERT_AUX' declared as an array with a negative size"
-// we could use a better fallback to also show line number, using:
-// http://www.pixelbeat.org/programming/gcc/static_assert.html
-#endif
-
 /* C99 compiler? */
 #if (defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901))
 #  define HAVE_STDINT_H
@@ -305,40 +288,34 @@ __AVR__
 namespace USE_NIM_NAMESPACE {
 #endif
 
-// preexisting check, seems paranoid, maybe remove
-#if defined(NIM_TRUE) || defined(NIM_FALSE) || defined(NIM_BOOL)
-#error "nim reserved preprocessor macros clash"
-#endif
-
 /* bool types (C++ has it): */
 #ifdef __cplusplus
-#define NIM_BOOL bool
-#elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901)
-// see #13798: to avoid conflicts for code emitting `#include <stdbool.h>`
-#define NIM_BOOL _Bool
-#else
-typedef unsigned char NIM_BOOL; // best effort
-#endif
-
-NIM_STATIC_ASSERT(sizeof(NIM_BOOL) == 1, ""); // check whether really needed
-
-#define NIM_TRUE true
-#define NIM_FALSE false
-
-#ifdef __cplusplus
+#  ifndef NIM_TRUE
+#    define NIM_TRUE true
+#  endif
+#  ifndef NIM_FALSE
+#    define NIM_FALSE false
+#  endif
+#  define NIM_BOOL bool
 #  if __cplusplus >= 201103L
 #    /* nullptr is more type safe (less implicit conversions than 0) */
 #    define NIM_NIL nullptr
 #  else
-#    // both `((void*)0)` and `NULL` would cause codegen to emit
-#    // error: assigning to 'Foo *' from incompatible type 'void *'
-#    // but codegen could be fixed if need. See also potential caveat regarding
-#    // NULL.
-#    // However, `0` causes other issues, see #13798
+#    /* consider using NULL if comment below for NIM_NIL doesn't apply to C++ */
 #    define NIM_NIL 0
 #  endif
 #else
-#  include <stdbool.h>
+#  ifdef bool
+#    define NIM_BOOL bool
+#  else
+  typedef unsigned char NIM_BOOL;
+#  endif
+#  ifndef NIM_TRUE
+#    define NIM_TRUE ((NIM_BOOL) 1)
+#  endif
+#  ifndef NIM_FALSE
+#    define NIM_FALSE ((NIM_BOOL) 0)
+#  endif
 #  define NIM_NIL ((void*)0) /* C's NULL is fucked up in some C compilers, so
                               the generated code does not rely on it anymore */
 #endif
@@ -479,6 +456,7 @@ typedef char* NCSTRING;
 #define ALLOC_0(size)  calloc(1, size)
 #define DL_ALLOC_0(size) dlcalloc(1, size)
 
+#define GenericSeqSize sizeof(TGenericSeq)
 #define paramCount() cmdCount
 
 // NAN definition copied from math.h included in the Windows SDK version 10.0.14393.0
@@ -538,8 +516,10 @@ static inline void GCGuard (void *ptr) { asm volatile ("" :: "X" (ptr)); }
 #  define GC_GUARD
 #endif
 
-// Test to see if Nim and the C compiler agree on the size of a pointer.
-NIM_STATIC_ASSERT(sizeof(NI) == sizeof(void*) && NIM_INTBITS == sizeof(NI)*8, "");
+/* Test to see if Nim and the C compiler agree on the size of a pointer.
+   On disagreement, your C compiler will say something like:
+   "error: 'Nim_and_C_compiler_disagree_on_target_architecture' declared as an array with a negative size" */
+typedef int Nim_and_C_compiler_disagree_on_target_architecture[sizeof(NI) == sizeof(void*) && NIM_INTBITS == sizeof(NI)*8 ? 1 : -1];
 
 #ifdef USE_NIM_NAMESPACE
 }
@@ -547,10 +527,8 @@ NIM_STATIC_ASSERT(sizeof(NI) == sizeof(void*) && NIM_INTBITS == sizeof(NI)*8, ""
 
 #if defined(_MSC_VER)
 #  define NIM_ALIGN(x)  __declspec(align(x))
-#  define NIM_ALIGNOF(x) __alignof(x)
 #else
 #  define NIM_ALIGN(x)  __attribute__((aligned(x)))
-#  define NIM_ALIGNOF(x) __alignof__(x)
 #endif
 
 /* ---------------- platform specific includes ----------------------- */
@@ -564,11 +542,15 @@ NIM_STATIC_ASSERT(sizeof(NI) == sizeof(void*) && NIM_INTBITS == sizeof(NI)*8, ""
 #  include <sys/types.h>
 #endif
 
+/* Compile with -d:checkAbi and a sufficiently C11:ish compiler to enable */
+#define NIM_CHECK_SIZE(typ, sz) \
+  _Static_assert(sizeof(typ) == sz, "Nim & C disagree on type size")
+
 /* these exist to make the codegen logic simpler */
 #define nimModInt(a, b, res) (((*res) = (a) % (b)), 0)
 #define nimModInt64(a, b, res) (((*res) = (a) % (b)), 0)
 
-#if (!defined(_MSC_VER) || defined(__clang__)) && !defined(NIM_EmulateOverflowChecks)
+#if !defined(_MSC_VER) && !defined(NIM_EmulateOverflowChecks)
   /* these exist because we cannot have .compilerProcs that are importc'ed
     by a different name */
 
