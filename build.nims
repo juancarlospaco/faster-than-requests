@@ -38,6 +38,11 @@ cpFile(rootFolder / "setup.cfg", "dist/setup.cfg")
 cpFile(rootFolder / "setup.py", "dist/setup.py")
 
 withDir("dist"):
+
+  selfExec "c -d:release --os:windows --out:faster_than_requests.pyd --gcc.exe:" & gccWin32 & " --gcc.linkerexe:" & gccWin32 & " " & rootFolder / "src/faster_than_requests.nim"
+
+  selfExec "c -d:release --out:faster_than_requests.so " & rootFolder / "src/faster_than_requests.nim"
+
   mkDir("lin") # C for Linux, compile for Linux, save C files to lin/*.c
   mkDir("win") # C for Windows, compile for Windows, save C files to win/*.c
   mkDir("mac") # C for Mac OSX, manual compile, manual copy C files to mac/*.c
@@ -65,3 +70,5 @@ withDir("dist"):
 
   exec "zip -9 -T -v -r " & packageName & "-" & version & ".zip *"
   echo "Apple Mac OSX: Compile manually and copy all the .c files to 'mac/' folder, see https://github.com/foxlet/macOS-Simple-KVM"
+
+selfExec "c -d:release --os:windows --out:faster_than_requests.pyd --gcc.exe:" & gccWin32 & " --gcc.linkerexe:" & gccWin32 & " " & rootFolder / "src/faster_than_requests.nim"
