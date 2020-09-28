@@ -58,6 +58,7 @@ NI nanosecond;
 static N_INLINE(void, nimZeroMem)(void* p, NI size);
 static N_INLINE(void, nimSetMem__zxfKBYntu9cBapkhrCOk1fgmemory)(void* a, int v, NI size);
 N_LIB_PRIVATE N_NIMCALL(tyObject_Duration__lj9ar6Co3fgk6NgGnVaNpJw, initDuration__wcR3zetvspAUsyuvWZ07Xg)(NI64 nanoseconds, NI64 microseconds, NI64 milliseconds, NI64 seconds, NI64 minutes, NI64 hours, NI64 days, NI64 weeks);
+N_LIB_PRIVATE N_NIMCALL(NI64, inNanoseconds__df0d89cDnRIju9aB6p1W1qVA_3)(tyObject_Duration__lj9ar6Co3fgk6NgGnVaNpJw dur);
 N_LIB_PRIVATE TNimType NTI__FEvFMlkqJiSSGVO6HgTv8w_;
 extern TNimType NTI__Aav8dQoMlCFnZRxA0IhTHQ_;
 static N_INLINE(void, nimSetMem__zxfKBYntu9cBapkhrCOk1fgmemory)(void* a, int v, NI size) {
@@ -85,6 +86,36 @@ N_LIB_PRIVATE N_NIMCALL(tyObject_Duration__lj9ar6Co3fgk6NgGnVaNpJw, minus___p9cB
 	tyObject_Duration__lj9ar6Co3fgk6NgGnVaNpJw result;
 	nimZeroMem((void*)(&result), sizeof(tyObject_Duration__lj9ar6Co3fgk6NgGnVaNpJw));
 	result = initDuration__wcR3zetvspAUsyuvWZ07Xg((NI64)(a.ticks - b.ticks), IL64(0), IL64(0), IL64(0), IL64(0), IL64(0), IL64(0), IL64(0));
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, lteq___3KIZNy1Wl5YmzvX5mBokLA)(tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w a, tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w b) {
+	NIM_BOOL result;
+	result = (NIM_BOOL)0;
+	result = (a.ticks <= b.ticks);
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, eqeq___3KIZNy1Wl5YmzvX5mBokLA_2)(tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w a, tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w b) {
+	NIM_BOOL result;
+	result = (NIM_BOOL)0;
+	result = (a.ticks == b.ticks);
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, lt___3KIZNy1Wl5YmzvX5mBokLA_3)(tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w a, tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w b) {
+	NIM_BOOL result;
+	result = (NIM_BOOL)0;
+	result = (a.ticks < b.ticks);
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w, plus___kq5bd8gLWmWN2ZS9bs8371Q)(tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w a, tyObject_Duration__lj9ar6Co3fgk6NgGnVaNpJw b) {
+	tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w result;
+	tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w T1_;
+	NI64 T2_;
+	nimZeroMem((void*)(&result), sizeof(tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w));
+	nimZeroMem((void*)(&T1_), sizeof(tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w));
+	T2_ = (NI64)0;
+	T2_ = inNanoseconds__df0d89cDnRIju9aB6p1W1qVA_3(b);
+	T1_.ticks = (NI64)(a.ticks + T2_);
+	result = T1_;
 	return result;
 }
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_monotimesDatInit000)(void) {

@@ -406,3 +406,69 @@ N_LIB_PRIVATE N_NIMCALL(NI, parseHex__5URmSDed0NZg9au720T3U9aA)(NimStringDesc* s
 	LA29_: ;
 	return result;
 }
+N_LIB_PRIVATE N_NIMCALL(NI, parseSaturatedNatural__hGWFPKYRsDcYFCjZLM9acZw)(NimStringDesc* s, NI* b, NI start) {
+	NI result;
+	NI i;
+	result = (NI)0;
+	i = start;
+	{
+		NIM_BOOL T3_;
+		T3_ = (NIM_BOOL)0;
+		T3_ = (i < (s ? s->Sup.len : 0));
+		if (!(T3_)) goto LA4_;
+		T3_ = ((NU8)(s->data[i]) == (NU8)(43));
+		LA4_: ;
+		if (!T3_) goto LA5_;
+		i += ((NI) 1);
+	}
+	LA5_: ;
+	{
+		NIM_BOOL T9_;
+		T9_ = (NIM_BOOL)0;
+		T9_ = (i < (s ? s->Sup.len : 0));
+		if (!(T9_)) goto LA10_;
+		T9_ = (((NU8)(s->data[i])) >= ((NU8)(48)) && ((NU8)(s->data[i])) <= ((NU8)(57)));
+		LA10_: ;
+		if (!T9_) goto LA11_;
+		(*b) = ((NI) 0);
+		{
+			while (1) {
+				NIM_BOOL T15_;
+				NI c;
+				T15_ = (NIM_BOOL)0;
+				T15_ = (i < (s ? s->Sup.len : 0));
+				if (!(T15_)) goto LA16_;
+				T15_ = (((NU8)(s->data[i])) >= ((NU8)(48)) && ((NU8)(s->data[i])) <= ((NU8)(57)));
+				LA16_: ;
+				if (!T15_) goto LA14;
+				c = (NI)(((NU8)(s->data[i])) - ((NI) 48));
+				{
+					if (!((*b) <= (NI)((NI)(((NI) IL64(9223372036854775807)) - c) / ((NI) 10)))) goto LA19_;
+					(*b) = (NI)((NI)((*b) * ((NI) 10)) + c);
+				}
+				goto LA17_;
+				LA19_: ;
+				{
+					(*b) = ((NI) IL64(9223372036854775807));
+				}
+				LA17_: ;
+				i += ((NI) 1);
+				{
+					while (1) {
+						NIM_BOOL T24_;
+						T24_ = (NIM_BOOL)0;
+						T24_ = (i < (s ? s->Sup.len : 0));
+						if (!(T24_)) goto LA25_;
+						T24_ = ((NU8)(s->data[i]) == (NU8)(95));
+						LA25_: ;
+						if (!T24_) goto LA23;
+						i += ((NI) 1);
+					} LA23: ;
+				}
+			} LA14: ;
+		}
+		result = (NI)(i - start);
+	}
+	LA11_: ;
+	return result;
+}

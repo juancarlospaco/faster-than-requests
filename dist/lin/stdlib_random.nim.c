@@ -26,6 +26,7 @@ NU64 a1;
 };
 N_LIB_PRIVATE N_NIMCALL(NU64, next__uKPilSLGUBbsncNO5ljzag)(tyObject_Rand__liBKmwv1H6v7oYBhDFHa6A* r);
 N_LIB_PRIVATE N_NIMCALL(NU64, rotl__I9aS29bnItunNBhkLW9cSr3SA)(NU64 x, NU64 k);
+N_LIB_PRIVATE N_NIMCALL(NI, rand__SN9aVN0MBPaaBWhJdtZLhNA)(tyObject_Rand__liBKmwv1H6v7oYBhDFHa6A* r, NI max);
 N_LIB_PRIVATE tyObject_Rand__liBKmwv1H6v7oYBhDFHa6A state__4atHrcHUZPts5LqH9bzbl0w = {7616934476015405061ULL, 15122295919272093642ULL}
 ;
 N_LIB_PRIVATE N_NIMCALL(NU64, rotl__I9aS29bnItunNBhkLW9cSr3SA)(NU64 x, NU64 k) {
@@ -66,5 +67,34 @@ N_LIB_PRIVATE N_NIMCALL(NI, random__v7jZDEs4VOsrcpvk0yo8Rg)(NI max) {
 		}
 	}
 	}BeforeRet_: ;
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NI, rand__SN9aVN0MBPaaBWhJdtZLhNA)(tyObject_Rand__liBKmwv1H6v7oYBhDFHa6A* r, NI max) {
+	NI result;
+{	result = (NI)0;
+	{
+		if (!(((NI) (max)) == ((NI) 0))) goto LA3_;
+		goto BeforeRet_;
+	}
+	LA3_: ;
+	{
+		while (1) {
+			NU64 x;
+			x = next__uKPilSLGUBbsncNO5ljzag(r);
+			{
+				if (!((NU64)(x) <= (NU64)((NU64)((NU64)(18446744073709551615ULL) - (NU64)((NU64)((NU64)(18446744073709551615ULL) % (NU64)(((NU64) (max))))))))) goto LA9_;
+				result = ((NI) ((NU64)((NU64)(x) % (NU64)((NU64)((NU64)(((NU64) (max))) + (NU64)(1ULL))))));
+				goto BeforeRet_;
+			}
+			LA9_: ;
+		}
+	}
+	}BeforeRet_: ;
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NI, rand__v7jZDEs4VOsrcpvk0yo8Rg_2)(NI max) {
+	NI result;
+	result = (NI)0;
+	result = rand__SN9aVN0MBPaaBWhJdtZLhNA((&state__4atHrcHUZPts5LqH9bzbl0w), ((NI) (max)));
 	return result;
 }

@@ -11,6 +11,8 @@
 #include <sys/select.h>
 #include <time.h>
 #include <sys/types.h>
+#include <fcntl.h>
+#include <netinet/in.h>
 #undef LANGUAGE_C
 #undef MIPSEB
 #undef MIPSEL
@@ -32,6 +34,14 @@ typedef struct tyObject_Option__FqSKP9b8yM9aV7mJ0VU4DFWQ tyObject_Option__FqSKP9
 typedef struct TNimType TNimType;
 typedef struct TNimNode TNimNode;
 typedef struct tySequence__9apztJSmgERYU8fZOjI4pOg tySequence__9apztJSmgERYU8fZOjI4pOg;
+typedef struct tyObject_UnpackError__VAWWBGXQQxBx5kHPK2xRMw tyObject_UnpackError__VAWWBGXQQxBx5kHPK2xRMw;
+typedef struct tyObject_Defect__LbeSGvgPzGzXnW9caIkJqMA tyObject_Defect__LbeSGvgPzGzXnW9caIkJqMA;
+typedef struct Exception Exception;
+typedef struct RootObj RootObj;
+typedef struct tySequence__uB9b75OUPRENsBAu4AnoePA tySequence__uB9b75OUPRENsBAu4AnoePA;
+typedef struct tyObject_IOError__iLZrPn9anoh9ad1MmO0RczFw tyObject_IOError__iLZrPn9anoh9ad1MmO0RczFw;
+typedef struct tyObject_CatchableError__qrLSDoe2oBoAqNtJ9badtnA tyObject_CatchableError__qrLSDoe2oBoAqNtJ9badtnA;
+typedef struct tyObject_StackTraceEntry__oLyohQ7O2XOvGnflOss8EA tyObject_StackTraceEntry__oLyohQ7O2XOvGnflOss8EA;
 typedef NU8 tyEnum_SockType__NQT1bItGG2X9byGdrWX7ujw;
 typedef NU8 tyEnum_Protocol__dqJ1OqRGclxIMMdSLRzzXg;
 struct TGenericSeq {
@@ -71,10 +81,43 @@ NCSTRING name;
 NI len;
 TNimNode** sons;
 };
+typedef NIM_CHAR tyArray__Wfh9bjgBQ4UqJsyISUuDSuA[16];
+struct RootObj {
+TNimType* m_type;
+};
+struct Exception {
+  RootObj Sup;
+Exception* parent;
+NCSTRING name;
+NimStringDesc* message;
+tySequence__uB9b75OUPRENsBAu4AnoePA* trace;
+Exception* up;
+};
+struct tyObject_Defect__LbeSGvgPzGzXnW9caIkJqMA {
+  Exception Sup;
+};
+struct tyObject_UnpackError__VAWWBGXQQxBx5kHPK2xRMw {
+  tyObject_Defect__LbeSGvgPzGzXnW9caIkJqMA Sup;
+};
+struct tyObject_CatchableError__qrLSDoe2oBoAqNtJ9badtnA {
+  Exception Sup;
+};
+struct tyObject_IOError__iLZrPn9anoh9ad1MmO0RczFw {
+  tyObject_CatchableError__qrLSDoe2oBoAqNtJ9badtnA Sup;
+};
 typedef NIM_CHAR tyArray__NSMq3FMCIrS8gSbyinBZ8w[14];
+struct tyObject_StackTraceEntry__oLyohQ7O2XOvGnflOss8EA {
+NCSTRING procname;
+NI line;
+NCSTRING filename;
+};
 struct tySequence__9apztJSmgERYU8fZOjI4pOg {
   TGenericSeq Sup;
   int data[SEQ_DECL_SIZE];
+};
+struct tySequence__uB9b75OUPRENsBAu4AnoePA {
+  TGenericSeq Sup;
+  tyObject_StackTraceEntry__oLyohQ7O2XOvGnflOss8EA data[SEQ_DECL_SIZE];
 };
 static N_INLINE(void, nimZeroMem)(void* p, NI size);
 static N_INLINE(void, nimSetMem__zxfKBYntu9cBapkhrCOk1fgmemory)(void* a, int v, NI size);
@@ -93,15 +136,33 @@ N_LIB_PRIVATE N_NIMCALL(struct timeval, timeValFromMilliseconds__OtKozLj4h73UWNu
 N_LIB_PRIVATE N_NIMCALL(void, createFdSet__qeAKZQwZIp32QbFZfozb3w)(fd_set* fd, tySequence__9apztJSmgERYU8fZOjI4pOg* s, NI* m);
 N_LIB_PRIVATE N_NIMCALL(void, pruneSocketSet__DzCd1luyXumO9c9aKDjkCMAQ)(tySequence__9apztJSmgERYU8fZOjI4pOg** s, fd_set* fd);
 N_LIB_PRIVATE N_NIMCALL(TGenericSeq*, setLengthSeqV2)(TGenericSeq* s, TNimType* typ, NI newLen);
+static N_INLINE(tyEnum_Domain__Q79bEtFARvq0ekDNtvj3Vqg, get__9bbQwSmTwiH8rrIRUZVyRxA_2options)(tyObject_Option__FqSKP9b8yM9aV7mJ0VU4DFWQ self);
+static N_INLINE(NIM_BOOL, isNone__H87Mp4Y2b9aVoDHbyPXjVtAoptions)(tyObject_Option__FqSKP9b8yM9aV7mJ0VU4DFWQ self);
+N_LIB_PRIVATE N_NIMCALL(void*, newObj)(TNimType* typ, NI size);
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, copyString)(NimStringDesc* src);
+N_LIB_PRIVATE N_NIMCALL(void, raiseExceptionEx)(Exception* e, NCSTRING ename, NCSTRING procname, NCSTRING filename, NI line);
+N_LIB_PRIVATE N_NIMCALL(tyObject_Option__FqSKP9b8yM9aV7mJ0VU4DFWQ, toKnownDomain__RQ9bFvLg4dpjf7aRPA8ID9bg)(int family);
+N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, isObj)(TNimType* obj, TNimType* subclass);
+static N_INLINE(Exception*, nimBorrowCurrentException)(void);
+static N_INLINE(void, popCurrentException)(void);
 N_LIB_PRIVATE TNimType NTI__Q79bEtFARvq0ekDNtvj3Vqg_;
 N_LIB_PRIVATE TNimType NTI__NQT1bItGG2X9byGdrWX7ujw_;
 N_LIB_PRIVATE TNimType NTI__dqJ1OqRGclxIMMdSLRzzXg_;
 extern TNimType NTI__9apztJSmgERYU8fZOjI4pOg_;
+extern TNimType NTI__GntyqsSCwg00S5X6lKEPuQ_;
+extern TNimType NTI__VAWWBGXQQxBx5kHPK2xRMw_;
+STRING_LITERAL(TM__f9bP3LqjpgpB9cXL8Nnak7tQ_11, "Can\'t obtain a value from a `none`", 34);
+extern TNimType NTI__HMIVdYjdZYWskTmTQVo5BQ_;
+extern TNimType NTI__iLZrPn9anoh9ad1MmO0RczFw_;
+STRING_LITERAL(TM__f9bP3LqjpgpB9cXL8Nnak7tQ_12, "Unknown socket family in getSockDomain", 38);
 N_LIB_PRIVATE NIM_CONST int osInvalidSocket__voz9aUXu8jtRbvGZZJHNE8w = ((int) -1);
 N_LIB_PRIVATE NIM_CONST int nativeAfInet__rQwsjQjVqXvdaL9aZofzWwg = ((int) 2);
 N_LIB_PRIVATE NIM_CONST int nativeAfInet6__Da6PongZL9aJxBrf7qeBmfA = ((int) 10);
 N_LIB_PRIVATE NIM_CONST int nativeAfUnix__F0RRmJ8JjfNr6yLSNEn9abA = ((int) 1);
 extern NIM_THREADVAR NIM_BOOL nimInErrorMode__759bT87luu8XGcbkw13FUjA;
+extern NIM_THREADVAR Exception* currException__9bVPeDJlYTi9bQApZpfH8wjg;
+extern NIM_THREADVAR Exception* currException__9bVPeDJlYTi9bQApZpfH8wjg;
+extern NIM_THREADVAR Exception* currException__9bVPeDJlYTi9bQApZpfH8wjg;
 N_LIB_PRIVATE N_NIMCALL(void, close__8c1w8B7fpSuB4Dgr5LHVJA)(int socket) {
 	int T1_;
 	T1_ = (int)0;
@@ -462,6 +523,176 @@ N_LIB_PRIVATE N_NIMCALL(NI, selectRead__hYdMbc9crqOqsDFcxhERoLA)(tySequence__9ap
 	}
 	LA1_: ;
 	pruneSocketSet__DzCd1luyXumO9c9aKDjkCMAQ(readfds, (&rd));
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(void, setBlocking__ksfYDEBjQla9cwhYE9b9ck7ZA)(int s, NIM_BOOL blocking) {
+	NI x;
+	int T1_;
+NIM_BOOL* nimErr_;
+{nimErr_ = nimErrorFlag();
+	T1_ = (int)0;
+	T1_ = fcntl(s, ((int) 3), ((NI) 0));
+	x = ((NI) (T1_));
+	{
+		NI32 T6_;
+		if (!(x == ((NI) -1))) goto LA4_;
+		T6_ = (NI32)0;
+		T6_ = osLastError__9bUWNxbcGnToMWA9b79aTXLIw();
+		raiseOSError__CWyPYlyH9a6rAuZckFyVxPA(T6_, ((NimStringDesc*) NIM_NIL));
+		if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	}
+	goto LA2_;
+	LA4_: ;
+	{
+		NI mode;
+		{
+			if (!blocking) goto LA10_;
+			mode = (NI)(x & ((NI) -2049));
+		}
+		goto LA8_;
+		LA10_: ;
+		{
+			mode = (NI)(x | ((NI) 2048));
+		}
+		LA8_: ;
+		{
+			int T15_;
+			NI32 T18_;
+			T15_ = (int)0;
+			T15_ = fcntl(s, ((int) 4), mode);
+			if (!(T15_ == ((NI32) -1))) goto LA16_;
+			T18_ = (NI32)0;
+			T18_ = osLastError__9bUWNxbcGnToMWA9b79aTXLIw();
+			raiseOSError__CWyPYlyH9a6rAuZckFyVxPA(T18_, ((NimStringDesc*) NIM_NIL));
+			if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+		}
+		LA16_: ;
+	}
+	LA2_: ;
+	}BeforeRet_: ;
+}
+N_LIB_PRIVATE N_NIMCALL(NI, getSockOptInt__g5P5hOeKQnylIzc7ktyiRA)(int socket, NI level, NI optname) {
+	NI result;
+	int res;
+	socklen_t size;
+NIM_BOOL* nimErr_;
+{nimErr_ = nimErrorFlag();
+	result = (NI)0;
+	res = (int)0;
+	size = ((socklen_t) 4);
+	{
+		int T3_;
+		NI32 T6_;
+		T3_ = (int)0;
+		T3_ = getsockopt(socket, ((int) (level)), ((int) (optname)), ((void*) ((&res))), (&size));
+		if (!(T3_ < ((NI32) 0))) goto LA4_;
+		T6_ = (NI32)0;
+		T6_ = osLastError__9bUWNxbcGnToMWA9b79aTXLIw();
+		raiseOSError__CWyPYlyH9a6rAuZckFyVxPA(T6_, ((NimStringDesc*) NIM_NIL));
+		if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	}
+	LA4_: ;
+	result = ((NI) (res));
+	}BeforeRet_: ;
+	return result;
+}
+static N_INLINE(NIM_BOOL, isNone__H87Mp4Y2b9aVoDHbyPXjVtAoptions)(tyObject_Option__FqSKP9b8yM9aV7mJ0VU4DFWQ self) {
+	NIM_BOOL result;
+	result = (NIM_BOOL)0;
+	result = !(self.has);
+	return result;
+}
+static N_INLINE(tyEnum_Domain__Q79bEtFARvq0ekDNtvj3Vqg, get__9bbQwSmTwiH8rrIRUZVyRxA_2options)(tyObject_Option__FqSKP9b8yM9aV7mJ0VU4DFWQ self) {
+	tyEnum_Domain__Q79bEtFARvq0ekDNtvj3Vqg result;
+{	result = (tyEnum_Domain__Q79bEtFARvq0ekDNtvj3Vqg)0;
+	{
+		NIM_BOOL T3_;
+		tyObject_UnpackError__VAWWBGXQQxBx5kHPK2xRMw* T6_;
+		T3_ = (NIM_BOOL)0;
+		T3_ = isNone__H87Mp4Y2b9aVoDHbyPXjVtAoptions(self);
+		if (!T3_) goto LA4_;
+		T6_ = (tyObject_UnpackError__VAWWBGXQQxBx5kHPK2xRMw*)0;
+		T6_ = (tyObject_UnpackError__VAWWBGXQQxBx5kHPK2xRMw*) newObj((&NTI__GntyqsSCwg00S5X6lKEPuQ_), sizeof(tyObject_UnpackError__VAWWBGXQQxBx5kHPK2xRMw));
+		(*T6_).Sup.Sup.Sup.m_type = (&NTI__VAWWBGXQQxBx5kHPK2xRMw_);
+		(*T6_).Sup.Sup.name = "UnpackError";
+		(*T6_).Sup.Sup.message = copyString(((NimStringDesc*) &TM__f9bP3LqjpgpB9cXL8Nnak7tQ_11));
+		(*T6_).Sup.Sup.parent = NIM_NIL;
+		raiseExceptionEx((Exception*)T6_, "UnpackError", "get", "options.nim", 185);
+		goto BeforeRet_;
+	}
+	LA4_: ;
+	result = self.val;
+	}BeforeRet_: ;
+	return result;
+}
+static N_INLINE(Exception*, nimBorrowCurrentException)(void) {
+	Exception* result;
+	result = (Exception*)0;
+	result = currException__9bVPeDJlYTi9bQApZpfH8wjg;
+	return result;
+}
+static N_INLINE(void, popCurrentException)(void) {
+	currException__9bVPeDJlYTi9bQApZpfH8wjg = (*currException__9bVPeDJlYTi9bQApZpfH8wjg).up;
+}
+N_LIB_PRIVATE N_NIMCALL(tyEnum_Domain__Q79bEtFARvq0ekDNtvj3Vqg, getSockDomain__wJxafeM5sIlhTxiuAPi51w)(int socket) {
+	tyEnum_Domain__Q79bEtFARvq0ekDNtvj3Vqg result;
+	struct sockaddr_in6 name;
+	socklen_t namelen;
+	tyObject_Option__FqSKP9b8yM9aV7mJ0VU4DFWQ T8_;
+	tyEnum_Domain__Q79bEtFARvq0ekDNtvj3Vqg T9_;
+NIM_BOOL* nimErr_;
+{nimErr_ = nimErrorFlag();
+	result = (tyEnum_Domain__Q79bEtFARvq0ekDNtvj3Vqg)0;
+	nimZeroMem((void*)(&name), sizeof(struct sockaddr_in6));
+	namelen = ((socklen_t) (((NI)sizeof(struct sockaddr_in6))));
+	{
+		int T3_;
+		NI32 T6_;
+		T3_ = (int)0;
+		T3_ = getsockname(socket, ((struct sockaddr*) ((&name))), (&namelen));
+		if (!(T3_ == ((NI32) -1))) goto LA4_;
+		T6_ = (NI32)0;
+		T6_ = osLastError__9bUWNxbcGnToMWA9b79aTXLIw();
+		raiseOSError__CWyPYlyH9a6rAuZckFyVxPA(T6_, ((NimStringDesc*) NIM_NIL));
+		if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	}
+	LA4_: ;
+	T8_ = toKnownDomain__RQ9bFvLg4dpjf7aRPA8ID9bg(((int) (name.sin6_family)));
+	T9_ = (tyEnum_Domain__Q79bEtFARvq0ekDNtvj3Vqg)0;
+	T9_ = get__9bbQwSmTwiH8rrIRUZVyRxA_2options(T8_);
+	if (NIM_UNLIKELY(*nimErr_)) goto LA7_;
+	result = T9_;
+	if (NIM_UNLIKELY(*nimErr_)) {
+		LA7_:;
+		if (isObj(nimBorrowCurrentException()->Sup.m_type, (&NTI__VAWWBGXQQxBx5kHPK2xRMw_))) {
+			tyObject_IOError__iLZrPn9anoh9ad1MmO0RczFw* T13_;
+			*nimErr_ = NIM_FALSE;
+			T13_ = (tyObject_IOError__iLZrPn9anoh9ad1MmO0RczFw*)0;
+			T13_ = (tyObject_IOError__iLZrPn9anoh9ad1MmO0RczFw*) newObj((&NTI__HMIVdYjdZYWskTmTQVo5BQ_), sizeof(tyObject_IOError__iLZrPn9anoh9ad1MmO0RczFw));
+			(*T13_).Sup.Sup.Sup.m_type = (&NTI__iLZrPn9anoh9ad1MmO0RczFw_);
+			(*T13_).Sup.Sup.name = "IOError";
+			(*T13_).Sup.Sup.message = copyString(((NimStringDesc*) &TM__f9bP3LqjpgpB9cXL8Nnak7tQ_12));
+			(*T13_).Sup.Sup.parent = NIM_NIL;
+			raiseExceptionEx((Exception*)T13_, "IOError", "getSockDomain", "nativesockets.nim", 426);
+			goto LA11_;
+			popCurrentException();
+			LA11_:;
+		}
+	}
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	}BeforeRet_: ;
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NU16, ntohs__mS2aR27cvkzR5vKc9cgIFwg)(NU16 x) {
+	NU16 result;
+	result = (NU16)0;
+	result = (NU16)((NU16)((NU16)(x) >> (NU16)(((NU16) 8))) | (NU16)((NU16)(x) << (NU16)(((NU16) 8))));
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NU32, ntohl__iBa9bcNfE4emNkgmMoxrrtA)(NU32 x) {
+	NU32 result;
+	result = (NU32)0;
+	result = (NU32)((NU32)((NU32)((NU32)((NU32)(x) >> (NU32)(((NU32) 24))) | (NU32)((NU32)((NU32)(x) >> (NU32)(((NU32) 8))) & ((NU32) 65280))) | (NU32)((NU32)((NU32)(x) << (NU32)(((NU32) 8))) & ((NU32) 16711680))) | (NU32)((NU32)(x) << (NU32)(((NU32) 24))));
 	return result;
 }
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_nativesocketsDatInit000)(void) {

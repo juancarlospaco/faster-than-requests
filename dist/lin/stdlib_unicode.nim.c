@@ -41,6 +41,7 @@ N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, setLengthStr)(NimStringDesc* s, NI newLe
 N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, nucisUpper)(NI32 c);
 N_LIB_PRIVATE N_NIMCALL(NI, binarySearch__6Rjp52dLh2BvURs8yXvtLQ)(NI32 c, NI* tab, NI tabLen_0, NI len, NI stride);
 N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, nucisLower)(NI32 c);
+N_LIB_PRIVATE N_NIMCALL(NI, runeLenAt__WMpE2MYPWM1HlcK1wXx02Q)(NimStringDesc* s, NI i);
 static NIM_CONST tyArray__BGKQJfFMmGTfunDWKTzYcQ TM__e1RUVS0Bw7xmj9cnDPXLJMQ_2 = {((NI) 65),
 ((NI) 90),
 ((NI) 532),
@@ -8160,6 +8161,205 @@ N_LIB_PRIVATE N_NIMCALL(NI32, nuctoLower)(NI32 c) {
 	}
 	LA13_: ;
 	result = c_2;
+	goto BeforeRet_;
+	}BeforeRet_: ;
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NI, nucruneLen)(NimStringDesc* s) {
+	NI result;
+	NI i;
+	result = (NI)0;
+	i = ((NI) 0);
+	{
+		while (1) {
+			if (!(i < (s ? s->Sup.len : 0))) goto LA2;
+			{
+				if (!((NU64)(((NU) (((NU8)(s->data[i]))))) <= (NU64)(((NU) 127)))) goto LA5_;
+				i += ((NI) 1);
+			}
+			goto LA3_;
+			LA5_: ;
+			{
+				if (!((NU)((NU64)(((NU) (((NU8)(s->data[i]))))) >> (NU64)(((NI) 5))) == ((NU) 6))) goto LA8_;
+				i += ((NI) 2);
+			}
+			goto LA3_;
+			LA8_: ;
+			{
+				if (!((NU)((NU64)(((NU) (((NU8)(s->data[i]))))) >> (NU64)(((NI) 4))) == ((NU) 14))) goto LA11_;
+				i += ((NI) 3);
+			}
+			goto LA3_;
+			LA11_: ;
+			{
+				if (!((NU)((NU64)(((NU) (((NU8)(s->data[i]))))) >> (NU64)(((NI) 3))) == ((NU) 30))) goto LA14_;
+				i += ((NI) 4);
+			}
+			goto LA3_;
+			LA14_: ;
+			{
+				if (!((NU)((NU64)(((NU) (((NU8)(s->data[i]))))) >> (NU64)(((NI) 2))) == ((NU) 62))) goto LA17_;
+				i += ((NI) 5);
+			}
+			goto LA3_;
+			LA17_: ;
+			{
+				if (!((NU)((NU64)(((NU) (((NU8)(s->data[i]))))) >> (NU64)(((NI) 1))) == ((NU) 126))) goto LA20_;
+				i += ((NI) 6);
+			}
+			goto LA3_;
+			LA20_: ;
+			{
+				i += ((NI) 1);
+			}
+			LA3_: ;
+			result += ((NI) 1);
+		} LA2: ;
+	}
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NI, runeOffset__EnrqtYM0boqQqeAIRc9bdmA)(NimStringDesc* s, NI pos, NI start) {
+	NI result;
+	NI i;
+	NI o;
+{	result = (NI)0;
+	i = ((NI) 0);
+	o = start;
+	{
+		while (1) {
+			NI T3_;
+			if (!(i < ((NI) (pos)))) goto LA2;
+			T3_ = (NI)0;
+			T3_ = runeLenAt__WMpE2MYPWM1HlcK1wXx02Q(s, o);
+			o += ((NI) (T3_));
+			{
+				if (!((s ? s->Sup.len : 0) <= ((NI) (o)))) goto LA6_;
+				result = ((NI) -1);
+				goto BeforeRet_;
+			}
+			LA6_: ;
+			i += ((NI) 1);
+		} LA2: ;
+	}
+	result = ((NI) (o));
+	goto BeforeRet_;
+	}BeforeRet_: ;
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NI, validateUtf8__gZHDHaRdP4jROav7Hun29aA)(NimStringDesc* s) {
+	NI result;
+	NI i;
+	NI L;
+{	result = (NI)0;
+	i = ((NI) 0);
+	L = (s ? s->Sup.len : 0);
+	{
+		while (1) {
+			if (!(i < L)) goto LA2;
+			{
+				if (!((NU64)(((NU) (((NU8)(s->data[i]))))) <= (NU64)(((NU) 127)))) goto LA5_;
+				i += ((NI) 1);
+			}
+			goto LA3_;
+			LA5_: ;
+			{
+				if (!((NU)((NU64)(((NU) (((NU8)(s->data[i]))))) >> (NU64)(((NI) 5))) == ((NU) 6))) goto LA8_;
+				{
+					if (!((NU64)(((NU) (((NU8)(s->data[i]))))) < (NU64)(((NU) 194)))) goto LA12_;
+					result = i;
+					goto BeforeRet_;
+				}
+				LA12_: ;
+				{
+					NIM_BOOL T16_;
+					T16_ = (NIM_BOOL)0;
+					T16_ = ((NI)(i + ((NI) 1)) < L);
+					if (!(T16_)) goto LA17_;
+					T16_ = ((NU)((NU64)(((NU) (((NU8)(s->data[(NI)(i + ((NI) 1))]))))) >> (NU64)(((NI) 6))) == ((NU) 2));
+					LA17_: ;
+					if (!T16_) goto LA18_;
+					i += ((NI) 2);
+				}
+				goto LA14_;
+				LA18_: ;
+				{
+					result = i;
+					goto BeforeRet_;
+				}
+				LA14_: ;
+			}
+			goto LA3_;
+			LA8_: ;
+			{
+				if (!((NU)((NU64)(((NU) (((NU8)(s->data[i]))))) >> (NU64)(((NI) 4))) == ((NU) 14))) goto LA22_;
+				{
+					NIM_BOOL T26_;
+					NIM_BOOL T27_;
+					T26_ = (NIM_BOOL)0;
+					T27_ = (NIM_BOOL)0;
+					T27_ = ((NI)(i + ((NI) 2)) < L);
+					if (!(T27_)) goto LA28_;
+					T27_ = ((NU)((NU64)(((NU) (((NU8)(s->data[(NI)(i + ((NI) 1))]))))) >> (NU64)(((NI) 6))) == ((NU) 2));
+					LA28_: ;
+					T26_ = T27_;
+					if (!(T26_)) goto LA29_;
+					T26_ = ((NU)((NU64)(((NU) (((NU8)(s->data[(NI)(i + ((NI) 2))]))))) >> (NU64)(((NI) 6))) == ((NU) 2));
+					LA29_: ;
+					if (!T26_) goto LA30_;
+					i += ((NI) 3);
+				}
+				goto LA24_;
+				LA30_: ;
+				{
+					result = i;
+					goto BeforeRet_;
+				}
+				LA24_: ;
+			}
+			goto LA3_;
+			LA22_: ;
+			{
+				if (!((NU)((NU64)(((NU) (((NU8)(s->data[i]))))) >> (NU64)(((NI) 3))) == ((NU) 30))) goto LA34_;
+				{
+					NIM_BOOL T38_;
+					NIM_BOOL T39_;
+					NIM_BOOL T40_;
+					T38_ = (NIM_BOOL)0;
+					T39_ = (NIM_BOOL)0;
+					T40_ = (NIM_BOOL)0;
+					T40_ = ((NI)(i + ((NI) 3)) < L);
+					if (!(T40_)) goto LA41_;
+					T40_ = ((NU)((NU64)(((NU) (((NU8)(s->data[(NI)(i + ((NI) 1))]))))) >> (NU64)(((NI) 6))) == ((NU) 2));
+					LA41_: ;
+					T39_ = T40_;
+					if (!(T39_)) goto LA42_;
+					T39_ = ((NU)((NU64)(((NU) (((NU8)(s->data[(NI)(i + ((NI) 2))]))))) >> (NU64)(((NI) 6))) == ((NU) 2));
+					LA42_: ;
+					T38_ = T39_;
+					if (!(T38_)) goto LA43_;
+					T38_ = ((NU)((NU64)(((NU) (((NU8)(s->data[(NI)(i + ((NI) 3))]))))) >> (NU64)(((NI) 6))) == ((NU) 2));
+					LA43_: ;
+					if (!T38_) goto LA44_;
+					i += ((NI) 4);
+				}
+				goto LA36_;
+				LA44_: ;
+				{
+					result = i;
+					goto BeforeRet_;
+				}
+				LA36_: ;
+			}
+			goto LA3_;
+			LA34_: ;
+			{
+				result = i;
+				goto BeforeRet_;
+			}
+			LA3_: ;
+		} LA2: ;
+	}
+	result = ((NI) -1);
 	goto BeforeRet_;
 	}BeforeRet_: ;
 	return result;

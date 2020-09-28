@@ -379,6 +379,7 @@ STRING_LITERAL(TM__XqsrSBxhOTPgLQ9cX4MmV4A_37, "SSLv3 is no longer secure and ha
 STRING_LITERAL(TM__XqsrSBxhOTPgLQ9cX4MmV4A_38, "Certificate file could not be found: ", 37);
 STRING_LITERAL(TM__XqsrSBxhOTPgLQ9cX4MmV4A_39, "Key file could not be found: ", 29);
 STRING_LITERAL(TM__XqsrSBxhOTPgLQ9cX4MmV4A_40, "Verification of private key file failed.", 40);
+N_LIB_PRIVATE TNimType NTI__4xio0cAXR7XG4pF9bVcpxEg_;
 extern tyProc__ln4kdL5W9bbX4a1xl8nnVXQ Dl_15780414_;
 extern NIM_THREADVAR NIM_BOOL nimInErrorMode__759bT87luu8XGcbkw13FUjA;
 extern tyProc__ln4kdL5W9bbX4a1xl8nnVXQ Dl_15825657_;
@@ -2629,6 +2630,42 @@ NIM_BOOL* nimErr_;
 	}BeforeRet_: ;
 	return result;
 }
+N_LIB_PRIVATE N_NIMCALL(int, toOSFlags__o0FbRanOjUQrx1x33AiBQA)(tySet_tyEnum_SocketFlag__4xio0cAXR7XG4pF9bVcpxEg socketFlags) {
+	int result;
+	result = (int)0;
+	{
+		tyEnum_SocketFlag__4xio0cAXR7XG4pF9bVcpxEg f;
+		NI i;
+		f = (tyEnum_SocketFlag__4xio0cAXR7XG4pF9bVcpxEg)0;
+		i = ((NI) 0);
+		{
+			while (1) {
+				if (!(i <= ((NI) 1))) goto LA3;
+				{
+					if (!((socketFlags &(1U<<((NU)(((tyEnum_SocketFlag__4xio0cAXR7XG4pF9bVcpxEg) (i)))&7U)))!=0)) goto LA6_;
+					f = ((tyEnum_SocketFlag__4xio0cAXR7XG4pF9bVcpxEg) (i));
+					{
+						switch (f) {
+						case ((tyEnum_SocketFlag__4xio0cAXR7XG4pF9bVcpxEg) 0):
+						{
+							result = (NI32)(result | ((int) 2));
+						}
+						break;
+						case ((tyEnum_SocketFlag__4xio0cAXR7XG4pF9bVcpxEg) 1):
+						{
+							goto LA8;
+						}
+						break;
+						}
+					} LA8: ;
+				}
+				LA6_: ;
+				i += ((NI) 1);
+			} LA3: ;
+		}
+	}
+	return result;
+}
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_netInit000)(void) {
 {
 NIM_BOOL* nimErr_;
@@ -2658,7 +2695,12 @@ static TNimNode* TM__XqsrSBxhOTPgLQ9cX4MmV4A_4_2[2];
 static TNimNode* TM__XqsrSBxhOTPgLQ9cX4MmV4A_5_2[2];
 static TNimNode* TM__XqsrSBxhOTPgLQ9cX4MmV4A_6_2[2];
 static TNimNode* TM__XqsrSBxhOTPgLQ9cX4MmV4A_18_15[15];
-static TNimNode TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[31];
+static TNimNode* TM__XqsrSBxhOTPgLQ9cX4MmV4A_41_2[2];
+NI TM__XqsrSBxhOTPgLQ9cX4MmV4A_43;
+static char* NIM_CONST TM__XqsrSBxhOTPgLQ9cX4MmV4A_42[2] = {
+"Peek", 
+"SafeDisconn"};
+static TNimNode TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[34];
 NTI__nNdejAl9bbVbX7sP6RJ4h0w_.size = sizeof(tyObject_SslContextcolonObjectType___nNdejAl9bbVbX7sP6RJ4h0w);
 NTI__nNdejAl9bbVbX7sP6RJ4h0w_.kind = 18;
 NTI__nNdejAl9bbVbX7sP6RJ4h0w_.base = 0;
@@ -2838,5 +2880,17 @@ NTI__DtrJpMCrh4f9cUcHkEf48kQ_.size = sizeof(tyObject_TimeoutError__YJ9a3zV3oEciJ
 NTI__DtrJpMCrh4f9cUcHkEf48kQ_.kind = 22;
 NTI__DtrJpMCrh4f9cUcHkEf48kQ_.base = (&NTI__YJ9a3zV3oEciJsNBlUEYRfw_);
 NTI__DtrJpMCrh4f9cUcHkEf48kQ_.marker = Marker_tyRef__DtrJpMCrh4f9cUcHkEf48kQ;
+NTI__4xio0cAXR7XG4pF9bVcpxEg_.size = sizeof(tyEnum_SocketFlag__4xio0cAXR7XG4pF9bVcpxEg);
+NTI__4xio0cAXR7XG4pF9bVcpxEg_.kind = 14;
+NTI__4xio0cAXR7XG4pF9bVcpxEg_.base = 0;
+NTI__4xio0cAXR7XG4pF9bVcpxEg_.flags = 3;
+for (TM__XqsrSBxhOTPgLQ9cX4MmV4A_43 = 0; TM__XqsrSBxhOTPgLQ9cX4MmV4A_43 < 2; TM__XqsrSBxhOTPgLQ9cX4MmV4A_43++) {
+TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[TM__XqsrSBxhOTPgLQ9cX4MmV4A_43+31].kind = 1;
+TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[TM__XqsrSBxhOTPgLQ9cX4MmV4A_43+31].offset = TM__XqsrSBxhOTPgLQ9cX4MmV4A_43;
+TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[TM__XqsrSBxhOTPgLQ9cX4MmV4A_43+31].name = TM__XqsrSBxhOTPgLQ9cX4MmV4A_42[TM__XqsrSBxhOTPgLQ9cX4MmV4A_43];
+TM__XqsrSBxhOTPgLQ9cX4MmV4A_41_2[TM__XqsrSBxhOTPgLQ9cX4MmV4A_43] = &TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[TM__XqsrSBxhOTPgLQ9cX4MmV4A_43+31];
+}
+TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[33].len = 2; TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[33].kind = 2; TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[33].sons = &TM__XqsrSBxhOTPgLQ9cX4MmV4A_41_2[0];
+NTI__4xio0cAXR7XG4pF9bVcpxEg_.node = &TM__XqsrSBxhOTPgLQ9cX4MmV4A_0[33];
 }
 

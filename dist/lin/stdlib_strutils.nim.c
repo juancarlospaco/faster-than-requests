@@ -91,6 +91,7 @@ struct tyTuple__UV3llMMYFckfui8YMBuUZA {
 NimStringDesc* Field0;
 NimStringDesc* Field1;
 };
+typedef NimStringDesc* tyArray__nHXaesL0DJZHyVS07ARPRA[1];
 struct tyObject_StackTraceEntry__oLyohQ7O2XOvGnflOss8EA {
 NCSTRING procname;
 NI line;
@@ -2006,5 +2007,19 @@ N_LIB_PRIVATE N_NIMCALL(tySequence__sM4lkSb7zS6F7OVMvW9cffQ*, nsuSplitCharSet)(N
 			} LA3: ;
 		} LA2: ;
 	}
+	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, nsuFormatSingleElem)(NimStringDesc* formatstr, NimStringDesc* a) {
+	NimStringDesc* result;
+	tyArray__nHXaesL0DJZHyVS07ARPRA T1_;
+NIM_BOOL* nimErr_;
+{nimErr_ = nimErrorFlag();
+	result = (NimStringDesc*)0;
+	result = rawNewString(((NI) ((NI)((formatstr ? formatstr->Sup.len : 0) + (a ? a->Sup.len : 0)))));
+	nimZeroMem((void*)T1_, sizeof(tyArray__nHXaesL0DJZHyVS07ARPRA));
+	T1_[0] = copyString(a);
+	nsuAddf((&result), formatstr, T1_, 1);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	}BeforeRet_: ;
 	return result;
 }
