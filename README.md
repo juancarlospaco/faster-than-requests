@@ -17,16 +17,16 @@
 
 <img src="http://feeds.feedburner.com/RecentCommitsToFaster-than-requestsmaster.1.gif" title="Recent Commits to Faster Than Requests" width="99%" height="75px">
 
-| Library                       | Speed    | Files | LOC  | Dependencies          | Developers | WebSockets | Multi-Threaded Web Scraper Built-in |
-|-------------------------------|----------|-------|------|-----------------------|------------|-------------------------------------|
-| PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
-| Requests                      | `15.58`  | >20   | 2558 | >=7                   | >527       | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
-| Requests (cached object)      |  `5.50`  | >20   | 2558 | >=7                   | >527       | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
-| Urllib                        |  `4.00`  | ???   | 1200 | 0 (std lib)           | ???        | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
-| Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
-| PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
-| PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
-| Faster_than_requests          |  `0.40`  | 1     | 999  | 0                     | 1          | :heavy_check_mark: | :heavy_check_mark: 7, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
+| Library                       | Speed    | Files | LOC  | Dependencies          | Developers | WebSockets                    | Multi-Threaded Web Scraper Built-in |
+|-------------------------------|----------|-------|------|-----------------------|------------|-------------------------------|-------------------------------------|
+| PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        | :negative_squared_cross_mark: | :negative_squared_cross_mark:       |
+| Requests                      | `15.58`  | >20   | 2558 | >=7                   | >527       | :negative_squared_cross_mark: | :negative_squared_cross_mark:       |
+| Requests (cached object)      |  `5.50`  | >20   | 2558 | >=7                   | >527       | :negative_squared_cross_mark: | :negative_squared_cross_mark:       |
+| Urllib                        |  `4.00`  | ???   | 1200 | 0 (std lib)           | ???        | :negative_squared_cross_mark: | :negative_squared_cross_mark:       |
+| Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | :negative_squared_cross_mark: | :negative_squared_cross_mark:       |
+| PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark: | :negative_squared_cross_mark:       |
+| PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark: | :negative_squared_cross_mark:       |
+| Faster_than_requests          |  `0.40`  | 1     | 999  | 0                     | 1          | :heavy_check_mark:            | :heavy_check_mark: 7, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
 
 <details>
 
@@ -1272,7 +1272,6 @@ More Faster Libraries...
 # Requisites
 
 - Python 3.
-- GCC.
 - 64 Bit.
 
 
