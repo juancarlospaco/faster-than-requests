@@ -89,12 +89,12 @@ extern TNimType NTI__3VcGJ5ZzkB2b0MMruetfFg_;
 extern TNimType NTI__vr5DoT1jILTGdRlYv1OYpw_;
 N_LIB_PRIVATE TNimType NTI__z1uZWlkSdiDfd9ahW9a6Ibug_;
 static void* TM__9c4KgWyI7MBUp1bOanYigOw_2;
-tyProc__y4Iy0gL1MDnSGVt43uUAgQ Dl_23507276_;
-tyProc__5cp59bim9aJ4WupX5aVaD1Sg Dl_23507304_;
-tyProc__hMR3nXvmHGbyZzcDul78bg Dl_23507371_;
-tyProc__OMNNRjh8IIE9bAc9btZcg0NA Dl_23507214_;
-tyProc__KqPl2ltkjnSoyb04zAVCAQ Dl_23507236_;
-tyProc__qU2uMIyWirSwn1Nd4hJjDw Dl_23507363_;
+tyProc__y4Iy0gL1MDnSGVt43uUAgQ Dl_25152276_;
+tyProc__5cp59bim9aJ4WupX5aVaD1Sg Dl_25152304_;
+tyProc__hMR3nXvmHGbyZzcDul78bg Dl_25152371_;
+tyProc__OMNNRjh8IIE9bAc9btZcg0NA Dl_25152214_;
+tyProc__KqPl2ltkjnSoyb04zAVCAQ Dl_25152236_;
+tyProc__qU2uMIyWirSwn1Nd4hJjDw Dl_25152363_;
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_pcreDatInit000)(void) {
 static TNimNode* TM__9c4KgWyI7MBUp1bOanYigOw_16_8[8];
 static TNimNode TM__9c4KgWyI7MBUp1bOanYigOw_0[10];
@@ -162,11 +162,11 @@ if (!((TM__9c4KgWyI7MBUp1bOanYigOw_2 = nimLoadLibrary(((NimStringDesc*) &TM__9c4
 ||(TM__9c4KgWyI7MBUp1bOanYigOw_2 = nimLoadLibrary(((NimStringDesc*) &TM__9c4KgWyI7MBUp1bOanYigOw_6)))
 ||(TM__9c4KgWyI7MBUp1bOanYigOw_2 = nimLoadLibrary(((NimStringDesc*) &TM__9c4KgWyI7MBUp1bOanYigOw_8)))
 )) nimLoadLibraryError(((NimStringDesc*) &TM__9c4KgWyI7MBUp1bOanYigOw_9));
-	Dl_23507276_ = (tyProc__y4Iy0gL1MDnSGVt43uUAgQ) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_exec");
-	Dl_23507304_ = (tyProc__5cp59bim9aJ4WupX5aVaD1Sg) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_free_substring");
-	Dl_23507371_ = (tyProc__hMR3nXvmHGbyZzcDul78bg) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_free_study");
-	Dl_23507214_ = (tyProc__OMNNRjh8IIE9bAc9btZcg0NA) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_compile");
-	Dl_23507236_ = (tyProc__KqPl2ltkjnSoyb04zAVCAQ) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_config");
-	Dl_23507363_ = (tyProc__qU2uMIyWirSwn1Nd4hJjDw) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_study");
+	Dl_25152276_ = (tyProc__y4Iy0gL1MDnSGVt43uUAgQ) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_exec");
+	Dl_25152304_ = (tyProc__5cp59bim9aJ4WupX5aVaD1Sg) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_free_substring");
+	Dl_25152371_ = (tyProc__hMR3nXvmHGbyZzcDul78bg) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_free_study");
+	Dl_25152214_ = (tyProc__OMNNRjh8IIE9bAc9btZcg0NA) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_compile");
+	Dl_25152236_ = (tyProc__KqPl2ltkjnSoyb04zAVCAQ) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_config");
+	Dl_25152363_ = (tyProc__qU2uMIyWirSwn1Nd4hJjDw) nimGetProcAddr(TM__9c4KgWyI7MBUp1bOanYigOw_2, "pcre_study");
 }
 

@@ -179,13 +179,13 @@ N_LIB_PRIVATE TNimType NTI__eXUKe0yimErFvWt9bGtwijw_;
 N_LIB_PRIVATE TNimType NTI__9aOkmtaUNuD5bHWcVuLdIoQ_;
 STRING_LITERAL(TM__EFUBs0zJOEvQ2SEKsixA2w_3, "\012", 1);
 STRING_LITERAL(TM__EFUBs0zJOEvQ2SEKsixA2w_4, "^\012", 2);
-extern tyProc__y4Iy0gL1MDnSGVt43uUAgQ Dl_23507276_;
-extern tyProc__5cp59bim9aJ4WupX5aVaD1Sg Dl_23507304_;
-extern tyProc__hMR3nXvmHGbyZzcDul78bg Dl_23507371_;
-extern tyProc__OMNNRjh8IIE9bAc9btZcg0NA Dl_23507214_;
+extern tyProc__y4Iy0gL1MDnSGVt43uUAgQ Dl_25152276_;
+extern tyProc__5cp59bim9aJ4WupX5aVaD1Sg Dl_25152304_;
+extern tyProc__hMR3nXvmHGbyZzcDul78bg Dl_25152371_;
+extern tyProc__OMNNRjh8IIE9bAc9btZcg0NA Dl_25152214_;
 extern NIM_THREADVAR NIM_BOOL nimInErrorMode__759bT87luu8XGcbkw13FUjA;
-extern tyProc__KqPl2ltkjnSoyb04zAVCAQ Dl_23507236_;
-extern tyProc__qU2uMIyWirSwn1Nd4hJjDw Dl_23507363_;
+extern tyProc__KqPl2ltkjnSoyb04zAVCAQ Dl_25152236_;
+extern tyProc__qU2uMIyWirSwn1Nd4hJjDw Dl_25152363_;
 static N_INLINE(void, nimSetMem__zxfKBYntu9cBapkhrCOk1fgmemory)(void* a, int v, NI size) {
 	void* T1_;
 	T1_ = (void*)0;
@@ -205,7 +205,7 @@ N_LIB_PRIVATE N_NIMCALL(tyTuple__1v9bKyksXWMsm0vNwmZ4EuQ, findBounds__h9bDVC3slP
 	nimZeroMem((void*)(&rtarray), sizeof(tyObject_RtArray__3dAfOhmMnD56kQD3eeo0Lg));
 	initRtArray__dgRhxurJYSkIc9bzLmhcMfQ(((NI) 3), (&rtarray));
 	rawMatches = getRawData__P13NCPA0zhaXrvo9bVrTd9bw((&rtarray));
-	res = Dl_23507276_((*pattern).h, (*pattern).e, buf, ((int) (bufSize)), ((int) (start)), ((NI32) 0), ((int*) (rawMatches)), ((int) 3));
+	res = Dl_25152276_((*pattern).h, (*pattern).e, buf, ((int) (bufSize)), ((int) (start)), ((NI32) 0), ((int*) (rawMatches)), ((int) 3));
 	{
 		NI colontmp_;
 		NI colontmp__2;
@@ -307,10 +307,10 @@ appendString(result, T12_);
 	return result;
 }
 N_LIB_PRIVATE N_NIMCALL(void, finalizeRegEx__4SdnqaehCmfUiW6zxHfMFw)(tyObject_RegexDesc__jxMAPyr9aBYX9b0g7iZ2E8zw* x) {
-	Dl_23507304_(((NCSTRING) ((*x).h)));
+	Dl_25152304_(((NCSTRING) ((*x).h)));
 	{
 		if (!!(((*x).e == 0))) goto LA3_;
-		Dl_23507371_((*x).e);
+		Dl_25152371_((*x).e);
 	}
 	LA3_: ;
 }
@@ -358,7 +358,7 @@ NIM_BOOL* nimErr_;
 	result = (tyObject_Pcre__bGVj3RgRlNY6kwJpiYI9b3A*)0;
 	msg = "";
 	offset = ((int) 0);
-	result = Dl_23507214_(nimToCStringConv(pattern), flags, (&msg), (&offset), NIM_NIL);
+	result = Dl_25152214_(nimToCStringConv(pattern), flags, (&msg), (&offset), NIM_NIL);
 	{
 		NimStringDesc* T5_;
 		NimStringDesc* T6_;
@@ -405,7 +405,7 @@ NIM_BOOL* nimErr_;
 		{
 			int T8_;
 			T8_ = (int)0;
-			T8_ = Dl_23507236_(((int) 9), ((void*) ((&hasJit))));
+			T8_ = Dl_25152236_(((int) 9), ((void*) ((&hasJit))));
 			if (!(T8_ == ((NI32) 0))) goto LA9_;
 			{
 				if (!(hasJit == ((NI32) 1))) goto LA13_;
@@ -414,7 +414,7 @@ NIM_BOOL* nimErr_;
 			LA13_: ;
 		}
 		LA9_: ;
-		(*result).e = Dl_23507363_((*result).h, options, (&msg));
+		(*result).e = Dl_25152363_((*result).h, options, (&msg));
 		{
 			NimStringDesc* T19_;
 			if (!!((msg == 0))) goto LA17_;
@@ -437,7 +437,7 @@ N_LIB_PRIVATE N_NIMCALL(int, matchOrFind__jpcUBS27e6bot0QabDwvkw)(NCSTRING buf, 
 	nimZeroMem((void*)(&rtarray), sizeof(tyObject_RtArray__3dAfOhmMnD56kQD3eeo0Lg));
 	initRtArray__dgRhxurJYSkIc9bzLmhcMfQ(((NI) 3), (&rtarray));
 	rawMatches = getRawData__P13NCPA0zhaXrvo9bVrTd9bw((&rtarray));
-	result = Dl_23507276_((*pattern).h, (*pattern).e, buf, ((int) (bufSize)), ((int) (start)), flags, ((int*) (rawMatches)), ((int) 3));
+	result = Dl_25152276_((*pattern).h, (*pattern).e, buf, ((int) (bufSize)), ((int) (start)), flags, ((int*) (rawMatches)), ((int) 3));
 	{
 		if (!(((NI32) 0) <= result)) goto LA3_;
 		result = (NI32)(rawMatches[((NI) 1)] - rawMatches[((NI) 0)]);
@@ -466,7 +466,7 @@ N_LIB_PRIVATE N_NIMCALL(tyTuple__1v9bKyksXWMsm0vNwmZ4EuQ, findBounds__9b9c65p7nd
 	nimZeroMem((void*)(&rtarray), sizeof(tyObject_RtArray__3dAfOhmMnD56kQD3eeo0Lg));
 	initRtArray__dgRhxurJYSkIc9bzLmhcMfQ(((NI) ((NI)((NI)(matchesLen_0 + ((NI) 1)) * ((NI) 3)))), (&rtarray));
 	rawMatches = getRawData__P13NCPA0zhaXrvo9bVrTd9bw((&rtarray));
-	res = Dl_23507276_((*pattern).h, (*pattern).e, buf, ((int) (bufSize)), ((int) (start)), ((NI32) 0), ((int*) (rawMatches)), (NI32)(((int) ((NI)(matchesLen_0 + ((NI) 1)))) * ((NI32) 3)));
+	res = Dl_25152276_((*pattern).h, (*pattern).e, buf, ((int) (bufSize)), ((int) (start)), ((NI32) 0), ((int*) (rawMatches)), (NI32)(((int) ((NI)(matchesLen_0 + ((NI) 1)))) * ((NI32) 3)));
 	{
 		NI colontmp_;
 		NI colontmp__2;

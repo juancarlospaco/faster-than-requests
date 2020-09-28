@@ -311,6 +311,12 @@ N_LIB_PRIVATE N_NIMCALL(NI64, inSeconds__df0d89cDnRIju9aB6p1W1qVA_2)(tyObject_Du
 	result = convert__2z1a0DRE31bT73xgVvBfQAtimes(((tyEnum_TimeUnit__52alPn04ElUUbqLeok9b3PQ) 3), ((tyEnum_TimeUnit__52alPn04ElUUbqLeok9b3PQ) 3), (NI64)(dur.seconds + ((NI64) (correctionX60gensym13740230_))));
 	return result;
 }
+N_LIB_PRIVATE N_NIMCALL(NI64, inNanoseconds__df0d89cDnRIju9aB6p1W1qVA_3)(tyObject_Duration__lj9ar6Co3fgk6NgGnVaNpJw dur) {
+	NI64 result;
+	result = (NI64)0;
+	result = (NI64)((NI64)(dur.seconds * IL64(1000000000)) + ((NI64) (dur.nanosecond)));
+	return result;
+}
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_timesInit000)(void) {
 {
 

@@ -120,6 +120,7 @@ struct tyObject_CatchableError__qrLSDoe2oBoAqNtJ9badtnA {
 struct tyObject_IOError__iLZrPn9anoh9ad1MmO0RczFw {
   tyObject_CatchableError__qrLSDoe2oBoAqNtJ9badtnA Sup;
 };
+typedef NIM_CHAR tyArray__9c7JcrsJvpitDQ9bIKunTDDw[4];
 struct tyObject_StackTraceEntry__oLyohQ7O2XOvGnflOss8EA {
 NCSTRING procname;
 NI line;
@@ -630,6 +631,34 @@ NIM_BOOL* nimErr_;
 	LA1_: ;
 	}BeforeRet_: ;
 	return result;
+}
+N_LIB_PRIVATE N_NIMCALL(void, write__sUE4QZAKKkyvAlK4w9auCRA)(tyObject_StreamObj__THYguAi9bSgidczZ3ywEIMQ* s, NU8 x) {
+NIM_BOOL* nimErr_;
+{nimErr_ = nimErrorFlag();
+	writeData__4hIni0uSy3RpPUiO9aB3JUQ_2(s, ((void*) ((&x))), ((NI) 1));
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	}BeforeRet_: ;
+}
+N_LIB_PRIVATE N_NIMCALL(void, write__A7DgbFjNELBYSIGya4L5uQ)(tyObject_StreamObj__THYguAi9bSgidczZ3ywEIMQ* s, NU16 x) {
+NIM_BOOL* nimErr_;
+{nimErr_ = nimErrorFlag();
+	writeData__4hIni0uSy3RpPUiO9aB3JUQ_2(s, ((void*) ((&x))), ((NI) 2));
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	}BeforeRet_: ;
+}
+N_LIB_PRIVATE N_NIMCALL(void, write__5r0HK3Eg6DLs9bTfaNiC7dw)(tyObject_StreamObj__THYguAi9bSgidczZ3ywEIMQ* s, NIM_CHAR x) {
+NIM_BOOL* nimErr_;
+{nimErr_ = nimErrorFlag();
+	writeData__4hIni0uSy3RpPUiO9aB3JUQ_2(s, ((void*) ((&x))), ((NI) 1));
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	}BeforeRet_: ;
+}
+N_LIB_PRIVATE N_NIMCALL(void, write__LPd9bx8Gr9aAp0ZBtVsZgOVw)(tyObject_StreamObj__THYguAi9bSgidczZ3ywEIMQ* s, tyArray__9c7JcrsJvpitDQ9bIKunTDDw x) {
+NIM_BOOL* nimErr_;
+{nimErr_ = nimErrorFlag();
+	writeData__4hIni0uSy3RpPUiO9aB3JUQ_2(s, ((void*) (x)), ((NI) 4));
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	}BeforeRet_: ;
 }
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_streamsDatInit000)(void) {
 static TNimNode* TM__Ue7tnBcsL67VCiRfvt8q0A_2_10[10];
