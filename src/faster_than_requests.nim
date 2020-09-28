@@ -1,4 +1,6 @@
-import httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, sequtils, db_sqlite, re, uri, strtabs, algorithm, pegs, nimpy
+import
+  httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, ws,
+  sequtils, db_sqlite, re, uri, strtabs, algorithm, pegs, asyncdispatch, nimpy
 
 when defined(windows) and not defined(amd64): {.warning: "64Bit is required".}
 when defined(windows) and not defined(gcc):   {.warning: "GCC for Windows is required".}
@@ -471,3 +473,26 @@ proc scraper7*(url: string, css_selector: string, user_agent: string = defUserAg
   findCssImpl(temp[], cssSelector)
   for item in temp[]: result.add $item
   dealloc temp
+
+proc websocket_ping*(url: string; data: string = ""; hangup: bool = false): string {.exportpy.} =
+  assert url.len > 0, "url must not be empty string"
+  result = waitFor (proc (url, data: string; hangup: bool): Future[string] {.async, inline.} =
+    let soquetito = create(WebSocket, sizeof WebSocket)
+    soquetito[] = await newWebSocket(url)
+    echo "WebSocket ", soquetito[].readyState
+    await soquetito[].send(data, Opcode.Ping)
+    result = await(soquetito[].receivePacket())[1]
+    if hangup: soquetito[].hangup() else: soquetito[].close()
+    dealloc soquetito)(url, data, hangup)
+
+proc websocket_send*(url: string; data: string; is_text: bool = true; hangup: bool = false): string {.exportpy.} =
+  assert url.len > 0, "url must not be empty string"
+  assert data.len > 0, "data must not be empty string"
+  result = waitFor (proc (url, data: string; is_text: bool; hangup: bool): Future[string] {.async, inline.} =
+    let soquetito = create(WebSocket, sizeof WebSocket)
+    soquetito[] = await newWebSocket(url)
+    echo "WebSocket ", soquetito[].readyState
+    await soquetito[].send(data, (if is_text: Opcode.Text else: Opcode.Binary))
+    result = await(soquetito[].receivePacket())[1]
+    if hangup: soquetito[].hangup() else: soquetito[].close()
+    dealloc soquetito)(url, data, is_text, hangup)

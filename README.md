@@ -17,16 +17,16 @@
 
 <img src="http://feeds.feedburner.com/RecentCommitsToFaster-than-requestsmaster.1.gif" title="Recent Commits to Faster Than Requests" width="99%" height="75px">
 
-| Library                       | Speed    | Files | LOC  | Dependencies          | Developers | Multi-Threaded Web Scraper Built-in |
+| Library                       | Speed    | Files | LOC  | Dependencies          | Developers | WebSockets | Multi-Threaded Web Scraper Built-in |
 |-------------------------------|----------|-------|------|-----------------------|------------|-------------------------------------|
-| PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        | :negative_squared_cross_mark:       |
-| Requests                      | `15.58`  | >20   | 2558 | >=7                   | >527       | :negative_squared_cross_mark:       |
-| Requests (cached object)      |  `5.50`  | >20   | 2558 | >=7                   | >527       | :negative_squared_cross_mark:       |
-| Urllib                        |  `4.00`  | ???   | 1200 | 0 (std lib)           | ???        | :negative_squared_cross_mark:       |
-| Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | :negative_squared_cross_mark:       |
-| PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       |
-| PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       |
-| Faster_than_requests          |  `0.40`  | 1     | 99   | 0                     | 1          | :heavy_check_mark: 7, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
+| PyWGET                        | `152.39` | 1     | 338  | Wget                  | >17        | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
+| Requests                      | `15.58`  | >20   | 2558 | >=7                   | >527       | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
+| Requests (cached object)      |  `5.50`  | >20   | 2558 | >=7                   | >527       | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
+| Urllib                        |  `4.00`  | ???   | 1200 | 0 (std lib)           | ???        | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
+| Urllib3                       |  `3.55`  | >40   | 5242 | 0 (No SSL), >=5 (SSL) | >188       | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
+| PyCurl                        |  `0.75`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
+| PyCurl (no SSL)               |  `0.68`  | >15   | 5932 | Curl, LibCurl         | >50        | :negative_squared_cross_mark:       | :negative_squared_cross_mark: |
+| Faster_than_requests          |  `0.40`  | 1     | 999  | 0                     | 1          | :heavy_check_mark: | :heavy_check_mark: 7, [One-Liner](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/multithread_web_scraper.py#L2) |
 
 <details>
 
@@ -53,6 +53,7 @@ requests.scraper(["http://foo.io", "http://bar.io"], threads=True)          # Mu
 requests.scraper5(["http://foo.io"], sqlite_file_path="database.db")        # URL-to-SQLite Web Scraper
 requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Regex-powered Web Scraper
 requests.scraper7("http://python.org", "body > div.someclass a#someid"])    # CSS Selector Web Scraper
+requests.websocket_send("ws://echo.websocket.org", "data here")             # WebSockets Binary/Text
 ```
 
 # Table Of Contents
@@ -68,7 +69,7 @@ requests.scraper7("http://python.org", "body > div.someclass a#someid"])    # CS
 | [download3()](#download3) | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) | [multipartdata2str()](#multipartdata2str) |
 | [datauri()](#datauri)   | [urlparse()](#urlparse)     | [urlencode()](#urlencode)     | [urldecode()](#urldecode) |
 | [encodequery()](#encodequery) | [encodexml()](#encodexml) | [debugs()](#debugs)       | [minifyhtml()](#minifyhtml) |
-| [How to set DEBUG mode](#how-to-set-debug-mode) |     |                               |                           |
+| [How to set DEBUG mode](#how-to-set-debug-mode) | [websocket_send()](#websocket_send) | [websocket_ping()](#websocket_ping) | |
 | [How to Install](#install) | [How to Windows](#windows) | [FAQ](#faq) | [Get Help](https://github.com/juancarlospaco/faster-than-requests/issues/new/choose) |
 | [PyPI](https://pypi.org/project/faster-than-requests) | [GitHub Actions / CI](https://github.com/juancarlospaco/faster-than-requests/actions?query=workflow%3APYTHON) | [Examples](https://github.com/juancarlospaco/faster-than-requests/tree/master/examples) | [Sponsors](#sponsors) |
 
@@ -567,6 +568,53 @@ More examples:
 https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/web_scraper_via_css_selectors.py
 
 **Returns:** Scraped Webs.
+
+</details>
+
+
+## websocket_ping()
+<details>
+
+**Description:**
+WebSocket Ping.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string, example `"ws://echo.websocket.org"`.
+- `data` data to send, string type, optional, can be empty string, default is empty string, example `""`.
+- `hangup` Close the Socket without sending a close packet, optional, default is `False`, not sending close packet can be faster.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.websocket_ping("ws://echo.websocket.org")
+```
+
+**Returns:** Response, `string` type, can be empty string.
+
+</details>
+
+
+## websocket_send()
+<details>
+
+**Description:**
+WebSocket send data, binary or text.
+
+**Arguments:**
+- `url` the remote URL, string type, required, must not be empty string, example `"ws://echo.websocket.org"`.
+- `data` data to send, string type, optional, can be empty string, default is empty string, example `""`.
+- `is_text` if `True` data is sent as Text else as Binary, optional, default is `False`.
+- `hangup` Close the Socket without sending a close packet, optional, default is `False`, not sending close packet can be faster.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.websocket_send("ws://echo.websocket.org", "data here")
+```
+
+**Returns:** Response, `string` type.
 
 </details>
 
