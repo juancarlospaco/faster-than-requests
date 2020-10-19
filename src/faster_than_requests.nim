@@ -2,12 +2,11 @@ import
   httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, ws,
   sequtils, db_sqlite, re, uri, strtabs, algorithm, pegs, asyncdispatch, nimpy
 
-when defined(windows) and not defined(amd64): {.warning: "64Bit is required".}
-when defined(windows) and not defined(gcc):   {.warning: "GCC for Windows is required".}
 
 template clientify(userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string; timeout: int; http_headers: openArray[tuple[key: string, val: string]]): HttpClient =
   newHttpClient(userAgent = userAgent, maxRedirects = maxRedirects, headers = newHttpHeaders(http_headers),
     proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil), timeout = timeout)
+
 
 template response2table(r: Response): Table[string, string] =
   toTable({"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
@@ -41,7 +40,7 @@ proc delete*(url: string; user_agent: string = defUserAgent; max_redirects: int 
 
 proc head*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP HEAD an URL to dictionary. HEAD do NOT have body by definition. May NOT have contentLength sometimes.
-  let r = createU(Response, sizeOf Response)
+  let r = createU(Response)
   r[] = clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).head(url)
   result = {"content-type": r[].contentType, "status": r[].status, "version": r[].version,
     "content-length": try: $r[].contentLength except: "0", "headers": replace($r[].headers, " @[", " [")}.toTable
@@ -51,7 +50,7 @@ proc head*(url: string; user_agent: string = defUserAgent; max_redirects: int = 
 # ^ Basic HTTP Functions ########### V Extra HTTP Functions, go beyond requests
 
 
-let proxyUrl = createU(string, sizeOf string)
+let proxyUrl = createU(string)
 proxyUrl[] = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY")
 var client = newHttpClient(timeout = getEnv("REQUESTS_TIMEOUT", "-1").parseInt, userAgent = getEnv("REQUESTS_USERAGENT", defUserAgent),
   proxy = (if unlikely(proxyUrl[].len > 1): newProxy(proxyUrl[], getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH")) else: nil),
@@ -69,7 +68,7 @@ proc multipartdata2str*(multipart_data: seq[tuple[name: string, content: string]
 
 
 proc urlparse*(url: string): array[9, string] {.exportpy.} =
-  let u = createU(Uri, sizeOf Uri)
+  let u = createU(Uri)
   u[] = uri.parseUri(url)
   result = [u[].scheme, u[].username, u[].password, u[].hostname, u[].port, u[].path, u[].query, u[].anchor, $u[].opaque]
   dealloc u
@@ -102,8 +101,8 @@ proc minifyhtml(html: string): string {.exportpy.} =
   html.strip.unindent.replace(re">\s+<", "> <")
 
 
-# proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.exportpy.} =
-#   uri.getDataUri(data, mime, encoding)
+proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.exportpy.} =
+  uri.getDataUri(data, mime, encoding)
 
 
 proc debugs*() {.discardable, exportpy.} =
@@ -122,7 +121,7 @@ if unlikely(getEnv("REQUESTS_DEBUG", "false").parseBool):
 
 proc tuples2json*(tuples: openArray[tuple[key: string, val: string]], pretty_print: bool = false): string {.exportpy.} =
   ## Convert Tuples to JSON Minified.
-  let temp = createU(JsonNode, sizeOf JsonNode)
+  let temp = createU(JsonNode)
   temp[] = %*{}
   if unlikely(pretty_print):
     for item in tuples: temp[].add(item[0], %item[1])
@@ -149,7 +148,7 @@ proc get2str2*(list_of_urls: openArray[string], threads: bool = false): seq[stri
 
 proc get2ndjson*(list_of_urls: openArray[string], ndjson_file_path: string) {.discardable, exportpy.} =
   ## HTTP GET body to NDJSON file from a list of URLs.
-  let temp = create(string, sizeOf string)
+  let temp = create(string)
   for url in list_of_urls:
     temp[].toUgly client.getContent(url).parseJson
     temp[].add "\n"
@@ -211,9 +210,9 @@ proc download2*(list_of_files: openArray[tuple[url: string, filename: string]], 
 
 proc download3*(list_of_files: openArray[tuple[url: string, filename: string]], delay: Positive = 1, tries: Positive = 9, backoff: Positive = 2, jitter: Positive = 2, verbose: bool = true) {.discardable, exportpy.} =
   ## Download a list of files ASAP, but if fails, retry again and again.
-  let mdelay = createU(int, sizeOf int)
+  let mdelay = createU(int)
   mdelay[] = delay
-  let mtries = createU(int, sizeOf int)
+  let mtries = createU(int)
   mtries[] = tries
   while mtries[] > 1:
     try:
@@ -261,9 +260,9 @@ proc scraper2*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], ve
 
 
 proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], start_with: string = "", end_with: string = "", line_start: Natural = 0, line_end: Positive = 1, verbose: bool = true, case_insensitive: bool = true, deduplicate_urls: bool = false, delay: Natural = 0, header: seq[(string, string)] = @[("DNT", "1")], pre_replacements: seq[(string, string)] = @[], post_replacements: seq[(string, string)] = @[], timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, proxy_url: string = "", proxy_auth: string = ""): seq[seq[string]] {.exportpy.} =
-  let urls = createU(seq[string], sizeOf seq[string])
+  let urls = createU(seq[string])
   urls[] = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
-  let cliente = createU(HttpClient, sizeOf HttpClient)
+  let cliente = createU(HttpClient)
   cliente[] = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = (if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil), timeout = timeout, headers = newHttpHeaders(header))
   result = newSeq[seq[string]](urls[].len)
   for i, url in urls[]:
@@ -465,9 +464,9 @@ proc findCssImpl(node: var seq[XmlNode], cssSelector: string) {.noinline.} =
 
 proc scraper7*(url: string, css_selector: string, user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): seq[string] {.exportpy.} =
   assert url.len > 0, "url must not be empty string"
-  let client = create(HttpClient, sizeOf HttpClient)
+  let client = create(HttpClient)
   client[] = clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers)
-  var temp = create(seq[XmlNode], sizeOf seq[XmlNode])
+  var temp = create(seq[XmlNode])
   temp[] = @[htmlparser.parseHtml(client[].getContent(url))]
   dealloc client
   findCssImpl(temp[], cssSelector)
@@ -477,7 +476,7 @@ proc scraper7*(url: string, css_selector: string, user_agent: string = defUserAg
 proc websocket_ping*(url: string; data: string = ""; hangup: bool = false): string {.exportpy.} =
   assert url.len > 0, "url must not be empty string"
   result = waitFor (proc (url, data: string; hangup: bool): Future[string] {.async, inline.} =
-    let soquetito = create(WebSocket, sizeof WebSocket)
+    let soquetito = create(WebSocket)
     soquetito[] = await newWebSocket(url)
     echo "WebSocket ", soquetito[].readyState
     await soquetito[].send(data, Opcode.Ping)
@@ -489,7 +488,7 @@ proc websocket_send*(url: string; data: string; is_text: bool = true; hangup: bo
   assert url.len > 0, "url must not be empty string"
   assert data.len > 0, "data must not be empty string"
   result = waitFor (proc (url, data: string; is_text: bool; hangup: bool): Future[string] {.async, inline.} =
-    let soquetito = create(WebSocket, sizeof WebSocket)
+    let soquetito = create(WebSocket)
     soquetito[] = await newWebSocket(url)
     echo "WebSocket ", soquetito[].readyState
     await soquetito[].send(data, (if is_text: Opcode.Text else: Opcode.Binary))
