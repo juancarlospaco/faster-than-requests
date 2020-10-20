@@ -135,28 +135,40 @@ jobs:
         python.exe -c "print(__import__('${{ env.PACKAGE_NAME }}').__file__)"
 
 
+    - name: Clean out C (Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: rm -f dist/lin/*.c
+
+
+    - name: Clean out C (Mac)
+      if: runner.os == 'macOS'
+      shell: bash
+      run: rm -f dist/mac/*.c
+
+
+    - name: Clean out C (Windows)
+      if: runner.os == 'Windows'
+      shell: bash
+      run: rm -f dist/win/*.c
+
+
     - name: Compile to C (Linux)
       if: runner.os == 'Linux'
       shell: bash
-      run: |
-        rm -f dist/lin/*.c
-        nim ${{ env.NIM_COMMON_OPTIONS }} --nimcache:dist/lin --tlsEmulation:off ${{ env.MAIN_MODULE }}
+      run: nim ${{ env.NIM_COMMON_OPTIONS }} --nimcache:dist/lin --tlsEmulation:off ${{ env.MAIN_MODULE }}
 
 
     - name: Compile to C (Mac)
       if: runner.os == 'macOS'
       shell: bash
-      run: |
-        rm -f dist/mac/*.c
-        nim ${{ env.NIM_COMMON_OPTIONS }} --nimcache:dist/mac --tlsEmulation:off ${{ env.MAIN_MODULE }}
+      run: nim ${{ env.NIM_COMMON_OPTIONS }} --nimcache:dist/mac --tlsEmulation:off ${{ env.MAIN_MODULE }}
 
 
     - name: Compile to C (Windows)
       if: runner.os == 'Windows'
       shell: bash
-      run: |
-        rm -f dist/win/*.c
-        nim ${{ env.NIM_COMMON_OPTIONS }} --nimcache:dist/win --tlsEmulation:on ${{ env.MAIN_MODULE }}
+      run: nim ${{ env.NIM_COMMON_OPTIONS }} --nimcache:dist/win --tlsEmulation:on ${{ env.MAIN_MODULE }}
 
 
     - name: Clean out
