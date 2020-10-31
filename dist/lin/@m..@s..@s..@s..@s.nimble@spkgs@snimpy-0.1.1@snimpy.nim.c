@@ -82,6 +82,7 @@ typedef struct tyTuple__UV3llMMYFckfui8YMBuUZA tyTuple__UV3llMMYFckfui8YMBuUZA;
 typedef struct tyObject_Table__Ji6x6JQ0gVMaFr8AIk18Ug tyObject_Table__Ji6x6JQ0gVMaFr8AIk18Ug;
 typedef struct tySequence__SFipDZIkFtPcrLs0AGBBjQ tySequence__SFipDZIkFtPcrLs0AGBBjQ;
 typedef struct tyTuple__8ZxhPt1NwfElsJs8zUSV9bg tyTuple__8ZxhPt1NwfElsJs8zUSV9bg;
+typedef struct tyTuple__LZ39cvVVRqEmmKgEGIo5IKA tyTuple__LZ39cvVVRqEmmKgEGIo5IKA;
 typedef struct tySequence__sM4lkSb7zS6F7OVMvW9cffQ tySequence__sM4lkSb7zS6F7OVMvW9cffQ;
 typedef struct tySequence__AjV3cEUgs0Y9c7dCt9aItdIA tySequence__AjV3cEUgs0Y9c7dCt9aItdIA;
 typedef struct tyObject_XmlNodeObj__X79bE2j9a1V7tizbx9blALudQ tyObject_XmlNodeObj__X79bE2j9a1V7tizbx9blALudQ;
@@ -501,6 +502,17 @@ struct tyTuple__8ZxhPt1NwfElsJs8zUSV9bg {
 NI Field0;
 NimStringDesc* Field1;
 NimStringDesc* Field2;
+};
+struct tyTuple__LZ39cvVVRqEmmKgEGIo5IKA {
+NimStringDesc* Field0;
+NimStringDesc* Field1;
+NimStringDesc* Field2;
+NimStringDesc* Field3;
+NimStringDesc* Field4;
+NimStringDesc* Field5;
+NimStringDesc* Field6;
+NimStringDesc* Field7;
+NimStringDesc* Field8;
 };
 struct tyObject_StackTraceEntry__oLyohQ7O2XOvGnflOss8EA {
 NCSTRING procname;
@@ -2165,34 +2177,95 @@ NIM_BOOL* nimErr_;
 	LA3_: ;
 	}BeforeRet_: ;
 }
-N_LIB_PRIVATE N_NIMCALL(void*, nimArrToPy__QDmD9aT9b4YNs9aDHJ7tXGoEA)(NimStringDesc** s, NI sLen_0) {
+N_LIB_PRIVATE N_NIMCALL(void*, nimTupleToPy__HNxdTJx9a7Hh9cwGprSQMesw)(tyTuple__LZ39cvVVRqEmmKgEGIo5IKA* o) {
 	void* result;
-	NI sz;
+	NI i;
+	void* T1_;
+	int T2_;
+	void* T3_;
+	int T4_;
+	void* T5_;
+	int T6_;
+	void* T7_;
+	int T8_;
+	void* T9_;
+	int T10_;
+	void* T11_;
+	int T12_;
+	void* T13_;
+	int T14_;
+	void* T15_;
+	int T16_;
+	void* T17_;
+	int T18_;
 NIM_BOOL* nimErr_;
 {nimErr_ = nimErrorFlag();
 	result = (void*)0;
-	sz = sLen_0;
-	result = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyList_New(sz);
-	{
-		NI i;
-		NI i_2;
-		i = (NI)0;
-		i_2 = ((NI) 0);
-		{
-			while (1) {
-				void* o;
-				int T4_;
-				if (!(i_2 < sz)) goto LA3;
-				i = i_2;
-				o = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy(s[i]);
-				if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
-				T4_ = (int)0;
-				T4_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyList_SetItem(result, i, o);
-				(void)(T4_);
-				i_2 += ((NI) 1);
-			} LA3: ;
-		}
-	}
+	result = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_New(((NI) 9));
+	i = ((NI) 0);
+	T1_ = (void*)0;
+	T1_ = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy((*o).Field0);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	T2_ = (int)0;
+	T2_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_SetItem(result, i, T1_);
+	(void)(T2_);
+	i += ((NI) 1);
+	T3_ = (void*)0;
+	T3_ = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy((*o).Field1);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	T4_ = (int)0;
+	T4_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_SetItem(result, i, T3_);
+	(void)(T4_);
+	i += ((NI) 1);
+	T5_ = (void*)0;
+	T5_ = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy((*o).Field2);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	T6_ = (int)0;
+	T6_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_SetItem(result, i, T5_);
+	(void)(T6_);
+	i += ((NI) 1);
+	T7_ = (void*)0;
+	T7_ = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy((*o).Field3);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	T8_ = (int)0;
+	T8_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_SetItem(result, i, T7_);
+	(void)(T8_);
+	i += ((NI) 1);
+	T9_ = (void*)0;
+	T9_ = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy((*o).Field4);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	T10_ = (int)0;
+	T10_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_SetItem(result, i, T9_);
+	(void)(T10_);
+	i += ((NI) 1);
+	T11_ = (void*)0;
+	T11_ = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy((*o).Field5);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	T12_ = (int)0;
+	T12_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_SetItem(result, i, T11_);
+	(void)(T12_);
+	i += ((NI) 1);
+	T13_ = (void*)0;
+	T13_ = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy((*o).Field6);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	T14_ = (int)0;
+	T14_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_SetItem(result, i, T13_);
+	(void)(T14_);
+	i += ((NI) 1);
+	T15_ = (void*)0;
+	T15_ = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy((*o).Field7);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	T16_ = (int)0;
+	T16_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_SetItem(result, i, T15_);
+	(void)(T16_);
+	i += ((NI) 1);
+	T17_ = (void*)0;
+	T17_ = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy((*o).Field8);
+	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+	T18_ = (int)0;
+	T18_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyTuple_SetItem(result, i, T17_);
+	(void)(T18_);
+	i += ((NI) 1);
 	}BeforeRet_: ;
 	return result;
 }
@@ -2417,6 +2490,37 @@ NIM_BOOL* nimErr_;
 	}
 	LA3_: ;
 	}BeforeRet_: ;
+}
+N_LIB_PRIVATE N_NIMCALL(void*, nimArrToPy__QDmD9aT9b4YNs9aDHJ7tXGoEA)(NimStringDesc** s, NI sLen_0) {
+	void* result;
+	NI sz;
+NIM_BOOL* nimErr_;
+{nimErr_ = nimErrorFlag();
+	result = (void*)0;
+	sz = sLen_0;
+	result = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyList_New(sz);
+	{
+		NI i;
+		NI i_2;
+		i = (NI)0;
+		i_2 = ((NI) 0);
+		{
+			while (1) {
+				void* o;
+				int T4_;
+				if (!(i_2 < sz)) goto LA3;
+				i = i_2;
+				o = nimValueToPy__JCDkP8wgVvgrZH49cYEzgDAnimpy(s[i]);
+				if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
+				T4_ = (int)0;
+				T4_ = (*pyLib__nxKBiAukGMNwnUq9bpn9adyw).PyList_SetItem(result, i, o);
+				(void)(T4_);
+				i_2 += ((NI) 1);
+			} LA3: ;
+		}
+	}
+	}BeforeRet_: ;
+	return result;
 }
 static N_INLINE(void*, nimValueToPy__zXY4sY8ktz8SKCRtLhP9bkwnimpy)(tyObject_Table__Ji6x6JQ0gVMaFr8AIk18Ug v) {
 	void* result;

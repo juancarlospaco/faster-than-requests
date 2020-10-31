@@ -61,6 +61,7 @@ typedef struct tyObject_PyMethodDef__9aWi1PsmvCuTKIYDHHnhfcw tyObject_PyMethodDe
 typedef struct tyObject_SocketImpl__aIhANOOoETolVz9cccNO9cRQ tyObject_SocketImpl__aIhANOOoETolVz9cccNO9cRQ;
 typedef struct tyObject_Uri__j49bukNPrq747O1GRd4Ng9bQ tyObject_Uri__j49bukNPrq747O1GRd4Ng9bQ;
 typedef struct tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w;
+typedef struct tyTuple__LZ39cvVVRqEmmKgEGIo5IKA tyTuple__LZ39cvVVRqEmmKgEGIo5IKA;
 typedef struct tyObject_RegexDesc__jxMAPyr9aBYX9b0g7iZ2E8zw tyObject_RegexDesc__jxMAPyr9aBYX9b0g7iZ2E8zw;
 typedef struct tyObject_JsonNodeObj__df9bshXB7C9cTiWPIOtX3j1Q tyObject_JsonNodeObj__df9bshXB7C9cTiWPIOtX3j1Q;
 typedef struct tyObject_OrderedTable__ZZvSdVkA2s2sIyifu4cpkg tyObject_OrderedTable__ZZvSdVkA2s2sIyifu4cpkg;
@@ -369,13 +370,24 @@ tyObject_MonoTime__FEvFMlkqJiSSGVO6HgTv8w lastProgressReport;
 tyObject_StreamObj__THYguAi9bSgidczZ3ywEIMQ* bodyStream;
 NIM_BOOL getBody;
 };
-typedef NimStringDesc* tyArray__17w6ns39bmjfAZ429aQpCFUA[9];
+struct tyTuple__LZ39cvVVRqEmmKgEGIo5IKA {
+NimStringDesc* Field0;
+NimStringDesc* Field1;
+NimStringDesc* Field2;
+NimStringDesc* Field3;
+NimStringDesc* Field4;
+NimStringDesc* Field5;
+NimStringDesc* Field6;
+NimStringDesc* Field7;
+NimStringDesc* Field8;
+};
 typedef NCSTRING tyArray__jieoU9cfWs1Krn17l9aYsDyg[2];
 typedef NCSTRING tyArray__iRfL3zsdcaf12aAZXBSJ6w[3];
 typedef NU8 tySet_tyChar__nmiMWKVIe46vacnhAFrQvw[32];
 typedef NU8 tySet_tyEnum_RegexFlag__gA189bEOtGhLt2cCHGW4ywg;
 typedef NCSTRING tyArray__z9ac6Ez5VSEHe9bC2NMwuc7Q[1];
 typedef NimStringDesc* tyArray__nHXaesL0DJZHyVS07ARPRA[1];
+typedef NimStringDesc* tyArray__17w6ns39bmjfAZ429aQpCFUA[9];
 typedef N_CLOSURE_PTR(void, TM__wDGC8Xtv5r3PSmcDG9aTygg_75) (NI64 total, NI64 progress, NI64 speed, void* ClE_0);
 typedef NU8 tyEnum_JsonNodeKind__RUngo7nCHe6O8aBGIcrhtg;
 struct tyObject_OrderedTable__ZZvSdVkA2s2sIyifu4cpkg {
@@ -835,9 +847,9 @@ N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, multipartdata2str__d3E5ySQLiBzUDDsaVglCD
 N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, dollar___ZV15HkD1bRHmQwnnvoWrNg)(tyObject_MultipartDatacolonObjectType___pa59bn7R9cBmjUm9clF5koL7g* data);
 N_LIB_PRIVATE N_CDECL(void*, urlparsePy_wrapper__HpzkcrkYSyX1zq09avbAJXw)(void* selfX60gensym166_, void* args, void* kwargs);
 N_LIB_PRIVATE N_NIMCALL(void*, noinline__VZ8sfrffg8NcNsSos89czMg_9)(void* args, void* kwargs);
-static N_INLINE(void*, nimValueToPy__jDCXRras0hk6cQVAHyBomgnimpy)(tyArray__17w6ns39bmjfAZ429aQpCFUA v);
-N_LIB_PRIVATE N_NIMCALL(void*, nimArrToPy__QDmD9aT9b4YNs9aDHJ7tXGoEA)(NimStringDesc** s, NI sLen_0);
-N_LIB_PRIVATE N_NIMCALL(void, urlparse__i0GT7MFjhCX4SdzkL5LuKA)(NimStringDesc* url, tyArray__17w6ns39bmjfAZ429aQpCFUA Result);
+static N_INLINE(void*, nimValueToPy__qyG4Ul3l6CqS6gKpnd31Dwnimpy)(tyTuple__LZ39cvVVRqEmmKgEGIo5IKA* v);
+N_LIB_PRIVATE N_NIMCALL(void*, nimTupleToPy__HNxdTJx9a7Hh9cwGprSQMesw)(tyTuple__LZ39cvVVRqEmmKgEGIo5IKA* o);
+N_LIB_PRIVATE N_NIMCALL(void, urlparse__rpewOwM8FSZsN0kVkuZjyQ)(NimStringDesc* url, tyTuple__LZ39cvVVRqEmmKgEGIo5IKA* Result);
 static N_INLINE(tyObject_Uri__j49bukNPrq747O1GRd4Ng9bQ*, createU__KboTCwYPzGgNgHPi4X9a9abQsystem)(NI size);
 N_LIB_PRIVATE N_NIMCALL(void, parseUri__rbZTAh57otUDsvMlWgTQog)(NimStringDesc* uri, tyObject_Uri__j49bukNPrq747O1GRd4Ng9bQ* Result);
 N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, nimBoolToStr)(NIM_BOOL x);
@@ -899,6 +911,7 @@ N_LIB_PRIVATE N_CDECL(void*, get2str2Py_wrapper__rTMWC0vghiZDgP0mI7i9bXA)(void* 
 N_LIB_PRIVATE N_NIMCALL(void*, noinline__VZ8sfrffg8NcNsSos89czMg_19)(void* args, void* kwargs);
 N_LIB_PRIVATE N_NIMCALL(void, parseArg__9b6ttEhK1WRqorza3JVW9cJw)(void* argTuple, void* kwargsDict, NI argIdx, NCSTRING argName, tySequence__sM4lkSb7zS6F7OVMvW9cffQ** result);
 static N_INLINE(void*, nimValueToPy__D3zjW9cYtGQuRuwL28IPiignimpy)(tySequence__sM4lkSb7zS6F7OVMvW9cffQ* v);
+N_LIB_PRIVATE N_NIMCALL(void*, nimArrToPy__QDmD9aT9b4YNs9aDHJ7tXGoEA)(NimStringDesc** s, NI sLen_0);
 N_LIB_PRIVATE N_NIMCALL(tySequence__sM4lkSb7zS6F7OVMvW9cffQ*, get2str2__z6EcWj9bT9a4zqPmfEQAEvVw)(NimStringDesc** list_of_urls, NI list_of_urlsLen_0, NIM_BOOL threads);
 N_LIB_PRIVATE N_NIMCALL(tySequence__sM4lkSb7zS6F7OVMvW9cffQ*, newSeq__q7W9bxIQ7BrFLngLO9cYelsA)(NI len);
 N_LIB_PRIVATE N_NIMCALL(NimStringDesc*, roof___ygtJ2etAIR9anioqk0X9cZYw)(tyObject_FlowVarObj__pNu0cief5ujI1ROVhZYW9cA* fv);
@@ -1264,7 +1277,7 @@ STRING_LITERAL(TM__wDGC8Xtv5r3PSmcDG9aTygg_65, "debugs", 6);
 STRING_LITERAL(TM__wDGC8Xtv5r3PSmcDG9aTygg_67, "{\012  \"nimVersion\": \"1.4.0\",\012  \"httpCore\": \"Nim httpclient/1.4.0\""
 ",\012  \"cpu\": \"amd64\",\012  \"os\": \"linux\",\012  \"debug\": false,\012  \"endian"
 "\": \"littleEndian\",\012  \"release\": true,\012  \"danger\": true,\012  \"Compi"
-"leDate\": \"2020-10-19\",\012  \"CompileTime\": \"15:10:50\",\012  \"tempDir\":"
+"leDate\": \"2020-10-31\",\012  \"CompileTime\": \"18:27:36\",\012  \"tempDir\":"
 " \"/tmp/\",\012  \"ssl\": true,\012  \"currentCompilerExe\": \"/home/runner/w"
 "ork/faster-than-requests/faster-than-requests/Nim/bin/nim\",\012  \"i"
 "nt.high\": 9223372036854775807\012}", 414);
@@ -3950,12 +3963,12 @@ N_LIB_PRIVATE N_CDECL(void*, multipartdata2strPy_wrapper__9a0BbLS9cLZTGOpmULPMpP
 	result = pX60gensym160_(args, kwargs);
 	return result;
 }
-static N_INLINE(void*, nimValueToPy__jDCXRras0hk6cQVAHyBomgnimpy)(tyArray__17w6ns39bmjfAZ429aQpCFUA v) {
+static N_INLINE(void*, nimValueToPy__qyG4Ul3l6CqS6gKpnd31Dwnimpy)(tyTuple__LZ39cvVVRqEmmKgEGIo5IKA* v) {
 	void* result;
 NIM_BOOL* nimErr_;
 {nimErr_ = nimErrorFlag();
 	result = (void*)0;
-	result = nimArrToPy__QDmD9aT9b4YNs9aDHJ7tXGoEA(v, 9);
+	result = nimTupleToPy__HNxdTJx9a7Hh9cwGprSQMesw(v);
 	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
 	}BeforeRet_: ;
 	return result;
@@ -3969,25 +3982,43 @@ static N_INLINE(tyObject_Uri__j49bukNPrq747O1GRd4Ng9bQ*, createU__KboTCwYPzGgNgH
 	result = ((tyObject_Uri__j49bukNPrq747O1GRd4Ng9bQ*) (T1_));
 	return result;
 }
-N_LIB_PRIVATE N_NIMCALL(void, urlparse__i0GT7MFjhCX4SdzkL5LuKA)(NimStringDesc* url, tyArray__17w6ns39bmjfAZ429aQpCFUA Result) {
+N_LIB_PRIVATE N_NIMCALL(void, urlparse__rpewOwM8FSZsN0kVkuZjyQ)(NimStringDesc* url, tyTuple__LZ39cvVVRqEmmKgEGIo5IKA* Result) {
 	tyObject_Uri__j49bukNPrq747O1GRd4Ng9bQ* u;
+	NimStringDesc* colontmp_;
+	NimStringDesc* colontmp__2;
+	NimStringDesc* colontmp__3;
+	NimStringDesc* colontmp__4;
+	NimStringDesc* colontmp__5;
+	NimStringDesc* colontmp__6;
+	NimStringDesc* colontmp__7;
+	NimStringDesc* colontmp__8;
+	NimStringDesc* colontmp__9;
 	u = createU__KboTCwYPzGgNgHPi4X9a9abQsystem(((NI) 1));
 	parseUri__rbZTAh57otUDsvMlWgTQog(url, (&(*u)));
-	Result[0] = copyString((*u).scheme);
-	Result[1] = copyString((*u).username);
-	Result[2] = copyString((*u).password);
-	Result[3] = copyString((*u).hostname);
-	Result[4] = copyString((*u).port);
-	Result[5] = copyString((*u).path);
-	Result[6] = copyString((*u).query);
-	Result[7] = copyString((*u).anchor);
-	Result[8] = nimBoolToStr((*u).opaque);
+	colontmp_ = copyString((*u).scheme);
+	colontmp__2 = copyString((*u).username);
+	colontmp__3 = copyString((*u).password);
+	colontmp__4 = copyString((*u).hostname);
+	colontmp__5 = copyString((*u).port);
+	colontmp__6 = copyString((*u).path);
+	colontmp__7 = copyString((*u).query);
+	colontmp__8 = copyString((*u).anchor);
+	colontmp__9 = nimBoolToStr((*u).opaque);
+	(*Result).Field0 = copyString(colontmp_);
+	(*Result).Field1 = copyString(colontmp__2);
+	(*Result).Field2 = copyString(colontmp__3);
+	(*Result).Field3 = copyString(colontmp__4);
+	(*Result).Field4 = copyString(colontmp__5);
+	(*Result).Field5 = copyString(colontmp__6);
+	(*Result).Field6 = copyString(colontmp__7);
+	(*Result).Field7 = copyString(colontmp__8);
+	(*Result).Field8 = copyString(colontmp__9);
 	deallocImpl__SAtZpVrJ3o5FJvSdLQe9auA(((void*) (u)));
 }
 N_LIB_PRIVATE N_NIMCALL(void*, noinline__VZ8sfrffg8NcNsSos89czMg_9)(void* args, void* kwargs) {
 	void* result;
 	NimStringDesc* arg0url;
-	tyArray__17w6ns39bmjfAZ429aQpCFUA T7_;
+	tyTuple__LZ39cvVVRqEmmKgEGIo5IKA T7_;
 	void* T8_;
 NIM_BOOL* nimErr_;
 {nimErr_ = nimErrorFlag();
@@ -4005,10 +4036,10 @@ NIM_BOOL* nimErr_;
 	arg0url = (NimStringDesc*)0;
 	parseArg__icg9aGIbXA4DEIGHwq7rmAA(args, kwargs, ((NI) 0), "url", (&arg0url));
 	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
-	nimZeroMem((void*)T7_, sizeof(tyArray__17w6ns39bmjfAZ429aQpCFUA));
-	urlparse__i0GT7MFjhCX4SdzkL5LuKA(arg0url, T7_);
+	nimZeroMem((void*)(&T7_), sizeof(tyTuple__LZ39cvVVRqEmmKgEGIo5IKA));
+	urlparse__rpewOwM8FSZsN0kVkuZjyQ(arg0url, (&T7_));
 	T8_ = (void*)0;
-	T8_ = nimValueToPy__jDCXRras0hk6cQVAHyBomgnimpy(T7_);
+	T8_ = nimValueToPy__qyG4Ul3l6CqS6gKpnd31Dwnimpy((&T7_));
 	if (NIM_UNLIKELY(*nimErr_)) goto LA6_;
 	result = T8_;
 	if (NIM_UNLIKELY(*nimErr_)) {
