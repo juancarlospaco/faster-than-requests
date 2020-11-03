@@ -1,6 +1,6 @@
 import
-  httpclient, json, tables, strutils, os, threadpool, htmlparser, xmltree, ws,
-  sequtils, db_sqlite, re, uri, strtabs, algorithm, pegs, asyncdispatch, nimpy
+  algorithm, asyncdispatch, db_sqlite, htmlparser, httpclient, json, nimpy, os,
+  pegs, re, strtabs, strutils, tables, threadpool, uri, ws, sequtils, xmltree
 
 
 template clientify(userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string; timeout: int; http_headers: openArray[tuple[key: string, val: string]]): HttpClient =
