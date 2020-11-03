@@ -57,23 +57,23 @@ STRING_LITERAL(TM__ZpuQ9cIusnUOv1iEoFq9arZw_7, "libsqlite3.so(|.0)", 18);
 
 /* section: NIM_merge_VARS */
 static void* TM__ZpuQ9cIusnUOv1iEoFq9arZw_2;
-tyProc__MGvm2GDOLe9cOGVrF2xiL8g Dl_25286893_;
-tyProc__9c803Jlmvw39cDHXPnE9c9acPA Dl_25286906_;
-tyProc__M35TeFGPs7TPKADYDaEq4Q Dl_25286921_;
-tyProc__1jkYBsuhXdCj7QieWqeYyQ Dl_25287037_;
-tyProc__1jkYBsuhXdCj7QieWqeYyQ Dl_25287079_;
-tyProc__gjdebP9bh9a6kXA5fmIpsLzQ Dl_25286787_;
+tyProc__MGvm2GDOLe9cOGVrF2xiL8g Dl_18182893_;
+tyProc__9c803Jlmvw39cDHXPnE9c9acPA Dl_18182906_;
+tyProc__M35TeFGPs7TPKADYDaEq4Q Dl_18182921_;
+tyProc__1jkYBsuhXdCj7QieWqeYyQ Dl_18183037_;
+tyProc__1jkYBsuhXdCj7QieWqeYyQ Dl_18183079_;
+tyProc__gjdebP9bh9a6kXA5fmIpsLzQ Dl_18182787_;
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_sqlite3DatInit000)(void) {
 
 /* section: NIM_merge_DYNLIB_INIT */
 if (!((TM__ZpuQ9cIusnUOv1iEoFq9arZw_2 = nimLoadLibrary(((NimStringDesc*) &TM__ZpuQ9cIusnUOv1iEoFq9arZw_4)))
 ||(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2 = nimLoadLibrary(((NimStringDesc*) &TM__ZpuQ9cIusnUOv1iEoFq9arZw_6)))
 )) nimLoadLibraryError(((NimStringDesc*) &TM__ZpuQ9cIusnUOv1iEoFq9arZw_7));
-	Dl_25286893_ = (tyProc__MGvm2GDOLe9cOGVrF2xiL8g) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_open");
-	Dl_25286906_ = (tyProc__9c803Jlmvw39cDHXPnE9c9acPA) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_errmsg");
-	Dl_25286921_ = (tyProc__M35TeFGPs7TPKADYDaEq4Q) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_prepare_v2");
-	Dl_25287037_ = (tyProc__1jkYBsuhXdCj7QieWqeYyQ) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_step");
-	Dl_25287079_ = (tyProc__1jkYBsuhXdCj7QieWqeYyQ) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_finalize");
-	Dl_25286787_ = (tyProc__gjdebP9bh9a6kXA5fmIpsLzQ) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_close");
+	Dl_18182893_ = (tyProc__MGvm2GDOLe9cOGVrF2xiL8g) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_open");
+	Dl_18182906_ = (tyProc__9c803Jlmvw39cDHXPnE9c9acPA) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_errmsg");
+	Dl_18182921_ = (tyProc__M35TeFGPs7TPKADYDaEq4Q) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_prepare_v2");
+	Dl_18183037_ = (tyProc__1jkYBsuhXdCj7QieWqeYyQ) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_step");
+	Dl_18183079_ = (tyProc__1jkYBsuhXdCj7QieWqeYyQ) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_finalize");
+	Dl_18182787_ = (tyProc__gjdebP9bh9a6kXA5fmIpsLzQ) nimGetProcAddr(TM__ZpuQ9cIusnUOv1iEoFq9arZw_2, "sqlite3_close");
 }
 

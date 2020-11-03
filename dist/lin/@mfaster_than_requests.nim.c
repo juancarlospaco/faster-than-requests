@@ -1120,47 +1120,47 @@ N_LIB_PRIVATE N_NIMCALL(void, stdlib_timesDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_timesInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_osDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_osInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_nativesocketsDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_setsDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_monotimesDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_opensslDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_opensslInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_netDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_netInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_uriDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_strtabsDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_streamsDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_tablesDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_httpcoreDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_heapqueueDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_dequesDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_asyncfuturesDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_asyncfuturesInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_asyncstreamsDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_monotimesDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_nativesocketsDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_setsDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_opensslDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_opensslInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_netDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_netInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_selectorsDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_asyncdispatchDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_asyncdispatchInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_sqlite3DatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_db_commonDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_streamsDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_lexbaseDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_parsexmlDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_strtabsDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_xmltreeDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_uriDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_httpcoreDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_asyncnetDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_asyncfileDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_httpclientDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_httpclientInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_lexbaseDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_parsejsonDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, stdlib_jsonDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_threadpoolDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_threadpoolInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_parsexmlDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_xmltreeDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, unknown_wsDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_sqlite3DatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_db_commonDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_pcreDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_reDatInit000)(void);
-N_LIB_PRIVATE N_NIMCALL(void, stdlib_pegsDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, nimpy_py_typesDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, nimpy_py_libDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, nimpy_py_libInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, nimpy_nimpyDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_pegsDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_pcreDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_reDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_threadpoolDatInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, stdlib_threadpoolInit000)(void);
+N_LIB_PRIVATE N_NIMCALL(void, unknown_wsDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, faster_than_requestsDatInit000)(void);
 N_LIB_PRIVATE N_NIMCALL(void, NimMainModule)(void);
 
@@ -1277,7 +1277,7 @@ STRING_LITERAL(TM__wDGC8Xtv5r3PSmcDG9aTygg_65, "debugs", 6);
 STRING_LITERAL(TM__wDGC8Xtv5r3PSmcDG9aTygg_67, "{\012  \"nimVersion\": \"1.4.0\",\012  \"httpCore\": \"Nim httpclient/1.4.0\""
 ",\012  \"cpu\": \"amd64\",\012  \"os\": \"linux\",\012  \"debug\": false,\012  \"endian"
 "\": \"littleEndian\",\012  \"release\": true,\012  \"danger\": true,\012  \"Compi"
-"leDate\": \"2020-10-31\",\012  \"CompileTime\": \"18:27:36\",\012  \"tempDir\":"
+"leDate\": \"2020-11-03\",\012  \"CompileTime\": \"23:39:43\",\012  \"tempDir\":"
 " \"/tmp/\",\012  \"ssl\": true,\012  \"currentCompilerExe\": \"/home/runner/w"
 "ork/faster-than-requests/faster-than-requests/Nim/bin/nim\",\012  \"i"
 "nt.high\": 9223372036854775807\012}", 414);
@@ -1594,7 +1594,7 @@ extern NU pyObjectStartOffset__g20dGCi2MffsHqmxIpqX7Q;
 extern tyObject_PyLibcolonObjectType___bTw708kK89b8Vj9cmSu9a4zig* pyLib__nxKBiAukGMNwnUq9bpn9adyw;
 extern NIM_THREADVAR Exception* currException__9bVPeDJlYTi9bQApZpfH8wjg;
 extern NIM_THREADVAR Exception* currException__9bVPeDJlYTi9bQApZpfH8wjg;
-extern tyProc__y4Iy0gL1MDnSGVt43uUAgQ Dl_25662276_;
+extern tyProc__y4Iy0gL1MDnSGVt43uUAgQ Dl_28842276_;
 
 /* section: NIM_merge_PROCS */
 static N_NIMCALL(void, TM__wDGC8Xtv5r3PSmcDG9aTygg_2)(void) {
@@ -8405,7 +8405,7 @@ NIM_BOOL* nimErr_;
 										NI T61_;
 										T50_ = (NimStringDesc*)0;
 										T50_ = colontmp_;
-										res = Dl_25662276_((*colontmp__2).h, (*colontmp__2).e, nimToCStringConv(T50_), ((int) ((colontmp_ ? colontmp_->Sup.len : 0))), i_4, ((NI32) 0), ((int*) (rawMatches)), ((int) 3));
+										res = Dl_28842276_((*colontmp__2).h, (*colontmp__2).e, nimToCStringConv(T50_), ((int) ((colontmp_ ? colontmp_->Sup.len : 0))), i_4, ((NI32) 0), ((int*) (rawMatches)), ((int) 3));
 										{
 											if (!(res < ((NI32) 0))) goto LA53_;
 											goto LA48;
@@ -10139,13 +10139,13 @@ static N_INLINE(void, initStackBottomWith)(void* locals) {
 N_LIB_PRIVATE void PreMainInner(void) {
 	stdlib_timesInit000();
 	stdlib_osInit000();
+	stdlib_asyncfuturesInit000();
 	stdlib_opensslInit000();
 	stdlib_netInit000();
-	stdlib_asyncfuturesInit000();
 	stdlib_asyncdispatchInit000();
 	stdlib_httpclientInit000();
-	stdlib_threadpoolInit000();
 	nimpy_py_libInit000();
+	stdlib_threadpoolInit000();
 }
 
 N_LIB_PRIVATE int cmdCount;
@@ -10163,40 +10163,40 @@ N_LIB_PRIVATE void PreMain(void) {
 	stdlib_optionsDatInit000();
 	stdlib_timesDatInit000();
 	stdlib_osDatInit000();
-	stdlib_nativesocketsDatInit000();
-	stdlib_setsDatInit000();
-	stdlib_monotimesDatInit000();
-	stdlib_opensslDatInit000();
-	stdlib_netDatInit000();
-	stdlib_uriDatInit000();
-	stdlib_strtabsDatInit000();
-	stdlib_streamsDatInit000();
 	stdlib_tablesDatInit000();
-	stdlib_httpcoreDatInit000();
 	stdlib_heapqueueDatInit000();
 	stdlib_dequesDatInit000();
 	stdlib_asyncfuturesDatInit000();
 	stdlib_asyncstreamsDatInit000();
+	stdlib_monotimesDatInit000();
+	stdlib_nativesocketsDatInit000();
+	stdlib_setsDatInit000();
+	stdlib_opensslDatInit000();
+	stdlib_netDatInit000();
 	stdlib_selectorsDatInit000();
 	stdlib_asyncdispatchDatInit000();
+	stdlib_sqlite3DatInit000();
+	stdlib_db_commonDatInit000();
+	stdlib_streamsDatInit000();
+	stdlib_lexbaseDatInit000();
+	stdlib_parsexmlDatInit000();
+	stdlib_strtabsDatInit000();
+	stdlib_xmltreeDatInit000();
+	stdlib_uriDatInit000();
+	stdlib_httpcoreDatInit000();
 	stdlib_asyncnetDatInit000();
 	stdlib_asyncfileDatInit000();
 	stdlib_httpclientDatInit000();
-	stdlib_lexbaseDatInit000();
 	stdlib_parsejsonDatInit000();
 	stdlib_jsonDatInit000();
-	stdlib_threadpoolDatInit000();
-	stdlib_parsexmlDatInit000();
-	stdlib_xmltreeDatInit000();
-	unknown_wsDatInit000();
-	stdlib_sqlite3DatInit000();
-	stdlib_db_commonDatInit000();
-	stdlib_pcreDatInit000();
-	stdlib_reDatInit000();
-	stdlib_pegsDatInit000();
 	nimpy_py_typesDatInit000();
 	nimpy_py_libDatInit000();
 	nimpy_nimpyDatInit000();
+	stdlib_pegsDatInit000();
+	stdlib_pcreDatInit000();
+	stdlib_reDatInit000();
+	stdlib_threadpoolDatInit000();
+	unknown_wsDatInit000();
 	faster_than_requestsDatInit000();
 	(*inner)();
 }

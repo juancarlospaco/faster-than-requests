@@ -136,13 +136,13 @@ STRING_LITERAL(TM__Y7t52g9b69cVuzHT832OjgmA_2, "\'", 1);
 STRING_LITERAL(TM__Y7t52g9b69cVuzHT832OjgmA_3, "\'\'", 2);
 
 /* section: NIM_merge_VARS */
-extern tyProc__MGvm2GDOLe9cOGVrF2xiL8g Dl_25286893_;
-extern tyProc__9c803Jlmvw39cDHXPnE9c9acPA Dl_25286906_;
+extern tyProc__MGvm2GDOLe9cOGVrF2xiL8g Dl_18182893_;
+extern tyProc__9c803Jlmvw39cDHXPnE9c9acPA Dl_18182906_;
 extern NIM_THREADVAR NIM_BOOL nimInErrorMode__759bT87luu8XGcbkw13FUjA;
-extern tyProc__M35TeFGPs7TPKADYDaEq4Q Dl_25286921_;
-extern tyProc__1jkYBsuhXdCj7QieWqeYyQ Dl_25287037_;
-extern tyProc__1jkYBsuhXdCj7QieWqeYyQ Dl_25287079_;
-extern tyProc__gjdebP9bh9a6kXA5fmIpsLzQ Dl_25286787_;
+extern tyProc__M35TeFGPs7TPKADYDaEq4Q Dl_18182921_;
+extern tyProc__1jkYBsuhXdCj7QieWqeYyQ Dl_18183037_;
+extern tyProc__1jkYBsuhXdCj7QieWqeYyQ Dl_18183079_;
+extern tyProc__gjdebP9bh9a6kXA5fmIpsLzQ Dl_18182787_;
 
 /* section: NIM_merge_PROCS */
 static N_INLINE(NCSTRING, nimToCStringConv)(NimStringDesc* s) {
@@ -174,7 +174,7 @@ N_LIB_PRIVATE N_NIMCALL(void, dbError__tMZ1L6kpZL5DXC6qzvE1JA)(tyObject_Sqlite3_
 	(*e).Sup.Sup.Sup.Sup.m_type = (&NTI__9cp8FUMATyqFmLaAKCXEjCQ_);
 	(*e).Sup.Sup.Sup.name = "DbError";
 	T1_ = (NCSTRING)0;
-	T1_ = Dl_25286906_(db);
+	T1_ = Dl_18182906_(db);
 	(*e).Sup.Sup.Sup.message = cstrToNimstr(T1_);
 	raiseExceptionEx((Exception*)e, "DbError", "dbError", "db_sqlite.nim", 147);
 	goto BeforeRet_;
@@ -196,7 +196,7 @@ NIM_BOOL* nimErr_;
 	{
 		NI32 T3_;
 		T3_ = (NI32)0;
-		T3_ = Dl_25286893_(nimToCStringConv(connection), &db);
+		T3_ = Dl_18182893_(nimToCStringConv(connection), &db);
 		if (!(T3_ == ((NI32) 0))) goto LA4_;
 		result = db;
 	}
@@ -320,14 +320,14 @@ N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, tryExec__x8iLJptB05buMJbN9cGcx0Q)(tyObject_Sql
 		T3_ = (NimStringDesc*)0;
 		T3_ = q;
 		T4_ = (int)0;
-		T4_ = Dl_25286921_(db, nimToCStringConv(T3_), ((int) ((q ? q->Sup.len : 0))), &stmt, NIM_NIL);
+		T4_ = Dl_18182921_(db, nimToCStringConv(T3_), ((int) ((q ? q->Sup.len : 0))), &stmt, NIM_NIL);
 		if (!(T4_ == ((NI32) 0))) goto LA5_;
-		x = Dl_25287037_(stmt);
+		x = Dl_18183037_(stmt);
 		{
 			NI32 T11_;
 			if (!(x == ((NI) 101) || x == ((NI) 100))) goto LA9_;
 			T11_ = (NI32)0;
-			T11_ = Dl_25287079_(stmt);
+			T11_ = Dl_18183079_(stmt);
 			result = (T11_ == ((NI32) 0));
 		}
 		goto LA7_;
@@ -335,7 +335,7 @@ N_LIB_PRIVATE N_NIMCALL(NIM_BOOL, tryExec__x8iLJptB05buMJbN9cGcx0Q)(tyObject_Sql
 		{
 			NI32 T13_;
 			T13_ = (NI32)0;
-			T13_ = Dl_25287079_(stmt);
+			T13_ = Dl_18183079_(stmt);
 			(void)(T13_);
 			result = NIM_FALSE;
 		}
@@ -350,7 +350,7 @@ NIM_BOOL* nimErr_;
 	{
 		NI32 T3_;
 		T3_ = (NI32)0;
-		T3_ = Dl_25286787_(db);
+		T3_ = Dl_18182787_(db);
 		if (!!((T3_ == ((NI32) 0)))) goto LA4_;
 		dbError__tMZ1L6kpZL5DXC6qzvE1JA(db);
 		if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;

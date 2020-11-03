@@ -4507,6 +4507,20 @@ NIM_BOOL* nimErr_;
 	if (NIM_UNLIKELY(*nimErr_)) goto BeforeRet_;
 	}BeforeRet_: ;
 }
+N_LIB_PRIVATE N_NIMCALL(void, nimRegisterGlobalMarker)(tyProc__T4eqaYlFJYZUv9aG9b1TV0bQ markerProc) {
+	{
+		if (!(globalMarkersLen <= ((NI) 3499))) goto LA3_;
+		globalMarkers[(globalMarkersLen)- 0] = markerProc;
+		globalMarkersLen += ((NI) 1);
+	}
+	goto LA1_;
+	LA3_: ;
+	{
+		rawWrite(stderr, "[GC] cannot register global variable; too many global variables");
+		exit(((NI) 1));
+	}
+	LA1_: ;
+}
 N_LIB_PRIVATE N_NOCONV(void*, allocShared0Impl__KzdpcuLT9aef9bsiSHlIu9aFg_3)(NI size) {
 	void* result;
 	result = (void*)0;
@@ -5354,20 +5368,6 @@ N_LIB_PRIVATE N_NIMCALL(void, createThread__ZlRlGL9cCaGDCyoP82KIjPQ)(tyObject_Th
 	}
 	LA20_: ;
 	}BeforeRet_: ;
-}
-N_LIB_PRIVATE N_NIMCALL(void, nimRegisterGlobalMarker)(tyProc__T4eqaYlFJYZUv9aG9b1TV0bQ markerProc) {
-	{
-		if (!(globalMarkersLen <= ((NI) 3499))) goto LA3_;
-		globalMarkers[(globalMarkersLen)- 0] = markerProc;
-		globalMarkersLen += ((NI) 1);
-	}
-	goto LA1_;
-	LA3_: ;
-	{
-		rawWrite(stderr, "[GC] cannot register global variable; too many global variables");
-		exit(((NI) 1));
-	}
-	LA1_: ;
 }
 N_LIB_PRIVATE N_NIMCALL(void, setupForeignThreadGc__amVlU9ajqZ06ujoesRBHcDg_5)(void) {
 	{

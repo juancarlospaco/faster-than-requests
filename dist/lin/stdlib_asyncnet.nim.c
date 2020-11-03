@@ -601,25 +601,25 @@ STRING_LITERAL(TM__JMBCj9b9cgmHN4QjGJNKaeyw_49, "\012", 1);
 /* section: NIM_merge_VARS */
 extern int osInvalidSocket__voz9aUXu8jtRbvGZZJHNE8w;
 extern NIM_THREADVAR NIM_BOOL nimInErrorMode__759bT87luu8XGcbkw13FUjA;
-extern tyProc__ln4kdL5W9bbX4a1xl8nnVXQ Dl_15765667_;
-extern tyProc__Vff1ipOwDPDGknaRJAdXjA Dl_15720701_;
-extern tyProc__e47RoMUolEGMiUlfiZt9abQ Dl_15720619_;
+extern tyProc__ln4kdL5W9bbX4a1xl8nnVXQ Dl_16005667_;
+extern tyProc__Vff1ipOwDPDGknaRJAdXjA Dl_15960701_;
+extern tyProc__e47RoMUolEGMiUlfiZt9abQ Dl_15960619_;
 extern NIM_THREADVAR Exception* currException__9bVPeDJlYTi9bQApZpfH8wjg;
 extern NIM_THREADVAR Exception* currException__9bVPeDJlYTi9bQApZpfH8wjg;
 extern NIM_THREADVAR Exception* currException__9bVPeDJlYTi9bQApZpfH8wjg;
-extern tyProc__Rqjya8uauy9aPcyfGamaSrg Dl_15720616_;
-extern tyProc__Rqjya8uauy9aPcyfGamaSrg Dl_15765617_;
-extern tyProc__HXibadfWHwHwyhCwpIRD2A Dl_15765623_;
-extern tyProc__h4YRAkwlfyBfCYwRiY5JqA Dl_15765659_;
-extern tyProc__e47RoMUolEGMiUlfiZt9abQ Dl_15765638_;
-extern tyProc__e47RoMUolEGMiUlfiZt9abQ Dl_15765641_;
-extern tyProc__xjxKRHVZXDqdWXw9bunoZ3w Dl_15765654_;
-extern tyProc__Vff1ipOwDPDGknaRJAdXjA Dl_15765625_;
-extern tyProc__xjxKRHVZXDqdWXw9bunoZ3w Dl_15765628_;
-extern tyProc__kxUw9cdxJbPtv0iPyoSbDBQ Dl_15720724_;
-extern tyProc__xjxKRHVZXDqdWXw9bunoZ3w Dl_15765633_;
-extern tyProc__v9chVxaoEEAWoxVjnpYxttA Dl_15720704_;
-extern tyProc__xjxKRHVZXDqdWXw9bunoZ3w Dl_15765644_;
+extern tyProc__Rqjya8uauy9aPcyfGamaSrg Dl_15960616_;
+extern tyProc__Rqjya8uauy9aPcyfGamaSrg Dl_16005617_;
+extern tyProc__HXibadfWHwHwyhCwpIRD2A Dl_16005623_;
+extern tyProc__h4YRAkwlfyBfCYwRiY5JqA Dl_16005659_;
+extern tyProc__e47RoMUolEGMiUlfiZt9abQ Dl_16005638_;
+extern tyProc__e47RoMUolEGMiUlfiZt9abQ Dl_16005641_;
+extern tyProc__xjxKRHVZXDqdWXw9bunoZ3w Dl_16005654_;
+extern tyProc__Vff1ipOwDPDGknaRJAdXjA Dl_16005625_;
+extern tyProc__xjxKRHVZXDqdWXw9bunoZ3w Dl_16005628_;
+extern tyProc__kxUw9cdxJbPtv0iPyoSbDBQ Dl_15960724_;
+extern tyProc__xjxKRHVZXDqdWXw9bunoZ3w Dl_16005633_;
+extern tyProc__v9chVxaoEEAWoxVjnpYxttA Dl_15960704_;
+extern tyProc__xjxKRHVZXDqdWXw9bunoZ3w Dl_16005644_;
 
 /* section: NIM_merge_PROCS */
 static N_NIMCALL(void, Marker_tyRef__aSlRc15aht0VRnOJAwHxLg)(void* p, NI op) {
@@ -720,8 +720,8 @@ NIM_BOOL* nimErr_;
 			T12_ = (T14_ == ((NI32) 0));
 			LA13_: ;
 			if (!T12_) goto LA15_;
-			Dl_15765667_();
-			res = Dl_15720701_((*socket).sslHandle);
+			Dl_16005667_();
+			res = Dl_15960701_((*socket).sslHandle);
 		}
 		goto LA10_;
 		LA15_: ;
@@ -729,7 +729,7 @@ NIM_BOOL* nimErr_;
 			res = ((int) 0);
 		}
 		LA10_: ;
-		Dl_15720619_((*socket).sslHandle);
+		Dl_15960619_((*socket).sslHandle);
 		{
 			if (!(res == ((NI32) 0))) goto LA20_;
 		}
@@ -1007,7 +1007,7 @@ NIM_BOOL* nimErr_;
 {nimErr_ = nimErrorFlag();
 	(*socket).isSsl = NIM_TRUE;
 	(*socket).sslContext = ctx;
-	(*socket).sslHandle = Dl_15720616_((*(*socket).sslContext).context);
+	(*socket).sslHandle = Dl_15960616_((*(*socket).sslContext).context);
 	{
 		if (!((*socket).sslHandle == NIM_NIL)) goto LA3_;
 		raiseSSLError__4bk00w9al9cfmeFR9a9cMW860g(((NimStringDesc*) NIM_NIL));
@@ -1015,12 +1015,12 @@ NIM_BOOL* nimErr_;
 	}
 	LA3_: ;
 	T5_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
-	T5_ = Dl_15765623_();
-	(*socket).bioIn = Dl_15765617_(T5_);
+	T5_ = Dl_16005623_();
+	(*socket).bioIn = Dl_16005617_(T5_);
 	T6_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
-	T6_ = Dl_15765623_();
-	(*socket).bioOut = Dl_15765617_(T6_);
-	Dl_15765659_((*socket).sslHandle, (*socket).bioIn, (*socket).bioOut);
+	T6_ = Dl_16005623_();
+	(*socket).bioOut = Dl_16005617_(T6_);
+	Dl_16005659_((*socket).sslHandle, (*socket).bioIn, (*socket).bioOut);
 	(*socket).sslNoShutdown = NIM_TRUE;
 	}BeforeRet_: ;
 }
@@ -1070,12 +1070,12 @@ NIM_BOOL* nimErr_;
 			(void)(T9_);
 		}
 		LA7_: ;
-		Dl_15765638_((*socket).sslHandle);
+		Dl_16005638_((*socket).sslHandle);
 	}
 	break;
 	case ((tyEnum_SslHandshakeType__9aZhh5f9bRDKgYB8GLASDSqg) 1):
 	{
-		Dl_15765641_((*socket).sslHandle);
+		Dl_16005641_((*socket).sslHandle);
 	}
 	break;
 	}
@@ -1134,7 +1134,7 @@ NIM_BOOL* nimErr_;
 			}
 			STATE0: ;
 			{
-				(*colonenvP_).len1 = Dl_15765625_((*(*(*colonenvP_).colonup_).socket1).bioOut);
+				(*colonenvP_).len1 = Dl_16005625_((*(*(*colonenvP_).colonup_).socket1).bioOut);
 				{
 					tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw* T8_;
 					tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w* T13_;
@@ -1142,7 +1142,7 @@ NIM_BOOL* nimErr_;
 					(*colonenvP_).data3 = mnewString(((NI) ((*colonenvP_).len1)));
 					T8_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
 					T8_ = (*(*(*colonenvP_).colonup_).socket1).bioOut;
-					(*colonenvP_).read4 = Dl_15765628_(T8_, ((NCSTRING) ((&(*colonenvP_).data3->data[((NI) 0)]))), (*colonenvP_).len1);
+					(*colonenvP_).read4 = Dl_16005628_(T8_, ((NCSTRING) ((&(*colonenvP_).data3->data[((NI) 0)]))), (*colonenvP_).len1);
 					{
 						if (!((*colonenvP_).read4 < ((NI32) 0))) goto LA11_;
 						raiseSSLError__4bk00w9al9cfmeFR9a9cMW860g(((NimStringDesc*) NIM_NIL));
@@ -1325,7 +1325,7 @@ N_LIB_PRIVATE N_NIMCALL(int, getSslError__St0QC9baaD44FSQJmp6OR9bQ)(tyObject_Asy
 NIM_BOOL* nimErr_;
 {nimErr_ = nimErrorFlag();
 	result = (int)0;
-	ret = Dl_15720724_((*socket).sslHandle, err);
+	ret = Dl_15960724_((*socket).sslHandle, err);
 	switch (ret) {
 	case ((NI) 6):
 	{
@@ -1466,7 +1466,7 @@ NIM_BOOL* nimErr_;
 				if (!(((NI) 0) < (*colonenvP_).length7)) goto LA12_;
 				T14_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
 				T14_ = (*(*(*colonenvP_).colonup_).socket2).bioIn;
-				(*colonenvP_).ret8 = Dl_15765633_(T14_, ((NCSTRING) ((&(*colonenvP_).data6->data[((NI) 0)]))), ((int) ((*colonenvP_).length7)));
+				(*colonenvP_).ret8 = Dl_16005633_(T14_, ((NCSTRING) ((&(*colonenvP_).data6->data[((NI) 0)]))), ((int) ((*colonenvP_).length7)));
 				{
 					if (!((*colonenvP_).ret8 < ((NI32) 0))) goto LA17_;
 					raiseSSLError__4bk00w9al9cfmeFR9a9cMW860g(((NimStringDesc*) NIM_NIL));
@@ -1478,7 +1478,7 @@ NIM_BOOL* nimErr_;
 			LA12_: ;
 			{
 				if (!((*colonenvP_).length7 == ((NI) 0))) goto LA20_;
-				Dl_15720704_((*(*(*colonenvP_).colonup_).socket2).sslHandle, ((int) 2));
+				Dl_15960704_((*(*(*colonenvP_).colonup_).socket2).sslHandle, ((int) 2));
 				(*colonenvP_).result1 = NIM_FALSE;
 			}
 			goto LA10_;
@@ -1690,12 +1690,12 @@ NIM_BOOL* nimErr_;
 				NCSTRING T16_;
 				tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w* T17_;
 				if (!((*colonenvP_).opResult3 < ((NI32) 0))) goto LA13_;
-				Dl_15765667_();
+				Dl_16005667_();
 				T15_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
 				T15_ = (*(*(*colonenvP_).colonup_).socket1).sslHandle;
 				T16_ = (NCSTRING)0;
 				T16_ = ((NCSTRING) ((&(*colonenvP_).copy2->data[((NI) 0)])));
-				(*colonenvP_).opResult3 = Dl_15765654_(T15_, T16_, ((int) (((*colonenvP_).copy2 ? (*colonenvP_).copy2->Sup.len : 0))));
+				(*colonenvP_).opResult3 = Dl_16005654_(T15_, T16_, ((int) (((*colonenvP_).copy2 ? (*colonenvP_).copy2->Sup.len : 0))));
 				(*colonenvP_).colonstate_ = ((NI) 2);
 				T17_ = (tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w*)0;
 				T17_ = sendPendingSslData__clDR2df2pcAPSKYZbKvqlg((*(*colonenvP_).colonup_).socket1, (*(*colonenvP_).colonup_).flags3);
@@ -2156,10 +2156,10 @@ NIM_BOOL* nimErr_;
 				tyObject_AsyncSocketDesc__D7quBEmo0QGfBsms9bXpWfg* T36_;
 				tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w* T37_;
 				if (!((*colonenvP_).opResult5 < ((NI32) 0))) goto LA33_;
-				Dl_15765667_();
+				Dl_16005667_();
 				T35_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
 				T35_ = (*(*(*colonenvP_).colonup_).socket1).sslHandle;
-				(*colonenvP_).opResult5 = Dl_15765644_(T35_, ((NCSTRING) ((&(*(*(*colonenvP_).colonup_).socket1).buffer[(((NI) 0))- 0]))), ((int) 4000));
+				(*colonenvP_).opResult5 = Dl_16005644_(T35_, ((NCSTRING) ((&(*(*(*colonenvP_).colonup_).socket1).buffer[(((NI) 0))- 0]))), ((int) 4000));
 				(*colonenvP_).colonstate_ = ((NI) 2);
 				T36_ = (tyObject_AsyncSocketDesc__D7quBEmo0QGfBsms9bXpWfg*)0;
 				T36_ = (*(*colonenvP_).colonup_).socket1;
@@ -2331,10 +2331,10 @@ NIM_BOOL* nimErr_;
 				tyObject_AsyncSocketDesc__D7quBEmo0QGfBsms9bXpWfg* T91_;
 				tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w* T92_;
 				if (!((*colonenvP_).opResult17 < ((NI32) 0))) goto LA88_;
-				Dl_15765667_();
+				Dl_16005667_();
 				T90_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
 				T90_ = (*(*(*colonenvP_).colonup_).socket1).sslHandle;
-				(*colonenvP_).opResult17 = Dl_15765644_(T90_, ((NCSTRING) ((&(*(*(*colonenvP_).colonup_).socket1).buffer[(((NI) 0))- 0]))), ((int) 4000));
+				(*colonenvP_).opResult17 = Dl_16005644_(T90_, ((NCSTRING) ((&(*(*(*colonenvP_).colonup_).socket1).buffer[(((NI) 0))- 0]))), ((int) 4000));
 				(*colonenvP_).colonstate_ = ((NI) 13);
 				T91_ = (tyObject_AsyncSocketDesc__D7quBEmo0QGfBsms9bXpWfg*)0;
 				T91_ = (*(*colonenvP_).colonup_).socket1;
@@ -2458,10 +2458,10 @@ NIM_BOOL* nimErr_;
 				tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw* T126_;
 				tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w* T127_;
 				if (!((*colonenvP_).opResult9 < ((NI32) 0))) goto LA124_;
-				Dl_15765667_();
+				Dl_16005667_();
 				T126_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
 				T126_ = (*(*(*colonenvP_).colonup_).socket1).sslHandle;
-				(*colonenvP_).opResult9 = Dl_15765644_(T126_, ((NCSTRING) ((&(*colonenvP_).result1->data[((NI) 0)]))), ((int) ((*(*colonenvP_).colonup_).size2)));
+				(*colonenvP_).opResult9 = Dl_16005644_(T126_, ((NCSTRING) ((&(*colonenvP_).result1->data[((NI) 0)]))), ((int) ((*(*colonenvP_).colonup_).size2)));
 				(*colonenvP_).colonstate_ = ((NI) 24);
 				T127_ = (tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w*)0;
 				T127_ = sendPendingSslData__clDR2df2pcAPSKYZbKvqlg((*(*colonenvP_).colonup_).socket1, (*(*colonenvP_).colonup_).flags3);
@@ -2839,10 +2839,10 @@ NIM_BOOL* nimErr_;
 				tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw* T28_;
 				tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w* T29_;
 				if (!((*colonenvP_).opResult4 < ((NI32) 0))) goto LA26_;
-				Dl_15765667_();
+				Dl_16005667_();
 				T28_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
 				T28_ = (*(*(*colonenvP_).colonup_).socket1).sslHandle;
-				(*colonenvP_).opResult4 = Dl_15765644_(T28_, ((NCSTRING) ((&(*(*(*colonenvP_).colonup_).socket1).buffer[(((NI) 0))- 0]))), ((int) 4000));
+				(*colonenvP_).opResult4 = Dl_16005644_(T28_, ((NCSTRING) ((&(*(*(*colonenvP_).colonup_).socket1).buffer[(((NI) 0))- 0]))), ((int) 4000));
 				(*colonenvP_).colonstate_ = ((NI) 2);
 				T29_ = (tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w*)0;
 				T29_ = sendPendingSslData__clDR2df2pcAPSKYZbKvqlg((*(*colonenvP_).colonup_).socket1, (*(*colonenvP_).colonup_).flags2);
@@ -3000,10 +3000,10 @@ NIM_BOOL* nimErr_;
 				tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw* T76_;
 				tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w* T77_;
 				if (!((*colonenvP_).opResult13 < ((NI32) 0))) goto LA74_;
-				Dl_15765667_();
+				Dl_16005667_();
 				T76_ = (tyObject_SslStruct__hZKic6WnTBMq6Usbg49bnhw*)0;
 				T76_ = (*(*(*colonenvP_).colonup_).socket1).sslHandle;
-				(*colonenvP_).opResult13 = Dl_15765644_(T76_, ((NCSTRING) ((&(*(*(*colonenvP_).colonup_).socket1).buffer[(((NI) 0))- 0]))), ((int) 4000));
+				(*colonenvP_).opResult13 = Dl_16005644_(T76_, ((NCSTRING) ((&(*(*(*colonenvP_).colonup_).socket1).buffer[(((NI) 0))- 0]))), ((int) 4000));
 				(*colonenvP_).colonstate_ = ((NI) 13);
 				T77_ = (tyObject_FuturecolonObjectType___te3W2Tqi7xuJ7rlPtg9al5w*)0;
 				T77_ = sendPendingSslData__clDR2df2pcAPSKYZbKvqlg((*(*colonenvP_).colonup_).socket1, (*(*colonenvP_).colonup_).flags2);
