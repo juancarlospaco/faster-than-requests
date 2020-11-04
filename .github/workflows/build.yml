@@ -200,11 +200,11 @@ jobs:
 
 
     - name: Commit Code  # Commit everything to Git repo
-      uses: EndBug/add-and-commit@v5  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
+      uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
       # uses: EndBug/add-and-commit@tests
       with:
-        add: 'dist --force'
-        # force: true
+        add: 'dist'
+        force: true
         message: ${{ steps.vars.outputs.semver_date }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
