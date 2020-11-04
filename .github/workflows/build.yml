@@ -199,11 +199,12 @@ jobs:
         zip -9 -T -v -r $PACKAGE_NAME-${{ steps.vars.outputs.sha_short }}.zip *
 
 
-    - name: Commit Code
-      uses: EndBug/add-and-commit@v4  # Commit everything to Git repo
+    - name: Commit Code  # Commit everything to Git repo
+      # uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
+      uses: EndBug/add-and-commit@tests
       with:
-        add: 'dist'
-        force: true
+        add: 'dist --force'
+        # force: true
         message: ${{ steps.vars.outputs.semver_date }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
