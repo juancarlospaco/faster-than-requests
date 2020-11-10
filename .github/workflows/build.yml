@@ -70,6 +70,7 @@ jobs:
 
     - name: Build Nim (Windows)
       if: runner.os == 'Windows'
+      shell: bash
       run: |
         cd Nim
         ./build_all.bat
@@ -85,11 +86,6 @@ jobs:
     - uses: juancarlospaco/nimpretty-action@main
       with:
         folder: "src"
-
-
-    # - name: Nim Check
-    #   shell: bash
-    #   run: nim check --styleCheck:hint ${{ env.MAIN_MODULE }}
 
 
     - name: Prepare Folders
@@ -123,6 +119,7 @@ jobs:
 
     - name: Compile Debug & import (Windows)
       if: runner.os == 'Windows'
+      shell: bash
       run: |
         nim c --app:lib --out:${{ env.PACKAGE_NAME }}.pyd ${{ env.MAIN_MODULE }}
         python.exe -c "print(__import__('${{ env.PACKAGE_NAME }}').__file__)"
@@ -192,7 +189,17 @@ jobs:
         zip -9 -T -v -r $PACKAGE_NAME-${{ steps.vars.outputs.sha_short }}.zip *
 
 
-    - name: Commit Code  # Commit everything to Git repo
+    - name: Commit Nimpretty Fixes  # Commit everything to Git repo
+      uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
+      with:
+        add: 'src/*.nim'
+        force: true
+        message: ${{ steps.vars.outputs.semver_date }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+    - name: Commit Generated C  # Commit everything to Git repo
       uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
       with:
         add: 'dist'
