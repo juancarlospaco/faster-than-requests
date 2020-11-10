@@ -95,6 +95,8 @@ jobs:
 
 
     - uses: juancarlospaco/nimpretty-action@main
+      with:
+        folder: "src"
 
 
     # - name: Nim Check
