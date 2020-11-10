@@ -44,8 +44,8 @@ jobs:
       id: vars
       shell: bash
       run: |
-        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-        echo "::set-output name=semver_date::$(date +"%y.%m.%d")"
+        echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        echo "semver_date=$(date +'%y.%m.%d')" >> $GITHUB_ENV
 
 
     - name: Set Environment Variables
