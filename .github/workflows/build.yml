@@ -94,9 +94,12 @@ jobs:
         nimble -y install nimpy
 
 
-    - name: Nim Check
-      shell: bash
-      run: nim check --styleCheck:hint ${{ env.MAIN_MODULE }}
+    - uses: juancarlospaco/nimpretty-action@main
+
+
+    # - name: Nim Check
+    #   shell: bash
+    #   run: nim check --styleCheck:hint ${{ env.MAIN_MODULE }}
 
 
     - name: Prepare Folders
@@ -220,11 +223,11 @@ jobs:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-    - name: Upload to PYPI (Linux)  # If everything worked, then upload to PYPI
-      if: runner.os == 'Linux'
-      run: |
-        pip3 install --quiet --upgrade --disable-pip-version-check twine
-        twine upload --verbose --disable-progress-bar --skip-existing --comment "Powered by https://Nim-lang.org" dist/*.zip
+    # - name: Upload to PYPI (Linux)  # If everything worked, then upload to PYPI
+    #   if: runner.os == 'Linux'
+    #   run: |
+    #     pip3 install --quiet --upgrade --disable-pip-version-check twine
+    #     twine upload --verbose --disable-progress-bar --skip-existing --comment "Powered by https://Nim-lang.org" dist/*.zip
 
 
     - name: Cache Nim
