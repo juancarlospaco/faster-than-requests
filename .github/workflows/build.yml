@@ -74,7 +74,7 @@ jobs:
       run: |
         cd Nim
         ./build_all.bat
-        nim --version
+        nim.exe --version
 
 
     - name: Nimble Install dependencies
