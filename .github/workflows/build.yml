@@ -56,7 +56,7 @@ jobs:
     - name: Clone Nim
       run: |
         git clone -q --depth 1 --branch v${{ env.NIM_VERSION }} https://github.com/nim-lang/Nim.git
-        echo "Nim/bin" >> $GITHUB_PATH
+        echo "${{ env.PWD }}/Nim/bin" >> $GITHUB_PATH
 
 
     - name: Build Nim (Unix)
