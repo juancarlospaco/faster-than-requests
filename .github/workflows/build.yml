@@ -56,7 +56,8 @@ jobs:
     - name: Clone Nim
       run: |
         git clone -q --depth 1 --branch v${{ env.NIM_VERSION }} https://github.com/nim-lang/Nim.git
-        echo "${{ env.PWD }}/Nim/bin" >> $GITHUB_PATH
+        echo "::add-path::$PWD/Nim/bin"
+        # echo "/path/to/dir" >> $GITHUB_PATH
 
 
     - name: Build Nim (Unix)
@@ -70,11 +71,10 @@ jobs:
 
     - name: Build Nim (Windows)
       if: runner.os == 'Windows'
-      shell: bash
       run: |
         cd Nim
         ./build_all.bat
-        nim.exe --version
+        nim --version
 
 
     - name: Nimble Install dependencies
@@ -119,7 +119,6 @@ jobs:
 
     - name: Compile Debug & import (Windows)
       if: runner.os == 'Windows'
-      shell: bash
       run: |
         nim c --app:lib --out:${{ env.PACKAGE_NAME }}.pyd ${{ env.MAIN_MODULE }}
         python.exe -c "print(__import__('${{ env.PACKAGE_NAME }}').__file__)"
@@ -189,20 +188,20 @@ jobs:
         zip -9 -T -v -r $PACKAGE_NAME-${{ steps.vars.outputs.sha_short }}.zip *
 
 
-    - name: Commit Nimpretty Fixes  # Commit everything to Git repo
+    - name: Commit Code  # Commit everything to Git repo
       uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
       with:
-        add: 'src/*.nim'
+        add: 'dist'
         force: true
         message: ${{ steps.vars.outputs.semver_date }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-    - name: Commit Generated C  # Commit everything to Git repo
+    - name: Commit Nimpretty Fixes  # Commit everything to Git repo
       uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
       with:
-        add: 'dist'
+        add: 'src/*.nim'
         force: true
         message: ${{ steps.vars.outputs.semver_date }}
       env:
