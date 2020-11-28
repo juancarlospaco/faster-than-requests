@@ -40,6 +40,11 @@
 
 </details>
 
+# Installation
+
+```bash
+pip install faster-than-requests
+```
 
 # Use
 
