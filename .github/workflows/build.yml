@@ -86,7 +86,7 @@ jobs:
 
     - uses: juancarlospaco/nimpretty-action@main
       with:
-        folder: "src"
+        folders: "src"
 
 
     - name: Prepare Folders
