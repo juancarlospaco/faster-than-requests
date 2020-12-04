@@ -39,12 +39,13 @@ jobs:
     - name: Set Environment Variables
       uses: allenevans/set-env@v2.0.0
       with:
-        NIM_VERSION:           "1.4.0"
+        NIM_VERSION:           "1.4.2"
         MAIN_MODULE:           "src/faster_than_requests.nim"
         PACKAGE_NAME:          "faster_than_requests"
         TWINE_USERNAME:        ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD:        ${{ secrets.PYPI_PASSWORD }}
         TWINE_NON_INTERACTIVE: 1
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         NIM_COMMON_OPTIONS:    >-
           compileToC --compileOnly:on --colors:off --threads:on
           -d:release -d:danger -d:lto -d:strip -d:ssl --app:lib --exceptions:goto
