@@ -132,7 +132,7 @@ proc tuples2json*(tuples: openArray[tuple[key: string, val: string]], pretty_pri
   dealloc temp
 
 
-proc get2str*(url: sink string): string {.exportpy.} =
+proc get2str*(url: string): string {.exportpy.} =
   ## HTTP GET body to string.
   client.getContent(url)
 
