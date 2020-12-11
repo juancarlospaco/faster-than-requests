@@ -1380,12 +1380,7 @@ https://github.com/juancarlospaco/faster-than-requests/issues
 
 - How to set an HTTP Header key=value ?.
 
-[setHeaders()](https://github.com/juancarlospaco/faster-than-requests#setheaders)
-
-
-- Whats NDJSON ?.
-
-https://github.com/ndjson/ndjson-spec
+[set_headers()](https://github.com/juancarlospaco/faster-than-requests#set_headers)
 
 - How can be faster than PyCurl ?.
 
