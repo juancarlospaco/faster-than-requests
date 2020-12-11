@@ -1,5 +1,5 @@
 import
-  algorithm, asyncdispatch, db_sqlite, htmlparser, httpclient, json, nimpy, os,
+  asyncdispatch, db_sqlite, htmlparser, httpclient, json, nimpy, os,
   pegs, re, strtabs, strutils, tables, threadpool, uri, ws, sequtils, xmltree
 
 
@@ -74,28 +74,28 @@ proc get*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9
 proc post*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy.} =
   ## HTTP POST an URL to dictionary.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
+    respons = cliente.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
-proc put*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc put*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy.} =
   ## HTTP PUT an URL to dictionary.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
     respons = cliente.put(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
-proc patch*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc patch*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy.} =
   ## HTTP PATCH an URL to dictionary.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
     respons = cliente.patch(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
-proc delete*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc delete*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy.} =
   ## HTTP DELETE an URL to dictionary.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
     respons = cliente.delete(url)
 
 
-proc head*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc head*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy.} =
   ## HTTP HEAD an URL to dictionary. HEAD do NOT have body by definition. May NOT have contentLength sometimes.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
     respons = cliente.head(url)
@@ -107,45 +107,28 @@ proc head*(url: string; user_agent: string = defUserAgent; max_redirects: int = 
 var client: HttpClient
 
 
-func init_client(timeout: int = -1; max_redirects: int = 9; user_agent: string = defUserAgent;
+proc init_client(timeout: int = -1; max_redirects: int = 9; user_agent: string = defUserAgent;
   headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {.exportpy.} =
   client = newHttpClient(timeout = timeout, userAgent = user_agent,
     maxRedirects = max_redirects, headers = newHttpHeaders(headers))
 
 
-func close_client() {.exportpy.} =
+proc close_client() {.exportpy.} =
   client.close()
 
 
-func set_headers*(headers: openArray[tuple[key: string, val: string]]) {.exportpy.} =
+proc set_headers*(headers: openArray[tuple[key: string, val: string]]) {.exportpy.} =
   ## Set the HTTP Headers to the HTTP client.
   doAssert headers.len > 0, "HTTP Headers must not be empty list"
   client.headers = newHttpHeaders(headers)
 
 
-func set_timeout*(timeout: Positive) {.exportpy.} =
+proc set_timeout*(timeout: Positive) {.exportpy.} =
   ## Set the Timeout for the HTTP client.
   client.timeout = timeout
 
 
-func set_user_agent*(user_agent: string = defUserAgent) {.exportpy.} =
-  ## Set the HTTP User Agent to the HTTP client.
-  doAssert user_agent.len > 0, "HTTP User Agent must not be empty string"
-  client.userAgent = user_agent
-
-
-func set_max_redirects*(max_redirects: Natural = 9) {.exportpy.} =
-  ## Set the HTTP Headers to the HTTP client.
-  client.maxRedirects = max_redirects
-
-
-func set_proxy*(proxy_url: string; proxy_auth: string) {.exportpy.} =
-  ## Set the HTTP User Agent to the HTTP client.
-  doAssert proxy_url.len > 0, "HTTP Proxy URL must not be empty string"
-  client.proxy = newProxy(proxy_url, proxy_auth)
-
-
-func show_progress*() {.exportpy.} =
+proc show_progress*() {.exportpy.} =
   client.onProgressChanged = (proc (t, p, s: BiggestInt) = echo(
     "{\"speed\": ", s div 1000, ",\t\"progress\": ", p, ",\t\"remaining\": ", t - p, ",\t\"total\": ", t, "}"))
 
@@ -182,7 +165,7 @@ proc encodexml*(s: string): string {.exportpy, noinit.} =
     of '<':  "&lt;"
     of '>':  "&gt;"
     of '\"': "&quot;"
-    else:    s[i])
+    else:    $s[i])
 
 
 proc minifyhtml(html: string): string {.exportpy, noinit.} =
@@ -528,16 +511,27 @@ proc findCssImpl(node: var seq[XmlNode], cssSelector: string) {.noinline.} =
 
 proc scraper7*(url: string, css_selector: string, user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): seq[string] {.exportpy.} =
   assert url.len > 0, "url must not be empty string"
-  let client = create(HttpClient)
-  client[] = clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers)
+  var clien = createU HttpClient
   var temp = create(seq[XmlNode])
-  temp[] = @[htmlparser.parseHtml(client[].getContent(url))]
-  findCssImpl(temp[], cssSelector)
-  for item in temp[]: result.add $item
-  if client != nil:
-    dealloc client
-  if temp != nil:
-    dealloc temp
+  try:
+    clien[] = newHttpClient(
+        timeout      = timeout,
+        userAgent    = userAgent,
+        maxRedirects = maxRedirects,
+        headers      = newHttpHeaders(http_headers),
+        proxy        = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil),
+      )
+    temp[] = @[htmlparser.parseHtml(clien[].getContent(url))]
+    findCssImpl(temp[], cssSelector)
+    for item in temp[]:
+      result.add $item
+  finally:
+    if temp != nil:
+      dealloc temp
+    clien[].close()
+    if clien != nil:
+      dealloc clien
+
 
 proc websocket_ping*(url: string; data: string = ""; hangup: bool = false): string {.exportpy.} =
   assert url.len > 0, "url must not be empty string"
@@ -551,6 +545,7 @@ proc websocket_ping*(url: string; data: string = ""; hangup: bool = false): stri
     if soquetito != nil:
       dealloc soquetito
   )(url, data, hangup)
+
 
 proc websocket_send*(url: string; data: string; is_text: bool = true; hangup: bool = false): string {.exportpy.} =
   assert url.len > 0, "url must not be empty string"
