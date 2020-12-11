@@ -50,7 +50,7 @@ jobs:
           compileToC --compileOnly:on --colors:off --threads:on
           -d:release -d:danger -d:lto -d:strip -d:ssl --app:lib --exceptions:goto
           -d:nimBinaryStdFiles -d:noSignalHandler -d:nimDisableCertificateValidation
-          --opt:speed --cpu:amd64 --forceBuild --gc:markAndSweep --panics:on
+          --opt:speed --cpu:amd64 --forceBuild --gc:orc --panics:on
           --stackTrace:off --excessiveStackTrace:off --experimental:parallel
 
 
