@@ -3,106 +3,194 @@ import
   pegs, re, strtabs, strutils, tables, threadpool, uri, ws, sequtils, xmltree
 
 
-template clientify(userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string; timeout: int; http_headers: openArray[tuple[key: string, val: string]]): HttpClient =
-  newHttpClient(userAgent = userAgent, maxRedirects = maxRedirects, headers = newHttpHeaders(http_headers),
-    proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil), timeout = timeout)
+template clientify(url: string; userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string;
+  timeout: int; http_headers: openArray[tuple[key: string, val: string]], code: untyped): array[7, string] =
+  var
+    respons {.inject.}: Response
+    cliente {.inject.} = createU HttpClient
+  try:
+    cliente[] = newHttpClient(
+      timeout      = timeout,
+      userAgent    = userAgent,
+      maxRedirects = maxRedirects,
+      headers      = newHttpHeaders(http_headers),
+      proxy        = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil),
+    )
+    {.push, experimental: "implicitDeref".}
+    code
+    {.pop.}
+  finally:
+    cliente[].close()
+    if cliente != nil:
+      dealloc cliente
+  [$respons.body, respons.contentType, respons.status, respons.version, url, try: $respons.contentLength except: "0", $respons.headers]
 
 
-template response2table(r: Response): Table[string, string] =
-  toTable({"body": r.body, "content-type": r.contentType, "status": r.status, "version": r.version,
-  "content-length": try: $r.contentLength except: "0", "headers": replace($r.headers, " @[", " [")})
+proc to_dict(ftr_response: array[7, string]): Table[string, string] {.exportpy, noinit.} =
+  ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to dict.
+  result = toTable({
+    "body":           ftr_response[0],
+    "content-type":   ftr_response[1],
+    "status":         ftr_response[2],
+    "version":        ftr_response[3],
+    "url":            ftr_response[4],
+    "content-length": ftr_response[5],
+    "headers":        ftr_response[6],
+  })
 
 
-proc get*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc to_json(ftr_response: array[7, string]): string {.exportpy, noinit.} =
+  ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to JSON.
+  result = pretty(%*{
+    "body":           %ftr_response[0],
+    "content-type":   %ftr_response[1],
+    "status":         %ftr_response[2],
+    "version":        %ftr_response[3],
+    "url":            %ftr_response[4],
+    "content-length": %ftr_response[5],
+    "headers":        %ftr_response[6],
+  })
+
+
+proc to_tuples(ftr_response: array[7, string]): array[7, (string, string)] {.exportpy, noinit.} =
+  ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to array of tuples.
+  result = [
+    ("body",           ftr_response[0]),
+    ("content-type",   ftr_response[1]),
+    ("status",         ftr_response[2]),
+    ("version",        ftr_response[3]),
+    ("url",            ftr_response[4]),
+    ("content-length", ftr_response[5]),
+    ("headers",        ftr_response[6]),
+  ]
+
+
+proc get*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy.} =
   ## HTTP GET an URL to dictionary.
-  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).get(url))
+  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
+    respons = cliente.get(url)
 
 
-proc post*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
+proc post*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy.} =
   ## HTTP POST an URL to dictionary.
-  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
+  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
+    respons = cliente.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
 
 
 proc put*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP PUT an URL to dictionary.
-  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).put(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
+  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
+    respons = cliente.put(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
 proc patch*(url: string; body: string; multipart_data: seq[tuple[name: string, content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP PATCH an URL to dictionary.
-  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).patch(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil))
+  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
+    respons = cliente.patch(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
 proc delete*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP DELETE an URL to dictionary.
-  response2table(clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).delete(url))
+  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
+    respons = cliente.delete(url)
 
 
 proc head*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]): Table[string, string] {.exportpy.} =
   ## HTTP HEAD an URL to dictionary. HEAD do NOT have body by definition. May NOT have contentLength sometimes.
-  let r = createU(Response)
-  r[] = clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers).head(url)
-  result = {"content-type": r[].contentType, "status": r[].status, "version": r[].version,
-    "content-length": try: $r[].contentLength except: "0", "headers": replace($r[].headers, " @[", " [")}.toTable
-  dealloc r
+  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
+    respons = cliente.head(url)
 
 
 # ^ Basic HTTP Functions ########### V Extra HTTP Functions, go beyond requests
 
 
-let proxyUrl = createU(string)
-proxyUrl[] = getEnv("HTTPS_PROXY", getEnv"HTTP_PROXY")
-var client = newHttpClient(timeout = getEnv("REQUESTS_TIMEOUT", "-1").parseInt, userAgent = getEnv("REQUESTS_USERAGENT", defUserAgent),
-  proxy = (if unlikely(proxyUrl[].len > 1): newProxy(proxyUrl[], getEnv("HTTPS_PROXY_AUTH", getEnv"HTTP_PROXY_AUTH")) else: nil),
-  maxRedirects = getEnv("REQUESTS_MAXREDIRECTS", "9").parseInt)
-dealloc proxyUrl
+var client: HttpClient
 
 
-proc set_headers*(headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {.exportpy.} =
+func init_client(timeout: int = -1; max_redirects: int = 9; user_agent: string = defUserAgent;
+  headers: openArray[tuple[key: string, val: string]] = @[("dnt", "1")]) {.exportpy.} =
+  client = newHttpClient(timeout = timeout, userAgent = user_agent,
+    maxRedirects = max_redirects, headers = newHttpHeaders(headers))
+
+
+func close_client() {.exportpy.} =
+  client.close()
+
+
+func set_headers*(headers: openArray[tuple[key: string, val: string]]) {.exportpy.} =
   ## Set the HTTP Headers to the HTTP client.
+  doAssert headers.len > 0, "HTTP Headers must not be empty list"
   client.headers = newHttpHeaders(headers)
 
 
-proc multipartdata2str*(multipart_data: seq[tuple[name: string, content: string]]): string {.exportpy.} =
-  $newMultipartData(multipart_data)
+func set_timeout*(timeout: Positive) {.exportpy.} =
+  ## Set the Timeout for the HTTP client.
+  client.timeout = timeout
 
 
-proc urlparse*(url: string): (string, string, string, string, string, string, string, string, string) {.exportpy.} =
-  let u = createU(Uri)
+func set_user_agent*(user_agent: string = defUserAgent) {.exportpy.} =
+  ## Set the HTTP User Agent to the HTTP client.
+  doAssert user_agent.len > 0, "HTTP User Agent must not be empty string"
+  client.userAgent = user_agent
+
+
+func set_max_redirects*(max_redirects: Natural = 9) {.exportpy.} =
+  ## Set the HTTP Headers to the HTTP client.
+  client.maxRedirects = max_redirects
+
+
+func set_proxy*(proxy_url: string; proxy_auth: string) {.exportpy.} =
+  ## Set the HTTP User Agent to the HTTP client.
+  doAssert proxy_url.len > 0, "HTTP Proxy URL must not be empty string"
+  client.proxy = newProxy(proxy_url, proxy_auth)
+
+
+func show_progress*() {.exportpy.} =
+  client.onProgressChanged = (proc (t, p, s: BiggestInt) = echo(
+    "{\"speed\": ", s div 1000, ",\t\"progress\": ", p, ",\t\"remaining\": ", t - p, ",\t\"total\": ", t, "}"))
+
+
+proc multipartdata2str*(multipart_data: seq[tuple[name: string, content: string]]): string {.exportpy, noinit.} =
+  result = $newMultipartData(multipart_data)
+
+
+proc urlparse*(url: string): array[9, string] {.exportpy, noinit.} =
+  let u = createU Uri
   u[] = uri.parseUri(url)
-  result = (u[].scheme, u[].username, u[].password, u[].hostname, u[].port, u[].path, u[].query, u[].anchor, $u[].opaque)
-  dealloc u
+  result = [u[].scheme, u[].username, u[].password, u[].hostname, u[].port, u[].path, u[].query, u[].anchor, $u[].opaque]
+  if u != nil:
+    dealloc u
 
 
-proc urlencode*(url: string; use_plus: bool = true): string {.exportpy.} =
-  uri.encodeUrl(url, use_plus)
+proc urlencode*(url: string; use_plus: bool = true): string {.exportpy, noinit.} =
+  result = uri.encodeUrl(url, use_plus)
 
 
-proc urldecode*(url: string; use_plus: bool = true): string {.exportpy.} =
-  uri.decodeUrl(url, use_plus)
+proc urldecode*(url: string; use_plus: bool = true): string {.exportpy, noinit.} =
+  result = uri.decodeUrl(url, use_plus)
 
 
-proc encodequery*(query: openArray[(string, string)]; use_plus: bool = true; omit_eq: bool = true): string {.exportpy.} =
-  uri.encodeQuery(query, use_plus, omit_eq)
+proc encodequery*(query: openArray[(string, string)]; use_plus: bool = true; omit_eq: bool = true): string {.exportpy, noinit.} =
+  result = uri.encodeQuery(query, use_plus, omit_eq)
 
 
-proc encodexml*(s: string): string {.exportpy.} =
+proc encodexml*(s: string): string {.exportpy, noinit.} =
   result = newStringOfCap(s.len + s.len shr 2)
-  for i in 0..len(s) - 1:
-    case s[i]
-    of '&': add(result, "&amp;")
-    of '<': add(result, "&lt;")
-    of '>': add(result, "&gt;")
-    of '\"': add(result, "&quot;")
-    else: add(result, s[i])
+  for i in 0 .. len(s) - 1:
+    result.add(case s[i]
+    of '&':  "&amp;"
+    of '<':  "&lt;"
+    of '>':  "&gt;"
+    of '\"': "&quot;"
+    else:    s[i])
 
 
-proc minifyhtml(html: string): string {.exportpy.} =
-  html.strip.unindent.replace(re">\s+<", "> <")
+proc minifyhtml(html: string): string {.exportpy, noinit.} =
+  result = html.strip.unindent.replace(re">\s+<", "> <")
 
 
-proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.exportpy.} =
-  uri.getDataUri(data, mime, encoding)
+proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.exportpy, noinit.} =
+  result = uri.getDataUri(data, mime, encoding)
 
 
 proc debugs*() {.discardable, exportpy.} =
@@ -114,51 +202,14 @@ proc debugs*() {.discardable, exportpy.} =
   }))
 
 
-if unlikely(getEnv("REQUESTS_DEBUG", "false").parseBool):
-  debugs()
-  client.onProgressChanged = (proc (t, p, s: BiggestInt) = echo("{\"speed\": ", s div 1000, ",\t\"progress\": ", p, ",\t\"remaining\": ", t - p, ",\t\"total\": ", t, "}"))
-
-
-proc tuples2json*(tuples: openArray[tuple[key: string, val: string]], pretty_print: bool = false): string {.exportpy.} =
-  ## Convert Tuples to JSON Minified.
-  let temp = createU(JsonNode)
-  temp[] = %*{}
-  if unlikely(pretty_print):
-    for item in tuples: temp[].add(item[0], %item[1])
-    result.toUgly(temp[])
-  else:
-    for item in tuples: temp[].add(item[0], %item[1])
-    result = temp[].pretty
-  dealloc temp
-
-
-proc get2str*(url: string): string {.exportpy.} =
+proc get2str*(url: string): string {.exportpy, noinit.} =
   ## HTTP GET body to string.
-  client.getContent(url)
+  result = client.getContent(url)
 
 
-proc get2str2*(list_of_urls: openArray[string], threads: bool = false): seq[string] {.exportpy.} =
-  ## HTTP GET body to string from a list of URLs.
-  if threads:
-    result = newSeq[string](list_of_urls.len)
-    for i, url in list_of_urls: result[i] = ^ spawn client.getContent(url)
-  else:
-    for url in list_of_urls: result.add client.getContent(url)
-
-
-proc get2ndjson*(list_of_urls: openArray[string], ndjson_file_path: string) {.discardable, exportpy.} =
-  ## HTTP GET body to NDJSON file from a list of URLs.
-  let temp = create(string)
-  for url in list_of_urls:
-    temp[].toUgly client.getContent(url).parseJson
-    temp[].add "\n"
-  writeFile(ndjson_file_path, temp[])
-  dealloc temp
-
-
-proc get2json*(url: string, pretty_print: bool = false): string {.exportpy.} =
+proc get2json*(url: string): string {.exportpy, noinit.} =
   ## HTTP GET body to JSON.
-  if unlikely(pretty_print): result = client.getContent(url).parseJson.pretty else: result.toUgly client.getContent(url).parseJson
+  result = client.getContent(url).parseJson.pretty
 
 
 proc get2dict*(url: string): seq[Table[string, string]] {.exportpy.} =
@@ -166,22 +217,19 @@ proc get2dict*(url: string): seq[Table[string, string]] {.exportpy.} =
   for i in client.getContent(url).parseJson.pairs: result.add {i[0]: i[1].pretty}.toTable
 
 
-proc post2str*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): string {.exportpy.} =
+proc post2str*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): string {.exportpy, noinit.} =
   ## HTTP POST body to string.
-  client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
+  result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
-proc post2list*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): seq[string] {.exportpy.} =
+proc post2list*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): seq[string] {.exportpy, noinit.} =
   ## HTTP POST body to list of strings (this is designed for quick web scrapping).
-  client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).strip.splitLines
+  result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).strip.splitLines
 
 
-proc post2json*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[], pretty_print: bool = false): string {.exportpy.} =
+proc post2json*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): string {.exportpy, noinit.} =
   ## HTTP POST body to JSON.
-  if unlikely(pretty_print):
-    result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson.pretty
-  else:
-    result.toUgly client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson
+  result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson.pretty
 
 
 proc post2dict*(url, body: string, multipart_data: seq[tuple[name: string, content: string]] = @[]): seq[Table[string, string]] {.exportpy.} =
@@ -193,6 +241,18 @@ proc post2dict*(url, body: string, multipart_data: seq[tuple[name: string, conte
 proc download*(url, filename: string) {.discardable, exportpy.} =
   ## Download a file ASAP, from url, filename arguments.
   client.downloadFile(url, filename)
+
+
+# ^ Extra HTTP Functions ################################# V Experimental stuff
+
+
+proc get2str2*(list_of_urls: openArray[string], threads: bool = false): seq[string] {.exportpy.} =
+  ## HTTP GET body to string from a list of URLs.
+  if threads:
+    result = newSeq[string](list_of_urls.len)
+    for i, url in list_of_urls: result[i] = ^ spawn client.getContent(url)
+  else:
+    for url in list_of_urls: result.add client.getContent(url)
 
 
 proc download2*(list_of_files: openArray[tuple[url: string, filename: string]], threads: bool = false, delay: Natural = 0) {.discardable, exportpy.} =
@@ -229,8 +289,10 @@ proc download3*(list_of_files: openArray[tuple[url: string, filename: string]], 
       sleep mdelay[] + mtries[] mod jitter * 100
       dec mtries[]
       mdelay[] *= backoff
-  dealloc mdelay
-  dealloc mtries
+  if mdelay != nil:
+    dealloc mdelay
+  if mtries != nil:
+    dealloc mtries
 
 
 proc scraper*(list_of_urls: openArray[string], html_tag: string = "a", case_insensitive: bool = true, deduplicate_urls: bool = false, threads: bool = false): seq[string] {.exportpy.} =
@@ -274,8 +336,10 @@ proc scraper3*(list_of_urls: seq[string], list_of_tags: seq[string] = @["a"], st
           if strip($item).startsWith(start_with) and strip($item).endsWith(end_with): result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
           else: continue
         else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
-  dealloc cliente
-  dealloc urls
+  if cliente != nil:
+    dealloc cliente
+  if urls != nil:
+    dealloc urls
 
 
 proc scraper4*(list_of_urls: seq[string], folder: string = getCurrentDir(), force_extension: string = ".jpg", https_only: bool = false, print_alt: bool = false, picture: bool = false, case_insensitive: bool = true, deduplicate_urls: bool = false, visited_urls: bool = true, html_output: bool = true, csv_output: bool = true, verbose: bool = true, delay: Natural = 0, timeout: int = -1, agent: string = defUserAgent, redirects: Positive = 5, header: seq[(string, string)] = @[("DNT", "1")], proxy_url: string = "", proxy_auth: string = "") {.exportpy, discardable.} =
@@ -468,10 +532,12 @@ proc scraper7*(url: string, css_selector: string, user_agent: string = defUserAg
   client[] = clientify(user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers)
   var temp = create(seq[XmlNode])
   temp[] = @[htmlparser.parseHtml(client[].getContent(url))]
-  dealloc client
   findCssImpl(temp[], cssSelector)
   for item in temp[]: result.add $item
-  dealloc temp
+  if client != nil:
+    dealloc client
+  if temp != nil:
+    dealloc temp
 
 proc websocket_ping*(url: string; data: string = ""; hangup: bool = false): string {.exportpy.} =
   assert url.len > 0, "url must not be empty string"
@@ -482,7 +548,9 @@ proc websocket_ping*(url: string; data: string = ""; hangup: bool = false): stri
     await soquetito[].send(data, Opcode.Ping)
     result = await(soquetito[].receivePacket())[1]
     if hangup: soquetito[].hangup() else: soquetito[].close()
-    dealloc soquetito)(url, data, hangup)
+    if soquetito != nil:
+      dealloc soquetito
+  )(url, data, hangup)
 
 proc websocket_send*(url: string; data: string; is_text: bool = true; hangup: bool = false): string {.exportpy.} =
   assert url.len > 0, "url must not be empty string"
@@ -494,4 +562,6 @@ proc websocket_send*(url: string; data: string; is_text: bool = true; hangup: bo
     await soquetito[].send(data, (if is_text: Opcode.Text else: Opcode.Binary))
     result = await(soquetito[].receivePacket())[1]
     if hangup: soquetito[].hangup() else: soquetito[].close()
-    dealloc soquetito)(url, data, is_text, hangup)
+    if soquetito != nil:
+      dealloc soquetito
+  )(url, data, is_text, hangup)
