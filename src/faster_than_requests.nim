@@ -26,7 +26,7 @@ template clientify(url: string; userAgent: string; maxRedirects: int; proxyUrl: 
   [$respons.body, respons.contentType, respons.status, respons.version, url, try: $respons.contentLength except: "0", $respons.headers]
 
 
-proc to_dict(ftr_response: array[7, string]): Table[string, string] {.exportpy, noinit.} =
+proc to_dict*(ftr_response: array[7, string]): Table[string, string] {.exportpy, noinit.} =
   ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to dict.
   result = toTable({
     "body": ftr_response[0],
@@ -39,7 +39,7 @@ proc to_dict(ftr_response: array[7, string]): Table[string, string] {.exportpy, 
   })
 
 
-proc to_json(ftr_response: array[7, string]): string {.exportpy, noinit.} =
+proc to_json*(ftr_response: array[7, string]): string {.exportpy, noinit.} =
   ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to JSON.
   result = pretty(%*{
     "body": %ftr_response[0],
@@ -52,7 +52,7 @@ proc to_json(ftr_response: array[7, string]): string {.exportpy, noinit.} =
   })
 
 
-proc to_tuples(ftr_response: array[7, string]): array[7, (string, string)] {.exportpy, noinit.} =
+proc to_tuples*(ftr_response: array[7, string]): array[7, (string, string)] {.exportpy, noinit.} =
   ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to array of tuples.
   result = [
     ("body", ftr_response[0]),
