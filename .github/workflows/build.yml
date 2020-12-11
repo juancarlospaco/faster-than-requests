@@ -186,7 +186,7 @@ jobs:
       run: |
         cd dist
         rm -f *.zip
-        zip -9 -T -v -r $PACKAGE_NAME-${{ steps.vars.outputs.sha_short }}.zip *
+        zip -9 -T -v -r $PACKAGE_NAME-${{ steps.vars.outputs.semver_date }}.zip *
 
 
     - name: Commit Code  # Commit everything to Git repo
