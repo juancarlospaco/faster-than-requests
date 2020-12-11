@@ -64,7 +64,7 @@ requests.websocket_send("ws://echo.websocket.org", "data here")             # We
 | [**patch()**](#patch)   | [**delete()**](#delete)     | [download()](#download)       | [download2()](#download2) |
 | [scraper()](#scraper)   | [scraper2()](#scraper2)     | [scraper3()](#scraper3)       | [scraper4()](#scraper4)   |
 | [scraper5()](#scraper5) | [scraper6()](#scraper6)     | [scraper7()](#scraper7)       | [get2str()](#get2str)     |
-| [get2str2()](#get2str2) | [get2ndjson()](#get2ndjson) | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
+| [get2str2()](#get2str2) |                             | [get2dict()](#get2dict)       | [get2json()](#get2json)   |
 | [post2str()](#post2str) | [post2dict()](#post2dict)   | [post2json()](#post2json)     | [post2list()](#post2list) |
 | [download3()](#download3) | [tuples2json()](#tuples2json) | [set_headers()](#set_headers) | [multipartdata2str()](#multipartdata2str) |
 | [datauri()](#datauri)   | [urlparse()](#urlparse)     | [urlencode()](#urlencode)     | [urldecode()](#urldecode) |
@@ -97,8 +97,11 @@ requests.get("http://example.com")
 ```
 
 **Returns:**
-Response, `dict` type, values of the dict are string type,
-values of the dict can be empty string, but keys are always consistent.
+Response, `list` type, values of the list are string type,
+values of the list can be empty string, the lenght of the list is always 7 items,
+the values are like `[body, type, status, version, url, length, headers]`,
+you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
+
 
 **See Also:**
 [get2str()](https://github.com/juancarlospaco/faster-than-requests#get2str) and [get2str2()](https://github.com/juancarlospaco/faster-than-requests#get2str2)
@@ -132,8 +135,11 @@ requests.post("http://httpbin.org/post", "Some Data Here")
 ```
 
 **Returns:**
-Response, `dict` type, values of the dict are string type,
-values of the dict can be empty string, but keys are always consistent.
+Response, `list` type, values of the list are string type,
+values of the list can be empty string, the lenght of the list is always 7 items,
+the values are like `[body, type, status, version, url, length, headers]`,
+you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
+
 
 </details>
 
@@ -163,8 +169,11 @@ requests.put("http://httpbin.org/post", "Some Data Here")
 ```
 
 **Returns:**
-Response, `dict` type, values of the dict are string type,
-values of the dict can be empty string, but keys are always consistent.
+Response, `list` type, values of the list are string type,
+values of the list can be empty string, the lenght of the list is always 7 items,
+the values are like `[body, type, status, version, url, length, headers]`,
+you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
+
 
 </details>
 
@@ -193,8 +202,11 @@ requests.delete("http://example.com/api/something")
 ```
 
 **Returns:**
-Response, `dict` type, values of the dict are string type,
-values of the dict can be empty string, but keys are always consistent.
+Response, `list` type, values of the list are string type,
+values of the list can be empty string, the lenght of the list is always 7 items,
+the values are like `[body, type, status, version, url, length, headers]`,
+you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
+
 
 </details>
 
@@ -224,8 +236,11 @@ requests.patch("http://example.com", "My Body Data Here")
 ```
 
 **Returns:**
-Response, `dict` type, values of the dict are string type,
-values of the dict can be empty string, but keys are always consistent.
+Response, `list` type, values of the list are string type,
+values of the list can be empty string, the lenght of the list is always 7 items,
+the values are like `[body, type, status, version, url, length, headers]`,
+you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
+
 
 </details>
 
@@ -253,8 +268,50 @@ requests.head("http://example.com/api/something")
 ```
 
 **Returns:**
-Response, `dict` type, values of the dict are string type,
-values of the dict can be empty string, but keys are always consistent.
+Response, `list` type, values of the list are string type,
+values of the list can be empty string, the lenght of the list is always 7 items,
+the values are like `[body, type, status, version, url, length, headers]`,
+you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
+
+
+</details>
+
+
+# to_dict()
+<details>
+
+**Description:** Convert the response to dict.
+
+**Arguments:**
+- `ftr_response` Response from any of the functions that return a response.
+
+**Returns:** Response, `dict` type.
+
+</details>
+
+
+# to_json()
+<details>
+
+**Description:** Convert the response to Pretty-Printed JSON.
+
+**Arguments:**
+- `ftr_response` Response from any of the functions that return a response.
+
+**Returns:** Response, Pretty-Printed JSON.
+
+</details>
+
+
+# to_tuples()
+<details>
+
+**Description:** Convert the response to a list of tuples.
+
+**Arguments:**
+- `ftr_response` Response from any of the functions that return a response.
+
+**Returns:** Response, list of tuples.
 
 </details>
 
@@ -665,30 +722,6 @@ values of the list can be empty string, can be empty list.
 </details>
 
 
-
-## get2ndjson()
-<details>
-
-**Description:**
-Takes a list of URLs, makes 1 HTTP GET for each URL, returns a list of strings with the response, and writes the responses to a NDJSON file, it can accumulate several JSON responses into a single file.
-
-**Arguments:**
-- `list_of_urls` A list of the remote URLs, list type, required. Objects inside the list must be string type.
-- `ndjson_file_path` Full path to a local writable NDJSON file, string type, required, file can be non-existent and it will be created, if it exists it will the overwritten.
-
-Examples:
-
-```python
-import faster_than_requests as requests
-requests.get2ndjson(["http://example.com/foo", "http://example.com/bar"], "/some/folder/some/file.ndjson")
-```
-
-**Returns:** None.
-
-</details>
-
-
-
 ## get2dict()
 <details>
 
@@ -730,7 +763,7 @@ import faster_than_requests as requests
 requests.get2json("http://example.com", pretty_print=True)
 ```
 
-**Returns:** Response Body, Minified or Pretty-Printed JSON.
+**Returns:** Response Body, Pretty-Printed JSON.
 
 </details>
 
@@ -1166,25 +1199,6 @@ requests.minifyhtml("<h1>Hello</h1>          <h1>World</h1>")
 </details>
 
 
-## tuples2json()
-<details>
-
-**Description:**
-Convert Tuples to JSON, this is a UX improvement just for convenience, this is 100% optional,
-returns the Tuples converted to Minified computer-friendly single-line JSON.
-
-**Arguments:**
-- `tuples` A list containing Tuples, list type, required,
-a list of tuples, tuples must be 2 items long,
-must not be empty list, must not be empty tuple,
-the first item of the tuple is the key and second item of the tuple is value,
-keys must not be empty string, values can be empty string, both must the stripped.
-
-**Returns:** JSON, string type.
-
-</details>
-
-
 ## debugs
 <details>
 **Description:**
@@ -1366,12 +1380,7 @@ https://github.com/juancarlospaco/faster-than-requests/issues
 
 - How to set an HTTP Header key=value ?.
 
-[setHeaders()](https://github.com/juancarlospaco/faster-than-requests#setheaders)
-
-
-- Whats NDJSON ?.
-
-https://github.com/ndjson/ndjson-spec
+[set_headers()](https://github.com/juancarlospaco/faster-than-requests#set_headers)
 
 - How can be faster than PyCurl ?.
 
