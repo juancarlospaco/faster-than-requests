@@ -24,8 +24,8 @@ jobs:
     name: ${{ matrix.platform }}
     runs-on: ${{ matrix.platform }}
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-python@v1
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
 
 
     - name: Get Git Commit Short Hash
@@ -186,7 +186,7 @@ jobs:
       run: |
         cd dist
         rm -f *.zip
-        zip -9 -T -v -r $PACKAGE_NAME-${{ steps.vars.outputs.semver_date }}.zip *
+        zip -9 -T -v -r $PACKAGE_NAME-${{ steps.vars.outputs.sha_short }}.zip *
 
 
     - name: Commit Code  # Commit everything to Git repo
