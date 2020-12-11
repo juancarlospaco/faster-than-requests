@@ -8,7 +8,6 @@ package_name = "faster_than_requests"
 assert platform.architecture()[0] == "64bit", "ERROR: Python must be 64 Bit!. OS must be 64 Bit!."
 assert sys.version_info > (3, 6, 0), "ERROR: Python version must be > 3.5!."
 atexit.register(lambda: print(importlib.metadata.distribution(package_name).files))
-# atexit.register(lambda: print(__import__(package_name).__file__))
 
 
 if sys.platform.startswith("lin"):
