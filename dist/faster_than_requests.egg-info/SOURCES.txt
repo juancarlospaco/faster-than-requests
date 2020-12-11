@@ -1,1 +1,9 @@
- 
+LICENSE
+README.md
+setup.cfg
+setup.py
+faster_than_requests.egg-info/PKG-INFO
+faster_than_requests.egg-info/SOURCES.txt
+faster_than_requests.egg-info/dependency_links.txt
+faster_than_requests.egg-info/top_level.txt
+faster_than_requests.egg-info/zip-safe
