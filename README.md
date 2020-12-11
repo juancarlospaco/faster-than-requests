@@ -277,6 +277,45 @@ you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()
 </details>
 
 
+# to_dict()
+<details>
+
+**Description:** Convert the response to dict.
+
+**Arguments:**
+- `ftr_response` Response from any of the functions that return a response.
+
+**Returns:** Response, `dict` type.
+
+</details>
+
+
+# to_json()
+<details>
+
+**Description:** Convert the response to Pretty-Printed JSON.
+
+**Arguments:**
+- `ftr_response` Response from any of the functions that return a response.
+
+**Returns:** Response, Pretty-Printed JSON.
+
+</details>
+
+
+# to_tuples()
+<details>
+
+**Description:** Convert the response to a list of tuples.
+
+**Arguments:**
+- `ftr_response` Response from any of the functions that return a response.
+
+**Returns:** Response, list of tuples.
+
+</details>
+
+
 # Extras: Go beyond requests
 
 ## scraper()
