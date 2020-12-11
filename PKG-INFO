@@ -6,21 +6,7 @@ Author: Juan Carlos
 Author-email: JuanCarlospaco@gmail.com
 Maintainer: Juan Carlos
 License: MIT
-Download-URL: https://github.com/juancarlospaco
-Project-URL: Homepage, https://nim-lang.org
-Project-URL: For Python Devs, https://github.com/nim-lang/Nim/wiki/Nim-for-Python-Programmers
-Project-URL: For TypeScript Devs, https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers
-Project-URL: Forum, http://forum.nim-lang.org
-Project-URL: Twitter, https://twitter.com/nim_lang
-Project-URL: Reddit, https://reddit.com/r/nim
-Project-URL: StackOverflow, https://stackoverflow.com/questions/tagged/nim-lang
-Project-URL: Discord, https://discord.gg/ezDFDw2
-Project-URL: Telegram, https://t.me/nim_lang
-Project-URL: Matrix, https://matrix.to/#/#freenode_#nim:matrix.org
-Project-URL: Argentina Chat Spanish, https://t.me/NimArgentina
-Project-URL: Dev Documentation Index, https://nim-lang.github.io/Nim/theindex.html
-Project-URL: Tutorial, https://nim-lang.github.io/Nim/tut1.html
-Keywords: python3, python4, cpython, speed, cython, rust, wasm, c, performance, compiled, native, fast, nim, argentina, requests, httpx, httpie, scraper, scrapinghub, curl, wget, http, web, ssl
+Keywords: python3,python4,cpython,speed,cython,rust,wasm,c,performance,compiled,native,fast,nim,argentina,requests,httpx,httpie,scraper,scrapinghub,curl,wget,http,web,ssl
 Platform: Linux
 Platform: Darwin
 Platform: Windows
