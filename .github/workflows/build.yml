@@ -189,6 +189,15 @@ jobs:
         zip -9 -T -v -r $PACKAGE_NAME-${{ steps.vars.outputs.sha_short }}.zip *
 
 
+    - name: Compress to ZIP (Unix)  # Make Python package
+      if: runner.os == 'Linux' || runner.os == 'macOS'
+      shell: bash
+      run: |
+        cd dist
+        rm -f *.zip
+        python3 setup.py sdist --format=zip
+
+
     - name: Commit Code  # Commit everything to Git repo
       uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
       with:
@@ -220,11 +229,11 @@ jobs:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-    - name: Upload to PYPI (Linux)  # If everything worked, then upload to PYPI
-      if: runner.os == 'Linux'
-      run: |
-        pip3 install --quiet --upgrade --disable-pip-version-check twine
-        twine upload --verbose --disable-progress-bar --skip-existing --comment "Powered by https://Nim-lang.org" dist/*.zip
+    # - name: Upload to PYPI (Linux)  # If everything worked, then upload to PYPI
+    #   if: runner.os == 'Linux'
+    #   run: |
+    #     pip3 install --quiet --upgrade --disable-pip-version-check twine
+    #     twine upload --verbose --disable-progress-bar --skip-existing --comment "Powered by https://Nim-lang.org" dist/*.zip
 
 
     - name: Cache Nim
