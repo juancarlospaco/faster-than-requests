@@ -17,3 +17,4 @@ assignees: ''
 - ARM support is Experimental, you may need to compile manually.
 - Mac OSX support is Experimental, you may need to compile manually.
 - Alpine Linux support is Experimental, you may need to compile manually.
+- Termux support is Experimental, you may need to compile manually.
