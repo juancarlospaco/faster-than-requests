@@ -38,7 +38,7 @@ setuptools.setup(
       sources = sources,
       include_dirs = [folder],
       extra_link_args = ["-s"],
-      extra_compile_args = ["-flto", "-ffast-math", "-march=native", "-mtune=native", "-O3", "-fsingle-precision-constant"],
+      extra_compile_args = ["-flto", "-ffast-math", "-march=native", "-mtune=native", "-O3", "-fsingle-precision-constant", "-fno-semantic-interposition"],
     )
   ]
 )
