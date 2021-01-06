@@ -232,9 +232,9 @@ jobs:
 
     - name: Upload to PYPI (Linux)  # If everything worked, then upload to PYPI
       if: runner.os == 'Linux'
-      run: |
-        pip3 install --quiet --upgrade --disable-pip-version-check twine==3.0.0  # New Twine is buggy, error "has different metadata"
-    # twine upload --verbose --disable-progress-bar --skip-existing --comment "Powered by https://Nim-lang.org" dist/*.zip
+      run: |  # New Twine is buggy, error "has different metadata"
+        pip3 install --quiet --upgrade --disable-pip-version-check twine==3.0.0
+        twine upload --verbose --disable-progress-bar --skip-existing --comment "Powered by https://Nim-lang.org" dist/*.zip
 
 
     - name: Cache Nim
