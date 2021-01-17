@@ -295,12 +295,12 @@ proc scraper2*(list_of_urls: seq[string]; list_of_tags: seq[string] = @["a"]; ve
   result = newSeq[seq[string]](urls.len)
   if likely(threads):
     for i, url in urls:
-      for tag in list_of_tags: result[i] = ^ spawn mapIt(findAll(parseHtml(cliente.getContent(url)), tag, case_insensitive), $it)
+      for tag in list_of_tags: result[i] = ^ spawn map(findAll(parseHtml(cliente.getContent(url)), tag, case_insensitive), proc(s: any): string = $s )
   else:
     for i, url in urls:
       if likely(verbose): echo i, "\t", url
       for tag in list_of_tags:
-        result[i] = mapIt(findAll(parseHtml(cliente.getContent(url)), tag, case_insensitive), $it)
+        result[i] = map(findAll(parseHtml(cliente.getContent(url)), tag, case_insensitive), proc(s: any): string = $s)
         sleep delay
 
 
