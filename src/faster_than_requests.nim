@@ -174,7 +174,7 @@ proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.
 proc debugs*() {.discardable, exportpy.} =
   ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
   echo static(pretty(%*{
-    "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS, "debug": getEnv("REQUESTS_DEBUG", "false").parseBool,
+    "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS,
     "endian": cpuEndian, "release": defined(release), "danger": defined(danger), "CompileDate": CompileDate, "CompileTime": CompileTime,
     "tempDir": getTempDir(), "ssl": defined(ssl), "currentCompilerExe": getCurrentCompilerExe(), "int.high": int.high
   }))
