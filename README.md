@@ -1258,6 +1258,8 @@ Instantiate the HTTP Client object, for deferred initialization, call it before 
 `get()`, `post()`, `put()`, `patch()`, `delete()`, `head()` do NOT need this, because they auto-init,
 this exist for performance reasons to defer the initialization and was requested by the community.
 
+This is required and recommended.
+
 **Arguments:** None.
 
 Examples:
@@ -1281,6 +1283,8 @@ Tear down the HTTP Client object, for deferred de-initialization, call it after 
 
 `get()`, `post()`, `put()`, `patch()`, `delete()`, `head()` do NOT need this, because they auto-init,
 this exist for performance reasons to defer the de-initialization and was requested by the community.
+
+This is optional but very recommended.
 
 **Arguments:** None.
 
