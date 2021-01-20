@@ -1225,6 +1225,7 @@ requests.debugs()
 
 **Description:**
 This module uses compile-time deterministic memory management GC (kinda like Rust, but for Python).
+Python at run-time makes a pause, runs a Garbage Collector, and resumes again after the pause.
 
 `gctricks.optimizeGC` allows you to omit the Python GC pauses at run-time temporarily on a context manager block,
 this is the proper way to use this module for Benchmarks!, this is optional but recommended,
@@ -1232,8 +1233,7 @@ we did not invent this, this is inspired from work from Instagram Engineering te
 
 - https://instagram-engineering.com/dismissing-python-garbage-collection-at-instagram-4dca40b29172
 
-
-**Arguments:** None.
+This is NOT a function, it is a context manager, it takes no arguments and wont return.
 
 Examples:
 
