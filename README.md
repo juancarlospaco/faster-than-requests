@@ -1235,6 +1235,8 @@ we did not invent this, this is inspired from work from Instagram Engineering te
 
 This is NOT a function, it is a context manager, it takes no arguments and wont return.
 
+This calls `init_client()` at start and `close_client()` at end automatically.
+
 Examples:
 
 ```python
@@ -1258,7 +1260,9 @@ Instantiate the HTTP Client object, for deferred initialization, call it before 
 `get()`, `post()`, `put()`, `patch()`, `delete()`, `head()` do NOT need this, because they auto-init,
 this exist for performance reasons to defer the initialization and was requested by the community.
 
-This is required and recommended.
+This is optional but recommended.
+
+Read `optimizeGC` documentation before using.
 
 **Arguments:** None.
 
@@ -1284,7 +1288,9 @@ Tear down the HTTP Client object, for deferred de-initialization, call it after 
 `get()`, `post()`, `put()`, `patch()`, `delete()`, `head()` do NOT need this, because they auto-init,
 this exist for performance reasons to defer the de-initialization and was requested by the community.
 
-This is optional but very recommended.
+This is optional but recommended.
+
+Read `optimizeGC` documentation before using.
 
 **Arguments:** None.
 
