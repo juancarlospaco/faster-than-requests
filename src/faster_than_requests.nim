@@ -66,31 +66,26 @@ proc to_tuples*(ftr_response: array[7, string]): array[7, (string, string)] {.ex
 
 
 proc get*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  ## HTTP GET an URL to dictionary.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
     respons = cliente.get(url)
 
 
 proc post*(url: string; body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  ## HTTP POST an URL to dictionary.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
     respons = cliente.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
 proc put*(url: string; body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  ## HTTP PUT an URL to dictionary.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
     respons = cliente.put(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
 proc patch*(url: string; body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  ## HTTP PATCH an URL to dictionary.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
     respons = cliente.patch(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
 
 
 proc delete*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  ## HTTP DELETE an URL to dictionary.
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
     respons = cliente.delete(url)
 
