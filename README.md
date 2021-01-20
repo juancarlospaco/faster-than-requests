@@ -1220,6 +1220,35 @@ requests.debugs()
 </details>
 
 
+## optimizeGC()
+<details>
+
+**Description:**
+This module uses compile-time deterministic memory management GC (kinda like Rust, but for Python).
+
+`gctricks.optimizeGC` allows you to omit the Python GC pauses at run-time temporarily on a context manager block,
+this is the proper way to use this module for Benchmarks!, this is optional but recommended,
+we did not invent this, this is inspired from work from Instagram Engineering team and battle tested by them:
+
+- https://instagram-engineering.com/dismissing-python-garbage-collection-at-instagram-4dca40b29172
+
+
+**Arguments:** None.
+
+Examples:
+
+```python
+from gctricks import optmizeGC
+
+with optmizeGC:
+  # All your HTTP code here. Chill the GC.
+
+# GC run-time pauses enabled again.
+```
+
+</details>
+
+
 ## init_client()
 <details>
 
