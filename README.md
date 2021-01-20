@@ -1301,20 +1301,6 @@ requests.close_client()
 </details>
 
 
-# How to set Debug Mode
-
-Set Debug Mode by changing the environment variable `REQUESTS_DEBUG`, `bool` type, can be empty string,
-Debug Mode prints progress in real time each second on the terminal as JSON string, Debug Mode is slow.
-This is 100% Optional, this is provided as Extra feature.
-
-Examples:
-
-```bash
-$ export REQUESTS_DEBUG = "true"
-$ # This is the Bash command line terminal!.
-```
-
-
 [**For more Examples check the Examples and Tests.**](https://github.com/juancarlospaco/faster-than-requests/blob/master/examples/example.py)
 
 Instead of having a pair of functions with a lot of arguments that you should provide to make it work,
