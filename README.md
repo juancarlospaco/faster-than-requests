@@ -1243,7 +1243,7 @@ Examples:
 from gctricks import optmizeGC
 
 with optmizeGC:
-  # All your HTTP code here. Chill the GC.
+  # All your HTTP code here. Chill the GC. Calls init_client() and close_client() automatically.
 
 # GC run-time pauses enabled again.
 ```
