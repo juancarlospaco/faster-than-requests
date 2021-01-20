@@ -1220,6 +1220,48 @@ requests.debugs()
 </details>
 
 
+## init_client()
+<details>
+
+**Description:**
+Instantiate the HTTP Client object, for deferred initialization, call it before the start of all HTTP operations.
+
+**Arguments:** None.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+requests.init_client()
+# All your HTTP code here.
+```
+
+**Returns:** None.
+
+</details>
+
+
+## close_client()
+<details>
+
+**Description:**
+Tear down the HTTP Client object, for deferred de-initialization, call it after the end of all HTTP operations.
+
+**Arguments:** None.
+
+Examples:
+
+```python
+import faster_than_requests as requests
+# All your HTTP code here.
+requests.close_client()
+```
+
+**Returns:** None.
+
+</details>
+
+
 # How to set Debug Mode
 
 Set Debug Mode by changing the environment variable `REQUESTS_DEBUG`, `bool` type, can be empty string,
