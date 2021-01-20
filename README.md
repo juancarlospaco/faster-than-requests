@@ -1255,6 +1255,9 @@ with optmizeGC:
 **Description:**
 Instantiate the HTTP Client object, for deferred initialization, call it before the start of all HTTP operations.
 
+`get()`, `post()`, `put()`, `patch()`, `delete()`, `head()` do NOT need this, because they auto-init,
+this exist for performance reasons to defer the initialization and was requested by the community.
+
 **Arguments:** None.
 
 Examples:
@@ -1275,6 +1278,9 @@ requests.init_client()
 
 **Description:**
 Tear down the HTTP Client object, for deferred de-initialization, call it after the end of all HTTP operations.
+
+`get()`, `post()`, `put()`, `patch()`, `delete()`, `head()` do NOT need this, because they auto-init,
+this exist for performance reasons to defer the de-initialization and was requested by the community.
 
 **Arguments:** None.
 
