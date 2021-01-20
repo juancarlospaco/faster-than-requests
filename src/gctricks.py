@@ -1,4 +1,4 @@
-import gc, atexit, faster_than_requests
+import gc, faster_than_requests  #, atexit
 
 class optimizeGC:
   """https://instagram-engineering.com/dismissing-python-garbage-collection-at-instagram-4dca40b29172"""
