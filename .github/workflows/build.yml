@@ -1,18 +1,5 @@
 name: Build
-on:
-  push:
-    paths:
-      - 'setup.py'
-      - 'setup.cfg'
-      - 'PKG-INFO'
-      - 'src/*.*'
-      - 'src/**.py'
-      - 'src/**.nim'
-      - 'src/**.nims'
-      - 'src/**.cfg'
-      - '.github/workflows/*.yml'
-      - '.github/workflows/*.yaml'
-      - '.gitignore'
+on: push
 
 jobs:
   build:
@@ -33,23 +20,15 @@ jobs:
       uses: allenevans/set-env@v2.0.0
       with:
         NIM_VERSION:           "1.4.2"
-        MAIN_MODULE:           "src/faster_than_requests.nim"
-        PACKAGE_NAME:          "faster_than_requests"
         TWINE_USERNAME:        ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD:        ${{ secrets.PYPI_PASSWORD }}
         TWINE_NON_INTERACTIVE: 1
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-        NIM_COMMON_OPTIONS:    >-
-          compileToC --compileOnly:on --colors:off --threads:on
-          -d:release -d:danger -d:lto -d:strip -d:ssl --app:lib --exceptions:goto
-          -d:nimBinaryStdFiles -d:noSignalHandler -d:nimDisableCertificateValidation
-          --opt:speed --cpu:amd64 --forceBuild --gc:orc --panics:on
-          --stackTrace:off --excessiveStackTrace:off --experimental:parallel
 
     - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install setuptools wheel twine nimporter
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install setuptools wheel twine nimporter
 
     - uses: juancarlospaco/nimpretty-action@main
       with:
@@ -64,11 +43,11 @@ jobs:
         ls dist
         twine upload dist/*
 
-      - name: Build Windows Mac
-        if: runner.os == 'Windows' || runner.os == 'macOS'
-        run: |
-          python setup.py bdist_wheel
-          twine upload dist/*
+    - name: Build Windows Mac
+      if: runner.os == 'Windows' || runner.os == 'macOS'
+      run: |
+        python setup.py bdist_wheel
+        twine upload dist/*
 
     - name: Commit Nimpretty Fixes  # Commit everything to Git repo
       uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
