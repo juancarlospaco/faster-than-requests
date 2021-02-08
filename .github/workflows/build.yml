@@ -15,11 +15,13 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: '3.9'
+    - uses: jiro4989/setup-nim-action@v1.3
+        with:
+          nim-version: "1.4.2"
 
     - name: Set Environment Variables
       uses: allenevans/set-env@v2.0.0
       with:
-        NIM_VERSION:           "1.4.2"
         TWINE_USERNAME:        ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD:        ${{ secrets.PYPI_PASSWORD }}
         TWINE_NON_INTERACTIVE: 1
