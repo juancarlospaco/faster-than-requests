@@ -10,58 +10,61 @@ template clientify(url: string; userAgent: string; maxRedirects: int; proxyUrl: 
     cliente {.inject.} = createU HttpClient
   try:
     cliente[] = newHttpClient(
-      timeout = timeout,
-      userAgent = userAgent,
+      timeout      = timeout,
+      userAgent    = userAgent,
       maxRedirects = maxRedirects,
-      headers = newHttpHeaders(http_headers),
-      proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil),
+      headers      = newHttpHeaders(http_headers),
+      proxy        = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil),
     )
     {.push, experimental: "implicitDeref".}
     code
     {.pop.}
   finally:
     cliente[].close()
-    if cliente != nil:
-      dealloc cliente
+    if cliente != nil: dealloc cliente
   [$respons.body, respons.contentType, respons.status, respons.version, url, try: $respons.contentLength except: "0", $respons.headers]
+
+template mltprt(data): untyped =
+  ## Construct a new Multi-Part data, or null if data is empty.
+  if unlikely(data.len > 0): newMultipartData(data) else: nil
 
 
 proc to_dict*(ftr_response: array[7, string]): Table[string, string] {.exportpy, noinit.} =
-  ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to dict.
+  ## Convert from `["body", "content-type", "status", "version", "content-length", "headers"]` to dict.
   result = toTable({
-    "body": ftr_response[0],
-    "content-type": ftr_response[1],
-    "status": ftr_response[2],
-    "version": ftr_response[3],
-    "url": ftr_response[4],
+    "body":           ftr_response[0],
+    "content-type":   ftr_response[1],
+    "status":         ftr_response[2],
+    "version":        ftr_response[3],
+    "url":            ftr_response[4],
     "content-length": ftr_response[5],
-    "headers": ftr_response[6],
+    "headers":        ftr_response[6],
   })
 
 
 proc to_json*(ftr_response: array[7, string]): string {.exportpy, noinit.} =
-  ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to JSON.
+  ## Convert from `["body", "content-type", "status", "version", "content-length", "headers"]` to JSON.
   result = pretty(%*{
-    "body": %ftr_response[0],
-    "content-type": %ftr_response[1],
-    "status": %ftr_response[2],
-    "version": %ftr_response[3],
-    "url": %ftr_response[4],
+    "body":           %ftr_response[0],
+    "content-type":   %ftr_response[1],
+    "status":         %ftr_response[2],
+    "version":        %ftr_response[3],
+    "url":            %ftr_response[4],
     "content-length": %ftr_response[5],
-    "headers": %ftr_response[6],
+    "headers":        %ftr_response[6],
   })
 
 
 proc to_tuples*(ftr_response: array[7, string]): array[7, (string, string)] {.exportpy, noinit.} =
-  ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to array of tuples.
+  ## Convert from `["body", "content-type", "status", "version", "content-length", "headers"]` to list of tuples.
   result = [
-    ("body", ftr_response[0]),
-    ("content-type", ftr_response[1]),
-    ("status", ftr_response[2]),
-    ("version", ftr_response[3]),
-    ("url", ftr_response[4]),
+    ("body",           ftr_response[0]),
+    ("content-type",   ftr_response[1]),
+    ("status",         ftr_response[2]),
+    ("version",        ftr_response[3]),
+    ("url",            ftr_response[4]),
     ("content-length", ftr_response[5]),
-    ("headers", ftr_response[6]),
+    ("headers",        ftr_response[6]),
   ]
 
 
@@ -72,17 +75,17 @@ proc get*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9
 
 proc post*(url: string; body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
+    respons = cliente.post(url, body, multipart = mltprt(multipart_data))
 
 
 proc put*(url: string; body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.put(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
+    respons = cliente.put(url, body, multipart = mltprt(multipart_data))
 
 
 proc patch*(url: string; body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
   clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.patch(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
+    respons = cliente.patch(url, body, multipart = mltprt(multipart_data))
 
 
 proc delete*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
@@ -99,7 +102,7 @@ proc head*(url: string; user_agent: string = defUserAgent; max_redirects: int = 
 # ^ Basic HTTP Functions ########### V Extra HTTP Functions, go beyond requests
 
 
-var client: HttpClient
+var client: HttpClient  ## HTTP Client for the extended utilities.
 
 
 proc init_client(timeout: int = -1; max_redirects: int = 9; user_agent: string = defUserAgent;
@@ -113,7 +116,7 @@ proc close_client() {.exportpy.} =
 
 
 proc set_headers*(headers: openArray[tuple[key: string; val: string]]) {.exportpy.} =
-  ## Set the HTTP Headers to the HTTP client.
+  ## Set the HTTP Headers to the HTTP client, for functions that do NOT have the `http_headers` argument.
   doAssert headers.len > 0, "HTTP Headers must not be empty list"
   client.headers = newHttpHeaders(headers)
 
@@ -197,27 +200,27 @@ proc get2dict*(url: string): seq[Table[string, string]] {.exportpy.} =
 
 proc post2str*(url, body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]): string {.exportpy, noinit.} =
   ## HTTP POST body to string.
-  result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
+  result = client.postContent(url, body, multipart = mltprt(multipart_data))
 
 
 proc post2list*(url, body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]): seq[string] {.exportpy, noinit.} =
   ## HTTP POST body to list of strings (this is designed for quick web scrapping).
-  result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).strip.splitLines
+  result = client.postContent(url, body, multipart = mltprt(multipart_data)).strip.splitLines
 
 
 proc post2json*(url, body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]): string {.exportpy, noinit.} =
   ## HTTP POST body to JSON.
-  result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson.pretty
+  result = client.postContent(url, body, multipart = mltprt(multipart_data)).parseJson.pretty
 
 
 proc post2dict*(url, body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]): seq[Table[string, string]] {.exportpy.} =
   ## HTTP POST body to dictionary.
-  for i in client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson.pairs:
+  for i in client.postContent(url, body, multipart = mltprt(multipart_data)).parseJson.pairs:
     result.add {i[0]: i[1].pretty}.toTable
 
 
 proc download*(url, filename: string) {.discardable, exportpy.} =
-  ## Download a file ASAP, from url, filename arguments.
+  ## Download a file from an url.
   client.downloadFile(url, filename)
 
 
