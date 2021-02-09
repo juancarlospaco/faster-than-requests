@@ -45,7 +45,7 @@ jobs:
         # twine upload dist/*
 
     - name: Build Windows Mac
-      if: runner.os == 'Windows' || runner.os == 'macOS'
+      if: runner.os == 'macOS'  # || runner.os == 'Windows'
       run: |
         python setup.py bdist_wheel
         # twine upload dist/*
