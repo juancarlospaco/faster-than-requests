@@ -40,8 +40,8 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         python setup.py bdist_wheel
-        WHEEL=dist/$(python3 -c 'import pathlib;print([*pathlib.Path("dist").glob("pebaz*")][0].name.replace("linux", "manylinux1"))')
-        mv dist/$(python -c "import pathlib;print([*pathlib.Path('dist').glob('pebaz*')][0].name)") $WHEEL
+        WHEEL=dist/$(python3 -c 'import pathlib;print([*pathlib.Path("dist").glob("juancarlospaco*")][0].name.replace("linux", "manylinux1"))')
+        mv dist/$(python -c "import pathlib;print([*pathlib.Path('dist').glob('juancarlospaco*')][0].name)") $WHEEL
         # twine upload dist/*
 
     - name: Build Windows Mac
