@@ -14,7 +14,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.9'
+        python-version: "3.9"
     - uses: jiro4989/setup-nim-action@v1.3
       with:
         nim-version: "1.4.2"
@@ -42,20 +42,19 @@ jobs:
         python setup.py bdist_wheel
         WHEEL=dist/$(python3 -c 'import pathlib;print([*pathlib.Path("dist").glob("pebaz*")][0].name.replace("linux", "manylinux1"))')
         mv dist/$(python -c "import pathlib;print([*pathlib.Path('dist').glob('pebaz*')][0].name)") $WHEEL
-        ls dist
-        twine upload dist/*
+        # twine upload dist/*
 
     - name: Build Windows Mac
       if: runner.os == 'Windows' || runner.os == 'macOS'
       run: |
         python setup.py bdist_wheel
-        twine upload dist/*
+        # twine upload dist/*
 
-    - name: Commit Nimpretty Fixes  # Commit everything to Git repo
-      uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
-      with:
-        add: 'src/*.nim'
-        force: true
-        message: ${{ steps.vars.outputs.semver_date }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Commit Nimpretty Fixes  # Commit everything to Git repo
+    #   uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
+    #   with:
+    #     add: 'src/*.nim'
+    #     force: true
+    #     message: ${{ steps.vars.outputs.semver_date }}
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
