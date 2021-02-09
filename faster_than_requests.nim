@@ -1,7 +1,7 @@
 import
   asyncdispatch, db_sqlite, htmlparser, httpclient, json, nimpy, os, sequtils,
   pegs, re, strtabs, strutils, tables, threadpool, uri, sequtils, xmltree
-import ws
+# import ws
 
 template clientify(url: string; userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string;
   timeout: int; http_headers: openArray[tuple[key: string; val: string]]; code: untyped): array[7, string] =
