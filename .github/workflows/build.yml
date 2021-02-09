@@ -32,6 +32,7 @@ jobs:
           python -m pip install setuptools wheel twine nimporter
       - name: Build and publish
         env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
@@ -61,6 +62,7 @@ jobs:
           python -m pip install setuptools wheel twine nimporter
       - name: Build and publish
         env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
@@ -86,6 +88,7 @@ jobs:
           python3 -m pip install setuptools wheel twine nimporter
       - name: Build and publish
         env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
