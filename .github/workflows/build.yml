@@ -14,7 +14,9 @@ jobs:
         with:
           python-version: '3.9'
 
-      - uses: jiro4989/setup-nim-action@v1.0.2
+      - uses: jiro4989/setup-nim-action@v1.3
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         with:
           nim-version: '1.4.2'
 
