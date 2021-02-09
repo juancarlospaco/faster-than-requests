@@ -1,0 +1,2 @@
+import nimporter
+import faster_than_requests
