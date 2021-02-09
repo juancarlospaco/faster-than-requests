@@ -37,7 +37,7 @@ jobs:
         folders: "src"
 
     - name: Build Linux
-      if: runner.os == 'Linux'
+      if: false   # runner.os == 'Linux'
       run: |
         python setup.py bdist_wheel
         WHEEL=dist/$(python3 -c 'import pathlib;print([*pathlib.Path("dist").glob("juancarlospaco*")][0].name.replace("linux", "manylinux1"))')
