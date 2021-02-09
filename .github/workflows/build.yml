@@ -43,20 +43,9 @@ jobs:
         python setup.py bdist_wheel
         WHEEL=dist/$(python3 -c 'import pathlib;print([*pathlib.Path("dist").glob("juancarlospaco*")][0].name.replace("linux", "manylinux1"))')
         mv dist/$(python -c "import pathlib;print([*pathlib.Path('dist').glob('juancarlospaco*')][0].name)") $WHEEL
-        # twine upload dist/*
 
     - name: Build Windows Mac
       if: runner.os == 'macOS' || runner.os == 'Windows'
       shell: bash
       run: |
         python setup.py bdist_wheel
-        # twine upload dist/*
-
-    # - name: Commit Nimpretty Fixes  # Commit everything to Git repo
-    #   uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
-    #   with:
-    #     add: 'src/*.nim'
-    #     force: true
-    #     message: ${{ steps.vars.outputs.semver_date }}
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
