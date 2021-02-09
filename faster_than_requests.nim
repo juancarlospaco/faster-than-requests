@@ -531,30 +531,30 @@ proc scraper7*(url: string; css_selector: string; user_agent: string = defUserAg
       dealloc clien
 
 
-proc websocket_ping*(url: string; data: string = ""; hangup: bool = false): string {.exportpy.} =
-  assert url.len > 0, "url must not be empty string"
-  result = waitFor (proc (url, data: string; hangup: bool): Future[string] {.async, inline.} =
-    let soquetito = create(WebSocket)
-    soquetito[] = await newWebSocket(url)
-    echo "WebSocket ", soquetito[].readyState
-    await soquetito[].send(data, Opcode.Ping)
-    result = await(soquetito[].receivePacket())[1]
-    if hangup: soquetito[].hangup() else: soquetito[].close()
-    if soquetito != nil:
-      dealloc soquetito
-  )(url, data, hangup)
+# proc websocket_ping*(url: string; data: string = ""; hangup: bool = false): string {.exportpy.} =
+#   assert url.len > 0, "url must not be empty string"
+#   result = waitFor (proc (url, data: string; hangup: bool): Future[string] {.async, inline.} =
+#     let soquetito = create(WebSocket)
+#     soquetito[] = await newWebSocket(url)
+#     echo "WebSocket ", soquetito[].readyState
+#     await soquetito[].send(data, Opcode.Ping)
+#     result = await(soquetito[].receivePacket())[1]
+#     if hangup: soquetito[].hangup() else: soquetito[].close()
+#     if soquetito != nil:
+#       dealloc soquetito
+#   )(url, data, hangup)
 
 
-proc websocket_send*(url: string; data: string; is_text: bool = true; hangup: bool = false): string {.exportpy.} =
-  assert url.len > 0, "url must not be empty string"
-  assert data.len > 0, "data must not be empty string"
-  result = waitFor (proc (url, data: string; is_text: bool; hangup: bool): Future[string] {.async, inline.} =
-    let soquetito = create(WebSocket)
-    soquetito[] = await newWebSocket(url)
-    echo "WebSocket ", soquetito[].readyState
-    await soquetito[].send(data, (if is_text: Opcode.Text else: Opcode.Binary))
-    result = await(soquetito[].receivePacket())[1]
-    if hangup: soquetito[].hangup() else: soquetito[].close()
-    if soquetito != nil:
-      dealloc soquetito
-  )(url, data, is_text, hangup)
+# proc websocket_send*(url: string; data: string; is_text: bool = true; hangup: bool = false): string {.exportpy.} =
+#   assert url.len > 0, "url must not be empty string"
+#   assert data.len > 0, "data must not be empty string"
+#   result = waitFor (proc (url, data: string; is_text: bool; hangup: bool): Future[string] {.async, inline.} =
+#     let soquetito = create(WebSocket)
+#     soquetito[] = await newWebSocket(url)
+#     echo "WebSocket ", soquetito[].readyState
+#     await soquetito[].send(data, (if is_text: Opcode.Text else: Opcode.Binary))
+#     result = await(soquetito[].receivePacket())[1]
+#     if hangup: soquetito[].hangup() else: soquetito[].close()
+#     if soquetito != nil:
+#       dealloc soquetito
+#   )(url, data, is_text, hangup)
