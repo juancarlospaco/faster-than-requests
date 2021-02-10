@@ -31,9 +31,9 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           python setup.py bdist_wheel
-          WHEEL=dist/$(python3 -c 'import pathlib;print([*pathlib.Path("dist").glob("pebaz*")][0].name.replace("linux", "manylinux1"))')
-          mv dist/$(python -c "import pathlib;print([*pathlib.Path('dist').glob('pebaz*')][0].name)") $WHEEL
-          ls dist
+          WHEEL=dist/$(python3 -c 'import pathlib;print([*pathlib.Path("dist").glob("juancarlospaco*")][0].name.replace("linux", "manylinux1"))')
+          mv dist/$(python -c "import pathlib;print([*pathlib.Path('dist').glob('juancarlospaco*')][0].name)") $WHEEL
+          ls .
 
   # ----------------------------------------------------------------------------
   build-win32:
@@ -61,7 +61,7 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           python setup.py bdist_wheel
-          ls dist
+          ls .
   # ----------------------------------------------------------------------------
   build-macos:
     runs-on: macos-latest
@@ -87,4 +87,4 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           python3 setup.py bdist_wheel
-          ls dist
+          ls .
