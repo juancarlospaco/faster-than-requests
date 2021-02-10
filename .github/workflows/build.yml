@@ -44,11 +44,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: '3.x'
+          python-version: '3.9'
 
       - uses: jiro4989/setup-nim-action@v1.3
         with:
-          nim-version: '1.0.6'
+          nim-version: '1.4.2'
 
       - name: Install dependencies
         run: |
@@ -71,10 +71,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: '3.x'
+          python-version: '3.9'
       - uses: jiro4989/setup-nim-action@v1.3
         with:
-          nim-version: '1.0.6'
+          nim-version: '1.4.2'
 
       - name: Install dependencies
         run: |
