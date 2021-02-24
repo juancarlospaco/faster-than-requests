@@ -6,6 +6,8 @@
 *.so
 *.pyd
 __pycache__/
+.eggs/
+*.egg-info/
 .ionide/
 *.c.o
 *.pyc

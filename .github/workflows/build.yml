@@ -27,7 +27,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.8'  # New PIP is buggy, error "has different metadata"
+        python-version: '3.9'  # New PIP is buggy, error "has different metadata"
+
+    - uses: jiro4989/setup-nim-action@v1
+      with:
+        nim-version: '1.4.2'
+        no-color: true  # --noColor
 
     - name: Get Git Commit Short Hash
       id: vars
@@ -47,37 +52,6 @@ jobs:
         TWINE_PASSWORD:        ${{ secrets.PYPI_PASSWORD }}
         TWINE_NON_INTERACTIVE: 1
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-        NIM_COMMON_OPTIONS:    >-
-          compileToC --compileOnly:on --colors:off --threads:on
-          -d:release -d:danger -d:lto -d:strip -d:ssl --app:lib --exceptions:goto
-          -d:nimBinaryStdFiles -d:noSignalHandler -d:nimDisableCertificateValidation
-          --opt:speed --cpu:amd64 --forceBuild --gc:orc --panics:on
-          --stackTrace:off --excessiveStackTrace:off --experimental:parallel
-
-
-    - name: Clone Nim
-      run: |
-        git clone -q --depth 1 --branch v${{ env.NIM_VERSION }} https://github.com/nim-lang/Nim.git
-        echo "::add-path::$PWD/Nim/bin"
-        # echo "/path/to/dir" >> $GITHUB_PATH
-
-
-    - name: Build Nim (Unix)
-      if: runner.os == 'Linux' || runner.os == 'macOS'
-      run: |
-        cd Nim
-        chmod +x ./build_all.sh
-        ./build_all.sh
-        nim --version
-
-
-    - name: Build Nim (Windows)
-      if: runner.os == 'Windows'
-      run: |
-        cd Nim
-        ./build_all.bat
-        nim --version
-
 
     - name: Nimble Install dependencies
       run: |
@@ -90,21 +64,6 @@ jobs:
         folders: "src"
 
 
-    - name: Prepare Folders
-      shell: bash
-      run: mkdir -p dist/lin dist/win dist/mac dist/$PACKAGE_NAME.egg-info docs
-
-
-    - name: Prepare Files
-      shell: bash
-      run: |
-        touch dist/LICENSE dist/$PACKAGE_NAME.egg-info/zip-safe dist/$PACKAGE_NAME.egg-info/top_level.txt dist/$PACKAGE_NAME.egg-info/requires.txt dist/$PACKAGE_NAME.egg-info/dependency_links.txt
-        cp -f $PWD/setup.py           dist/setup.py
-        cp -f $PWD/Nim/lib/nimbase.h  dist/lin/nimbase.h
-        cp -f $PWD/Nim/lib/nimbase.h  dist/win/nimbase.h
-        cp -f $PWD/Nim/lib/nimbase.h  dist/mac/nimbase.h
-
-
     # - name: Generate Documentation (Linux)
     #   if: runner.os == 'Linux'
     #   run: |
@@ -115,98 +74,19 @@ jobs:
     - name: Compile Debug & import (Unix)
       if: runner.os == 'Linux' || runner.os == 'macOS'
       run: |
-        nim c --app:lib --out:$PACKAGE_NAME.so $MAIN_MODULE
+        nim c --app:lib --threads:on --out:$PACKAGE_NAME.so $MAIN_MODULE
         python3 -c "print(__import__('${{ env.PACKAGE_NAME }}').__file__)"
 
 
     - name: Compile Debug & import (Windows)
       if: runner.os == 'Windows'
       run: |
-        nim c --app:lib --out:${{ env.PACKAGE_NAME }}.pyd ${{ env.MAIN_MODULE }}
+        nim c --app:lib --threads:on --out:${{ env.PACKAGE_NAME }}.pyd ${{ env.MAIN_MODULE }}
         python.exe -c "print(__import__('${{ env.PACKAGE_NAME }}').__file__)"
 
 
-    - name: Clean out C (Linux)
-      if: runner.os == 'Linux'
-      shell: bash
-      run: rm -f dist/lin/*.c
-
-
-    - name: Clean out C (Mac)
-      if: runner.os == 'macOS'
-      shell: bash
-      run: rm -f dist/mac/*.c
-
-
-    - name: Clean out C (Windows)
-      if: runner.os == 'Windows'
-      shell: bash
-      run: rm -f dist/win/*.c
-
-
-    - name: Compile to C (Linux)
-      if: runner.os == 'Linux'
-      shell: bash
-      run: nim ${{ env.NIM_COMMON_OPTIONS }} --nimcache:dist/lin --tlsEmulation:off ${{ env.MAIN_MODULE }}
-
-
-    - name: Compile to C (Mac)
-      if: runner.os == 'macOS'
-      shell: bash
-      run: nim ${{ env.NIM_COMMON_OPTIONS }} --nimcache:dist/mac --tlsEmulation:off ${{ env.MAIN_MODULE }}
-
-
-    - name: Compile to C (Windows)
-      if: runner.os == 'Windows'
-      shell: bash
-      run: nim ${{ env.NIM_COMMON_OPTIONS }} --nimcache:dist/win --tlsEmulation:on ${{ env.MAIN_MODULE }}
-
-
-    - name: Clean out
-      shell: bash
-      run: rm -f dist/lin/*.json dist/win/*.json dist/mac/*.json dist/lin/*.c.o dist/win/*.c.o dist/mac/*.c.o
-
-
-    - name: SemVer
-      shell: bash
-      run: |
-        cp -f $PWD/setup.cfg dist/setup.cfg
-        echo ${{ steps.vars.outputs.semver_date }} >>  dist/setup.cfg
-        cp -f $PWD/PKG-INFO  dist/$PACKAGE_NAME.egg-info/PKG-INFO
-        echo ${{ steps.vars.outputs.semver_date }} >>  dist/$PACKAGE_NAME.egg-info/PKG-INFO
-
-
-    - name: Delay (Linux) # Linux should finish last.
-      if: runner.os == 'Linux'
-      run: sleep 9m
-
-
-    - name: Compress to ZIP (Unix)  # Make Python package
-      if: runner.os == 'Linux' || runner.os == 'macOS'
-      shell: bash
-      run: |
-        cd dist
-        rm -f *.zip
-        zip -9 -T -v -r $PACKAGE_NAME-${{ steps.vars.outputs.sha_short }}.zip *
-
-
-    # - name: Compress to ZIP (Unix)  # Make Python package
-    #   if: runner.os == 'Linux' || runner.os == 'macOS'
-    #   shell: bash
-    #   run: |
-    #     cd dist
-    #     rm -f *.zip
-    #     python3 setup.py sdist --format=zip
-
-
-    - name: Commit Code  # Commit everything to Git repo
-      uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
-      with:
-        add: 'dist'
-        force: true
-        message: ${{ steps.vars.outputs.semver_date }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Package
+    #   run: python setup.py sdist --format=zip
 
 
     - name: Commit Nimpretty Fixes  # Commit everything to Git repo
@@ -217,24 +97,6 @@ jobs:
         message: ${{ steps.vars.outputs.semver_date }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-    # - name: Commit Documentation (Linux)
-    #   uses: EndBug/add-and-commit@v4  # Commit everything to Git repo
-    #   if: runner.os == 'Linux'
-    #   with:
-    #     add: 'docs'
-    #     force: true
-    #     message: ${{ steps.vars.outputs.semver_date }}
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-    # - name: Upload to PYPI (Linux)  # If everything worked, then upload to PYPI
-    #   if: runner.os == 'Linux'
-    #   run: |  # New Twine is buggy, error "has different metadata"
-    #     pip3 install --quiet --upgrade --disable-pip-version-check twine==2.0.0
-    #     twine upload --verbose --disable-progress-bar --skip-existing --comment "Powered by https://Nim-lang.org" dist/*.zip
 
 
     - name: Cache Nim
