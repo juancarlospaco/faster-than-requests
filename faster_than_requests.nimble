@@ -13,9 +13,9 @@ import os, strutils
 
 task setup, "Generating Optimized Native Module":
   const file =  name & (when defined(windows): ".pyd" else: ".so")
-  const py3 = os.findExe("python3")
-  const pyX = os.findExe("python")
-  const py2 = os.findExe("python2")
+  const py3 = system.findExe("python3")
+  const pyX = system.findExe("python")
+  const py2 = system.findExe("python2")
   var pyexe = py3
   if pyexe.len == 0:
     pyexe = pyX
@@ -23,10 +23,12 @@ task setup, "Generating Optimized Native Module":
   elif pyexe.len == 0:
     pyexe = py2
     echo "WARNING: Can not find 'python' executable, using 'python2' as fallback."
-  var path = gorge(pyexe & " -m site --user-site").strip
-  if path.len == 0:
+  var (path, exitCode) = gorgeEx(pyexe & " -m site --user-site")
+  if exitCode != 0 or path.len == 0:
     path = "."
     echo "WARNING: Can not find 'python -m site --user-site', using './' as fallback."
+  else:
+    path = path.strip
 
   try:
     selfExec("compile -d:ssl -d:lto -d:strip -d:danger -d:noSignalHandler -d:nimBinaryStdFiles -d:nimDisableCertificateValidation --app:lib --gc:arc --threads:on --forceBuild --panics:on --listFullPaths:off --excessiveStackTrace:off --exceptions:goto --passL:'-ffast-math -fsingle-precision-constant -march=native' --verbosity:0 --hints:off --out:'$1' '$2'".format(
@@ -36,7 +38,7 @@ task setup, "Generating Optimized Native Module":
     echo path / file
     echo "👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑👑"
   except:
-    echo "Failed to install library at:\t" & path
+    echo "Failed to install library at:\t", path
 
   when defined(windows):
     echo "Please reboot the computer before using the module."
