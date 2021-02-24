@@ -28,7 +28,7 @@ task setup, "Generating Optimized Native Module":
   const path = gorge(pyexe & " -m site --user-site").strip
 
   try:
-    selfExec("compile -d:ssl -d:lto -d:strip -d:danger -d:noSignalHandler -d:nimBinaryStdFiles -d:nimDisableCertificateValidation --app:lib --gc:arc --threads:on --listFullPaths:off --excessiveStackTrace:off --exceptions:goto --passL:'-ffast-math -fsingle-precision-constant -march=native' --out:'$1' '$2'".format(
+    selfExec("compile -d:ssl -d:lto -d:strip -d:danger -d:noSignalHandler -d:nimBinaryStdFiles -d:nimDisableCertificateValidation --app:lib --gc:arc --threads:on --forceBuild --panics:on --listFullPaths:off --excessiveStackTrace:off --exceptions:goto --passL:'-ffast-math -fsingle-precision-constant -march=native' --out:'$1' '$2'".format(
       path / file, "src" / name & ".nim"
     ))
   except:
