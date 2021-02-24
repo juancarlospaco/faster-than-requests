@@ -13,9 +13,9 @@ import os, strutils
 
 task setup, "Generating Optimized Native Module":
   const file =  name & (when defined(windows): ".pyd" else: ".so")
-  const py3 = findExe"python3"
-  const pyX = findExe"python"
-  const py2 = findExe"python2"
+  const py3 = os.findExe("python3")
+  const pyX = os.findExe("python")
+  const py2 = os.findExe("python2")
   var pyexe = py3
   if pyexe.len == 0:
     pyexe = pyX
