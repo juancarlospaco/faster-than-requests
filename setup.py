@@ -10,6 +10,6 @@ assert sys.version_info > (3, 5, 0), "ERROR: Python version must be > 3.5!."
 class X(install):
   def run(self):
     install.run(self)
-    subprocess.run(f"nimble --accept --noSSLCheck install '{git_repo}'", shell=1, check=1, timeout=999)
+    subprocess.run(f"nimble --accept install '{git_repo}'", shell=1, check=1, timeout=999)
 
 setuptools.setup(cmdclass = {"install": X})
