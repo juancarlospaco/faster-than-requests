@@ -11,3 +11,5 @@ __pycache__/
 .ionide/
 *.c.o
 *.pyc
+dist/*.zip
+dist/faster_than_requests/faster_than_requests/
