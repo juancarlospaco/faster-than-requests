@@ -5,11 +5,13 @@ on:
       - 'setup.py'
       - 'setup.cfg'
       - 'PKG-INFO'
-      - 'src/*.*'
-      - 'src/**.py'
-      - 'src/**.nim'
-      - 'src/**.nims'
-      - 'src/**.cfg'
+      - 'faster_than_requests/*.*'
+      - 'faster_than_requests/**.py'
+      - 'faster_than_requests/**.nim'
+      - 'faster_than_requests/**.nims'
+      - 'faster_than_requests/**.cfg'
+      - 'faster_than_requests/**.so'
+      - 'faster_than_requests/**.dll'
       - '.github/workflows/*.yml'
       - '.github/workflows/*.yaml'
       - '.gitignore'
@@ -46,7 +48,7 @@ jobs:
       uses: allenevans/set-env@v2.0.0
       with:
         NIM_VERSION:           "1.4.2"
-        MAIN_MODULE:           "src/faster_than_requests.nim"
+        MAIN_MODULE:           "faster_than_requests/faster_than_requests.nim"
         PACKAGE_NAME:          "faster_than_requests"
         TWINE_USERNAME:        ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD:        ${{ secrets.PYPI_PASSWORD }}
@@ -61,7 +63,7 @@ jobs:
 
     - uses: juancarlospaco/nimpretty-action@main
       with:
-        folders: "src"
+        folders: "faster_than_requests"
 
 
     # - name: Generate Documentation (Linux)
