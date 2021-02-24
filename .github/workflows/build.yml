@@ -31,7 +31,7 @@ jobs:
 
     - uses: jiro4989/setup-nim-action@v1
       with:
-        nim-version: '1.4.4'
+        nim-version: '1.4.2'
         no-color: true  # --noColor
 
     - name: Get Git Commit Short Hash
@@ -45,7 +45,7 @@ jobs:
     - name: Set Environment Variables
       uses: allenevans/set-env@v2.0.0
       with:
-        NIM_VERSION:           "1.4.4"
+        NIM_VERSION:           "1.4.2"
         MAIN_MODULE:           "src/faster_than_requests.nim"
         PACKAGE_NAME:          "faster_than_requests"
         TWINE_USERNAME:        ${{ secrets.PYPI_USERNAME }}
