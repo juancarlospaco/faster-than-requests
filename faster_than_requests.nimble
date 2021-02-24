@@ -7,7 +7,7 @@ const name = "faster_than_requests"  # Module name and file name (Must be the sa
 
 
 
-requires "nim >= 1.4.4"
+requires "nim >= 1.4.2"
 requires "nimpy"
 
 import os, strutils
