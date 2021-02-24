@@ -85,6 +85,10 @@ jobs:
         python.exe -c "print(__import__('${{ env.PACKAGE_NAME }}').__file__)"
 
 
+    - name: Package
+      run: python setup.py sdist --format=zip
+
+
     - name: Commit Nimpretty Fixes  # Commit everything to Git repo
       uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
       with:
