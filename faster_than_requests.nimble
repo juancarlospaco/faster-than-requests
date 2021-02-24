@@ -2,14 +2,13 @@ version     = "9.9.9"
 author      = "Nim"
 description = "Python compiled native module"
 license     = "MIT"
-const name = "faster_than_requests"  # Module name and file name (Must be the same).
-
-
-
-
 requires "nim >= 1.4.2"
 requires "nimpy"
 
+
+
+
+const name = "faster_than_requests"  # Module name and file name (Must be the same).
 import os, strutils
 
 task setup, "Generating Optimized Native Module":
