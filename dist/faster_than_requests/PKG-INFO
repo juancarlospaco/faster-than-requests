@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: faster_than_requests
+Version: 21.03.03
+Summary: Faster & simpler requests replacement for Python
+Author: Juan Carlos
+Maintainer: Juan Carlos
+License: MIT
+Project-URL: Homepage, https://nim-lang.org
+Project-URL: For Python Devs, https://github.com/nim-lang/Nim/wiki/Nim-for-Python-Programmers
+Project-URL: For TypeScript Devs, https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers
+Project-URL: Forum, http://forum.nim-lang.org
+Project-URL: Twitter, https://twitter.com/nim_lang
+Project-URL: Reddit, https://reddit.com/r/nim
+Project-URL: StackOverflow, https://stackoverflow.com/questions/tagged/nim-lang
+Project-URL: Discord, https://discord.gg/ezDFDw2
+Project-URL: Telegram, https://t.me/nim_lang
+Project-URL: Matrix, https://matrix.to/#/#freenode_#nim:matrix.org
+Project-URL: Argentina Chat Spanish, https://t.me/NimArgentina
+Project-URL: Dev Documentation Index, https://nim-lang.github.io/Nim/theindex.html
+Project-URL: Tutorial, https://nim-lang.github.io/Nim/tut1.html
+Keywords: python3, python4, cpython, speed, cython, c, performance, compiled, native, fast, nim
+Platform: Linux
+Platform: Darwin
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Environment :: Other Environment
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Other Audience
+Classifier: Natural Language :: English
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Topic :: Software Development
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
