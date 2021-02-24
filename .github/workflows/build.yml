@@ -85,8 +85,8 @@ jobs:
         python.exe -c "print(__import__('${{ env.PACKAGE_NAME }}').__file__)"
 
 
-    - name: Package
-      run: python setup.py sdist --format=zip
+    # - name: Package
+    #   run: python setup.py sdist --format=zip
 
 
     - name: Commit Nimpretty Fixes  # Commit everything to Git repo
