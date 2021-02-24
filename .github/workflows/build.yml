@@ -27,7 +27,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.8'  # New PIP is buggy, error "has different metadata"
+        python-version: '3.9'  # New PIP is buggy, error "has different metadata"
 
     - uses: jiro4989/setup-nim-action@v1
       with:
