@@ -19,17 +19,17 @@ task setup, "Generating Optimized Native Module":
   var pyexe = py3
   if pyexe.len == 0:
     pyexe = pyX
+    echo "WARNING: Can not find 'python3' executable, using 'python' as fallback."
   elif pyexe.len == 0:
     pyexe = py2
-    echo "WARNING: Can not find Python3 executable, using legacy Python2 as fallback."
-  else:
-    echo "ERROR: Can not find Python executable."
+    echo "WARNING: Can not find 'python' executable, using 'python2' as fallback."
   var path = gorge(pyexe & " -m site --user-site").strip
   if path.len == 0:
     path = "."
+    echo "WARNING: Can not find 'python -m site --user-site', using './' as fallback."
 
   try:
-    selfExec("compile -d:ssl -d:lto -d:strip -d:danger -d:noSignalHandler -d:nimBinaryStdFiles -d:nimDisableCertificateValidation --app:lib --gc:arc --threads:on --forceBuild --panics:on --listFullPaths:off --excessiveStackTrace:off --exceptions:goto --passL:'-ffast-math -fsingle-precision-constant -march=native' --out:'$1' '$2'".format(
+    selfExec("compile -d:ssl -d:lto -d:strip -d:danger -d:noSignalHandler -d:nimBinaryStdFiles -d:nimDisableCertificateValidation --app:lib --gc:arc --threads:on --forceBuild --panics:on --listFullPaths:off --excessiveStackTrace:off --exceptions:goto --passL:'-ffast-math -fsingle-precision-constant -march=native' --verbosity:0 --hints:off --out:'$1' '$2'".format(
       path / file, "src" / name & ".nim"
     ))
     echo path / file
