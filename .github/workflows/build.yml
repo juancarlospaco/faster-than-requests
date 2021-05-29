@@ -33,7 +33,7 @@ jobs:
 
     - uses: jiro4989/setup-nim-action@v1
       with:
-        nim-version: '1.5.1'
+        nim-version: 'devel'
         no-color: true  # --noColor
 
     - name: Get Git Commit Short Hash
