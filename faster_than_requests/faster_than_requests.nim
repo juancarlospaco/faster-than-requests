@@ -1,6 +1,6 @@
 import
   asyncdispatch, db_sqlite, htmlparser, httpclient, json, nimpy, os, sequtils,
-  pegs, re, strtabs, strutils, tables, threadpool, uri, ws, sequtils, xmltree
+  pegs, re, strtabs, strutils, tables, threadpool, uri, ws, sequtils, xmltree, std/tasks
 
 
 template clientify(url: string; userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string;
@@ -224,13 +224,18 @@ proc download*(url, filename: string) {.discardable, exportpy.} =
 # ^ Extra HTTP Functions ################################# V Experimental stuff
 
 
-proc get2str2*(list_of_urls: openArray[string]; threads: bool = false): seq[string] {.exportpy.} =
-  ## HTTP GET body to string from a list of URLs.
-  if threads:
-    result = newSeq[string](list_of_urls.len)
-    for i, url in list_of_urls: result[i] = ^ spawn client.getContent(url)
-  else:
-    for url in list_of_urls: result.add client.getContent(url)
+proc get2str2*(list_of_urls: openArray[string]): seq[string] {.exportpy.} =
+  result = newSeq[string](list_of_urls.len)
+
+  proc gety(url: string, i: int) {.inline.} =
+    let clnt = newHttpClient()
+    putEnv $i, clnt.getContent(url)
+    clnt.close()
+
+  for i, url in list_of_urls:
+    invoke(toTask gety(url, i))
+    result[i] = getEnv $i
+    # delEnv $i
 
 
 proc download2*(list_of_files: openArray[tuple[url: string; filename: string]]; threads: bool = false; delay: Natural = 0) {.discardable, exportpy.} =
