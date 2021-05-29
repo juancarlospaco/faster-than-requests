@@ -703,16 +703,16 @@ requests.get2str("http://example.com")
 
 **Description:**
 Takes a list of URLs, makes 1 HTTP GET for each URL, and returns a list of strings with the response Body.
+This makes all `GET` fully parallel, in a single Thread, in a single Process.
 
 **Arguments:**
 - `list_of_urls` A list of the remote URLs, list type, required. Objects inside the list must be string type.
-- `threads` Passing `threads = True` uses Multi-Threading, `threads = False` will Not use Multi-Threading, omitting it will Not use Multi-Threading.
 
 Examples:
 
 ```python
 import faster_than_requests as requests
-requests.get2str2(["http://example.com/foo", "http://example.com/bar"], threads = True)
+requests.get2str2(["http://example.com/foo", "http://example.com/bar"]) # Parallel GET
 ```
 
 **Returns:**
