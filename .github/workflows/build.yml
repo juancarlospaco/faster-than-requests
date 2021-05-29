@@ -59,6 +59,7 @@ jobs:
       run: |
         nimble -y refresh
         nimble -y install nimpy
+        pip install nimporter
 
 
     - uses: juancarlospaco/nimpretty-action@main
