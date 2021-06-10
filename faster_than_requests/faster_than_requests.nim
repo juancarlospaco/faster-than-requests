@@ -1,5 +1,5 @@
 import
-  asyncdispatch, db_sqlite, htmlparser, httpclient, json, nimpy, os, sequtils,
+  asyncdispatch, db_sqlite, htmlparser, httpclient, json, nimpy, os, sequtils, base64,
   pegs, re, strtabs, strutils, tables, threadpool, uri, ws, sequtils, xmltree, std/tasks
 
 
@@ -169,6 +169,10 @@ proc minifyhtml(html: string): string {.exportpy, noinit.} =
 
 proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.exportpy, noinit.} =
   result = uri.getDataUri(data, mime, encoding)
+
+
+proc gen_auth_header*(username: string; password: string): string {.exportpy.} =
+  "Basic " & base64.encode(username & ':' & password)
 
 
 proc debugs*() {.discardable, exportpy.} =

@@ -1199,6 +1199,25 @@ requests.minifyhtml("<h1>Hello</h1>          <h1>World</h1>")
 </details>
 
 
+## gen_auth_header()
+<details>
+
+**Description:**
+Helper for HTTP Authentication headers.
+
+Returns 1 string kinda like "Basic base64(username):base64(username)",
+so it can be used like `[ ("Authorization": gen_auth_header("username", "password") ) ]`.
+See https://github.com/juancarlospaco/faster-than-requests/issues/168#issuecomment-858999317
+
+**Arguments:**
+- `username` Username string, must not be empty string, required.
+- `password` Password string, must not be empty string, required.
+
+**Returns:** string.
+
+</details>
+
+
 ## debugs
 <details>
 **Description:**
