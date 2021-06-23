@@ -1,5 +1,6 @@
 import faster_than_requests as requests
 
+requests.init_client()
 
 print(requests.get("http://httpbin.org/get"))              # HTTP GET.
 
@@ -26,8 +27,6 @@ print(requests.post2json("http://httpbin.org/post", """{"foo": "bar", "baz": tru
 print(requests.download("http://httpbin.org/image/jpeg", "foo.jpeg"))                  # HTTP GET Download 1 file.
 
 print(requests.get2str2(["http://httpbin.org/json", "http://httpbin.org/xml"]))     # HTTP GET body to string from a list.
-
-print(requests.get2ndjson(["http://httpbin.org/json", "http://httpbin.org/json"], "output.ndjson")) # HTTP GET body to NDJSON file from a list.
 
 print(requests.download2([("http://httpbin.org/image/jpeg", "foo.jpg"),            # HTTP GET Download a list of files.
                             ("http://httpbin.org/image/svg",  "bar.svg")]))
