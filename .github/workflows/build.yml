@@ -1,22 +1,6 @@
 name: Build
 on: [push, pull_request]
 
-  # push:
-  #   paths:
-  #     - 'setup.py'
-  #     - 'setup.cfg'
-  #     - 'PKG-INFO'
-  #     - 'faster_than_requests/*.*'
-  #     - 'faster_than_requests/**.py'
-  #     - 'faster_than_requests/**.nim'
-  #     - 'faster_than_requests/**.nims'
-  #     - 'faster_than_requests/**.cfg'
-  #     - 'faster_than_requests/**.so'
-  #     - 'faster_than_requests/**.dll'
-  #     - '.github/workflows/*.yml'
-  #     - '.github/workflows/*.yaml'
-  #     - '.gitignore'
-
 jobs:
   build:
     if: |
@@ -89,8 +73,8 @@ jobs:
 
     - name: Commit Docs
       if: |
-        github.event_name == 'push' && github.ref == 'refs/heads/main' && runner.os == 'Linux' &&
-        matrix.platform == 'ubuntu-latest' && matrix.architecture == 'x64' && matrix.python_version == '3.10'
+        github.event_name == 'push' && runner.os == 'Linux' &&
+        matrix.platform == 'ubuntu-latest' && matrix.architecture == 'x64' && matrix.python-version == '3.10'
       uses: EndBug/add-and-commit@v4  # Commit everything to Git repo
       with:
         add: 'docs'
