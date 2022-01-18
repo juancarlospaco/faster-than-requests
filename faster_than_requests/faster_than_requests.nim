@@ -35,7 +35,7 @@ template parseHttpCode(s: string): int =
       else:   0
     char2Int(s[9], 100) + char2Int(s[10], 10) + char2Int(s[11], 1)
   else:
-    parseInt(s)
+    parseInt(s[9..11])
 
 
 func parseHeaders(data: string): seq[(string, string)] {.raises: [].} =
