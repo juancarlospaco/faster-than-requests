@@ -52,6 +52,7 @@ jobs:
     - uses: jiro4989/setup-nim-action@v1.0.2
       with:
         nim-version: ${{ matrix.nim-channel }}
+        no-color: true
 
 
     - name: Get Git Commit Short Hash
@@ -84,3 +85,16 @@ jobs:
         rm --verbose --force --recursive docs/*.idx
         rm --verbose --force --recursive docs/nimcache/*.*
         rm --verbose --force --recursive docs/nimcache/runnableExamples/*.*
+
+
+    - name: Commit Docs
+      if: |
+        github.event_name == 'push' && github.ref == 'refs/heads/main' && runner.os == 'Linux' &&
+        matrix.platform == 'ubuntu-latest' && matrix.architecture == 'x64' && matrix.python_version == '3.10'
+      uses: EndBug/add-and-commit@v4  # Commit everything to Git repo
+      with:
+        add: 'docs'
+        force: true
+        message: 'Fully Automated Luxury Nim'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
