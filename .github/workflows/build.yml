@@ -74,7 +74,7 @@ jobs:
     - name: Commit Docs
       if: |
         github.event_name == 'push' && runner.os == 'Linux' &&
-        matrix.platform == 'ubuntu-latest' && matrix.architecture == 'x64'
+        matrix.platform == 'ubuntu-latest' && matrix.architecture == 'x64' && matrix.python-version == '3.10'
       uses: EndBug/add-and-commit@v4  # Commit everything to Git repo
       with:
         add: 'docs'
