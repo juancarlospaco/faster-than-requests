@@ -3,11 +3,11 @@ import nimpy
 export HttpMethod, HttpCode
 
 
-proc default_headers*(body: string; contentType = "text/plain"; accept = "*/*"; userAgent = "x"; proxyUser = ""; proxyPassword = ""): array[5, (string, string)] =
+proc default_headers*(body: string; contentType: string = "text/plain"; accept: string = "*/*"; userAgent: string = "x"; proxyUser: string = ""; proxyPassword: string = ""): array[5, (string, string)] {.exportpy.} =
   if likely(proxyUser.len == 0):
-    result = [("Content-Length", $body.len), ("User-Agent", userAgent), ("Content-Type", contentType), ("Accept", accept), ("Dnt", "1")]
+    [("Content-Length", $body.len), ("User-Agent", userAgent), ("Content-Type", contentType), ("Accept", accept), ("Dnt", "1")]
   else:
-    result = [("Content-Length", $body.len), ("User-Agent", userAgent), ("Content-Type", contentType), ("Accept", accept), ("Proxy-Authorization", "Basic " & encode(proxyUser & ':' & proxyPassword))]
+    [("Content-Length", $body.len), ("User-Agent", userAgent), ("Content-Type", contentType), ("Accept", accept), ("Proxy-Authorization", "Basic " & encode(proxyUser & ':' & proxyPassword))]
 
 
 macro unrollStringOps(x: ForLoopStmt) =
