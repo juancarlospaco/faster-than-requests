@@ -9,7 +9,7 @@
 
 ![](https://img.shields.io/github/languages/top/juancarlospaco/faster-than-requests?style=for-the-badge)
 ![](https://img.shields.io/github/stars/juancarlospaco/faster-than-requests?style=for-the-badge "Star faster-than-requests on GitHub!")
-![](https://img.shields.io/maintenance/yes/2020?style=for-the-badge "2020")
+![](https://img.shields.io/maintenance/yes/2022?style=for-the-badge)
 ![](https://img.shields.io/github/languages/code-size/juancarlospaco/faster-than-requests?style=for-the-badge)
 ![](https://img.shields.io/github/issues-raw/juancarlospaco/faster-than-requests?style=for-the-badge "Bugs")
 ![](https://img.shields.io/github/issues-pr-raw/juancarlospaco/faster-than-requests?style=for-the-badge "PRs")
