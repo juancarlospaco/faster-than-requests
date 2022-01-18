@@ -1,566 +1,272 @@
-import
-  asyncdispatch, db_sqlite, htmlparser, httpclient, json, nimpy, os, sequtils, base64,
-  pegs, re, strtabs, strutils, tables, threadpool, uri, ws, sequtils, xmltree, std/tasks
-
-
-template clientify(url: string; userAgent: string; maxRedirects: int; proxyUrl: string; proxyAuth: string;
-  timeout: int; http_headers: openArray[tuple[key: string; val: string]]; code: untyped): array[7, string] =
-  var
-    respons {.inject.}: Response
-    cliente {.inject.} = createU HttpClient
-  try:
-    cliente[] = newHttpClient(
-      timeout = timeout,
-      userAgent = userAgent,
-      maxRedirects = maxRedirects,
-      headers = newHttpHeaders(http_headers),
-      proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil),
-    )
-    {.push, experimental: "implicitDeref".}
-    code
-    {.pop.}
-  finally:
-    cliente[].close()
-    if cliente != nil:
-      dealloc cliente
-  [$respons.body, respons.contentType, respons.status, respons.version, url, try: $respons.contentLength except: "0", $respons.headers]
-
-
-proc to_dict*(ftr_response: array[7, string]): Table[string, string] {.exportpy, noinit.} =
-  ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to dict.
-  result = toTable({
-    "body": ftr_response[0],
-    "content-type": ftr_response[1],
-    "status": ftr_response[2],
-    "version": ftr_response[3],
-    "url": ftr_response[4],
-    "content-length": ftr_response[5],
-    "headers": ftr_response[6],
-  })
-
-
-proc to_json*(ftr_response: array[7, string]): string {.exportpy, noinit.} =
-  ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to JSON.
-  result = pretty(%*{
-    "body": %ftr_response[0],
-    "content-type": %ftr_response[1],
-    "status": %ftr_response[2],
-    "version": %ftr_response[3],
-    "url": %ftr_response[4],
-    "content-length": %ftr_response[5],
-    "headers": %ftr_response[6],
-  })
-
-
-proc to_tuples*(ftr_response: array[7, string]): array[7, (string, string)] {.exportpy, noinit.} =
-  ## From `["body", "content-type", "status", "version", "content-length", "headers"]` to array of tuples.
-  result = [
-    ("body", ftr_response[0]),
-    ("content-type", ftr_response[1]),
-    ("status", ftr_response[2]),
-    ("version", ftr_response[3]),
-    ("url", ftr_response[4]),
-    ("content-length", ftr_response[5]),
-    ("headers", ftr_response[6]),
-  ]
-
-
-proc get*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.get(url)
-
-
-proc post*(url: string; body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.post(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
-
-
-proc put*(url: string; body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.put(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
-
-
-proc patch*(url: string; body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.patch(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
-
-
-proc delete*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.delete(url)
-
-
-proc head*(url: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): array[7, string] {.exportpy, noinit.} =
-  ## HTTP HEAD an URL to dictionary. HEAD do NOT have body by definition. May NOT have contentLength sometimes.
-  clientify(url, user_agent, max_redirects, proxy_url, proxy_auth, timeout, http_headers):
-    respons = cliente.head(url)
-
-
-# ^ Basic HTTP Functions ########### V Extra HTTP Functions, go beyond requests
-
-
-var client: HttpClient
-
-
-proc init_client(timeout: int = -1; max_redirects: int = 9; user_agent: string = defUserAgent;
-  headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]) {.exportpy.} =
-  client = newHttpClient(timeout = timeout, userAgent = user_agent,
-    maxRedirects = max_redirects, headers = newHttpHeaders(headers))
-
-
-proc close_client() {.exportpy.} =
-  client.close()
-
-
-proc set_headers*(headers: openArray[tuple[key: string; val: string]]) {.exportpy.} =
-  ## Set the HTTP Headers to the HTTP client.
-  doAssert headers.len > 0, "HTTP Headers must not be empty list"
-  client.headers = newHttpHeaders(headers)
-
-
-proc set_timeout*(timeout: Positive) {.exportpy.} =
-  ## Set the Timeout for the HTTP client.
-  client.timeout = timeout
-
-
-proc show_progress*() {.exportpy.} =
-  client.onProgressChanged = (proc (t, p, s: BiggestInt) = echo(
-    "{\"speed\": ", s div 1000, ",\t\"progress\": ", p, ",\t\"remaining\": ", t - p, ",\t\"total\": ", t, "}"))
-
-
-proc multipartdata2str*(multipart_data: seq[tuple[name: string; content: string]]): string {.exportpy, noinit.} =
-  result = $newMultipartData(multipart_data)
-
-
-proc urlparse*(url: string): array[9, string] {.exportpy, noinit.} =
-  let u = createU Uri
-  u[] = uri.parseUri(url)
-  result = [u[].scheme, u[].username, u[].password, u[].hostname, u[].port, u[].path, u[].query, u[].anchor, $u[].opaque]
-  if u != nil:
-    dealloc u
-
-
-proc urlencode*(url: string; use_plus: bool = true): string {.exportpy, noinit.} =
-  result = uri.encodeUrl(url, use_plus)
-
-
-proc urldecode*(url: string; use_plus: bool = true): string {.exportpy, noinit.} =
-  result = uri.decodeUrl(url, use_plus)
-
-
-proc encodequery*(query: openArray[(string, string)]; use_plus: bool = true; omit_eq: bool = true): string {.exportpy, noinit.} =
-  result = uri.encodeQuery(query, use_plus, omit_eq)
-
-
-proc encodexml*(s: string): string {.exportpy, noinit.} =
-  result = newStringOfCap(s.len + s.len shr 2)
-  for i in 0 .. len(s) - 1:
-    result.add(case s[i]
-    of '&': "&amp;"
-    of '<': "&lt;"
-    of '>': "&gt;"
-    of '\"': "&quot;"
-    else: $s[i])
-
-
-proc minifyhtml(html: string): string {.exportpy, noinit.} =
-  result = html.strip.unindent.replace(re">\s+<", "> <")
-
-
-proc datauri*(data: string; mime: string; encoding: string = "utf-8"): string {.exportpy, noinit.} =
-  result = uri.getDataUri(data, mime, encoding)
-
-
-proc gen_auth_header*(username: string; password: string): string {.exportpy.} =
-  "Basic " & base64.encode(username & ':' & password)
-
-
-proc debugs*() {.discardable, exportpy.} =
-  ## Get the Config and print it to the terminal, for debug purposes only, human friendly.
-  echo static(pretty(%*{
-    "nimVersion": NimVersion, "httpCore": defUserAgent, "cpu": hostCPU, "os": hostOS,
-    "endian": cpuEndian, "release": defined(release), "danger": defined(danger), "CompileDate": CompileDate, "CompileTime": CompileTime,
-    "tempDir": getTempDir(), "ssl": defined(ssl), "currentCompilerExe": getCurrentCompilerExe(), "int.high": int.high
-  }))
-
-
-proc get2str*(url: string): string {.exportpy, noinit.} =
-  ## HTTP GET body to string.
-  result = client.getContent(url)
-
-
-proc get2json*(url: string): string {.exportpy, noinit.} =
-  ## HTTP GET body to JSON.
-  result = client.getContent(url).parseJson.pretty
-
-
-proc get2dict*(url: string): seq[Table[string, string]] {.exportpy.} =
-  ## HTTP GET body to dictionary.
-  for i in client.getContent(url).parseJson.pairs: result.add {i[0]: i[1].pretty}.toTable
-
-
-proc post2str*(url, body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]): string {.exportpy, noinit.} =
-  ## HTTP POST body to string.
-  result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil)
-
-
-proc post2list*(url, body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]): seq[string] {.exportpy, noinit.} =
-  ## HTTP POST body to list of strings (this is designed for quick web scrapping).
-  result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).strip.splitLines
-
-
-proc post2json*(url, body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]): string {.exportpy, noinit.} =
-  ## HTTP POST body to JSON.
-  result = client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson.pretty
-
-
-proc post2dict*(url, body: string; multipart_data: seq[tuple[name: string; content: string]] = @[]): seq[Table[string, string]] {.exportpy.} =
-  ## HTTP POST body to dictionary.
-  for i in client.postContent(url, body, multipart = if unlikely(multipart_data.len > 0): newMultipartData(multipart_data) else: nil).parseJson.pairs:
-    result.add {i[0]: i[1].pretty}.toTable
-
-
-proc download*(url, filename: string) {.discardable, exportpy.} =
-  ## Download a file ASAP, from url, filename arguments.
-  client.downloadFile(url, filename)
-
-
-# ^ Extra HTTP Functions ################################# V Experimental stuff
-
-
-proc get2str2*(list_of_urls: openArray[string]): seq[string] {.exportpy.} =
-  result = newSeq[string](list_of_urls.len)
-
-  proc gety(url: string, i: int) {.inline.} =
-    let clnt = newHttpClient()
-    putEnv $i, clnt.getContent(url)
-    clnt.close()
-
-  for i, url in list_of_urls:
-    invoke(toTask gety(url, i))
-    result[i] = getEnv $i
-    # delEnv $i
-
-
-proc download2*(list_of_files: openArray[tuple[url: string; filename: string]]; threads: bool = false; delay: Natural = 0) {.discardable, exportpy.} =
-  ## Download a list of files ASAP, like ``[(url, filename), (url, filename), ...],``, ``threads=True`` will use multi-threading.
-  if likely(delay == 0):
-    if likely(threads):
-      for item in list_of_files: spawn client.downloadFile(item[0], item[1])
+import std/[net, macros, json, httpcore, importutils, parseutils, uri, base64, strutils]
+import nimpy
+export HttpMethod, HttpCode
+
+
+proc default_headers*(body: string; contentType = "text/plain"; accept = "*/*"; userAgent = "x"; proxyUser = ""; proxyPassword = ""): array[5, (string, string)] =
+  if likely(proxyUser.len == 0):
+    result = [("Content-Length", $body.len), ("User-Agent", userAgent), ("Content-Type", contentType), ("Accept", accept), ("Dnt", "1")]
+  else:
+    result = [("Content-Length", $body.len), ("User-Agent", userAgent), ("Content-Type", contentType), ("Accept", accept), ("Proxy-Authorization", "Basic " & encode(proxyUser & ':' & proxyPassword))]
+
+
+macro unrollStringOps(x: ForLoopStmt) =
+  expectKind x, nnkForStmt
+  var body = newStmtList()
+  for chara in x[^2][^2].strVal:
+    body.add nnkAsgn.newTree(x[^2][^1], chara.newLit)
+    body.add x[^1]
+  result = body
+
+
+template parseHttpCode(s: string): int =
+  when defined(danger):
+    template char2Int(c: '0'..'9'; pos: static int): int =
+      case c
+      of '1': static(1 * pos)
+      of '2': static(2 * pos)
+      of '3': static(3 * pos)
+      of '4': static(4 * pos)
+      of '5': static(5 * pos)
+      of '6': static(6 * pos)
+      of '7': static(7 * pos)
+      of '8': static(8 * pos)
+      of '9': static(9 * pos)
+      else:   0
+    char2Int(s[9], 100) + char2Int(s[10], 10) + char2Int(s[11], 1)
+  else:
+    parseInt(s)
+
+
+func parseHeaders(data: string): seq[(string, string)] {.raises: [].} =
+  var i = 0
+  while data[i] != '\l': inc i
+  inc i
+  var value = false
+  var current: (string, string)
+  while i < data.len:
+    case data[i]
+    of ':':
+      if value: current[1].add ':'
+      value = true
+    of ' ':
+      if value:
+        if current[1].len != 0: current[1].add data[i]
+      else: current[0].add(data[i])
+    of '\c': discard
+    of '\l':
+      if current[0].len == 0: return result
+      result.add current
+      value = false
+      current = ("", "")
     else:
-      for item in list_of_files: client.downloadFile(item[0], item[1])
-  else:
-    for item in list_of_files:
-      sleep delay
-      client.downloadFile(item[0], item[1])
+      if value: current[1].add data[i] else: current[0].add data[i]
+    inc i
+  return
 
 
-proc download3*(list_of_files: openArray[tuple[url: string; filename: string]]; delay: Positive = 1; tries: Positive = 9; backoff: Positive = 2; jitter: Positive = 2; verbose: bool = true) {.discardable, exportpy.} =
-  ## Download a list of files ASAP, but if fails, retry again and again.
-  let mdelay = createU(int)
-  mdelay[] = delay
-  let mtries = createU(int)
-  mtries[] = tries
-  while mtries[] > 1:
-    try:
-      if likely(verbose): echo "Retry " & $mtries[] & " of " & $tries
-      for item in list_of_files:
-        sleep mdelay[]
-        if likely(verbose): echo item
-        client.downloadFile(item[0], item[1])
-      return
-    except:
-      if likely(verbose):
-        echo getCurrentExceptionMsg()
-        echo "Retrying in " & $mdelay[] & " microseconds" & (if mtries[] < 3: " (Warning: This is the last Retry!)." else: "...")
-      sleep mdelay[] + mtries[] mod jitter * 100
-      dec mtries[]
-      mdelay[] *= backoff
-  if mdelay != nil:
-    dealloc mdelay
-  if mtries != nil:
-    dealloc mtries
+func toString(url: Uri; metod: HttpMethod; headers: openArray[(string, string)]; body: string): string {.raises: [].} =
+  var it: char  # TODO: Better name for this func.
+  var temp: string = url.path
+  if unlikely(temp.len == 0): temp = "/"
+  if url.query.len > 0:
+    temp.add '?'
+    temp.add url.query
+  case metod
+  of HttpGet:
+    for _ in unrollStringOps("GET ", it):     result.add it
+  of HttpPost:
+    for _ in unrollStringOps("POST ", it):    result.add it
+  of HttpPut:
+    for _ in unrollStringOps("PUT ", it):     result.add it
+  of HttpHead:
+    for _ in unrollStringOps("HEAD ", it):    result.add it
+  of HttpDelete:
+    for _ in unrollStringOps("DELETE ", it):  result.add it
+  of HttpPatch:
+    for _ in unrollStringOps("PATCH ", it):   result.add it
+  of HttpTrace:
+    for _ in unrollStringOps("TRACE ", it):   result.add it
+  of HttpOptions:
+    for _ in unrollStringOps("OPTIONS ", it): result.add it
+  of HttpConnect:
+    for _ in unrollStringOps("CONNECT ", it): result.add it
+  result.add temp
+  for _ in unrollStringOps(" HTTP/1.1\r\nHost: ", it): result.add it
+  result.add url.hostname
+  for _ in unrollStringOps("\r\n", it): result.add it
+  temp.setLen 0  # Reuse variable.
+  for header in headers:
+    temp.add header[0]
+    for _ in unrollStringOps(": ", it):   temp.add it
+    temp.add header[1]
+    for _ in unrollStringOps("\r\n", it): temp.add it
+  for _ in unrollStringOps("\r\n", it):   temp.add it
+  assert not(temp.len > 10_000), "Header must not be > 10_000 char"
+  result.add temp
+  result.add body
 
 
-proc scraper*(list_of_urls: openArray[string]; html_tag: string = "a"; case_insensitive: bool = true; deduplicate_urls: bool = false; threads: bool = false): seq[string] {.exportpy.} =
-  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
-  result = newSeq[string](urls.len)
-  if likely(threads):
-    for i, url in urls: result[i] = ^ spawn $findAll(parseHtml(client.getContent(url)), html_tag, case_insensitive)
-  else:
-    for i, url in urls: result[i] = $findAll(parseHtml(client.getContent(url)), html_tag, case_insensitive)
-
-
-proc scraper2*(list_of_urls: seq[string]; list_of_tags: seq[string] = @["a"]; verbose: bool = true; case_insensitive: bool = true; deduplicate_urls: bool = false; threads: bool = false; delay: Natural = 0; timeout: int = -1; agent: string = defUserAgent; redirects: Positive = 5; header: seq[(string, string)] = @[("DNT", "1")]; proxy_url: string = ""; proxy_auth: string = ""): seq[seq[string]] {.exportpy.} =
-  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
-  let proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
-  var cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = proxi, timeout = timeout)
-  cliente.headers = newHttpHeaders(header)
-  result = newSeq[seq[string]](urls.len)
-  if likely(threads):
-    for i, url in urls:
-      for tag in list_of_tags: result[i] = ^ spawn map(findAll(parseHtml(cliente.getContent(url)), tag, case_insensitive), proc(s: any): string = $s )
-  else:
-    for i, url in urls:
-      if likely(verbose): echo i, "\t", url
-      for tag in list_of_tags:
-        result[i] = map(findAll(parseHtml(cliente.getContent(url)), tag, case_insensitive), proc(s: any): string = $s)
-        sleep delay
-
-
-proc scraper3*(list_of_urls: seq[string]; list_of_tags: seq[string] = @["a"]; start_with: string = ""; end_with: string = ""; line_start: Natural = 0; line_end: Positive = 1; verbose: bool = true; case_insensitive: bool = true; deduplicate_urls: bool = false; delay: Natural = 0; header: seq[(string, string)] = @[("DNT", "1")]; pre_replacements: seq[(string, string)] = @[]; post_replacements: seq[(string, string)] = @[]; timeout: int = -1; agent: string = defUserAgent; redirects: Positive = 5; proxy_url: string = ""; proxy_auth: string = ""): seq[seq[string]] {.exportpy.} =
-  let urls = createU(seq[string])
-  urls[] = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
-  let cliente = createU(HttpClient)
-  cliente[] = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = (if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil), timeout = timeout, headers = newHttpHeaders(header))
-  result = newSeq[seq[string]](urls[].len)
-  for i, url in urls[]:
-    if likely(verbose): echo i, "\t", url
-    for tag in list_of_tags:
-      sleep delay
-      for item in findAll(parseHtml(if pre_replacements.len > 0: cliente[].getContent(url).multiReplace(pre_replacements) else: cliente[].getContent(url)), tag, case_insensitive):
-        if start_with.len > 0 and end_with.len > 0:
-          if strip($item).startsWith(start_with) and strip($item).endsWith(end_with): result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
-          else: continue
-        else: result[i].add(if post_replacements.len > 0: strip($item).multiReplace(post_replacements)[line_start..^line_end] else: strip($item)[line_start..^line_end])
-  if cliente != nil:
-    dealloc cliente
-  if urls != nil:
-    dealloc urls
-
-
-proc scraper4*(list_of_urls: seq[string]; folder: string = getCurrentDir(); force_extension: string = ".jpg"; https_only: bool = false; print_alt: bool = false; picture: bool = false; case_insensitive: bool = true; deduplicate_urls: bool = false; visited_urls: bool = true; html_output: bool = true; csv_output: bool = true; verbose: bool = true; delay: Natural = 0; timeout: int = -1; agent: string = defUserAgent; redirects: Positive = 5; header: seq[(string, string)] = @[("DNT", "1")]; proxy_url: string = ""; proxy_auth: string = "") {.exportpy, discardable.} =
-  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
-  let proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
+proc fetch*(socket: Socket; url: Uri; metod: HttpMethod; headers: openArray[(string, string)]; body = "";
+    timeout = -1; proxyUrl = ""; port = 80.Port; portSsl = 443.Port;
+    parseHeader = true; parseStatus = true; parseBody = true; ignoreErrors = false; bodyOnly: static[bool] = false): auto {.raises: [IOError, OSError, TimeoutError, SslError, ValueError].} =
+  assert timeout > -2 and timeout != 0, "Timeout argument must be -1 or a non-zero positive integer"
   var
-    visited: seq[string]
-    src, dir, htmls: string
-    cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = proxi, timeout = timeout)
-  cliente.headers = newHttpHeaders(header)
-  for i, url in urls:
-    if likely(verbose): echo i, "\t", url
-    dir = folder / $i
-    if not existsOrCreateDir(dir) and verbose: echo i, "\t", dir
-    for i2, img_tag in findAll(parseHtml(cliente.getContent(url)), if picture: "source" else: "img", case_insensitive):
-      src = img_tag.attr(if picture: "srcset" else: "src")
-      if src.len < 2 or https_only and not src.normalize.startsWith("https:") or visited_urls and src in visited: continue
-      if unlikely(print_alt): echo img_tag.attr("alt")
-      if likely(verbose): echo dir / $i & "_" & $i2 & force_extension, "\t", src
-      cliente.downloadFile(src, dir / $i & "_" & $i2 & force_extension)
-      visited.add src
-      htmls &= img_tag
-      sleep delay
-    if likely(html_output):
-      if likely(verbose): echo i, "\t", dir / $i & ".html"
-      writeFile(dir / $i & ".html", htmls)
-    if likely(csv_output):
-      if likely(verbose): echo i, "\t", dir / $i & ".csv"
-      writeFile(dir / $i & ".csv", visited.join",")
-
-
-proc scraper5*(list_of_urls: seq[string]; sqlite_file_path: string; skip_ends_with: seq[string] = @[".jpg", ".png", ".pdf"]; https_only: bool = false; case_insensitive: bool = true; deduplicate_urls: bool = false; visited_urls: bool = true; verbose: bool = true; delay: Natural = 0; timeout: int = -1; max_loops: uint16 = uint16.high; max_deep: byte = byte.high; only200: bool = false; agent: string = defUserAgent; redirects: byte = 5.byte; header: seq[(string, string)] = @[("DNT", "1")]; proxy_url: string = ""; proxy_auth: string = "") {.discardable, exportpy, noreturn.} =
-  const table = sql"""create table if not exists web(
-    id          integer   primary key,
-    date        timestamp not null     default (strftime('%s', 'now')),
-    url         text      not null,
-    body        text      not null,
-    headers     text      not null,
-    status      text      not null,
-    contenttype text      not null,
-    deep        integer   not null
-  ); """
-  doAssert sqlite_file_path.endsWith".db", "sqlite_file_path must be *.db file extension: " & sqlite_file_path
+    res: string
+    chunked: bool
+    contentLength: int
+    chunks: seq[string]
   let
-    db = db_sqlite.open(sqlite_file_path, "", "", "")
-    proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
-  doAssert db.tryExec(table), "Error creating SQLite table or database: " & sqlite_file_path
-  var
-    deep: byte
-    loop: uint16
-    visited, tempLinks: seq[string]
-    href, links: string
-    urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
-    cliente = newHttpClient(userAgent = agent, maxRedirects = redirects.int16, proxy = proxi, timeout = timeout)
-  cliente.headers = newHttpHeaders(header)
-  while urls.len > 0:
-    if loop > max_loops: break
-    loop = 0.uint16
-    for i, url in urls:
-      if deep > max_deep: break
-      deep = 0.byte
-      if likely(verbose): echo i, "\t", url
-      for i2, link in findAll(parseHtml(cliente.getContent(url)), "a", case_insensitive):
-        links &= $link & ",\n"
-        href = link.attr("href")
-        if likely(href.len > 1):
-          for to_skip in skip_ends_with:
-            if href.endsWith(to_skip): continue
-          if href.startsWith("/"): href = url & href
-          if visited_urls and href in visited: continue
-          visited.add href
-          tempLinks.add href
-          if https_only and not href.normalize.startsWith("https:"): continue
-          if likely(verbose): echo i2, "\t", href
-          let req = cliente.get(href)
-          if only200 and req.status != "200 OK": continue
-          if not db.tryExec(sql"""INSERT INTO web(
-            url,  body,             headers,              status,     contenttype,     deep) VALUES (?,?,?,?,?,?)""",
-            href, req.body.strip(), pretty(%req.headers), req.status, req.contentType, deep): continue
-        sleep delay
-      inc deep
-      inc loop
-    urls = deduplicate(tempLinks)
-  db.close()
-  writeFile(sqlite_file_path.replace(".db", ".csv"), links)
-
-
-proc scraper6*(list_of_urls: seq[string]; list_of_regex: seq[string]; multiline: bool = false; dot: bool = false; extended: bool = false; case_insensitive: bool = true; post_replacement_regex: string = "";
-  post_replacement_by: string = ""; re_start: Natural = 0; start_with: string = ""; end_with: string = ""; verbose: bool = true; deduplicate_urls: bool = false; delay: Natural = 0;
-  header: seq[(string, string)] = @[("DNT", "1")]; timeout: int = -1; agent: string = defUserAgent; redirects: Positive = 5; proxy_url: string = ""; proxy_auth: string = ""): seq[seq[string]] {.exportpy.} =
-  let urls = if unlikely(deduplicate_urls): deduplicate(list_of_urls) else: @(list_of_urls)
-  let proxi = if unlikely(proxy_url.len > 0): newProxy(proxy_url, proxy_auth) else: nil
-  var cliente = newHttpClient(userAgent = agent, maxRedirects = redirects, proxy = proxi, timeout = timeout)
-  cliente.headers = newHttpHeaders(header)
-  result = newSeq[seq[string]](urls.len)
-  var reflags = {reStudy}
-  if case_insensitive: incl(reflags, reIgnoreCase)
-  if multiline: incl(reflags, reMultiLine)
-  if dot: incl(reflags, reDotAll)
-  if extended: incl(reflags, reExtended)
-  for i, url in urls:
-    if likely(verbose): echo i, "\t", url
-    for rege in list_of_regex:
-      sleep delay
-      for item in findAll(cliente.getContent(url), re(rege, reflags), re_start):
-        if start_with.len > 0 and end_with.len > 0:
-          if item.startsWith(re(start_with, reflags)) and item.endsWith(re(end_with, reflags)):
-            result[i].add(if post_replacement_regex.len > 0 and post_replacement_by.len > 0: replacef(item, re(post_replacement_regex, reflags), post_replacement_by) else: item)
-          else: continue
-        else: result[i].add(if post_replacement_regex.len > 0 and post_replacement_by.len > 0: replacef(item, re(post_replacement_regex, reflags), post_replacement_by) else: item)
-
-
-func match(n: XmlNode; s: tuple[id: string; tag: string; combi: char; class: seq[string]]): bool =
-  result = (s.tag.len == 0 or s.tag == n.tag)
-  if result and s.id.len > 0: result = s.id == n.attr"id"
-  if result and s.class.len > 0:
-    for class in s.class: result = n.attr("class").len > 0 and class in n.attr("class").split
-
-func find(parent: XmlNode; selector: tuple[id: string; tag: string; combi: char; class: seq[string]]; found: var seq[XmlNode]) =
-  for child in parent.items:
-    if child.kind == xnElement:
-      if match(child, selector): found.add(child)
-      if selector.combi != '>': child.find(selector, found)
-
-proc find(parents: var seq[XmlNode]; selector: tuple[id: string; tag: string; combi: char; class: seq[string]]) =
-  var found: seq[XmlNode]
-  for p in parents: find(p, selector, found)
-  parents = found
-
-proc multiFind(parent: XmlNode; selectors: seq[tuple[id: string; tag: string; combi: char; class: seq[string]]]; found: var seq[XmlNode]) =
-  var matches: seq[int]
-  var start: seq[int]
-  start = @[0]
-  for i in 0 ..< selectors.len:
-    var selector = selectors[i]
-    matches = @[]
-    for j in start:
-      for k in j ..< parent.len:
-        var child = parent[k]
-        if child.kind == xnElement and match(child, selector):
-          if i < selectors.len - 1: matches.add(k + 1)
-          else: found.add(child)
-          if selector.combi == '+': break
-    start = matches
-
-proc multiFind(parents: var seq[XmlNode]; selectors: seq[tuple[id: string; tag: string; combi: char; class: seq[string]]]) =
-  var found: seq[XmlNode]
-  for p in parents: multiFind(p, selectors, found)
-  parents = found
-
-proc parseSelector(token: string): tuple[id: string; tag: string; combi: char; class: seq[string]] =
-  result = (id: "", tag: "", combi: ' ', class: @[])
-  if token == "*": result.tag = "*"
-  elif token =~ peg"""\s*{\ident}?({'#'\ident})? ({\.[a-zA-Z0-9_][a-zA-Z0-9_\-]*})* {\[[a-zA-Z][a-zA-Z0-9_\-]*\s*([\*\^\$\~]?\=\s*[\'""]?(\s*\ident\s*)+[\'""]?)?\]}*""":
-    for i in 0 ..< matches.len:
-      if matches[i].len == 0: continue
-      case matches[i][0]:
-      of '#': result.id = matches[i][1..^1]
-      of '.': result.class.add(matches[i][1..^1])
-      else: result.tag = matches[i]
-
-proc findCssImpl(node: var seq[XmlNode]; cssSelector: string) {.noinline.} =
-  assert cssSelector.len > 0, "cssSelector must not be empty string"
-  var tokens = cssSelector.strip.split
-  for pos in 0 ..< tokens.len:
-    var isSimple = true
-    if pos > 0 and (tokens[pos - 1] == "+" or tokens[pos - 1] == "~"): continue
-    if tokens[pos] in [">", "~", "+"]: continue
-    var selector = parseSelector(tokens[pos])
-    if pos > 0 and tokens[pos-1] == ">": selector.combi = '>'
-    var selectors = @[selector]
-    var i = 1
+    flag = if ignoreErrors: {} else: {SafeDisconn}
+    proxi: string = if unlikely(proxyUrl.len > 0): proxyUrl else: url.hostname
+  if likely(url.scheme == "https"):
+    var ctx =
+      try:    newContext(verifyMode = CVerifyPeer)
+      except: raise newException(IOError, getCurrentExceptionMsg())
+    socket.connect(proxi, portSsl, timeout)
+    try:    ctx.wrapConnectedSocket(socket, handshakeAsClient, proxi)
+    except: raise newException(IOError, getCurrentExceptionMsg())
+  else: socket.connect(proxi, port, timeout)
+  if ignoreErrors: discard socket.trySend(toString(url, metod, headers, body))
+  else:            socket.send(toString(url, metod, headers, body), flags = flag)
+  while true:
+    let line = socket.recvLine(timeout, flags = flag)
+    res.add line
+    res.add '\r'
+    res.add '\n'
+    let lineLower = line.toLowerAscii()
+    if line == "\r\n":                              break
+    elif lineLower.startsWith("content-length:"):   contentLength = parseInt(line.split(' ')[1])
+    elif lineLower == "transfer-encoding: chunked": chunked = true
+  if chunked:
     while true:
-      if pos + i >= tokens.len: break
-      var nextCombi = tokens[pos + i]
-      if nextCombi == "+" or nextCombi == "~":
-        if pos + i + 1 >= tokens.len: assert false, "Selector not found"
-      else: break
-      isSimple = false
-      var nextToken = tokens[pos + i + 1]
-      inc i, 2
-      var temp = parseSelector(nextToken)
-      temp.combi = nextCombi[0]
-      selectors.add(temp)
-    if isSimple: node.find(selectors[0]) else: node.multiFind(selectors)
+      var chunkLenStr: string
+      while true:
+        var readChar: char
+        let readLen = socket.recv(readChar.addr, 1, timeout)
+        doAssert readLen == 1
+        chunkLenStr.add(readChar)
+        if chunkLenStr.endsWith("\r\n"): break
+      if chunkLenStr == "\r\n": break
+      var chunkLen: int
+      discard parseHex(chunkLenStr, chunkLen)
+      if chunkLen == 0: break
+      var chunk = newString(chunkLen)
+      let readLen = socket.recv(chunk[0].addr, chunkLen, timeout)
+      doAssert readLen == chunkLen
+      chunks.add(chunk)
+      var endStr = newString(2)
+      let readLen2 {.used.} = socket.recv(endStr[0].addr, 2, timeout)
+      assert endStr == "\r\n"
+  else:
+    var chunk = newString(contentLength)
+    let readLen = socket.recv(chunk[0].addr, contentLength, timeout)
+    assert readLen == contentLength
+    chunks.add chunk
+  when bodyOnly: result = chunks.join
+  else:
+    privateAccess url.type  # To use Uri.isIpv6
+    result = (url: url, metod: metod, isIpv6: url.isIpv6,
+              headers: if parseHeader: parseHeaders(res)  else: @[],
+              code:    if parseStatus: parseHttpCode(res).HttpCode else: 0.HttpCode,
+              body:    if parseBody:   chunks.join        else: "" )
 
-proc scraper7*(url: string; css_selector: string; user_agent: string = defUserAgent; max_redirects: int = 9; proxy_url: string = ""; proxy_auth: string = ""; timeout: int = -1; http_headers: openArray[tuple[key: string; val: string]] = @[("dnt", "1")]): seq[string] {.exportpy.} =
-  assert url.len > 0, "url must not be empty string"
-  var clien = createU HttpClient
-  var temp = create(seq[XmlNode])
+
+template fetchImpl(code, result): untyped {.dirty.} =
+  let socket: Socket = newSocket()
+  try: result = code
+  finally: close socket
+
+
+proc get*(url: Uri): auto =
+  fetchImpl(socket.fetch(url, HttpGet, default_headers""), result)
+
+
+proc getContent*(url: Uri): string =
+  fetchImpl(socket.fetch(url, HttpGet, default_headers"", bodyOnly = true), result)
+
+
+proc post*(url: Uri; body: string): auto =
+  fetchImpl(socket.fetch(url, HttpPost, default_headers(body), body), result)
+
+
+proc postContent*(url: Uri; body: string): string =
+  fetchImpl(socket.fetch(url, HttpPost, default_headers(body), body, bodyOnly = true), result)
+
+
+proc put*(url: Uri; body: string): auto =
+  fetchImpl(socket.fetch(url, HttpPut, default_headers(body), body), result)
+
+
+proc putContent*(url: Uri; body: string): string =
+  fetchImpl(socket.fetch(url, HttpPut, default_headers(body), body, bodyOnly = true), result)
+
+
+proc patch*(url: Uri; body: string): auto =
+  fetchImpl(socket.fetch(url, HttpPatch, default_headers(body), body), result)
+
+
+proc patchContent*(url: Uri; body: string): string =
+  fetchImpl(socket.fetch(url, HttpPatch, default_headers(body), body, bodyOnly = true), result)
+
+
+proc delete*(url: Uri): auto =
+  fetchImpl(socket.fetch(url, HttpDelete, default_headers""), result)
+
+
+proc deleteContent*(url: Uri): string =
+  fetchImpl(socket.fetch(url, HttpDelete, default_headers"", bodyOnly = true), result)
+
+
+proc downloadFile*(url: Uri; filename: string) =
+  assert filename.len > 0, "filename must not be an empty string"
+  let socket: Socket = newSocket()
+  try: writeFile(filename, socket.fetch(url, HttpGet, default_headers"", bodyOnly = true))
+  finally: close socket
+
+
+proc getJson*(url: Uri): JsonNode =
+  fetchImpl(parseJson(socket.fetch(url, HttpGet, default_headers"", bodyOnly = true)), result)
+
+
+proc postJson*(url: Uri; body: JsonNode): JsonNode =
+  let bodi: string = $body
+  fetchImpl(parseJson(socket.fetch(url, HttpPost, default_headers(bodi), bodi, bodyOnly = true)), result)
+
+
+proc downloadFile*(files: openArray[tuple[url: Uri; path: string]]) =
+  assert files.len > 0, "files must not be empty"
+  let socket: Socket = newSocket()
   try:
-    clien[] = newHttpClient(
-        timeout = timeout,
-        userAgent = userAgent,
-        maxRedirects = maxRedirects,
-        headers = newHttpHeaders(http_headers),
-        proxy = (if unlikely(proxyUrl.len > 1): newProxy(proxyUrl, proxyAuth) else: nil),
-      )
-    temp[] = @[htmlparser.parseHtml(clien[].getContent(url))]
-    findCssImpl(temp[], cssSelector)
-    for item in temp[]:
-      result.add $item
-  finally:
-    if temp != nil:
-      dealloc temp
-    clien[].close()
-    if clien != nil:
-      dealloc clien
+    for url_file in files:
+      assert url_file.path.len > 0, "path must not be empty string"
+      writeFile(url_file.path, socket.fetch(url_file.url, HttpGet, default_headers"", bodyOnly = true))
+  finally: close socket
 
 
-proc websocket_ping*(url: string; data: string = ""; hangup: bool = false): string {.exportpy.} =
-  assert url.len > 0, "url must not be empty string"
-  result = waitFor (proc (url, data: string; hangup: bool): Future[string] {.async, inline.} =
-    let soquetito = create(WebSocket)
-    soquetito[] = await newWebSocket(url)
-    echo "WebSocket ", soquetito[].readyState
-    await soquetito[].send(data, Opcode.Ping)
-    result = await(soquetito[].receivePacket())[1]
-    if hangup: soquetito[].hangup() else: soquetito[].close()
-    if soquetito != nil:
-      dealloc soquetito
-  )(url, data, hangup)
-
-
-proc websocket_send*(url: string; data: string; is_text: bool = true; hangup: bool = false): string {.exportpy.} =
-  assert url.len > 0, "url must not be empty string"
-  assert data.len > 0, "data must not be empty string"
-  result = waitFor (proc (url, data: string; is_text: bool; hangup: bool): Future[string] {.async, inline.} =
-    let soquetito = create(WebSocket)
-    soquetito[] = await newWebSocket(url)
-    echo "WebSocket ", soquetito[].readyState
-    await soquetito[].send(data, (if is_text: Opcode.Text else: Opcode.Binary))
-    result = await(soquetito[].receivePacket())[1]
-    if hangup: soquetito[].hangup() else: soquetito[].close()
-    if soquetito != nil:
-      dealloc soquetito
-  )(url, data, is_text, hangup)
+runnableExamples"--gc:orc --experimental:strictFuncs -d:ssl -d:nimStressOrc --import:std/httpcore":
+  import std/json               # GET and POST from JSON to JSON directly.
+  from std/uri import parseUri  # To use Uri.
+  block:
+    doAssert get(parseUri"http://httpbin.org/get").code == Http200
+    doAssert getContent(parseUri"http://httpbin.org/get").len > 0
+  block:
+    doAssert post(parseUri"http://httpbin.org/post", "data here").code == Http200
+    doAssert postContent(parseUri"http://httpbin.org/post", "data here").len > 0
+  block:
+    doAssert delete(parseUri"http://httpbin.org/delete").code == Http200
+    doAssert deleteContent(parseUri"http://httpbin.org/delete").len > 0
+  block:
+    doAssert put(parseUri"http://httpbin.org/put", "data here").code == Http200
+    doAssert putContent(parseUri"http://httpbin.org/put", "data here").len > 0
+  block:
+    doAssert patch(parseUri"http://httpbin.org/patch", "data here").code == Http200
+    doAssert patchContent(parseUri"http://httpbin.org/patch", "data here").len > 0
+  block:
+    let jsonData: JsonNode = %*{"key": "value", "other": 42} # GET and POST from JSON to JSON
+    doAssert getJson(parseUri"http://httpbin.org/get") is JsonNode
+    doAssert postJson(parseUri"http://httpbin.org/post", jsonData) is JsonNode
+  block:
+    downloadFile parseUri"http://httpbin.org/image/png", "temp.png" # Download 1 or multiple files
+    downloadFile [(url: parseUri"http://httpbin.org/image/png", path: "temp.png"), (url: parseUri"http://httpbin.org/image/jpg", path: "temp.jpg")]
+    doAssert default_headers(body = "data here", proxyUser = "root", proxyPassword = "password") is array[5, (string, string)]
