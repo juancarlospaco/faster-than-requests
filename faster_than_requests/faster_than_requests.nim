@@ -107,18 +107,36 @@ func toString(url: Uri; metod: HttpMethod; headers: openArray[(string, string)];
   result.add body
 
 
-proc fetch*(socket: Socket; url: Uri; metod: HttpMethod; headers: openArray[(string, string)]; body = "";
-    timeout = -1; proxyUrl = ""; port = 80.Port; portSsl = 443.Port;
-    parseHeader = true; parseStatus = true; parseBody = true; ignoreErrors = false; bodyOnly: static[bool] = false): auto {.raises: [IOError, OSError, TimeoutError, SslError, ValueError].} =
+proc fetch*(urls: string; meth0d: string; headers: seq[(string, string)]; body: string = "";
+    timeout: int = -1; proxyUrl: string = ""; port: int = 80; portSsl: int = 443;
+    parseHeader: bool = true; parseStatus: bool = true; parseBody: bool = true; ignoreErrors: bool = false; bodyOnly: bool = false): auto {.exportpy.} =
   assert timeout > -2 and timeout != 0, "Timeout argument must be -1 or a non-zero positive integer"
+
   var
     res: string
     chunked: bool
     contentLength: int
     chunks: seq[string]
+    url: Uri = parseUri(urls)
+    port: Port = Port(port)
+    portSsl: Port = Port(portSsl)
+  let socket: Socket = newSocket()
   let
     flag = if ignoreErrors: {} else: {SafeDisconn}
     proxi: string = if unlikely(proxyUrl.len > 0): proxyUrl else: url.hostname
+
+  let metod = case meth0d
+    of "GET":     HttpGet
+    of "POST":    HttpPost
+    of "PUT":     HttpPut
+    of "HEAD":    HttpHead
+    of "DELETE":  HttpDelete
+    of "PATCH":   HttpPatch
+    of "TRACE":   HttpTrace
+    of "OPTIONS": HttpOptions
+    of "CONNECT": HttpConnect
+    else:         HttpGet
+
   if likely(url.scheme == "https"):
     var ctx =
       try:    newContext(verifyMode = CVerifyPeer)
@@ -163,85 +181,84 @@ proc fetch*(socket: Socket; url: Uri; metod: HttpMethod; headers: openArray[(str
     let readLen = socket.recv(chunk[0].addr, contentLength, timeout)
     assert readLen == contentLength
     chunks.add chunk
-  when bodyOnly: result = chunks.join
-  else:
-    privateAccess url.type  # To use Uri.isIpv6
-    result = (url: url, metod: metod, isIpv6: url.isIpv6,
-              headers: if parseHeader: parseHeaders(res)  else: @[],
-              code:    if parseStatus: parseHttpCode(res).HttpCode else: 0.HttpCode,
-              body:    if parseBody:   chunks.join        else: "" )
+  close socket
+
+  # FIXME: What to do with the return type ?.
+  #if bodyOnly:
+  result = chunks
+  # else:
+  #   privateAccess url.type  # To use Uri.isIpv6
+  #   result = (
+  #     url:     $urls,
+  #     metod:   $meth0d,
+  #     isIpv6:  $url.isIpv6,
+  #     headers: if parseHeader: $parseHeaders(res)  else: "",
+  #     code:    if parseStatus: $parseHttpCode(res) else: "0",
+  #     body:    if parseBody:   $chunks        else: ""
+  #   )
 
 
-template fetchImpl(code, result): untyped {.dirty.} =
-  let socket: Socket = newSocket()
-  try: result = code
-  finally: close socket
+proc get*(url: string): auto =
+  fetch(url, "GET", @(default_headers("")))
 
 
-proc get*(url: Uri): auto =
-  fetchImpl(socket.fetch(url, HttpGet, default_headers""), result)
+proc getContent*(url: string): seq[string] =
+  fetch(url, "GET", @(default_headers("")), bodyOnly = true)
 
 
-proc getContent*(url: Uri): string =
-  fetchImpl(socket.fetch(url, HttpGet, default_headers"", bodyOnly = true), result)
+proc post*(url: string; body: string): auto =
+  fetch(url, "POST", @(default_headers(body)), body)
 
 
-proc post*(url: Uri; body: string): auto =
-  fetchImpl(socket.fetch(url, HttpPost, default_headers(body), body), result)
+proc postContent*(url: string; body: string): seq[string] =
+  fetch(url, "POST", @(default_headers(body)), body, bodyOnly = true)
 
 
-proc postContent*(url: Uri; body: string): string =
-  fetchImpl(socket.fetch(url, HttpPost, default_headers(body), body, bodyOnly = true), result)
+proc put*(url: string; body: string): auto =
+  fetch(url, "PUT", @(default_headers(body)), body)
 
 
-proc put*(url: Uri; body: string): auto =
-  fetchImpl(socket.fetch(url, HttpPut, default_headers(body), body), result)
+proc putContent*(url: string; body: string): seq[string] =
+  fetch(url, "PUT", @(default_headers(body)), body, bodyOnly = true)
 
 
-proc putContent*(url: Uri; body: string): string =
-  fetchImpl(socket.fetch(url, HttpPut, default_headers(body), body, bodyOnly = true), result)
+proc patch*(url: string; body: string): auto =
+  fetch(url, "PATCH", @(default_headers(body)), body)
 
 
-proc patch*(url: Uri; body: string): auto =
-  fetchImpl(socket.fetch(url, HttpPatch, default_headers(body), body), result)
+proc patchContent*(url: string; body: string): seq[string] =
+  fetch(url, "PATCH", @(default_headers(body)), body, bodyOnly = true)
 
 
-proc patchContent*(url: Uri; body: string): string =
-  fetchImpl(socket.fetch(url, HttpPatch, default_headers(body), body, bodyOnly = true), result)
+proc delete*(url: string): auto =
+  fetch(url, "DELETE", @(default_headers("")))
 
 
-proc delete*(url: Uri): auto =
-  fetchImpl(socket.fetch(url, HttpDelete, default_headers""), result)
+proc deleteContent*(url: string): seq[string] =
+  fetch(url, "DELETE", @(default_headers("")), bodyOnly = true)
 
 
-proc deleteContent*(url: Uri): string =
-  fetchImpl(socket.fetch(url, HttpDelete, default_headers"", bodyOnly = true), result)
-
-
-proc downloadFile*(url: Uri; filename: string) =
+proc downloadFile*(url: string; filename: string) =
   assert filename.len > 0, "filename must not be an empty string"
   let socket: Socket = newSocket()
-  try: writeFile(filename, socket.fetch(url, HttpGet, default_headers"", bodyOnly = true))
+  try: writeFile(filename, fetch(url, "GET", @(default_headers("")), bodyOnly = true).join)
   finally: close socket
 
 
-proc getJson*(url: Uri): JsonNode =
-  fetchImpl(parseJson(socket.fetch(url, HttpGet, default_headers"", bodyOnly = true)), result)
+proc getJson*(url: string): string =
+  parseJson(fetch(url, "GET", @(default_headers("")), bodyOnly = true).join).pretty
 
 
-proc postJson*(url: Uri; body: JsonNode): JsonNode =
-  let bodi: string = $body
-  fetchImpl(parseJson(socket.fetch(url, HttpPost, default_headers(bodi), bodi, bodyOnly = true)), result)
+proc postJson*(url: string; body: string): string =
+  let bodi: string = body
+  parseJson(fetch(url, "POST", @(default_headers(body)), bodi, bodyOnly = true).join).pretty
 
 
-proc downloadFile*(files: openArray[tuple[url: Uri; path: string]]) =
+proc downloadFile*(files: seq[tuple[url: string; path: string]]) =
   assert files.len > 0, "files must not be empty"
-  let socket: Socket = newSocket()
-  try:
-    for url_file in files:
-      assert url_file.path.len > 0, "path must not be empty string"
-      writeFile(url_file.path, socket.fetch(url_file.url, HttpGet, default_headers"", bodyOnly = true))
-  finally: close socket
+  for url_file in files:
+    assert url_file.path.len > 0, "path must not be empty string"
+    writeFile(url_file.path, fetch(url_file.url, "GET", @(default_headers("")), bodyOnly = true).join)
 
 
 runnableExamples"--gc:orc --experimental:strictFuncs -d:ssl -d:nimStressOrc --import:std/httpcore":
