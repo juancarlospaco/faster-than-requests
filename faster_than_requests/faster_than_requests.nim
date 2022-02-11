@@ -1,154 +1,101 @@
-import std/[net, macros, json, httpcore, importutils, parseutils, uri, base64, strutils]
-import nimpy
-export HttpMethod, HttpCode
+import std/[net,  macros, strutils, times, json, httpcore, importutils, parseutils, uri]
 
-
-proc default_headers*(body: string; contentType: string = "text/plain"; accept: string = "*/*"; userAgent: string = "x"; proxyUser: string = ""; proxyPassword: string = ""): array[5, (string, string)] {.exportpy.} =
-  if likely(proxyUser.len == 0):
-    [("Content-Length", $body.len), ("User-Agent", userAgent), ("Content-Type", contentType), ("Accept", accept), ("Dnt", "1")]
-  else:
-    [("Content-Length", $body.len), ("User-Agent", userAgent), ("Content-Type", contentType), ("Accept", accept), ("Proxy-Authorization", "Basic " & encode(proxyUser & ':' & proxyPassword))]
-
-
-macro unrollStringOps(x: ForLoopStmt) =
-  expectKind x, nnkForStmt
-  var body = newStmtList()
-  for chara in x[^2][^2].strVal:
-    body.add nnkAsgn.newTree(x[^2][^1], chara.newLit)
-    body.add x[^1]
-  result = body
-
-
-template parseHttpCode(s: string): int =
-  when defined(danger):
-    template char2Int(c: '0'..'9'; pos: static int): int =
-      case c
-      of '1': static(1 * pos)
-      of '2': static(2 * pos)
-      of '3': static(3 * pos)
-      of '4': static(4 * pos)
-      of '5': static(5 * pos)
-      of '6': static(6 * pos)
-      of '7': static(7 * pos)
-      of '8': static(8 * pos)
-      of '9': static(9 * pos)
-      else:   0
-    char2Int(s[9], 100) + char2Int(s[10], 10) + char2Int(s[11], 1)
-  else:
-    parseInt(s[9..11])
-
-
-func parseHeaders(data: string): seq[(string, string)] {.raises: [].} =
-  var i = 0
-  while data[i] != '\l': inc i
-  inc i
-  var value = false
-  var current: (string, string)
-  while i < data.len:
-    case data[i]
-    of ':':
-      if value: current[1].add ':'
-      value = true
-    of ' ':
-      if value:
-        if current[1].len != 0: current[1].add data[i]
-      else: current[0].add(data[i])
-    of '\c': discard
-    of '\l':
-      if current[0].len == 0: return result
-      result.add current
-      value = false
-      current = ("", "")
-    else:
-      if value: current[1].add data[i] else: current[0].add data[i]
-    inc i
-  return
-
-
-func toString(url: Uri; metod: HttpMethod; headers: openArray[(string, string)]; body: string): string {.raises: [].} =
-  var it: char  # TODO: Better name for this func.
-  var temp: string = url.path
-  if unlikely(temp.len == 0): temp = "/"
-  if url.query.len > 0:
-    temp.add '?'
-    temp.add url.query
-  case metod
-  of HttpGet:
-    for _ in unrollStringOps("GET ", it):     result.add it
-  of HttpPost:
-    for _ in unrollStringOps("POST ", it):    result.add it
-  of HttpPut:
-    for _ in unrollStringOps("PUT ", it):     result.add it
-  of HttpHead:
-    for _ in unrollStringOps("HEAD ", it):    result.add it
-  of HttpDelete:
-    for _ in unrollStringOps("DELETE ", it):  result.add it
-  of HttpPatch:
-    for _ in unrollStringOps("PATCH ", it):   result.add it
-  of HttpTrace:
-    for _ in unrollStringOps("TRACE ", it):   result.add it
-  of HttpOptions:
-    for _ in unrollStringOps("OPTIONS ", it): result.add it
-  of HttpConnect:
-    for _ in unrollStringOps("CONNECT ", it): result.add it
-  result.add temp
-  for _ in unrollStringOps(" HTTP/1.1\r\nHost: ", it): result.add it
-  result.add url.hostname
-  for _ in unrollStringOps("\r\n", it): result.add it
-  temp.setLen 0  # Reuse variable.
-  for header in headers:
-    temp.add header[0]
-    for _ in unrollStringOps(": ", it):   temp.add it
-    temp.add header[1]
-    for _ in unrollStringOps("\r\n", it): temp.add it
-  for _ in unrollStringOps("\r\n", it):   temp.add it
-  assert not(temp.len > 10_000), "Header must not be > 10_000 char"
-  result.add temp
-  result.add body
-
-
-proc fetch*(urls: string; meth0d: string; headers: seq[(string, string)]; body: string = "";
-    timeout: int = -1; proxyUrl: string = ""; port: int = 80; portSsl: int = 443;
-    parseHeader: bool = true; parseStatus: bool = true; parseBody: bool = true; ignoreErrors: bool = false; bodyOnly: bool = false): auto {.exportpy.} =
-  assert timeout > -2 and timeout != 0, "Timeout argument must be -1 or a non-zero positive integer"
-
+proc fetch*(url: string; metod: string;
+    headers: seq[(string, string)] = @[("User-Agent", "x")];
+    body: string = ""; timeout: int = -1; port: int = 80; portSsl: int = 443;
+    parseHeader: bool = true; parseStatus: bool = true; parseBody: bool = true; bodyOnly: static[bool] = false): auto =
   var
     res: string
     chunked: bool
     contentLength: int
     chunks: seq[string]
-    url: Uri = parseUri(urls)
-    port: Port = Port(port)
-    portSsl: Port = Port(portSsl)
-  let socket: Socket = newSocket()
-  let
-    flag = if ignoreErrors: {} else: {SafeDisconn}
-    proxi: string = if unlikely(proxyUrl.len > 0): proxyUrl else: url.hostname
+    url: Uri = parseUri(url)
+    socket: Socket = newSocket()
+    port: Port = port.Port
+    portSsl: Port = portSsl.Port
 
-  let metod = case meth0d
-    of "GET":     HttpGet
-    of "POST":    HttpPost
-    of "PUT":     HttpPut
-    of "HEAD":    HttpHead
-    of "DELETE":  HttpDelete
-    of "PATCH":   HttpPatch
-    of "TRACE":   HttpTrace
-    of "OPTIONS": HttpOptions
-    of "CONNECT": HttpConnect
-    else:         HttpGet
+  template parseHttpCode(s: string): int {.used.} =
+    when defined(danger):
+      template char2Int(c: '0'..'9'; pos: static int): int =
+        case c
+        of '1': static(1 * pos)
+        of '2': static(2 * pos)
+        of '3': static(3 * pos)
+        of '4': static(4 * pos)
+        of '5': static(5 * pos)
+        of '6': static(6 * pos)
+        of '7': static(7 * pos)
+        of '8': static(8 * pos)
+        of '9': static(9 * pos)
+        else:   0
+      char2Int(s[9], 100) + char2Int(s[10], 10) + char2Int(s[11], 1)
+    else: parseInt(s[9..11])
+
+  func parseHeaders(data: string): seq[(string, string)] {.inline, used, raises: [].} =
+    var i = 0
+    while data[i] != '\l': inc i
+    inc i
+    var value = false
+    var current: (string, string)
+    while i < data.len:
+      case data[i]
+      of ':':
+        if value: current[1].add ':'
+        value = true
+      of ' ':
+        if value:
+          if current[1].len != 0: current[1].add data[i]
+        else: current[0].add(data[i])
+      of '\c': discard
+      of '\l':
+        if current[0].len == 0: return result
+        result.add current
+        value = false
+        current = ("", "")
+      else:
+        if value: current[1].add data[i] else: current[0].add data[i]
+      inc i
+    return
+
+  func toString(url: Uri; metod: string; headers: openArray[(string, string)]; body: string): string {.raises: [].} =
+    var it: char
+    var temp: string = url.path
+    macro unrollStringOps(x: ForLoopStmt) =
+      result = newStmtList()
+      for chara in x[^2][^2].strVal:
+        result.add nnkAsgn.newTree(x[^2][^1], chara.newLit)
+        result.add x[^1]
+    if unlikely(temp.len == 0): temp = "/"
+    if url.query.len > 0:
+      temp.add '?'
+      temp.add url.query
+    for _ in unrollStringOps(metod, it): result.add it
+    result.add ' '
+    result.add temp
+    for _ in unrollStringOps(" HTTP/1.1\r\nHost: ", it): result.add it
+    result.add url.hostname
+    for _ in unrollStringOps("\r\n", it): result.add it
+    temp.setLen 0
+    for header in headers:
+      temp.add header[0]
+      for _ in unrollStringOps(": ", it):   temp.add it
+      temp.add header[1]
+      for _ in unrollStringOps("\r\n", it): temp.add it
+    for _ in unrollStringOps("\r\n", it):   temp.add it
+    result.add temp
+    result.add body
 
   if likely(url.scheme == "https"):
     var ctx =
-      try:    newContext(verifyMode = CVerifyPeer)
+      try:    newContext(verifyMode = CVerifyNone)
       except: raise newException(IOError, getCurrentExceptionMsg())
-    socket.connect(proxi, portSsl, timeout)
-    try:    ctx.wrapConnectedSocket(socket, handshakeAsClient, proxi)
+    socket.connect(url.hostname, portSsl, timeout)
+    try:    ctx.wrapConnectedSocket(socket, handshakeAsClient, url.hostname)
     except: raise newException(IOError, getCurrentExceptionMsg())
-  else: socket.connect(proxi, port, timeout)
-  if ignoreErrors: discard socket.trySend(toString(url, metod, headers, body))
-  else:            socket.send(toString(url, metod, headers, body), flags = flag)
+  else: socket.connect(url.hostname, port, timeout)
+  socket.send(toString(url, metod, headers, body))
   while true:
-    let line = socket.recvLine(timeout, flags = flag)
+    let line = socket.recvLine(timeout)
     res.add line
     res.add '\r'
     res.add '\n'
@@ -175,90 +122,67 @@ proc fetch*(urls: string; meth0d: string; headers: seq[(string, string)]; body: 
       chunks.add(chunk)
       var endStr = newString(2)
       let readLen2 {.used.} = socket.recv(endStr[0].addr, 2, timeout)
-      assert endStr == "\r\n"
   else:
     var chunk = newString(contentLength)
-    let readLen = socket.recv(chunk[0].addr, contentLength, timeout)
-    assert readLen == contentLength
+    let readLen {.used.} = socket.recv(chunk[0].addr, contentLength, timeout)
     chunks.add chunk
+  when bodyOnly: result = chunks
+  else:
+    privateAccess url.type
+    result = (url: url, metod: metod, isIpv6: url.isIpv6,
+              headers: if parseHeader: parseHeaders(res)  else: @[],
+              code:    if parseStatus: parseHttpCode(res) else: 0,
+              body:    if parseBody:   chunks             else: @[])
   close socket
-
-  # FIXME: What to do with the return type ?.
-  #if bodyOnly:
-  result = chunks
-  # else:
-  #   privateAccess url.type  # To use Uri.isIpv6
-  #   result = (
-  #     url:     $urls,
-  #     metod:   $meth0d,
-  #     isIpv6:  $url.isIpv6,
-  #     headers: if parseHeader: $parseHeaders(res)  else: "",
-  #     code:    if parseStatus: $parseHttpCode(res) else: "0",
-  #     body:    if parseBody:   $chunks        else: ""
-  #   )
 
 
 proc get*(url: string): auto =
-  fetch(url, "GET", @(default_headers("")))
+  fetch(url, "GET")
 
 
 proc getContent*(url: string): seq[string] =
-  fetch(url, "GET", @(default_headers("")), bodyOnly = true)
+  fetch(url, "GET", bodyOnly = true)
 
 
 proc post*(url: string; body: string): auto =
-  fetch(url, "POST", @(default_headers(body)), body)
+  fetch(url, "POST", body = body)
 
 
 proc postContent*(url: string; body: string): seq[string] =
-  fetch(url, "POST", @(default_headers(body)), body, bodyOnly = true)
+  fetch(url, "POST", body = body, bodyOnly = true)
 
 
 proc put*(url: string; body: string): auto =
-  fetch(url, "PUT", @(default_headers(body)), body)
+  fetch(url, "PUT", body = body)
 
 
 proc putContent*(url: string; body: string): seq[string] =
-  fetch(url, "PUT", @(default_headers(body)), body, bodyOnly = true)
+  fetch(url, "PUT", body = body, bodyOnly = true)
 
 
 proc patch*(url: string; body: string): auto =
-  fetch(url, "PATCH", @(default_headers(body)), body)
+  fetch(url, "PATCH", body = body)
 
 
 proc patchContent*(url: string; body: string): seq[string] =
-  fetch(url, "PATCH", @(default_headers(body)), body, bodyOnly = true)
+  fetch(url, "PATCH", body = body, bodyOnly = true)
 
 
 proc delete*(url: string): auto =
-  fetch(url, "DELETE", @(default_headers("")))
+  fetch(url, "DELETE")
 
 
 proc deleteContent*(url: string): seq[string] =
-  fetch(url, "DELETE", @(default_headers("")), bodyOnly = true)
+  fetch(url, "DELETE", bodyOnly = true)
 
 
 proc downloadFile*(url: string; filename: string) =
-  assert filename.len > 0, "filename must not be an empty string"
-  let socket: Socket = newSocket()
-  try: writeFile(filename, fetch(url, "GET", @(default_headers("")), bodyOnly = true).join)
-  finally: close socket
-
-
-proc getJson*(url: string): string =
-  parseJson(fetch(url, "GET", @(default_headers("")), bodyOnly = true).join).pretty
-
-
-proc postJson*(url: string; body: string): string =
-  let bodi: string = body
-  parseJson(fetch(url, "POST", @(default_headers(body)), bodi, bodyOnly = true).join).pretty
+  writeFile(filename, fetch(url, "GET", bodyOnly = true).join)
 
 
 proc downloadFile*(files: seq[tuple[url: string; path: string]]) =
-  assert files.len > 0, "files must not be empty"
   for url_file in files:
-    assert url_file.path.len > 0, "path must not be empty string"
-    writeFile(url_file.path, fetch(url_file.url, "GET", @(default_headers("")), bodyOnly = true).join)
+    writeFile(url_file.path, fetch(url_file.url, "GET", bodyOnly = true).join)
 
 
 runnableExamples"--gc:orc --experimental:strictFuncs -d:ssl -d:nimStressOrc --import:std/httpcore":
