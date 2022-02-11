@@ -126,6 +126,7 @@ proc fetch*(url: string; metod: string;
     var chunk = newString(contentLength)
     let readLen {.used.} = socket.recv(chunk[0].addr, contentLength, timeout)
     chunks.add chunk
+  close socket
   when bodyOnly: result = chunks
   else:
     privateAccess url.type
@@ -133,7 +134,6 @@ proc fetch*(url: string; metod: string;
               headers: if parseHeader: parseHeaders(res)  else: @[],
               code:    if parseStatus: parseHttpCode(res) else: 0,
               body:    if parseBody:   chunks             else: @[])
-  close socket
 
 
 proc get*(url: string): auto =
