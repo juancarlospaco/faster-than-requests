@@ -1,0 +1,28 @@
+name: Stale Issues & PRs
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  # workflow_dispatch:
+
+jobs:
+  mark_stale:
+    name: Mark issues and PRs as Stale
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-pr-stale: 90
+          days-before-pr-close: 10
+          days-before-issue-close: 3
+          stale-issue-message: >
+            This issue is Stale because it has been open for 60 days with no activity.
+            Contribute a fix or comment on the issue, or it will be closed in 3 days.
+          stale-pr-message: >
+            This pull request is Stale because it has been open for 90 days with no activity.
+            Contribute more commits on the pull request, or it will be closed in 10 days.
+          close-issue-message: >
+            This issue has been marked as Stale and closed due to inactivity.
+          close-pr-message: >
+            This pull request has been marked as Stale and Closed due to inactivity for 100 days.
