@@ -1413,11 +1413,6 @@ nim c -d:ssl -d:danger --app:lib --out:faster_than_requests.pyd faster_than_requ
 ```
 
 
-# Stars
-
-![Star faster-than-requests on GitHub](https://starchart.cc/juancarlospaco/faster-than-requests.svg "Star faster-than-requests on GitHub!")
-
-
 # Sponsors
 
 - **Become a Sponsor and help improve this library with the features you want!, we need Sponsors!.**
@@ -1613,4 +1608,6 @@ Please send Pull Request to Python to improve the output of `timeit`.
 Projects that use Cython wont count the whole Cython on the LoC, so we wont neither.
 
 
-[  ⬆️  ⬆️  ⬆️  ⬆️  ](#faster-than-requests "Go to top")
+# Stars
+
+![](https://starchart.cc/juancarlospaco/faster-than-requests.svg "Star faster-than-requests on GitHub!")
