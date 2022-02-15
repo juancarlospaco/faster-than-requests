@@ -1,0 +1,18 @@
+name: Add Stars
+
+on: [watch]
+
+jobs:
+  addstars:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Add Stars to Readme
+      run: |
+        echo -e ":star: [@${{github.actor}}](https://github.com/${{github.actor}} '`date --iso-8601`')\t" >> README.md
+
+    - name: Commit changes
+      uses: elstudio/actions-js-build/commit@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUSH_BRANCH: 'master'
