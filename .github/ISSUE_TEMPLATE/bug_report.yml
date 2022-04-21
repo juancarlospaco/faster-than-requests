@@ -1,0 +1,395 @@
+name:        "BUG Report"
+description: "Create a new Bug report."
+title:       "[bug] "
+labels:      ["unconfirmed"]
+assignees:   ["juancarlospaco"]
+body:
+
+- type: markdown
+  attributes:
+    value: |
+      - **Remember to :star: Star the project on GitHub!.**
+      - **Please provide a minimal code example that reproduces the :bug: Bug!.**
+        Reports with full repro code and descriptive detailed information will be fixed faster.
+      - [Please, keep in mind there is ZERO FUNDING for the project!, we have no sponsors, no company behind, no dev team,
+        :heart: Send crypto today to speed up development!](https://gist.github.com/juancarlospaco/37da34ed13a609663f55f4466c4dbc3e)
+
+- type: dropdown
+  id: architecture
+  attributes:
+    label: Architecture
+    description: What is your Hardware Architecture?.
+    options:
+      - x86_64 (Default)
+      - x86_32 (32Bit)
+      - ARM_64 (64Bit)
+      - ARM_32 (32Bit)
+      - AVR (Arduino, ESP32)
+      - RISC (RISC-V)
+      - Others (Unkown)
+  validations:
+    required: true
+
+- type: dropdown
+  id: os
+  attributes:
+    label: Operating System
+    description: What is your Operating System?.
+    options:
+      - Linux
+      - Windows
+      - Mac OSX
+      - Android
+      - BSD
+      - FreeDOS
+      - ReactOS
+      - Others (Unkown)
+  validations:
+    required: true
+
+- type: dropdown
+  id: disk
+  attributes:
+    label: Disk
+    description: What is your main Disk Storage?.
+    options:
+      - SSD (Solid)
+      - HDD (SATA, IDE, Mechanical)
+      - NVME (M2, MSATA)
+      - Others (USB)
+  validations:
+    required: true
+
+- type: dropdown
+  id: ram
+  attributes:
+    label: Memory
+    description: What is your total RAM Memory capacity?.
+    options:
+      - 1 Gigabytes
+      - 2 Gigabytes
+      - 4 Gigabytes
+      - 8 Gigabytes
+      - 16 Gigabytes
+      - 32 Gigabytes
+      - 64 Gigabytes
+      - 128 Gigabytes
+      - 256 Gigabytes
+      - 512 Gigabytes
+      - Others (Unkown)
+  validations:
+    required: true
+
+- type: dropdown
+  id: cores
+  attributes:
+    label: CPU Cores
+    description: What is your total CPU Cores count?.
+    options:
+      - 1 CPU Cores
+      - 2 CPU Cores
+      - 4 CPU Cores
+      - 8 CPU Cores
+      - 16 CPU Cores
+      - 32 CPU Cores
+      - 64 CPU Cores
+      - 128 CPU Cores
+      - 256 CPU Cores
+      - 512 CPU Cores
+      - Others (Unkown)
+  validations:
+    required: true
+
+- type: dropdown
+  id: internet
+  attributes:
+    label: Internet Connection
+    description: What is your Internet connection?.
+    options:
+      - Optical Fiber (very fast)
+      - DSL (aDSL, DSL, etc)
+      - Wifi (WLAN, Wireless)
+      - LAN (RJ45, Local, etc)
+      - Satellite (StarLink, etc)
+      - Mobile (4G, 3G, Edge, etc)
+      - Offline (No Internet)
+      - Others (Unkown)
+  validations:
+    required: true
+
+- type: dropdown
+  id: browser
+  attributes:
+    label: What is your web browser?
+    options:
+      - Chrome/Chromium
+      - Firefox/Firefox Fork
+      - Apple Safari
+      - Microsoft Edge
+      - KDE (Konqueror, Falkon, etc)
+      - Others (Unkown)
+  validations:
+    required: true
+
+- type: dropdown
+  id: device
+  attributes:
+    label: Device
+    description: What kind of computer is it?.
+    options:
+      - Desktop PC
+      - Server PC
+      - Docker/Qemu (Container)
+      - VirtualBox/Vagrant (Virtual Machine)
+      - Embedded/IOT
+      - Arduino/ESP32 Kit
+      - SmartTV/SmartDisplay
+      - Drone/Robot
+      - ASIC/FPGA/Crypto-mining hardware
+      - PLC/Industrial/heavy machine
+      - Point Of Sale/Kiosk/ATM
+      - Car/Self-Driving/On-Board Computer
+      - Electric scooter/Electric bike
+      - Satellite/MicroSatellite
+      - Military machine
+      - Others (Unkown)
+  validations:
+    required: true
+
+- type: dropdown
+  id: country
+  attributes:
+    label: Where are you from?
+    options:
+      - Afghanistan
+      - Albania
+      - Algeria
+      - Andorra
+      - Angola
+      - Antigua
+      - Argentina
+      - Armenia
+      - Australia
+      - Austria
+      - Azerbaijan
+      - Bahamas
+      - Bahrain
+      - Bangladesh
+      - Barbados
+      - Belarus
+      - Belgium
+      - Belize
+      - Benin
+      - Bhutan
+      - Bolivia
+      - Bosnia Herzegovina
+      - Botswana
+      - Brazil
+      - Brunei
+      - Bulgaria
+      - Burkina
+      - Burundi
+      - Cambodia
+      - Cameroon
+      - Canada
+      - Cape Verde
+      - Central African Republic
+      - Chad
+      - Chile
+      - China
+      - Colombia
+      - Comoros
+      - Congo
+      - Congo Democratic Republic
+      - Costa Rica
+      - Croatia
+      - Cuba
+      - Curacao
+      - Cyprus
+      - Czech Republic
+      - Denmark
+      - Djibouti
+      - Dominica
+      - Dominican Republic
+      - East Timor
+      - Ecuador
+      - Egypt
+      - El Salvador
+      - Equatorial Guinea
+      - Eritrea
+      - Estonia
+      - Ethiopia
+      - Fiji
+      - Finland
+      - France
+      - Gabon
+      - Gambia
+      - Georgia
+      - Germany
+      - Ghana
+      - Greece
+      - Grenada
+      - Guatemala
+      - Guinea
+      - Guinea-Bissau
+      - Guyana
+      - Haiti
+      - Honduras
+      - Hungary
+      - Iceland
+      - India
+      - Indonesia
+      - Iran
+      - Iraq
+      - Ireland
+      - Israel
+      - Italy
+      - Ivory Coast
+      - Jamaica
+      - Japan
+      - Jordan
+      - Kazakhstan
+      - Kenya
+      - Kiribati
+      - Korea North
+      - Korea South
+      - Kosovo
+      - Kuwait
+      - Kyrgyzstan
+      - Laos
+      - Latvia
+      - Lebanon
+      - Lesotho
+      - Liberia
+      - Libya
+      - Liechtenstein
+      - Lithuania
+      - Luxembourg
+      - Macedonia
+      - Madagascar
+      - Malawi
+      - Malaysia
+      - Maldives
+      - Mali
+      - Malvinas Argentinas Islands
+      - Malta
+      - Marshall Islands
+      - Mauritania
+      - Mauritius
+      - Mexico
+      - Micronesia
+      - Moldova
+      - Monaco
+      - Mongolia
+      - Montenegro
+      - Morocco
+      - Mozambique
+      - Myanmar
+      - Namibia
+      - Nauru
+      - Nepal
+      - Netherlands
+      - New Zealand
+      - Nicaragua
+      - Niger
+      - Nigeria
+      - Norway
+      - Oman
+      - Pakistan
+      - Palau
+      - Palestine
+      - Panama
+      - Papua New Guinea
+      - Paraguay
+      - Peru
+      - Philippines
+      - Poland
+      - Portugal
+      - Qatar
+      - Romania
+      - Russia
+      - Rwanda
+      - St Kitts
+      - St Lucia
+      - Saint Vincent
+      - Samoa
+      - San Marino
+      - Sao Tome Principe
+      - Saudi Arabia
+      - Senegal
+      - Scotland
+      - Serbia
+      - Seychelles
+      - Sierra Leone
+      - Singapore
+      - Slovakia
+      - Slovenia
+      - Solomon Islands
+      - Somalia
+      - South Africa
+      - South Sudan
+      - Spain
+      - Sri Lanka
+      - Sudan
+      - Suriname
+      - Swaziland
+      - Sweden
+      - Switzerland
+      - Syria
+      - Taiwan
+      - Tajikistan
+      - Tanzania
+      - Thailand
+      - Togo
+      - Tonga
+      - Trinidad Tobago
+      - Tunisia
+      - Turkey
+      - Turkmenistan
+      - Tuvalu
+      - Uganda
+      - Ukraine
+      - United Arab Emirates
+      - United Kingdom
+      - United States
+      - Uruguay
+      - Uzbekistan
+      - Vanuatu
+      - Vatican City
+      - Venezuela
+      - Vietnam
+      - Yemen
+      - Zambia
+      - Zimbabwe
+  validations:
+    required: true
+
+- type: textarea
+  id: what-happened
+  attributes:
+    label: What happened?
+    description: Use DETAILED DESCRIPTIVE information about the problem
+    placeholder: Bug reports with full repro code and detailed information will be fixed faster.
+  validations:
+    required: true
+
+- type: textarea
+  id: logs
+  attributes:
+    label: Standard Output Logs
+    description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+    placeholder: Bug reports with full repro code and detailed information will be fixed faster.
+    render: shell
+
+- type: markdown
+  attributes:
+    value: |
+      **Before you open a new bug...**
+      - 32-Bit is NOT supported.
+      - Windows older than Windows 10 is NOT supported.
+      - Mac OSX support is Experimental.
+      - ARM support is Experimental.
+      - Alpine Linux support is Experimental.
+      - Termux support is Experimental.
+      - Check if Git main branch already have a fix for your problem.
+      

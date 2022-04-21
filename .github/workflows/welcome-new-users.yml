@@ -1,0 +1,208 @@
+name: Welcome New Users
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: |
+          # Welcome ${{github.actor}}
+          - **Remember to :star: Star the project on GitHub!.**
+          - **Congrats for your first issue!, please provide a minimal code example that reproduces the :bug: Bug!.**
+            Reports with full repro code and descriptive detailed information will be fixed faster.
+          - Please, keep in mind there is ZERO FUNDING for the project!, we have no sponsors, no company behind, no dev team,
+            :heart: Send crypto today to speed up development!:
+          <details> 
+          <summary title="Send Bitcoin"><kbd> Bitcoin BTC </kbd></summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **BTC Bitcoin Network**
+          ```
+          1Pnf45MgGgY32X4KDNJbutnpx96E4FxqVi
+          ```
+          **Lightning Network**
+          ```
+          juancarlospaco@bitrefill.me
+          ```  
+          </details>
+
+          <details> 
+          <summary title="Send Ethereum and DAI"><kbd> Ethereum ETH </kbd> <kbd> Dai DAI </kbd> <kbd> Uniswap UNI </kbd> <kbd> Axie Infinity AXS </kbd> <kbd> Smooth Love Potion SLP </kbd> </summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **ERC20 Ethereum Network**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          </details>
+          <details> 
+          <summary title="Send Tether"><kbd> Tether USDT </kbd></summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **ERC20 Ethereum Network**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **TRC20 Tron Network**
+          ```
+          TWGft53WgWvH2mnqR8ZUXq1GD8M4gZ4Yfu
+          ```
+          </details>
+          <details> 
+          <summary title="Send Solana"><kbd> Solana SOL </kbd></summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **SOL Solana Network**
+          ```
+          FKaPSd8kTUpH7Q76d77toy1jjPGpZSxR4xbhQHyCMSGq
+          ```
+          </details>
+          <details> 
+          <summary title="Send Cardano"><kbd> Cardano ADA </kbd></summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **ADA Cardano Network**
+          ```
+          DdzFFzCqrht9Y1r4Yx7ouqG9yJNWeXFt69xavLdaeXdu4cQi2yXgNWagzh52o9k9YRh3ussHnBnDrg7v7W2hSXWXfBhbo2ooUKRFMieM
+          ```
+          </details>
+          <details> 
+          <summary title="Send Sandbox"><kbd> Sandbox SAND </kbd> <kbd> Decentraland MANA </kbd></summary>
+
+          **ERC20 Ethereum Network**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          </details>
+          <details> 
+          <summary title="Send Algorand"><kbd> Algorand ALGO </kbd></summary>
+
+          **ALGO Algorand Network**
+          ```
+          WM54DHVZQIQDVTHMPOH6FEZ4U2AU3OBPGAFTHSCYWMFE7ETKCUUOYAW24Q
+          ```
+          </details>
+          <details> 
+          <summary title="Send via Binance Pay"> Binance </summary>
+
+          [https://pay.binance.com/en/checkout/e92e536210fd4f62b426ea7ee65b49c3](https://pay.binance.com/en/checkout/e92e536210fd4f62b426ea7ee65b49c3 "Send via Binance Pay")
+          </details>
+          <details>
+
+        pr-message: |
+          # Welcome ${{github.actor}}
+          - **Remember to :star: Star the project on GitHub!.**
+          - **Congrats for your first Pull Request!, we will review your contributions very soon, and likely merge it!.**
+            Pull Requests with detailed description of the changes and documentation on the code will be merged faster.
+          - Please, keep in mind there is ZERO FUNDING for the project!, we have no sponsors, no company behind, no dev team,
+            :heart: Send crypto today to speed up development!:
+          <details> 
+          <summary title="Send Bitcoin"><kbd> Bitcoin BTC </kbd></summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **BTC Bitcoin Network**
+          ```
+          1Pnf45MgGgY32X4KDNJbutnpx96E4FxqVi
+          ```
+          **Lightning Network**
+          ```
+          juancarlospaco@bitrefill.me
+          ```  
+          </details>
+
+          <details> 
+          <summary title="Send Ethereum and DAI"><kbd> Ethereum ETH </kbd> <kbd> Dai DAI </kbd> <kbd> Uniswap UNI </kbd> <kbd> Axie Infinity AXS </kbd> <kbd> Smooth Love Potion SLP </kbd> </summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **ERC20 Ethereum Network**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          </details>
+          <details> 
+          <summary title="Send Tether"><kbd> Tether USDT </kbd></summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **ERC20 Ethereum Network**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **TRC20 Tron Network**
+          ```
+          TWGft53WgWvH2mnqR8ZUXq1GD8M4gZ4Yfu
+          ```
+          </details>
+          <details> 
+          <summary title="Send Solana"><kbd> Solana SOL </kbd></summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **SOL Solana Network**
+          ```
+          FKaPSd8kTUpH7Q76d77toy1jjPGpZSxR4xbhQHyCMSGq
+          ```
+          </details>
+          <details> 
+          <summary title="Send Cardano"><kbd> Cardano ADA </kbd></summary>
+
+          **BEP20 Binance Smart Chain Network BSC**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          **ADA Cardano Network**
+          ```
+          DdzFFzCqrht9Y1r4Yx7ouqG9yJNWeXFt69xavLdaeXdu4cQi2yXgNWagzh52o9k9YRh3ussHnBnDrg7v7W2hSXWXfBhbo2ooUKRFMieM
+          ```
+          </details>
+          <details> 
+          <summary title="Send Sandbox"><kbd> Sandbox SAND </kbd> <kbd> Decentraland MANA </kbd></summary>
+
+          **ERC20 Ethereum Network**
+          ```
+          0xb78c4cf63274bb22f83481986157d234105ac17e
+          ```
+          </details>
+          <details> 
+          <summary title="Send Algorand"><kbd> Algorand ALGO </kbd></summary>
+
+          **ALGO Algorand Network**
+          ```
+          WM54DHVZQIQDVTHMPOH6FEZ4U2AU3OBPGAFTHSCYWMFE7ETKCUUOYAW24Q
+          ```
+          </details>
+          <details> 
+          <summary title="Send via Binance Pay"> Binance </summary>
+
+          [https://pay.binance.com/en/checkout/e92e536210fd4f62b426ea7ee65b49c3](https://pay.binance.com/en/checkout/e92e536210fd4f62b426ea7ee65b49c3 "Send via Binance Pay")
+          </details>
+          <details>

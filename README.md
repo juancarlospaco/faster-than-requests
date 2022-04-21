@@ -1413,11 +1413,6 @@ nim c -d:ssl -d:danger --app:lib --out:faster_than_requests.pyd faster_than_requ
 ```
 
 
-# Stars
-
-![Star faster-than-requests on GitHub](https://starchart.cc/juancarlospaco/faster-than-requests.svg "Star faster-than-requests on GitHub!")
-
-
 # Sponsors
 
 - **Become a Sponsor and help improve this library with the features you want!, we need Sponsors!.**
@@ -1613,4 +1608,45 @@ Please send Pull Request to Python to improve the output of `timeit`.
 Projects that use Cython wont count the whole Cython on the LoC, so we wont neither.
 
 
-[  ⬆️  ⬆️  ⬆️  ⬆️  ](#faster-than-requests "Go to top")
+# Stars
+
+![](https://starchart.cc/juancarlospaco/faster-than-requests.svg "Star faster-than-requests on GitHub!")
+:star: [@juancarlospaco](https://github.com/juancarlospaco '2022-02-15')	
+:star: [@nikitavoloboev](https://github.com/nikitavoloboev '2022-02-15')	
+:star: [@5u4](https://github.com/5u4 '2022-02-16')	
+:star: [@CKristensen](https://github.com/CKristensen '2022-02-16')	
+:star: [@Lips7](https://github.com/Lips7 '2022-02-17')	
+:star: [@zeandrade](https://github.com/zeandrade '2022-02-17')	
+:star: [@SoloDevOG](https://github.com/SoloDevOG '2022-02-18')	
+:star: [@AM-I-Human](https://github.com/AM-I-Human '2022-02-19')	
+:star: [@pauldevos](https://github.com/pauldevos '2022-02-20')	
+:star: [@divanovGH](https://github.com/divanovGH '2022-02-21')	
+:star: [@ali-sajjad-rizavi](https://github.com/ali-sajjad-rizavi '2022-02-23')	
+:star: [@George2901](https://github.com/George2901 '2022-03-01')	
+:star: [@jeaps17](https://github.com/jeaps17 '2022-03-01')	
+:star: [@TeeWallz](https://github.com/TeeWallz '2022-03-04')	
+:star: [@Shinji-Mimura](https://github.com/Shinji-Mimura '2022-03-18')	
+:star: [@oozdemir83](https://github.com/oozdemir83 '2022-03-18')	
+:star: [@aaman007](https://github.com/aaman007 '2022-03-18')	
+:star: [@dungtq](https://github.com/dungtq '2022-03-19')	
+:star: [@bonginkosi0607](https://github.com/bonginkosi0607 '2022-03-20')	
+:star: [@4nzor](https://github.com/4nzor '2022-03-20')	
+:star: [@CyberLionsNFT](https://github.com/CyberLionsNFT '2022-03-24')	
+:star: [@Lyapsus](https://github.com/Lyapsus '2022-03-24')	
+:star: [@boskuv](https://github.com/boskuv '2022-03-28')	
+:star: [@jckli](https://github.com/jckli '2022-03-28')	
+:star: [@VitSimon](https://github.com/VitSimon '2022-03-29')	
+:star: [@zjmdp](https://github.com/zjmdp '2022-03-30')	
+:star: [@maxclac](https://github.com/maxclac '2022-03-31')	
+:star: [@krishna2206](https://github.com/krishna2206 '2022-03-31')	
+:star: [@KhushC-03](https://github.com/KhushC-03 '2022-03-31')	
+:star: [@nicksnell](https://github.com/nicksnell '2022-04-01')	
+:star: [@skandix](https://github.com/skandix '2022-04-02')	
+:star: [@gioleppe](https://github.com/gioleppe '2022-04-08')	
+:star: [@mvandermeulen](https://github.com/mvandermeulen '2022-04-11')	
+:star: [@Vexarr](https://github.com/Vexarr '2022-04-13')	
+:star: [@baajarmeh](https://github.com/baajarmeh '2022-04-13')	
+:star: [@znel2002](https://github.com/znel2002 '2022-04-13')	
+:star: [@matkuki](https://github.com/matkuki '2022-04-14')	
+:star: [@SmartManoj](https://github.com/SmartManoj '2022-04-16')	
+:star: [@SmartManoj](https://github.com/SmartManoj '2022-04-21')	
