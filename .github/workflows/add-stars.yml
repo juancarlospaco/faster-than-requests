@@ -12,7 +12,7 @@ jobs:
         echo -e ":star: [@${{github.actor}}](https://github.com/${{github.actor}} '`date --iso-8601`')\t" >> README.md
 
     - name: Commit changes
-      uses: elstudio/actions-js-build/commit@v2
+      uses: elstudio/actions-js-build/commit@v4
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PUSH_BRANCH: 'master'
