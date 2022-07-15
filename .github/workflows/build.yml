@@ -1,40 +1,43 @@
 name: Build
-on:
-  push:
-    paths:
-      - 'setup.py'
-      - 'setup.cfg'
-      - 'PKG-INFO'
-      - 'faster_than_requests/*.*'
-      - 'faster_than_requests/**.py'
-      - 'faster_than_requests/**.nim'
-      - 'faster_than_requests/**.nims'
-      - 'faster_than_requests/**.cfg'
-      - 'faster_than_requests/**.so'
-      - 'faster_than_requests/**.dll'
-      - '.github/workflows/*.yml'
-      - '.github/workflows/*.yaml'
-      - '.gitignore'
+on: [push, pull_request]
 
 jobs:
   build:
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    if: |
+      !contains(github.event.head_commit.message, '[skip ci]')
     strategy:
       fail-fast: true
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
-    name: ${{ matrix.platform }}
+        platform:       [ubuntu-latest]
+        python-version: ["3.5", "3.6", "3.7", "3.8", "3.9", "3.10"]
+        architecture:   ["x64", "x86"]
+        nim-channel:    [stable, devel]
+
+    name: ${{ matrix.platform }}-${{ matrix.architecture }}-${{ matrix.python-version }}-${{ matrix.nim-channel }}
     runs-on: ${{ matrix.platform }}
     steps:
+
+
     - uses: actions/checkout@v2
+
+
+    - name: Set Environment Variables
+      uses: allenevans/set-env@v2.0.0
+      with:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        CMD: "nim doc -d:nimStrictDelete -d:nimPreviewFloatRoundtrip -d:nimPreviewDotLikeOps --gc:orc --index:on --project --experimental:strictEffects --experimental:strictFuncs --styleCheck:usages --styleCheck:hint --outdir:../../docs"
+
+
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.9'  # New PIP is buggy, error "has different metadata"
+        python-version: ${{ matrix.python-version }}
 
-    - uses: jiro4989/setup-nim-action@v1
+
+    - uses: jiro4989/setup-nim-action@v1.0.2
       with:
-        nim-version: 'devel'
-        no-color: true  # --noColor
+        nim-version: ${{ matrix.nim-channel }}
+        no-color: true
+
 
     - name: Get Git Commit Short Hash
       id: vars
@@ -44,17 +47,6 @@ jobs:
         echo "semver_date=$(date +'%y.%m.%d')" >> $GITHUB_ENV
 
 
-    - name: Set Environment Variables
-      uses: allenevans/set-env@v2.0.0
-      with:
-        NIM_VERSION:           "1.4.2"
-        MAIN_MODULE:           "faster_than_requests/faster_than_requests.nim"
-        PACKAGE_NAME:          "faster_than_requests"
-        TWINE_USERNAME:        ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD:        ${{ secrets.PYPI_PASSWORD }}
-        TWINE_NON_INTERACTIVE: 1
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-
     - name: Nimble Install dependencies
       run: |
         nimble -y refresh
@@ -62,48 +54,31 @@ jobs:
         pip install nimporter
 
 
-    - uses: juancarlospaco/nimpretty-action@main
-      with:
-        folders: "faster_than_requests"
-
-
-    # - name: Generate Documentation (Linux)
-    #   if: runner.os == 'Linux'
-    #   run: |
-    #     nim doc --out:docs/index.html ${{ env.MAIN_MODULE }}
-    #     nim rst2tex --out:docs/${{ env.PACKAGE_NAME }}.tex ${{ env.MAIN_MODULE }}
-
-
-    - name: Compile Debug & import (Unix)
-      if: runner.os == 'Linux' || runner.os == 'macOS'
+    - name: Build docs
+      shell: bash
       run: |
-        nim c --app:lib --threads:on --out:$PACKAGE_NAME.so $MAIN_MODULE
-        python3 -c "print(__import__('${{ env.PACKAGE_NAME }}').__file__)"
+        cd faster_than_requests/
+        for i in *.nim; do
+          $CMD $i
+        done
 
 
-    - name: Compile Debug & import (Windows)
-      if: runner.os == 'Windows'
+    - name: Clean out
+      shell: bash
       run: |
-        nim c --app:lib --threads:on --out:${{ env.PACKAGE_NAME }}.pyd ${{ env.MAIN_MODULE }}
-        python.exe -c "print(__import__('${{ env.PACKAGE_NAME }}').__file__)"
+        rm --verbose --force --recursive docs/*.idx
+        rm --verbose --force --recursive docs/nimcache/*.*
+        rm --verbose --force --recursive docs/nimcache/runnableExamples/*.*
 
 
-    # - name: Package
-    #   run: python setup.py sdist --format=zip
-
-
-    - name: Commit Nimpretty Fixes  # Commit everything to Git repo
-      uses: EndBug/add-and-commit@v4  # https://github.com/EndBug/add-and-commit/issues/67#issuecomment-711081492
+    - name: Commit Docs
+      if: |
+        github.event_name == 'push' && runner.os == 'Linux' &&
+        matrix.platform == 'ubuntu-latest' && matrix.architecture == 'x64' && matrix.python-version == '3.10'
+      uses: EndBug/add-and-commit@v4  # Commit everything to Git repo
       with:
-        add: 'src/*.nim'
+        add: 'docs'
         force: true
-        message: ${{ steps.vars.outputs.semver_date }}
+        message: 'Fully Automated Luxury Nim'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-    - name: Cache Nim
-      uses: actions/cache@v1
-      with:
-        path: $PWD/Nim/
-        key: ${{ runner.os }}-nim
