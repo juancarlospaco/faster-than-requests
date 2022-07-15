@@ -391,5 +391,5 @@ body:
       - ARM support is Experimental.
       - Alpine Linux support is Experimental.
       - Termux support is Experimental.
+      - Code on this repo does NOT depend on `wheel`, open a Bug to PIP to fix that.
       - Check if Git main branch already have a fix for your problem.
-      
