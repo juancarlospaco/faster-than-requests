@@ -1725,3 +1725,4 @@ Projects that use Cython wont count the whole Cython on the LoC, so we wont neit
 :star: [@tk-iitd](https://github.com/tk-iitd '2022-10-07')	
 :star: [@smartniz](https://github.com/smartniz '2022-10-13')	
 :star: [@popcrocks](https://github.com/popcrocks '2022-10-13')	
+:star: [@senic35](https://github.com/senic35 '2022-10-14')	
