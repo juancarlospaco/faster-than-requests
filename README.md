@@ -1817,3 +1817,4 @@ Projects that use Cython wont count the whole Cython on the LoC, so we wont neit
 :star: [@eantho](https://github.com/eantho '2023-02-26')	
 :star: [@RodrigoTorresWeb](https://github.com/RodrigoTorresWeb '2023-03-04')	
 :star: [@mighty-phoenix](https://github.com/mighty-phoenix '2023-03-05')	
+:star: [@DSDanielPark](https://github.com/DSDanielPark '2023-03-05')	
