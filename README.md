@@ -2010,3 +2010,4 @@ Projects that use Cython wont count the whole Cython on the LoC, so we wont neit
 :star: [@himanshu076](https://github.com/himanshu076 '2024-06-09')	
 :star: [@herlangga72](https://github.com/herlangga72 '2024-06-10')	
 :star: [@SamDc73](https://github.com/SamDc73 '2024-06-11')	
+:star: [@ewnprn112](https://github.com/ewnprn112 '2024-06-20')	
