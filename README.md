@@ -2018,3 +2018,4 @@ Projects that use Cython wont count the whole Cython on the LoC, so we wont neit
 :star: [@warezit](https://github.com/warezit '2024-08-01')	
 :star: [@firasuke](https://github.com/firasuke '2024-08-04')	
 :star: [@bit-code](https://github.com/bit-code '2024-08-14')	
+:star: [@beingDave](https://github.com/beingDave '2024-08-19')	
