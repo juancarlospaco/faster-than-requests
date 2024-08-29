@@ -1608,6 +1608,11 @@ Please send Pull Request to Python to improve the output of `timeit`.
 Projects that use Cython wont count the whole Cython on the LoC, so we wont neither.
 
 
+# Sponsors
+
+![](https://raw.githubusercontent.com/juancarlospaco/faster-than-requests/master/CapSolver%20Ads.png)
+
+
 # Stars
 
 ![](https://starchart.cc/juancarlospaco/faster-than-requests.svg "Star faster-than-requests on GitHub!")
