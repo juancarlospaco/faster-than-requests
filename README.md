@@ -41,6 +41,11 @@
 </details>
 
 
+# Sponsors
+
+[![](https://raw.githubusercontent.com/juancarlospaco/faster-than-requests/master/CapSolver%20Ads.png)](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=faster-than-requests)
+
+
 # Use
 
 ```python
@@ -55,6 +60,7 @@ requests.scraper6(["http://python.org"], ["(www|http:|https:)+[^\s]+[\w]"]) # Re
 requests.scraper7("http://python.org", "body > div.someclass a#someid"])    # CSS Selector Web Scraper
 requests.websocket_send("ws://echo.websocket.org", "data here")             # WebSockets Binary/Text
 ```
+
 
 # Table Of Contents
 
@@ -1606,11 +1612,6 @@ Please send Pull Request to Python to improve the output of `timeit`.
 - The LoC is a lie, not counting the lines of code of the Compiler ?.
 
 Projects that use Cython wont count the whole Cython on the LoC, so we wont neither.
-
-
-# Sponsors
-
-[![](https://raw.githubusercontent.com/juancarlospaco/faster-than-requests/master/CapSolver%20Ads.png)](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=faster-than-requests)
 
 
 # Stars
