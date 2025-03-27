@@ -2045,3 +2045,4 @@ Projects that use Cython wont count the whole Cython on the LoC, so we wont neit
 :star: [@planetis-m](https://github.com/planetis-m '2025-01-24')	
 :star: [@cryptoeurovpn](https://github.com/cryptoeurovpn '2025-02-13')	
 :star: [@emansije](https://github.com/emansije '2025-03-22')	
+:star: [@trinhminhtriet](https://github.com/trinhminhtriet '2025-03-27')	
