@@ -2055,3 +2055,4 @@ Projects that use Cython wont count the whole Cython on the LoC, so we wont neit
 :star: [@godofvareyes](https://github.com/godofvareyes '2025-05-10')	
 :star: [@donkey-lips](https://github.com/donkey-lips '2025-05-14')	
 :star: [@zinuznet](https://github.com/zinuznet '2025-05-16')	
+:star: [@XelXen](https://github.com/XelXen '2025-05-17')	
