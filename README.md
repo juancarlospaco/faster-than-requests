@@ -99,7 +99,7 @@ requests.get("http://example.com")
 
 **Returns:**
 Response, `list` type, values of the list are string type,
-values of the list can be empty string, the lenght of the list is always 7 items,
+values of the list can be empty string, the length of the list is always 7 items,
 the values are like `[body, type, status, version, url, length, headers]`,
 you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
 
@@ -137,7 +137,7 @@ requests.post("http://httpbin.org/post", "Some Data Here")
 
 **Returns:**
 Response, `list` type, values of the list are string type,
-values of the list can be empty string, the lenght of the list is always 7 items,
+values of the list can be empty string, the length of the list is always 7 items,
 the values are like `[body, type, status, version, url, length, headers]`,
 you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
 
@@ -171,7 +171,7 @@ requests.put("http://httpbin.org/post", "Some Data Here")
 
 **Returns:**
 Response, `list` type, values of the list are string type,
-values of the list can be empty string, the lenght of the list is always 7 items,
+values of the list can be empty string, the length of the list is always 7 items,
 the values are like `[body, type, status, version, url, length, headers]`,
 you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
 
@@ -204,7 +204,7 @@ requests.delete("http://example.com/api/something")
 
 **Returns:**
 Response, `list` type, values of the list are string type,
-values of the list can be empty string, the lenght of the list is always 7 items,
+values of the list can be empty string, the length of the list is always 7 items,
 the values are like `[body, type, status, version, url, length, headers]`,
 you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
 
@@ -238,7 +238,7 @@ requests.patch("http://example.com", "My Body Data Here")
 
 **Returns:**
 Response, `list` type, values of the list are string type,
-values of the list can be empty string, the lenght of the list is always 7 items,
+values of the list can be empty string, the length of the list is always 7 items,
 the values are like `[body, type, status, version, url, length, headers]`,
 you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
 
@@ -270,7 +270,7 @@ requests.head("http://example.com/api/something")
 
 **Returns:**
 Response, `list` type, values of the list are string type,
-values of the list can be empty string, the lenght of the list is always 7 items,
+values of the list can be empty string, the length of the list is always 7 items,
 the values are like `[body, type, status, version, url, length, headers]`,
 you can use `to_json()` to get JSON or `to_dict()` to get a dict or `to_tuples()` to get a tuples.
 
